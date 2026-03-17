@@ -15,5 +15,5 @@ Core functions of the application are as follows:
 
 To complete each function, the user must complete a simple math equation before the action is completed. The user may be provided multiple tries to complete the equation.
 
-
-
+## Technical Requirements
+See [Technical-Requirements.md](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Technical-Requirements.md).
