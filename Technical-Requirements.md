@@ -49,7 +49,7 @@ The system uses a layered architecture. Core components include:
     - Generates hints/questions rather than direct answers.
 
 6. **Data Access Layer**
-    - Persists user accounts, pet state, and optional chatbot session history.
+    - Persists user accounts and pet state.
 
 7. **Database**
     - Stores user progress, pet attributes, and other persistent data.
