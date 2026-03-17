@@ -10,6 +10,7 @@ Core functions of the application are as follows:
 - Feeding
 - Petting
 - Playing
-To complete each function, the user must complete a simple math equation before the action is completed. The user may be provided multiple tries to complete the equation. 
+
+To complete each function, the user must complete a simple math equation before the action is completed. The user may be provided multiple tries to complete the equation.
 
 The application is suited to all ages as an educational tool to help individuals better understand simple math.
