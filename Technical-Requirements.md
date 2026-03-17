@@ -88,6 +88,7 @@ The system uses a layered architecture. Core components include:
 - Login: User needs to be able to use registered username or email with password (key pair) to login to the application.
 - Logout: User needs to be able to log out so progress is protected on shared devices.
 - Account Storage: User needs to have in-game progress saved to account for continuous access.
+- Account Security: User details need to be stored securely to prevent unauthorised access.
 
 ---
 
