@@ -88,15 +88,42 @@ The system uses a layered architecture. Core components include:
 - Login: User needs to be able to use registered username or email with password (key pair) to login to the application.
 - Logout: User needs to be able to log out so progress is protected on shared devices.
 - Account Storage: User needs to have in-game progress saved to account for continuous access.
-- Account Security: User details need to be stored securely to prevent unauthorised access.
+
+### 3.2 User Interface
+- Pet Display: User needs to be able to clearly view virtual pet on the main screen.
+- Pet Attribute: User needs to be able to clearly view virtual pet attributes.
+- Layout: User needs to be able to access different areas of the application to interact with virtual pet.
+- Navigation: User needs to be able to use buttons and other appropriate functions to access separate areas of the application.
+- Navigation Continued: User needs to be able to use buttons and other appropriate functions to interact with the virtual pet.
+
+### 3.3 User Experience
+- .
+
+### 3.4 Math Learning System
+- .
+
+### 3.5 Data Persistence
+- .
 
 ---
 
 ## 4. Non-functional Requirements
 ### 4.1 User Authentication
 - Incorrect Details: User should be told when login credentials are incorrect.
+- Account Security: User details need to be stored securely to prevent unauthorised access.
 
-### 4.2
+### 4.2 User Interface
+- Accessibility: Buttons should be clearly labelled for accessibility and ease-of-use.
+- Layout: Layout should be organised and easily readable to prevent confusion and difficulty navigating.
+
+### 4.3 User Experience
+- .
+
+### 4.4 Math Learning System
+- .
+
+### 4.5 Data Persistence
+- .
 
 ---
 
