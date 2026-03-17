@@ -83,12 +83,17 @@ The system uses a layered architecture. Core components include:
 ---
 
 ## 3. Functional Requirements
-### 3.1
+### 3.1 User Authentication
+- Create Account: User needs to be able to register their details (username, email, password) to create an account.
+- Login: User needs to be able to use registered username or email with password (key pair) to login to the application.
+- Logout: User needs to be able to log out so progress is protected on shared devices.
+- Account Storage: User needs to have in-game progress saved to account for continuous access.
 
 ---
 
 ## 4. Non-functional Requirements
-### 4.1
+### 4.1 User Authentication
+- Incorrect Details: User should be told when login credentials are incorrect.
 
 ### 4.2
 
