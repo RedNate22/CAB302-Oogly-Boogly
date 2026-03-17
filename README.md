@@ -14,3 +14,9 @@ Core functions of the application are as follows:
 To complete each function, the user must complete a simple math equation before the action is completed. The user may be provided multiple tries to complete the equation.
 
 The application is suited to all ages as an educational tool to help individuals better understand simple math.
+
+
+
+{TBC} is a Java-based, GUI application that simulates a virtual pixelated pet cat that users must care for by managing its basic needs. The pet will have attributes similar to a real-life pet, which change over time and require the user to interact with the pet to ensure its wellbeing and maintenance of their attributes. 
+
+To interlink the game concept with an educational aspect, the user is able to maintain and alter the pet's attributes by performing and solving simple mathematics problems that are suitable to all ages. Successfully answering these problems will subsequently result in the improvement of the pet's current condition. 
