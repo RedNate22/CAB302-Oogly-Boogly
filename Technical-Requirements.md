@@ -117,7 +117,9 @@ The system uses a layered architecture. Core components include:
 - Layout: Layout should be organised and easily readable to prevent confusion and difficulty navigating.
 
 ### 4.3 User Experience
-- .
+- Feedback: User should receive immediate feedback on pet interactions.
+- 
+- 
 
 ### 4.4 Math Learning System
 - .
