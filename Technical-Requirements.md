@@ -97,13 +97,16 @@ The system uses a layered architecture. Core components include:
 - Navigation Continued: User needs to be able to use buttons and other appropriate functions to interact with the virtual pet.
 
 ### 3.3 User Experience
-- .
+- Feedback: User should receive immediate feedback on pet interactions.
+- Level Progression: Pet should visually grow or change appearance as it levels up, indicating progress.
 
 ### 3.4 Math Learning System
-- .
+- Progress Recording: User's math performance should be tracked to adapt difficulty or provide suggestions.
+- Rewards: User should earn rewards or points for completing math exercises, which can affect the virtual pet’s happiness or growth.
 
 ### 3.5 Data Persistence
-- .
+- Data Saving : Every interation with the virtual pet is recorded and saved to prevent data loss.
+- 
 
 ---
 
@@ -117,12 +120,14 @@ The system uses a layered architecture. Core components include:
 - Layout: Layout should be organised and easily readable to prevent confusion and difficulty navigating.
 
 ### 4.3 User Experience
-- Feedback: User should receive immediate feedback on pet interactions.
+- Performance: The application should run smoothly without noticeable lag.
+-  
 - 
 - 
 
 ### 4.4 Math Learning System
-- .
+- Adaptability: The learning system should adjust difficulty based on user performance.
+- 
 
 ### 4.5 Data Persistence
 - .
