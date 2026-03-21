@@ -7,12 +7,10 @@ High-level overview of the project purpose is outlined in the project [README.md
 ### 1.2 Scope
 **In Scope**
 - Virtual pet interaction system
+	- Core actions: feeding, petting, playing
+	- Dynamic pet behaviour system driven by internal need states (e.g. energy, hunger, happiness), affecting animations and interactions
 - Math problem generation and validation
-- Core actions: feeding, petting, playing
 - User feedback and progression
-
-AI Implementation:
-- AI driven pet behavior
 - AI Clippy-style helper
     - [Socratic Method](https://en.wikipedia.org/wiki/Socratic_method) teaching (guides towards answers, but never explicitly gives it)
 
@@ -20,7 +18,8 @@ AI Implementation:
 - Advanced mathematics beyond defined difficulty levels
 - Additional subjects (e.g. Science, History, English/Languages etc.)
 - Multiplayer or social features
-- Additional external integrations
+- Additional external integrations (e.g., browser support)
+- Android/IOS Support
 
 ---
 
@@ -38,15 +37,15 @@ The system uses a layered architecture. Core components include:
     - Implements game rules, math challenges, and interaction logic.
     - Interfaces with both AI modules.
 
-4. **Pet State Machine (AI)**
+4. **Pet State Machine**
     - Tracks pet state (health, happiness, fatigue, etc.).
     - Updates behavior based on user interactions.
     - Deterministic logic; part of core gameplay.
 
 5. **AI Chatbot Module**
     - Optional, user-invoked guidance using the Socratic method.
-    - Queries Business Logic Layer for current math problem or progress.
     - Generates hints/questions rather than direct answers.
+	- Queries Business Logic Layer for current math problem or progress.
 
 6. **Data Access Layer**
     - Persists user accounts and pet state.
@@ -73,12 +72,15 @@ The system uses a layered architecture. Core components include:
 - Frameworks: JavaFX
 - Build Tool: Maven
 - Database: SQLite
+- Unit Testing: [JUnit 5](https://docs.junit.org/5.10.5/user-guide/)
 - Other Dependencies:
-	-
+	- JavaFX Libraries:
+ 		- [FormsFX](https://github.com/dlsc-software-consulting-gmbh/FormsFX/)
+   		- [FXGL](https://github.com/AlmasB/FXGL)
 
 ### 2.3 Deployment Environment
 - OS: Windows, MacOS
-- CI/CD:
+- CI/CD: Github Actions
 
 ---
 
