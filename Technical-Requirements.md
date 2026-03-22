@@ -1,8 +1,39 @@
 # Technical Requirements
 
 ## 1. Overview
-### 1.1 Purpose
 High-level overview of the project purpose is outlined in the project [README.md](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/README.md).
+
+### 1.1 Gameplay Loop
+
+#### 1.1.1 Pet Stats
+- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores over time or via items.  
+- **Happiness** – Measures the pet’s emotional state. Increases through interactions such as petting, playing, or giving fun items, and gradually decreases over **real-world time** to encourage regular engagement.  
+- **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Fullness cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
+
+#### 1.1.2 Cat Level System
+- Players earn **XP** by completing math problems.
+- Level progression unlocks:
+  - Higher problem difficulty (e.g., Level 2 problems require cat to be at or above Level 2)  
+  - Access to new shop items and variations
+  - Scaling rewards and bonus multipliers
+
+#### 1.1.3 Solving Math Problems
+- Completing problems rewards **items + currency**.  
+- Rewards scale with difficulty and may include bonus multipliers:
+  - **AI Usage Bonus** – Users can use the AI up to 3 times before the bonus is fully lost; each use reduces the bonus multiplier (e.g., using it 3 times results in no “No AI Used” bonus).
+  - **Difficulty Bonus** – Higher-level problems provide higher rewards.  
+  - **Pet Stats Bonus** – Happiness and Fullness influence XP and item gains.  
+- Items earned or bought can **restore Energy, increase Happiness, or satisfy Fullness**.
+
+#### 1.1.4 Bonus Challenges
+- Players can spend **Energy** to attempt higher-difficulty problems (**(x) levels above current player level**).  
+- Rewards are scaled to difficulty and include extra incentive.
+
+#### 1.1.5 Shop
+- Players use currency earned from math problems to buy items. 
+- Items vary in effect (stronger items cost more).
+- Some cosmetic items can be bought; they have no effect on the cat's needs or gameplay
+- Some items are **locked behind player level**, encouraging progression.
 
 ### 1.2 Scope
 **In Scope**
