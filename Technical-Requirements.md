@@ -76,7 +76,7 @@ The system uses a layered architecture. Core components include:
 
 5. **Pet State Machine**
     - Tracks the cat’s internal states (Happiness, Energy, Fullness, Level, etc.).
-    - Updates behavior deterministically based on user interactions and time-based decay.
+    - Updates behaviour deterministically based on user interactions and time-based decay.
 
 6. **AI Chatbot Module**
     - Optional, user-invoked guidance using the [Socratic method](https://en.wikipedia.org/wiki/Socratic_method).  
@@ -168,14 +168,14 @@ The system uses a layered architecture. Core components include:
 - **Separation of Concerns**
   - **FXML**: Define UI structure only. Avoid in-line styling unless absolutely necessary.
   - **CSS**: Define styling with classes/IDs to maintain consistency.
-  - **Controller (.java)**: Handle UI behavior, event handling, and interaction with the model/data.
+  - **Controller (.java)**: Handle UI behaviour, event handling, and interaction with the model/data.
   - **Other .java files**: Contain main application logic, APIs, and database interactions.
-  - **Assets**: Images, icons, and other resources organized in dedicated folders with sub-folders.
+  - **Assets**: Images, icons, and other resources organised in dedicated folders with sub-folders.
 
 - **Security, Validation, and Error Handling**
-  - Sanitize user input to prevent invalid data or security issues.
+  - Sanitise user input to prevent invalid data or security issues.
   - Implement proper exception handling with `try/catch`. Use `throws` only when passing responsibility is intentional.
-  - Provide fallback behavior (e.g., return to main menu) on failures.
+  - Provide fallback behaviour (e.g., return to main menu) on failures.
 
 - **Naming Conventions**
   - **Classes**: PascalCase (e.g., `VirtualPetController`)  
@@ -194,7 +194,7 @@ The system uses a layered architecture. Core components include:
 
 - **Formatting and Readability**
   - Maintain consistent indentation and spacing.
-  - Organize code logically for readability and maintainability.
+  - Organise code logically for readability and maintainability.
       - Separate logical blocks with empty lines
 
 ### 5.2 Documentation requirements
@@ -204,7 +204,7 @@ The system uses a layered architecture. Core components include:
 - Use inline comments to explain:
     - Complex logic
     - Non-obvious decisions or edge cases
-- Avoid redundant comments that restate obvious code behavior.
+- Avoid redundant comments that restate obvious code behaviour.
 - Keep all comments accurate and update them alongside code changes.
 - Maintain consistent formatting and style for all documentation.
 
