@@ -11,7 +11,7 @@ High-level overview of the project purpose is outlined in the project [README.md
 - **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Fullness cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
 
 #### 1.1.2 Cat Level System
-- Players earn **XP** by completing math problems.
+- Users earn **XP** by completing math problems.
 - Level progression unlocks:
   - Higher problem difficulty (e.g., Level 2 problems require cat to be at or above Level 2)  
   - Access to new shop items and variations
@@ -26,11 +26,11 @@ High-level overview of the project purpose is outlined in the project [README.md
 - Items earned or bought can **restore Energy, increase Happiness, or satisfy Fullness**.
 
 #### 1.1.4 Bonus Challenges
-- Players can spend **Energy** to attempt higher-difficulty problems (**(x) levels above current player level**).  
+- Users can spend **Energy** to attempt higher-difficulty problems (**(x) levels above current player level**).  
 - Rewards are scaled to difficulty and include extra incentive.
 
 #### 1.1.5 Shop
-- Players use currency earned from math problems to buy items. 
+- Users use currency earned from math problems to buy items. 
 - Items vary in effect (stronger items cost more).
 - Some cosmetic items can be bought; they have no effect on the cat's needs or gameplay
 - Some items are **locked behind player level**, encouraging progression.
