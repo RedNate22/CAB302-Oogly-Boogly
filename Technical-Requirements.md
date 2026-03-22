@@ -141,7 +141,6 @@ The system uses a layered architecture. Core components include:
 
 ### 3.5 Data Persistence
 - Data Saving : Every interation with the virtual pet is recorded and saved to prevent data loss.
-- 
 
 ---
 
@@ -156,16 +155,11 @@ The system uses a layered architecture. Core components include:
 
 ### 4.3 User Experience
 - Performance: The application should run smoothly without noticeable lag.
--  
-- 
-- 
 
 ### 4.4 Math Learning System
 - Adaptability: The learning system should adjust difficulty based on user performance.
-- 
 
 ### 4.5 Data Persistence
-- .
 
 ---
 
