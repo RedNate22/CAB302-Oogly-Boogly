@@ -6,7 +6,7 @@ High-level overview of the project purpose is outlined in the project [README.md
 ### 1.1 Gameplay Loop
 
 #### 1.1.1 Pet Stats
-- **Happiness** – Measures the pet’s emotional state. Increases through interactions such as petting, playing, or giving fun items, and gradually decreases over **real-world time** to encourage regular engagement.  
+- **Happiness** – Measures the pet’s emotional state. Increases through interactions such as petting, playing, or giving fun items, and gradually decreases over **real-world time** to encourage regular engagement.
 - **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores over time or via items.
 - **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Fullness cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
 
@@ -18,11 +18,11 @@ High-level overview of the project purpose is outlined in the project [README.md
   - Scaling rewards and bonus multipliers
 
 #### 1.1.3 Solving Math Problems
-- Completing problems rewards **items + currency**.  
+- Completing problems rewards **items + currency**.
 - Rewards scale with difficulty and may include bonus multipliers:
   - **AI Usage Bonus** – Users can use the AI up to 3 times before the bonus is fully lost; each use reduces the bonus multiplier (e.g., using it 3 times results in no “No AI Used” bonus).
-  - **Difficulty Bonus** – Higher-level problems provide higher rewards.  
-  - **Pet Stats Bonus** – Happiness and Fullness influence XP and item gains.  
+  - **Difficulty Bonus** – Higher-level problems provide higher rewards.
+  - **Pet Stats Bonus** – Happiness and Fullness influence XP and item gains.
 - Items earned or bought can **restore Energy, increase Happiness, or satisfy Fullness**.
 
 #### 1.1.4 Bonus Challenges
@@ -30,7 +30,7 @@ High-level overview of the project purpose is outlined in the project [README.md
 - Rewards are scaled to difficulty and include extra incentive.
 
 #### 1.1.5 Shop
-- Users use currency earned from math problems to buy items. 
+- Users use currency earned from math problems to buy items.
 - Items vary in effect (stronger items cost more).
 - Some cosmetic items can be bought; they have no effect on the cat's needs or gameplay
 - Some items are **locked behind player level**, encouraging progression.
@@ -59,44 +59,45 @@ High-level overview of the project purpose is outlined in the project [README.md
 **Overview**  
 The system uses a layered architecture. Core components include:
 
-1. **Presentation Layer (UI)**
-    - **FXML**: Defines layout.
-    - **CSS**: Defines styling.
-    - **Controller (.java)**: Handles events, triggers pet actions, opens AI Chatbot window.
+1. **Presentation Layer**
+    - **UI**: Renders the interface and handles user input.
+    - **FXML & CSS**: Define layout and styling.
+    - UI communicates bidirectionally with Controllers.
 
-3. **Business Logic Layer**
-    - Implements game rules, math challenges, and interaction logic.
-    - Interfaces with both AI modules.
+3. **Controller Layer**
+    - **Controller (.java)**: Handles user events, triggers pet actions, and manages the AI Chatbot window.
+    - Controllers communicate bidirectionally with both the UI and Business Logic.
+    - Controllers also communicate bidirectionally with the AI Chatbot Module.
 
-4. **Pet State Machine**
-    - Tracks pet state (health, happiness, fatigue, etc.).
-    - Updates behavior based on user interactions.
-    - Deterministic logic; part of core gameplay.
+4. **Business Logic Layer**
+    - Implements game rules, math challenges, reward calculations, and interaction logic.
+    - Interfaces with the Pet State Machine, AI Chatbot Module, and Database.
+    - Can also query external APIs for math problems or datasets if integrated.
 
-5. **AI Chatbot Module**
-    - Optional, user-invoked guidance using the Socratic method.
+5. **Pet State Machine**
+    - Tracks the cat’s internal states (Happiness, Energy, Fullness, Level, etc.).
+    - Updates behavior deterministically based on user interactions and time-based decay.
+
+6. **AI Chatbot Module**
+    - Optional, user-invoked guidance using the [Socratic method](https://en.wikipedia.org/wiki/Socratic_method).  
     - Generates hints/questions rather than direct answers.
-	- Queries Business Logic Layer for current math problem or progress.
+    - Queries Business Logic Layer for current problem context or progress.
+    - Interacts bidirectionally with Controllers for display and user input.
 
-6. **Data Access Layer**
-    - Persists user accounts and pet state.
+7. **Data Access Layer**
+	- Handles persistent storage of user accounts, pet state, items, and other application data.
 
-7. **Database**
-    - Stores user progress, pet attributes, and other persistent data.
+8. **Database**
+    - Stores all persistent data, including user progress, pet attributes, and inventory.
 
 **Component Interaction**
-    - UI triggers actions → Business Logic → Pet State Machine updates pet state.
-    - Business Logic provides context to AI Chatbot when user requests help.
-    - AI Chatbot returns Socratic guidance → UI displays it.
-    - Data Access Layer persists pet state and user progress.
+	- User actions -> UI <-> Controllers -> Business Logic -> Pet State Machine updates state.
+	- Business Logic provides context -> AI Chatbot <-> Controllers -> UI updates.
+	- Business Logic -> Database Layer -> Database for all persistence.
+	- Optional API requests (e.g., math problem dataset) are queried by Business Logic or AI Chatbot.
 
 **Diagram**
-- Include a component diagram showing:
-	- Boxes for: FXML & Controllers, Business Logic, Data Access, Database, AI Chatbot.
-    - Arrows showing:
-        - UI -> Business Logic -> Data Access -> Database
-        - UI <-> AI Chatbot
-        - AI Chatbot <-> Business Logic
+{Pending}
 
 ### 2.2 Technology Stack
 - Language: Java21 (Amazon Corretto 21)
@@ -108,6 +109,7 @@ The system uses a layered architecture. Core components include:
 	- JavaFX Libraries:
  		- [FormsFX](https://github.com/dlsc-software-consulting-gmbh/FormsFX/)
    		- [FXGL](https://github.com/AlmasB/FXGL)
+     	- [Ikonli](https://kordamp.org/ikonli/)
 
 ### 2.3 Deployment Environment
 - OS: Windows, MacOS
