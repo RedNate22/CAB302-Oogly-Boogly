@@ -1,19 +1,13 @@
-# Virtual Pet Application
+# MathCat: Virtual Pet Application
 ---
 ## Overview
-This project is for CAB302 Agile Project Development, at Queensland University of Technology. It is a group-based project, with the group "OoglyBoogly" (Mohamed Zayan Eangapadalil, Alexander Grossi, Nathan Pithie, Leonora Van de Sande, and Hui Colin Wu) being equal collaborators.
+This project is for CAB302 Agile Project Development at Queensland University of Technology. It is a group-based project, with the group "OoglyBoogly" ([Mohamed Zayan Eangapadalil](https://github.com/notzayan), [Alexander Grossi](https://github.com/agrossi178), [Nathan Pithie](https://github.com/RedNate22), [Leonora Van de Sande](https://github.com/smolbebby), and [Hui Colin Wu](https://github.com/Ka-319)) being equal collaborators.
 
-The application/project is {TBC}, where you interact with a virtual pet through completing simple math equations.
-{TBC} is a Java-based, GUI application that simulates a virtual pixelated pet cat that users must care for by managing its basic needs. The pet will have attributes similar to a real-life pet, which change over time and require the user to interact with the pet to ensure its wellbeing and maintenance of their attributes. 
-{TBC} is created with the theme "**Living, Learning, Working with AI**" in mind, with intentions behind the application is to help individuals learn simple math in a gamified way to incentivise continual learning and improvement. Additionally, AI will be included in the application through {TBC (probably pet behaviour, or a clippy-style bot)}.
-To interlink the game concept with an educational aspect, the user is able to maintain and alter the pet's attributes by performing and solving simple mathematics problems that are suitable to all ages. Successfully answering these problems will subsequently result in the improvement of the pet's current condition.
+**MathCat** is a Java-based GUI application that simulates a virtual pixelated cat. Users care for the pet by solving simple math problems to earn items, currency, and XP. The pet has dynamic attributes that change over time and in response to user interactions. The virtual cat has three distinct stats the user must manage; Happiness, Energy, Fullness.
 
-Core functions of the application are as follows:
-- Feeding
-- Petting
-- Playing
+The project embraces the theme "**Living, Learning, Working with AI**," combining gamified learning with AI assistance. An optional AI chatbot helps users using the [Socratic method](https://en.wikipedia.org/wiki/Socratic_method), guiding toward solutions without giving direct answers. Using the AI affects bonus rewards to encourage independent problem solving.
 
-To complete each function, the user must complete a simple math equation before the action is completed. The user may be provided multiple tries to complete the equation.
+Users maintain and improve their pet's stats through earned or purchased items. Items can also provide cosmetic customization, such as costumes, fur (colour) patterns etc. which have no effect on gameplay.
 
 ## Technical Requirements
-See [Technical-Requirements.md](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Technical-Requirements.md).
+For a low-level overview of the gameplay loop and technical specifications, see [Technical-Requirements.md](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Technical-Requirements.md).
