@@ -6,9 +6,9 @@ High-level overview of the project purpose is outlined in the project [README.md
 ### 1.1 Gameplay Loop
 
 #### 1.1.1 Pet Stats
-- **Happiness** – Measures the pet’s emotional state. Increases through interactions such as petting, playing, or giving fun items, and gradually decreases over **real-world time** to encourage regular engagement.
-- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores over time or via items.
-- **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Fullness cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
+- **Happiness** – Measures the pet’s emotional state. Increases through interactions determined by item use (e.g., 'brush' item increases happiness), continously solving problems, and gradually decreases over **real-world time** to encourage regular engagement.
+- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores over time or via specific items.
+- **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Fullness cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains. Fullness depletes over **real-world time** as it does with Happiness.
 
 #### 1.1.2 Cat Level System
 - Users earn **XP** by completing math problems.
@@ -38,7 +38,7 @@ High-level overview of the project purpose is outlined in the project [README.md
 ### 1.2 Scope
 **In Scope**
 - Virtual pet interaction system
-	- Core actions: feeding, petting, playing
+	- Core actions: Feeding, playing, petting (via item use)
 	- Dynamic pet behaviour system driven by internal need states (e.g. energy, hunger, happiness), affecting animations and interactions
 - Math problem generation and validation
 - User feedback and progression
@@ -133,7 +133,7 @@ The system uses a layered architecture. Core components include:
 
 ### 3.3 User Experience
 - Feedback: User should receive immediate feedback on pet interactions.
-- Level Progression: Pet should visually grow or change appearance as it levels up, indicating progress.
+- Level Progression: Clear indicator for current level and progress towards the next
 
 ### 3.4 Math Learning System
 - Progress Recording: User's math performance should be tracked to adapt difficulty or provide suggestions.
