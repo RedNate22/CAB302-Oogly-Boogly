@@ -90,14 +90,15 @@ The system uses a layered architecture. Core components include:
 8. **Database**
     - Stores all persistent data, including user progress, pet attributes, and inventory.
 
-**Component Interaction**
+### 2.2 Component Interaction
 	- User actions -> UI <-> Controllers -> Business Logic -> Pet State Machine updates state.
 	- Business Logic provides context -> AI Chatbot <-> Controllers -> UI updates.
 	- Business Logic -> Database Layer -> Database for all persistence.
 	- Optional API requests (e.g., math problem dataset) are queried by Business Logic or AI Chatbot.
 
-**Diagram**
-[Architecture Diagram](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Desktop%20Pet%20Architecture%20Diagram.png)
+### 2.3 Component Diagram
+
+![Architecture Diagram](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Desktop%20Pet%20Architecture%20Diagram.png)
 
 ### 2.2 Technology Stack
 - Language: Java21 (Amazon Corretto 21)
