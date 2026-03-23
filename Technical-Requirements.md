@@ -97,7 +97,7 @@ The system uses a layered architecture. Core components include:
 	- Optional API requests (e.g., math problem dataset) are queried by Business Logic or AI Chatbot.
 
 **Diagram**
-[Architecture Diagram] - https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Desktop%20Pet%20Architecture%20Diagram.png
+[Architecture Diagram](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Desktop%20Pet%20Architecture%20Diagram.png)
 
 ### 2.2 Technology Stack
 - Language: Java21 (Amazon Corretto 21)
