@@ -153,6 +153,8 @@ The system uses a layered architecture. Core components include:
 ### 4.1 User Authentication
 - Incorrect Details: User should be told when login credentials are incorrect.
 - Account Security: User details need to be stored securely to prevent unauthorised access.
+- Duplicate Registration: The system must prevent registration with a username or email that is already associated with an existing account.
+- Password Requirements: Passwords must meet a minimum complexity requirement 
 
 ### 4.2 User Interface
 - Accessibility: Buttons should be clearly labelled for accessibility and ease-of-use.
