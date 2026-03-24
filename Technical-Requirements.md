@@ -131,17 +131,21 @@ The system uses a layered architecture. Core components include:
 - Layout: User needs to be able to access different areas of the application to interact with virtual pet.
 - Navigation: User needs to be able to use buttons and other appropriate functions to access separate areas of the application.
 - Navigation Continued: User needs to be able to use buttons and other appropriate functions to interact with the virtual pet.
+- Shop Display  User needs to be able to view available items, their costs, effects.
 
 ### 3.3 User Experience
 - Feedback: User should receive immediate feedback on pet interactions.
 - Level Progression: Clear indicator for current level and progress towards the next
+- Level up Notification User should receive a notification when pets level up.
 
 ### 3.4 Math Learning System
 - Progress Recording: User's math performance should be tracked to adapt difficulty or provide suggestions.
 - Rewards: User should earn rewards or points for completing math exercises, which can affect the virtual pet’s happiness or growth.
+- Answer Validation User's submitted answer must be evaluated and marked correct or incorrect with immediate feedback.
 
 ### 3.5 Data Persistence
-- Data Saving : Every interation with the virtual pet is recorded and saved to prevent data loss.
+- Data Saving  Every interation with the virtual pet is recorded and saved to prevent data loss.
+- Inventory Persistence The user's item inventory and currency balance must be saved and restored between sessions.
 
 ---
 
@@ -153,14 +157,24 @@ The system uses a layered architecture. Core components include:
 ### 4.2 User Interface
 - Accessibility: Buttons should be clearly labelled for accessibility and ease-of-use.
 - Layout: Layout should be organised and easily readable to prevent confusion and difficulty navigating.
+- Input Validation Registration fields must validate format such as valid email, minimum password length.
 
 ### 4.3 User Experience
-- Performance: The application should run smoothly without noticeable lag.
+- Performance The application should run smoothly without noticeable lag.
+- Accessibility Buttons should be clearly labelled for accessibility and ease of use.
+- Layout Layout should be organised and easily readable to prevent confusion.
+- UI Consistency components such as fonts, colors, button styles should remain consistent across all screens.
+
 
 ### 4.4 Math Learning System
-- Adaptability: The learning system should adjust difficulty based on user performance.
+- Adaptability The learning system should adjust difficulty based on user performance.
+- Answer Accuracy The answer validation system must correctly evaluate all expected problem types without error.
+- Problem Variety The system should generate varied problem types at each difficulty level to prevent repetitive or predictable question patterns.
 
 ### 4.5 Data Persistence
+- Reliability All game state and user progress must be saved after every meaningful interaction with no data loss on normal exit.
+- Integrity The database must maintain consistent state at all times; partial writes must not corrupt saved data.
+- Consistency Inventory, currency, pet stats, and level progress must all remain in sync
 
 ---
 
