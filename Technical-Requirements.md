@@ -7,7 +7,7 @@ High-level overview of the project purpose is outlined in the project [README.md
 
 #### 1.1.1 Pet Stats
 - **Happiness** – Measures the pet’s emotional state. Increases through interactions determined by item use (e.g., 'brush' item increases happiness), continously solving problems, and gradually decreases over **real-world time** to encourage regular engagement.
-- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores over time or via specific items.
+- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores automatically proportionally to current Fullness state or via specific items.
 - **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Depletes over **real-world time** as it does with Happiness, and cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
 
 #### 1.1.2 Cat Level System
