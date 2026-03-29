@@ -6,9 +6,9 @@ High-level overview of the project purpose is outlined in the project [README.md
 ### 1.1 Gameplay Loop
 
 #### 1.1.1 Pet Stats
-- **Happiness** – Measures the pet’s emotional state. Increases through interactions determined by item use (e.g., 'brush' item increases happiness), continously solving problems, and gradually decreases over **real-world time** to encourage regular engagement.
-- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores automatically proportionally to current Fullness state or via specific items.
+- **Happiness** – Measures the pet’s emotional state. Increases through interactions via items (e.g., brush, catnip, toys etc.), continously solving problems, and gradually decreases over **real-world time** to encourage regular engagement. Additionally, Happiness decreases when Fullness is low.
 - **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Depletes over **real-world time** as it does with Happiness, and cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
+- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores automatically proportionally to current Fullness state or via specific items.
 
 #### 1.1.2 Cat Level System
 - Users earn **XP** by completing math problems.
@@ -30,10 +30,10 @@ High-level overview of the project purpose is outlined in the project [README.md
 - Rewards are scaled to difficulty and include extra incentive.
 
 #### 1.1.5 Shop
-- Users use currency earned from math problems to buy items.
+- Users use currency earned from math problems to buy items or sell (TBD) for more currency.
 - Items vary in effect (stronger items cost more).
-- Some cosmetic items can be bought; they have no effect on the cat's needs or gameplay
-- Some items are **locked behind player level**, encouraging progression.
+- Some cosmetic items can be bought; they have no effect on the cat's needs or gameplay but encourage progression.
+- Some items are **locked behind player level**, further encouraging progression.
 
 ### 1.2 Scope
 **In Scope**
