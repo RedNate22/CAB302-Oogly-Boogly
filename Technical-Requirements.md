@@ -98,9 +98,17 @@ The system uses a layered architecture. Core components include:
 
 ### 2.3 Component Diagram
 
-![Architecture Diagram](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Desktop%20Pet%20Architecture%20Diagram.png)
+![Architecture Diagram](Diagrams/Desktop%20Pet%20Architecture%20Diagram.png)
 
-### 2.2 Technology Stack
+Created by [Collin](https://github.com/Ka-319)
+
+### 2.4 State Machine Diagram (Pet Stats)
+
+![State Machine Diagram](Diagrams/MathCat_StateMachine.png)
+
+Created by [Nathan](https://github.com/RedNate22)
+
+### 2.5 Technology Stack
 - Language: Java21 (Amazon Corretto 21)
 - Frameworks: JavaFX
 - Build Tool: Maven
@@ -112,7 +120,7 @@ The system uses a layered architecture. Core components include:
    		- [FXGL](https://github.com/AlmasB/FXGL)
      	- [Ikonli](https://kordamp.org/ikonli/)
 
-### 2.3 Deployment Environment
+### 2.6 Deployment Environment
 - OS: Windows, MacOS
 - CI/CD: Github Actions
 
