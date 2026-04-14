@@ -100,7 +100,7 @@ The system uses a layered architecture. Core components include:
 
 ![Architecture Diagram](Diagrams/Desktop%20Pet%20Architecture%20Diagram.png)
 
-Created by [Collin](https://github.com/Ka-319)
+Created by [Colin](https://github.com/Ka-319)
 
 ### 2.4 State Machine Diagram (Pet Stats)
 
