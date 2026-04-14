@@ -110,7 +110,9 @@ Created by [Nathan](https://github.com/RedNate22)
 
 ### 2.5 Wireframe of Project (Screens + Flow)
 
-add diagram here
+![Medium Wireframe Diagram](Diagrams/CAB302_Project-MediumWireframe-withInteractions.png)
+
+Created by [Leonora](https://github.com/smolbebby)
 
 ### 2.6 Technology Stack
 - Language: Java21 (Amazon Corretto 21)
