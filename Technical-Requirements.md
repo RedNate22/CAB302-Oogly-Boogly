@@ -111,7 +111,7 @@ The system uses a layered architecture. Core components include:
 
 ![Architecture Diagram](Diagrams/Desktop%20Pet%20Architecture%20Diagram.png)
 
-Created by [Collin](https://github.com/Ka-319)
+Created by [Colin](https://github.com/Ka-319)
 
 ### 2.4 State Machine Diagram (Pet Stats)
 
@@ -119,8 +119,13 @@ Created by [Collin](https://github.com/Ka-319)
 
 Created by [Nathan](https://github.com/RedNate22)
 
-### 2.5 Technology Stack
+### 2.5 Wireframe of Project (Screens + Flow)
 
+![Medium Wireframe Diagram](Diagrams/CAB302_Project-MediumWireframe-withInteractions.png)
+
+Created by [Leonora](https://github.com/smolbebby)
+
+### 2.6 Technology Stack
 - Language: Java21 (Amazon Corretto 21)
 - Frameworks: JavaFX
 - Build Tool: Maven
@@ -132,8 +137,7 @@ Created by [Nathan](https://github.com/RedNate22)
         - [FXGL](https://github.com/AlmasB/FXGL)
         - [Ikonli](https://kordamp.org/ikonli/)
 
-### 2.6 Deployment Environment
-
+### 2.7 Deployment Environment
 - OS: Windows, MacOS
 - CI/CD: Github Actions
 
