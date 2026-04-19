@@ -63,46 +63,13 @@ public class authController {
     // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
         if (usernameField != null || passwordField != null || emailField != null){
-            if (passwordField.getText().length() < 8){
-                System.out.println("Ensure password length is atleast 8 characters long");
-            }
-            if (userSession.users == null){
-                userSession.currentUser = new User(
-                        usernameField.getText(),
-                        emailField.getText(),
-                        passwordField.getText()
-                );
-                userSession.users.add(userSession.currentUser);
-
-                Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                Scene scene = new Scene(root,700, 400);
-                stage.setTitle("Home");
-                stage.setScene(scene);
-                stage.show();
-            }
-            else {
-                boolean exists = false;
-
-                for (User user : userSession.users) {
-                    if (user.getUsername().equals(usernameField.getText()) ||
-                            user.getEmail().equals(emailField.getText())) {
-
-                        exists = true;
-                        break;
-                    }
-                }
-
-                if (exists) {
-                    System.out.println("Username or email already exists");
-                } else {
+            if (passwordField.getText().length() >= 10){
+                if (userSession.users == null){
                     userSession.currentUser = new User(
                             usernameField.getText(),
                             emailField.getText(),
                             passwordField.getText()
                     );
-
                     userSession.users.add(userSession.currentUser);
 
                     Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
@@ -113,18 +80,52 @@ public class authController {
                     stage.setScene(scene);
                     stage.show();
                 }
-                //Checking output of the list
-                for (User user : userSession.users) {
-                    System.out.println(user.getUsername());
-                    System.out.println(user.getEmail());
-                    System.out.println(user.getPassword());
-                }
+                else {
+                    boolean exists = false;
 
-                // this is to just check that the username and password are storing
-                // System.out.println("Username:" + userSession.currentUser.getUsername());
-                // System.out.println("Email:" + userSession.currentUser.getEmail());
-                // System.out.println("Password:" + userSession.currentUser.getPassword());
+                    for (User user : userSession.users) {
+                        if (user.getUsername().equals(usernameField.getText()) ||
+                                user.getEmail().equals(emailField.getText())) {
+
+                            exists = true;
+                            break;
+                        }
+                    }
+
+                    if (exists) {
+                        System.out.println("Username or email already exists");
+                    } else {
+                        userSession.currentUser = new User(
+                                usernameField.getText(),
+                                emailField.getText(),
+                                passwordField.getText()
+                        );
+
+                        userSession.users.add(userSession.currentUser);
+
+                        Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        Scene scene = new Scene(root,700, 400);
+                        stage.setTitle("Home");
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+                    //Checking output of the list
+                    for (User user : userSession.users) {
+                        System.out.println(user.getUsername());
+                        System.out.println(user.getEmail());
+                        System.out.println(user.getPassword());
+                    }
+
+                    // this is to just check that the username and password are storing
+                    // System.out.println("Username:" + userSession.currentUser.getUsername());
+                    // System.out.println("Email:" + userSession.currentUser.getEmail());
+                    // System.out.println("Password:" + userSession.currentUser.getPassword());
+                }
             }
+            else {System.out.println("Ensure password length is atleast 10 characters long");}
+
         }
         else {System.out.println("Ensure all details are filled out");}
 
