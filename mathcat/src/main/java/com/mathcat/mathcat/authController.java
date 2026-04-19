@@ -22,51 +22,57 @@ public class authController {
 
     @FXML
     // When pressing Login inside the login page
-    // Check an account exists, and validity of details
-    // If details match temp values, log-in is successful, switches to home page
+    // Check an account exists, and validity of details. Scans over the user array to identify these.
+    // If details match temp values, log-in is successful, switches to home page with current user set.
     public void onLoginConfirm(ActionEvent event) throws IOException {
         String enteredUsername = usernameField.getText();
         String enteredPassword = passwordField.getText();
 
-        if (userSession.username != null){
-            if (enteredUsername.equals(userSession.username) && enteredPassword.equals(userSession.password)){
-                System.out.println("Login Successful; Matching details");
+        if (userSession.users != null){
+            boolean accountexists = false;
+            for (User user : userSession.users) {
+                if (user.getUsername().equals(usernameField.getText())) {
+                    accountexists = true;
+                    if (enteredUsername.equals(user.getUsername()) && enteredPassword.equals(user.getPassword())){
+                        System.out.println("Login Successful; Matching details");
 
-                Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        userSession.currentUser = user;
 
-                Scene scene = new Scene(root,700, 400);
-                stage.setTitle("Home");
-                stage.setScene(scene);
-                stage.show();
+                        Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        Scene scene = new Scene(root,700, 400);
+                        stage.setTitle("Home");
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+                    else {System.out.println("Invalid Details");}
+                }
+
             }
-            else {System.out.println("Invalid Details");}
+            if (!accountexists){System.out.println("Username does not exist");}
+
         }
         else {System.out.println("No accounts exist");}
     }
 
     // when pressing Create Account inside the create account page
-    // Check for no null inputs, password length is sufficient, and does a check to see if details already exist (using temp value)
-    // Given all nescessary requirements, username and password and email values take values inputted into text fields
+    // Check for no null inputs, password length is sufficient, and does a check to see if details already exist now using object list
+    // Given all nescessary requirements, username and password and email values take values inputted into text fields.
+    // Current user is set to this user, whilst also being added to the users list
     // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
         if (usernameField != null || passwordField != null || emailField != null){
             if (passwordField.getText().length() < 8){
                 System.out.println("Ensure password length is atleast 8 characters long");
             }
-            else if (usernameField.getText().equals(userSession.username) || emailField.getText().equals(userSession.email)){
-                System.out.println("Username or email already exists");
-            }
-            else {
-                userSession.username = usernameField.getText();
-                userSession.email = emailField.getText();
-                userSession.password = passwordField.getText();
-
-                // this is to just check that the username and password are storing
-                System.out.println("Username:" + userSession.username);
-                System.out.println("Email:" + userSession.email);
-                System.out.println("Password:" + userSession.password);
-
+            if (userSession.users == null){
+                userSession.currentUser = new User(
+                        usernameField.getText(),
+                        emailField.getText(),
+                        passwordField.getText()
+                );
+                userSession.users.add(userSession.currentUser);
 
                 Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -75,6 +81,49 @@ public class authController {
                 stage.setTitle("Home");
                 stage.setScene(scene);
                 stage.show();
+            }
+            else {
+                boolean exists = false;
+
+                for (User user : userSession.users) {
+                    if (user.getUsername().equals(usernameField.getText()) ||
+                            user.getEmail().equals(emailField.getText())) {
+
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (exists) {
+                    System.out.println("Username or email already exists");
+                } else {
+                    userSession.currentUser = new User(
+                            usernameField.getText(),
+                            emailField.getText(),
+                            passwordField.getText()
+                    );
+
+                    userSession.users.add(userSession.currentUser);
+
+                    Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                    Scene scene = new Scene(root,700, 400);
+                    stage.setTitle("Home");
+                    stage.setScene(scene);
+                    stage.show();
+                }
+                //Checking output of the list
+                for (User user : userSession.users) {
+                    System.out.println(user.getUsername());
+                    System.out.println(user.getEmail());
+                    System.out.println(user.getPassword());
+                }
+
+                // this is to just check that the username and password are storing
+                // System.out.println("Username:" + userSession.currentUser.getUsername());
+                // System.out.println("Email:" + userSession.currentUser.getEmail());
+                // System.out.println("Password:" + userSession.currentUser.getPassword());
             }
         }
         else {System.out.println("Ensure all details are filled out");}

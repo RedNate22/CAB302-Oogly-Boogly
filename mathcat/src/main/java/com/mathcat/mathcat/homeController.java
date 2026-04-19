@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -18,7 +17,7 @@ public class homeController {
 
     @FXML
     public void initialize(){
-        usernameLabel.setText(userSession.username);
+        usernameLabel.setText(userSession.currentUser.getUsername());
     }
     // Return to start page
     public void onReturn(ActionEvent event) throws IOException {
