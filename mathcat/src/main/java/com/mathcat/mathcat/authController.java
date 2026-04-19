@@ -63,7 +63,17 @@ public class authController {
     // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
         if (usernameField != null || passwordField != null || emailField != null){
-            if (passwordField.getText().length() >= 10){
+
+            String password = passwordField.getText();
+            boolean passwordisValid = password.matches(
+                    "^(?=.*[A-Z])" +     // at least 1 uppercase
+                            "(?=.*[a-z])" +     // at least 1 lowercase
+                            "(?=.*\\d)" +       // at least 1 number
+                            "(?=.*[^A-Za-z0-9])" + // at least 1 special character
+                            ".{10,}$"           // at least 10 characters long
+            );
+
+            if (passwordisValid){
                 if (userSession.users == null){
                     userSession.currentUser = new User(
                             usernameField.getText(),
@@ -124,7 +134,8 @@ public class authController {
                     // System.out.println("Password:" + userSession.currentUser.getPassword());
                 }
             }
-            else {System.out.println("Ensure password length is atleast 10 characters long");}
+            else {System.out.println("Ensure password length is atleast 10 characters long and " +
+                    "contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");}
 
         }
         else {System.out.println("Ensure all details are filled out");}
