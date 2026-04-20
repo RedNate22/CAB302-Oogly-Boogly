@@ -83,7 +83,7 @@ public class authController {
     // Current user is set to this user, whilst also being added to the users list
     // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
-        if (usernameField != null || passwordField != null || emailField != null){
+        if (usernameField.getLength() > 0 && passwordField.getLength() > 0 && emailField.getLength() > 0){
             String email = emailField.getText();
             String password = passwordField.getText();
 
@@ -130,7 +130,8 @@ public class authController {
                         }
 
                         if (exists) {
-                            System.out.println("Username or email already exists");
+                            error.setText("Username or email already exists");
+                            // System.out.println("Username or email already exists");
                         } else {
                             userSession.currentUser = new User(
                                     usernameField.getText(),
@@ -161,16 +162,23 @@ public class authController {
                         // System.out.println("Password:" + userSession.currentUser.getPassword());
                     }
                 }
-                else {System.out.println("Ensure password length is atleast 10 characters long and " +
-                        "contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");}
+                else {
+                    error.setText("Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
+                    // System.out.println("Ensure password length is atleast 10 characters long and " +
+                        // "contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
+                }
             }
-            else {System.out.println("Please enter a valid email");}
-
-
+            else {
+                error.setText("Please enter a valid email");
+                // System.out.println("Please enter a valid email");
+            }
         }
-        else {System.out.println("Ensure all details are filled out");}
-
+        else {
+            error.setText("Ensure all details are filled out");
+            // System.out.println("Ensure all details are filled out");
+        }
     }
+
     // Returns to the starter page
     public void onReturn(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
