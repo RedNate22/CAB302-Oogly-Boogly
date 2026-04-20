@@ -27,7 +27,7 @@ public class AIService {
                 "3. NEVER repeat a question you already asked. " +
                 "4. Give ONE short, specific hint or question per response. " +
                 "5. Build directly on exactly what the student just said. " +
-                "6. If the student is correct, confirm it briefly and move to the next step. " +
+                "6. If the student is correct, confirm it and ask the student to press next question. " +
                 "7. Max 2 sentences per response.";
 
         String body = String.format("""
