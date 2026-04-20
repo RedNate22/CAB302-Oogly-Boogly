@@ -36,7 +36,7 @@ public class authController {
         //check text fields are not empty
         if (!enteredUsername.isEmpty() && !enteredPassword.isEmpty()){
             // Check that users is not empty and then check the inputted account exists
-            if (userSession.users.size() != 0){
+            if (!userSession.users.isEmpty()){
                 boolean accountexists = false;
                 for (User user : userSession.users) {
                     if (user.getUsername().equals(usernameField.getText())) {
