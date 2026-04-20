@@ -24,7 +24,10 @@ public class homeController {
         emailLabel.setText(userSession.currentUser.getEmail());
     }
     // Return to start page
-    public void onReturn(ActionEvent event) throws IOException {
+    public void onLogout(ActionEvent event) throws IOException {
+
+        userSession.currentUser = null;
+
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

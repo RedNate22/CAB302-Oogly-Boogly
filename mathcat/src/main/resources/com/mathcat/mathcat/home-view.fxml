@@ -13,6 +13,6 @@
 
     <Label fx:id = "usernameLabel" style="-fx-font-size: 40px; -fx-font-weight: bold;"/>
     <Label fx:id = "emailLabel" style="-fx-font-size: 40px; -fx-font-weight: bold;"/>
-    <Button text="Return" onAction="#onReturn"/>
+    <Button text="Logout" onAction="#onLogout"/>
 
 </VBox>
