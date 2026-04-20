@@ -27,7 +27,7 @@ public class authController {
     public void onLoginConfirm(ActionEvent event) throws IOException {
         String enteredUsername = usernameField.getText();
         String enteredPassword = passwordField.getText();
-
+        // Check that users is not empty and then check the inputted account exists
         if (userSession.users != null){
             boolean accountexists = false;
             for (User user : userSession.users) {
@@ -66,7 +66,9 @@ public class authController {
             String email = emailField.getText();
             String password = passwordField.getText();
 
+            // Ensures email contains @ symbol and a domain
             boolean emailisValid = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+            // Ensures password matches all the given criteria
             boolean passwordisValid = password.matches(
                     "^(?=.*[A-Z])" +     // at least 1 uppercase
                             "(?=.*[a-z])" +     // at least 1 lowercase
@@ -76,6 +78,8 @@ public class authController {
             );
             if (emailisValid){
                 if (passwordisValid){
+                    // Add a user if the users list is empty otherwise check the inputted user doesn't already
+                    // exist and then add them
                     if (userSession.users == null){
                         userSession.currentUser = new User(
                                 usernameField.getText(),
