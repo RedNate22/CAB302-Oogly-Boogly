@@ -16,8 +16,12 @@ public class homeController {
     private Label usernameLabel;
 
     @FXML
+    private Label emailLabel;
+
+    @FXML
     public void initialize(){
         usernameLabel.setText(userSession.currentUser.getUsername());
+        emailLabel.setText(userSession.currentUser.getEmail());
     }
     // Return to start page
     public void onReturn(ActionEvent event) throws IOException {
