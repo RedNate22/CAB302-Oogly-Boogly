@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -19,6 +20,9 @@ public class authController {
     private TextField passwordField;
     @FXML
     private TextField emailField;
+
+    @FXML
+    private Label error;
 
     @FXML
     // When pressing Login inside the login page
@@ -46,14 +50,20 @@ public class authController {
                         stage.setScene(scene);
                         stage.show();
                     }
-                    else {System.out.println("Invalid Details");}
+                    else {
+                        error.setText("Invalid Details.");
+                        System.out.println("Invalid Details");}
                 }
 
             }
-            if (!accountexists){System.out.println("Username does not exist");}
+            if (!accountexists){
+                error.setText("This account does not exist.");
+                System.out.println("Username does not exist");}
 
         }
-        else {System.out.println("No accounts exist");}
+        else {
+            error.setText("No Accounts Exist. Please create an account.");
+            System.out.println("No accounts exist");}
     }
 
     // when pressing Create Account inside the create account page
