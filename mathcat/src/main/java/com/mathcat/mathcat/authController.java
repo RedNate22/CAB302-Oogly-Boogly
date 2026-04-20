@@ -29,41 +29,52 @@ public class authController {
     // Check an account exists, and validity of details. Scans over the user array to identify these.
     // If details match temp values, log-in is successful, switches to home page with current user set.
     public void onLoginConfirm(ActionEvent event) throws IOException {
+
         String enteredUsername = usernameField.getText();
         String enteredPassword = passwordField.getText();
-        // Check that users is not empty and then check the inputted account exists
-        if (userSession.users != null){
-            boolean accountexists = false;
-            for (User user : userSession.users) {
-                if (user.getUsername().equals(usernameField.getText())) {
-                    accountexists = true;
-                    if (enteredUsername.equals(user.getUsername()) && enteredPassword.equals(user.getPassword())){
-                        System.out.println("Login Successful; Matching details");
 
-                        userSession.currentUser = user;
+        //check text fields are not empty
+        if (enteredUsername.length() > 0 && enteredPassword.length() > 0){
+            // Check that users is not empty and then check the inputted account exists
+            if (userSession.users.size() != 0){
+                boolean accountexists = false;
+                for (User user : userSession.users) {
+                    if (user.getUsername().equals(usernameField.getText())) {
+                        accountexists = true;
+                        if (enteredUsername.equals(user.getUsername()) && enteredPassword.equals(user.getPassword())){
+                            System.out.println("Login Successful; Matching details");
 
-                        Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            userSession.currentUser = user;
 
-                        Scene scene = new Scene(root,700, 400);
-                        stage.setTitle("Home");
-                        stage.setScene(scene);
-                        stage.show();
+                            Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                            Scene scene = new Scene(root,700, 400);
+                            stage.setTitle("Home");
+                            stage.setScene(scene);
+                            stage.show();
+                        }
+                        else {
+                            error.setText("Details are Incorrect. Please try again");
+                            // System.out.println("Invalid Details");
+                            }
                     }
-                    else {
-                        error.setText("Invalid Details.");
-                        System.out.println("Invalid Details");}
+
+                }
+                if (!accountexists){
+                    error.setText("This account does not exist.");
+                    // System.out.println("Username does not exist");
                 }
 
             }
-            if (!accountexists){
-                error.setText("This account does not exist.");
-                System.out.println("Username does not exist");}
-
+            else {
+                error.setText("No Accounts Exist. Please create an account.");
+                // System.out.println("No accounts exist");
+            }
         }
-        else {
-            error.setText("No Accounts Exist. Please create an account.");
-            System.out.println("No accounts exist");}
+        else {error.setText("Please fill out all fields");}
+
+
     }
 
     // when pressing Create Account inside the create account page
