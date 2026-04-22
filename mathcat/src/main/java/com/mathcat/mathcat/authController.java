@@ -48,7 +48,7 @@ public class authController {
         for (User user : userSession.users) {
             if (user.getUsername().equals(enteredUsername)) {
                 matchedUser = user;
-                break;  # user found; stop searching
+                break;  // user found; stop searching
             }
         }
 
@@ -62,7 +62,7 @@ public class authController {
             return;
         }
 
-        # Only gets here if all above checks pass
+        // Only gets here if all above checks pass
         System.out.println("Login Successful; Matching details");
         userSession.currentUser = matchedUser;
 
@@ -72,13 +72,14 @@ public class authController {
         stage.setTitle("Home");
         stage.setScene(scene);
         stage.show();
+    }
 
     // When pressing Create Account inside the create account page
     // Check for no null inputs, password and email meet requirements, and does a check to see if details already exist now using object list
     // Given all nescessary requirements, username and password and email values take values inputted into text fields.
     // Current user is set to this user, whilst also being added to the users list
     // Then switches to "Home" page
-    public void onCreateAccountConfirm(ActionEvent event) throws IOException {
+    public void onCreateAccountConfirm (ActionEvent event) throws IOException {
         if (usernameField.getLength() > 0 && passwordField.getLength() > 0 && emailField.getLength() > 0){
             String email = emailField.getText();
             String password = passwordField.getText();
