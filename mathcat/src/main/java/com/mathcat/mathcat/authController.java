@@ -55,7 +55,7 @@ public class authController {
                             stage.show();
                         }
                         else {
-                            error.setText("Details are Incorrect. Please try again");
+                            error.setText("Password is incorrect. Please try again");
                             // System.out.println("Invalid Details");
                             }
                     }
