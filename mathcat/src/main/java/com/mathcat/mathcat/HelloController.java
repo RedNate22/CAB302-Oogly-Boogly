@@ -28,7 +28,7 @@ public class HelloController {
         stage.show();
     }
 
-    // Clicking the Create Account button on the homescreen results being taken to the login scene
+    // Clicking the Create Account button on the homescreen results being taken to the create account scene
     public void onCreateClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("createaccount-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

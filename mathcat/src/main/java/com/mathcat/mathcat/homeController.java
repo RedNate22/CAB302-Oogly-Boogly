@@ -19,6 +19,7 @@ public class homeController {
     private Label emailLabel;
 
     @FXML
+    // Initialise current user values
     public void initialize(){
         usernameLabel.setText(userSession.currentUser.getUsername());
         emailLabel.setText(userSession.currentUser.getEmail());

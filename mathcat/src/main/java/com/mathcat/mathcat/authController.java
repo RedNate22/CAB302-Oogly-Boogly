@@ -26,7 +26,7 @@ public class authController {
 
     @FXML
     // When pressing Login inside the login page
-    // Check an account exists, and validity of details. Scans over the user array to identify these.
+    // Checks the fields aren't empty, an account exists, and validity of details. Scans over the user array to identify these.
     // If details match temp values, log-in is successful, switches to home page with current user set.
     public void onLoginConfirm(ActionEvent event) throws IOException {
 
@@ -77,8 +77,8 @@ public class authController {
 
     }
 
-    // when pressing Create Account inside the create account page
-    // Check for no null inputs, password length is sufficient, and does a check to see if details already exist now using object list
+    // When pressing Create Account inside the create account page
+    // Check for no null inputs, password and email meet requirements, and does a check to see if details already exist now using object list
     // Given all nescessary requirements, username and password and email values take values inputted into text fields.
     // Current user is set to this user, whilst also being added to the users list
     // Then switches to "Home" page
@@ -149,12 +149,12 @@ public class authController {
                             stage.setScene(scene);
                             stage.show();
                         }
-                        //Checking output of the list
-                        for (User user : userSession.users) {
-                            System.out.println(user.getUsername());
-                            System.out.println(user.getEmail());
-                            System.out.println(user.getPassword());
-                        }
+                        //Terminal output check of the list
+                        // for (User user : userSession.users) {
+                            // System.out.println(user.getUsername());
+                            // System.out.println(user.getEmail());
+                            // System.out.println(user.getPassword());
+                        // }
 
                         // this is to just check that the username and password are storing
                         // System.out.println("Username:" + userSession.currentUser.getUsername());
