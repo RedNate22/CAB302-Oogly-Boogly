@@ -34,48 +34,44 @@ public class authController {
         String enteredPassword = passwordField.getText();
 
         //check text fields are not empty
-        if (!enteredUsername.isEmpty() && !enteredPassword.isEmpty()){
-            // Check that users is not empty and then check the inputted account exists
-            if (!userSession.users.isEmpty()){
-                boolean accountexists = false;
-                for (User user : userSession.users) {
-                    if (user.getUsername().equals(usernameField.getText())) {
-                        accountexists = true;
-                        if (enteredUsername.equals(user.getUsername()) && enteredPassword.equals(user.getPassword())){
-                            System.out.println("Login Successful; Matching details");
+        if (enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
+            error.setText("Please fill out all fields");
+            return;
+        }
 
-                            userSession.currentUser = user;
+        if (userSession.users.isEmpty()) {
+            error.setText("No Accounts Exist. Please create an account.");
+            return;
+        }
 
-                            Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                            Scene scene = new Scene(root,700, 400);
-                            stage.setTitle("Home");
-                            stage.setScene(scene);
-                            stage.show();
-                        }
-                        else {
-                            error.setText("Password is incorrect. Please try again");
-                            // System.out.println("Invalid Details");
-                            }
-                    }
-
-                }
-                if (!accountexists){
-                    error.setText("This account does not exist.");
-                    // System.out.println("Username does not exist");
-                }
-
-            }
-            else {
-                error.setText("No Accounts Exist. Please create an account.");
-                // System.out.println("No accounts exist");
+        User matchedUser = null;
+        for (User user : userSession.users) {
+            if (user.getUsername().equals(enteredUsername)) {
+                matchedUser = user;
+                break;  # user found; stop searching
             }
         }
-        else {error.setText("Please fill out all fields");}
 
+        if (matchedUser == null) {
+            error.setText("This account does not exist.");
+            return;
+        }
 
-    }
+        if (!enteredPassword.equals(matchedUser.getPassword())) {
+            error.setText("Password is incorrect. Please try again");
+            return;
+        }
+
+        # Only gets here if all above checks pass
+        System.out.println("Login Successful; Matching details");
+        userSession.currentUser = matchedUser;
+
+        Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 700, 400);
+        stage.setTitle("Home");
+        stage.setScene(scene);
+        stage.show();
 
     // When pressing Create Account inside the create account page
     // Check for no null inputs, password and email meet requirements, and does a check to see if details already exist now using object list
