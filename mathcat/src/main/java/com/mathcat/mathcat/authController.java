@@ -80,99 +80,67 @@ public class authController {
     // Current user is set to this user, whilst also being added to the users list
     // Then switches to "Home" page
     public void onCreateAccountConfirm (ActionEvent event) throws IOException {
-        if (usernameField.getLength() > 0 && passwordField.getLength() > 0 && emailField.getLength() > 0){
-            String email = emailField.getText();
-            String password = passwordField.getText();
 
-            // Ensures email contains @ symbol and a domain
-            boolean emailisValid = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-            // Ensures password matches all the given criteria
-            boolean passwordisValid = password.matches(
-                    "^(?=.*[A-Z])" +     // at least 1 uppercase
-                            "(?=.*[a-z])" +     // at least 1 lowercase
-                            "(?=.*\\d)" +       // at least 1 number
-                            "(?=.*[^A-Za-z0-9])" + // at least 1 special character
-                            ".{10,}$"           // at least 10 characters long
-            );
-            if (emailisValid){
-                if (passwordisValid){
-                    // Add a user if the users list is empty otherwise check the inputted user doesn't already
-                    // exist and then add them
-                    if (userSession.users == null){
-                        userSession.currentUser = new User(
-                                usernameField.getText(),
-                                emailField.getText(),
-                                passwordField.getText()
-                        );
-                        userSession.users.add(userSession.currentUser);
+        String email = emailField.getText();
+        String password = passwordField.getText();
 
-                        Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // Ensures email contains @ symbol and a domain
+        boolean emailisValid = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        // Ensures password matches all the given criteria
+        boolean passwordisValid = password.matches(
+                "^(?=.*[A-Z])" +     // at least 1 uppercase
+                        "(?=.*[a-z])" +     // at least 1 lowercase
+                        "(?=.*\\d)" +       // at least 1 number
+                        "(?=.*[^A-Za-z0-9])" + // at least 1 special character
+                        ".{10,}$"           // at least 10 characters long
+        );
 
-                        Scene scene = new Scene(root,700, 400);
-                        stage.setTitle("Home");
-                        stage.setScene(scene);
-                        stage.show();
-                    }
-                    else {
-                        boolean exists = false;
+        if (usernameField.getLength() == 0 || passwordField.getLength() == 0 || emailField.getLength() == 0) {
+            error.setText("Ensure all details are filled out");
+            return;
+        }
 
-                        for (User user : userSession.users) {
-                            if (user.getUsername().equals(usernameField.getText()) ||
-                                    user.getEmail().equals(emailField.getText())) {
+        if (!emailisValid) {
+            error.setText("Please enter a valid email");
+            return;
+        }
 
-                                exists = true;
-                                break;
-                            }
-                        }
+        if (!passwordisValid) {
+            error.setText("Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
+            return;
+        }
 
-                        if (exists) {
-                            error.setText("Username or email already exists");
-                            // System.out.println("Username or email already exists");
-                        } else {
-                            userSession.currentUser = new User(
-                                    usernameField.getText(),
-                                    emailField.getText(),
-                                    passwordField.getText()
-                            );
+        boolean exists = false;
 
-                            userSession.users.add(userSession.currentUser);
+        for (User user : userSession.users) {
+            if (user.getUsername().equals(usernameField.getText()) ||
+                    user.getEmail().equals(emailField.getText())) {
 
-                            Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
-                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                            Scene scene = new Scene(root,700, 400);
-                            stage.setTitle("Home");
-                            stage.setScene(scene);
-                            stage.show();
-                        }
-                        //Terminal output check of the list
-                        // for (User user : userSession.users) {
-                            // System.out.println(user.getUsername());
-                            // System.out.println(user.getEmail());
-                            // System.out.println(user.getPassword());
-                        // }
-
-                        // this is to just check that the username and password are storing
-                        // System.out.println("Username:" + userSession.currentUser.getUsername());
-                        // System.out.println("Email:" + userSession.currentUser.getEmail());
-                        // System.out.println("Password:" + userSession.currentUser.getPassword());
-                    }
-                }
-                else {
-                    error.setText("Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
-                    // System.out.println("Ensure password length is atleast 10 characters long and " +
-                        // "contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
-                }
-            }
-            else {
-                error.setText("Please enter a valid email");
-                // System.out.println("Please enter a valid email");
+                exists = true;
+                break;
             }
         }
+
+        if (!exists) {
+            userSession.currentUser = new User(
+                    usernameField.getText(),
+                    emailField.getText(),
+                    passwordField.getText()
+            );
+
+            userSession.users.add(userSession.currentUser);
+
+            Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Scene scene = new Scene(root,700, 400);
+            stage.setTitle("Home");
+            stage.setScene(scene);
+            stage.show();
+        }
         else {
-            error.setText("Ensure all details are filled out");
-            // System.out.println("Ensure all details are filled out");
+            error.setText("Username or email already exists");
+            return;
         }
     }
 
