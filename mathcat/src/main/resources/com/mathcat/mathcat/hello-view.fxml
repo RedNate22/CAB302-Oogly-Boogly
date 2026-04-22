@@ -13,7 +13,7 @@
 
     <ImageView fitWidth="700.0" fitHeight="500.0" preserveRatio="false">
         <image>
-            <Image url="@pixelated.png"/>
+            <Image url="@assets/images/pixelated.png"/>
         </image>
     </ImageView>
 

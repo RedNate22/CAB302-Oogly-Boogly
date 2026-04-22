@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         Font.loadFont(
-                getClass().getResourceAsStream("/com/mathcat/mathcat/PressStart2P-Regular.ttf"),
+                getClass().getResourceAsStream("/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"),
                 12
         );
 
