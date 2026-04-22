@@ -152,5 +152,4 @@ public class authController {
         stage.setTitle("Start");
         stage.getScene().setRoot(root);
     }
-
 }
