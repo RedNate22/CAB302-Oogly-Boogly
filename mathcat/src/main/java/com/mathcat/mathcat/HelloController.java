@@ -11,10 +11,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelloController {
-
     @FXML
 
-    // Clicking the login button on the homescreen results being taken to the login scene
+    // Clicking the login button on the homescreen results being in taken to the login scene
     public void onLoginClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -25,7 +24,7 @@ public class HelloController {
         stage.show();
     }
 
-    // Clicking the Create Account button on the homescreen results being taken to the create account scene
+    // Clicking the Create Account button on the home screen results in being taken to the create account scene
     public void onCreateClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("createaccount-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
