@@ -24,6 +24,7 @@ public class homeController {
         usernameLabel.setText(userSession.currentUser.getUsername());
         emailLabel.setText(userSession.currentUser.getEmail());
     }
+
     // Return to start page
     public void onLogout(ActionEvent event) throws IOException {
 
