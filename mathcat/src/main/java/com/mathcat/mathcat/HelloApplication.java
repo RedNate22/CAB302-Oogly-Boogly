@@ -13,12 +13,11 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Font.loadFont(
-                getClass().getResourceAsStream("/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"),
-                12
-        );
+        Font.loadFont(getClass().getResourceAsStream(
+                "/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"), 12);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                HelloApplication.class.getResource("/com/mathcat/mathcat/hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);

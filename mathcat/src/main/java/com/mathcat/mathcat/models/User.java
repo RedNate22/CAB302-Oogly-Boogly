@@ -1,4 +1,4 @@
-package com.mathcat.mathcat;
+package com.mathcat.mathcat.models;
 
 public class User {
     private String username;

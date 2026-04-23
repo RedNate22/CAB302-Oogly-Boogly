@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.mathcat.mathcat.HelloController">
+           fx:controller="com.mathcat.mathcat.controllers.HelloController">
 
     <ImageView fitWidth="700.0" fitHeight="500.0" preserveRatio="false">
         <image>
