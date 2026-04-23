@@ -19,7 +19,7 @@ public class HelloController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root,700, 400);
-        stage.setTitle("Login!");
+        stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
     }
@@ -30,7 +30,7 @@ public class HelloController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root,700, 400);
-        stage.setTitle("Sign In!");
+        stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
     }

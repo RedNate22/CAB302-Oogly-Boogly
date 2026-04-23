@@ -69,7 +69,7 @@ public class authController {
         Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 400);
-        stage.setTitle("Home");
+        stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
     }
@@ -130,11 +130,11 @@ public class authController {
 
             userSession.users.add(userSession.currentUser);
 
-            Parent root = FXMLLoader.load(getClass().getResource("home-view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("createpet-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene scene = new Scene(root,700, 400);
-            stage.setTitle("Home");
+            stage.setTitle("MathCat");
             stage.setScene(scene);
             stage.show();
         }
@@ -149,7 +149,7 @@ public class authController {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setTitle("Start");
+        stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
 }

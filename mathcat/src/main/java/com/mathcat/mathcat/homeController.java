@@ -33,7 +33,7 @@ public class homeController {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setTitle("Start");
+        stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
 }
