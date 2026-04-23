@@ -1,6 +1,7 @@
-package com.mathcat.mathcat;
+package com.mathcat.mathcat.session;
 
 import java.util.ArrayList;
+import com.mathcat.mathcat.models.User;
 
 // Tracks currently saved users (for running session only)
 public class userSession {
