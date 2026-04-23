@@ -1,5 +1,6 @@
 package com.mathcat.mathcat;
 
+import com.mathcat.mathcat.services.AIService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -8,10 +9,14 @@ import javafx.geometry.Pos;
 
 public class ChatController {
 
-    @FXML private VBox chatBox;
-    @FXML private ScrollPane scrollPane;
-    @FXML private TextField userInput;
-    @FXML private Button sendButton;
+    @FXML
+    private VBox chatBox;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private TextField userInput;
+    @FXML
+    private Button sendButton;
 
     private AIService aiService;
     private String currentQuestion = "What is 15 multiplied by 6?";
@@ -22,11 +27,13 @@ public class ChatController {
     @FXML
     public void initialize() {
         aiService = new AIService();
-        chatBox.heightProperty().addListener((obs, old, newVal) ->
-                scrollPane.setVvalue(1.0));
+        chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
 
         // Show warning message at start
-        addMessage("⚠️ You have " + MAX_HINTS + " hints available. Using hints will reduce your score.", "#FFF9C4", Pos.CENTER);
+        addMessage(
+                "⚠️ You have " + MAX_HINTS
+                        + " hints available. Using hints will reduce your score.",
+                "#FFF9C4", Pos.CENTER);
     }
 
     public void setQuestion(String question) {
@@ -44,7 +51,8 @@ public class ChatController {
     @FXML
     private void onSendClicked() {
         String message = userInput.getText().trim();
-        if (message.isEmpty()) return;
+        if (message.isEmpty())
+            return;
 
 
         // Increment hint count
@@ -61,7 +69,8 @@ public class ChatController {
             int hintsRemaining = MAX_HINTS - hintCount;
             addMessage("💡 Hints remaining: " + hintsRemaining, "#FFF9C4", Pos.CENTER);
         } else if (hintCount == MAX_HINTS) {
-            addMessage("⚠️ No more bonus rewards will be given for using hints.", "#FFCCCC", Pos.CENTER);
+            addMessage("⚠️ No more bonus rewards will be given for using hints.", "#FFCCCC",
+                    Pos.CENTER);
         }
 
         // Get hint from AI in background thread
@@ -87,8 +96,8 @@ public class ChatController {
         Label label = new Label(message);
         label.setWrapText(true);
         label.setMaxWidth(300);
-        label.setStyle("-fx-background-color: " + color + "; " +
-                "-fx-padding: 8; -fx-background-radius: 10;");
+        label.setStyle("-fx-background-color: " + color + "; "
+                + "-fx-padding: 8; -fx-background-radius: 10;");
 
         HBox container = new HBox(label);
         container.setAlignment(alignment);
