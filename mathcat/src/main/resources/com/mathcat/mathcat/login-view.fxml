@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mathcat.mathcat.controllers.authController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <Text> Username </Text>
+    <TextField fx:id="usernameField"/>
+    <Text> Password </Text>
+    <TextField fx:id="passwordField"/>
+    <Button text="Login" onAction="#onLoginConfirm"/>
+    <Label fx:id="error"/>
+    <Button text="Return" onAction="#onReturn"/>
+</VBox>

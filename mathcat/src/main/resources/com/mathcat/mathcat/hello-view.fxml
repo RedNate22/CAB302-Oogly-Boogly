@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mathcat.mathcat.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.mathcat.mathcat.controllers.HelloController">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <ImageView fitWidth="700.0" fitHeight="500.0" preserveRatio="false">
+        <image>
+            <Image url="@assets/images/pixelated.png"/>
+        </image>
+    </ImageView>
+
+    <VBox alignment="CENTER" spacing="20.0">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </padding>
+
+        <Label text="MATHCAT"
+               style="
+              -fx-font-family: 'Press Start 2P';
+              -fx-font-size: 40px;
+              -fx-font-weight: bold;
+              -fx-text-fill: #f5f5ce;
+
+              -fx-effect: dropshadow(gaussian, black, 0, 0, 4, 4)
+                          dropshadow(gaussian, black, 0, 0, -4, -4)
+                          dropshadow(gaussian, black, 0, 0, 4, -4)
+                          dropshadow(gaussian, black, 0, 0, -4, 4);" />
+        <Button text="Login" onAction="#onLoginClick"/>
+        <Button text="Create Account" onAction="#onCreateClick"/>
+    </VBox>
+
+</StackPane>

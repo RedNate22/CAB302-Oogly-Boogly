@@ -257,7 +257,7 @@ Created by [Leonora](https://github.com/smolbebby)
 
 #### Code Documentation
 
-- Use JavaDoc comments for all public classes and methods.
+- Use [JavaDoc](https://www.geeksforgeeks.org/java/what-is-javadoc-tool-and-how-to-use-it/) comments for all public classes and methods.
   - Include `@param`, `@return`, and `@throws` where applicable.
 - Use inline comments to explain:
   - Complex logic
