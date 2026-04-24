@@ -10,10 +10,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 
 import com.mathcat.mathcat.session.userSession;
 import com.mathcat.mathcat.models.User;
+import com.mathcat.mathcat.database.DatabaseManager;
+import com.mathcat.mathcat.database.UserDAO;
 
 public class authController {
 
@@ -44,18 +47,8 @@ public class authController {
             return;
         }
 
-        if (userSession.users.isEmpty()) {
-            error.setText("No Accounts Exist. Please create an account.");
-            return;
-        }
-
-        User matchedUser = null;
-        for (User user : userSession.users) {
-            if (user.getUsername().equals(enteredUsername)) {
-                matchedUser = user;
-                break; // user found; stop searching
-            }
-        }
+// Look up user from the database by username
+        User matchedUser = UserDAO.getUserByUsername(enteredUsername);
 
         if (matchedUser == null) {
             error.setText("This account does not exist.");
@@ -119,26 +112,23 @@ public class authController {
             return;
         }
 
-        boolean exists = false;
+// Check if username or email already exists in the database
+        boolean exists = UserDAO.userExists(usernameField.getText(), emailField.getText());
 
-        for (User user : userSession.users) {
-            if (user.getUsername().equals(usernameField.getText())
-                    || user.getEmail().equals(emailField.getText())) {
 
-                exists = true;
-                break;
-            }
-        }
+
 
         if (!exists) {
+            // Create new user and save to the database
             userSession.currentUser = new User(usernameField.getText(), emailField.getText(),
                     passwordField.getText());
-
-            userSession.users.add(userSession.currentUser);
+            UserDAO.saveUser(userSession.currentUser);
 
             Parent root =
                     FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
 
             Scene scene = new Scene(root, 700, 400);
             stage.setTitle("Home");
@@ -148,6 +138,8 @@ public class authController {
             error.setText("Username or email already exists");
             return;
         }
+
+
     }
 
     // Returns to the starter page

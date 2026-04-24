@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import com.mathcat.mathcat.database.DatabaseManager;
 
 
 import java.io.IOException;
@@ -12,6 +13,8 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        // Initialise the SQLite database and create tables if they don't exist
+        DatabaseManager.initialiseDatabase();
 
         Font.loadFont(getClass().getResourceAsStream(
                 "/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"), 12);
