@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.mathcat.mathcat.session.userSession;
+import com.mathcat.mathcat.session.UserSession;
 import com.mathcat.mathcat.models.User;
 import com.mathcat.mathcat.dao.UserDAO;
 

@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-import com.mathcat.mathcat.session.userSession;
+import com.mathcat.mathcat.session.UserSession;
 
 public class homeController {
     // This section is just so that the current user's name is displayed when entering
@@ -23,14 +23,14 @@ public class homeController {
     @FXML
     // Initialise current user values
     public void initialize() {
-        usernameLabel.setText(userSession.currentUser.getUsername());
-        emailLabel.setText(userSession.currentUser.getEmail());
+        usernameLabel.setText(UserSession.currentUser.GetUsername());
+        emailLabel.setText(UserSession.currentUser.GetEmail());
     }
 
     // Return to start page
     public void onLogout(ActionEvent event) throws IOException {
 
-        userSession.currentUser = null;
+        UserSession.currentUser = null;
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));

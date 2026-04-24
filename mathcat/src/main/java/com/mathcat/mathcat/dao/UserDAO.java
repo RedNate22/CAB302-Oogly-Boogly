@@ -1,12 +1,10 @@
 package com.mathcat.mathcat.dao;
 
-import com.mathcat.mathcat.session.userSession;
+import com.mathcat.mathcat.session.UserSession;
 import com.mathcat.mathcat.models.User;
 
 public class UserDAO {
-    /*
     // Login methods
-    */
     public boolean fieldsEmpty(String username, String password) {
         return (username.isEmpty() || password.isEmpty());
     }
@@ -38,8 +36,8 @@ public class UserDAO {
     }
 
     /*
-    // Create Account methods
-    */
+     * // Create Account methods
+     */
     public boolean fieldsEmpty(String username, String email, String password) {
         return (username.isEmpty() || email.isEmpty() || password.isEmpty());
     }
@@ -62,8 +60,7 @@ public class UserDAO {
         boolean exists = false;
 
         for (User user : userSession.users) {
-            if (user.getUsername().equals(username)
-                    || user.getEmail().equals(email)) {
+            if (user.getUsername().equals(username) || user.getEmail().equals(email)) {
                 exists = true;
                 break;
             }
