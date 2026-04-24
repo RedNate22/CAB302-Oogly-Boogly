@@ -4,7 +4,9 @@ import com.mathcat.mathcat.session.userSession;
 import com.mathcat.mathcat.models.User;
 
 public class UserDAO {
+    /*
     // Login methods
+    */
     public boolean fieldsEmpty(String username, String password) {
         return (username.isEmpty() || password.isEmpty());
     }
@@ -35,7 +37,9 @@ public class UserDAO {
         userSession.currentUser = matchedUser;
     }
 
+    /*
     // Create Account methods
+    */
     public boolean fieldsEmpty(String username, String email, String password) {
         return (username.isEmpty() || email.isEmpty() || password.isEmpty());
     }
@@ -60,7 +64,6 @@ public class UserDAO {
         for (User user : userSession.users) {
             if (user.getUsername().equals(username)
                     || user.getEmail().equals(email)) {
-
                 exists = true;
                 break;
             }
