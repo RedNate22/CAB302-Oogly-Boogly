@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import com.mathcat.mathcat.models.User;
 
 // Tracks currently saved users (for running session only)
-public class userSession {
+public class UserSession {
     // List of all the stored users
     public static ArrayList<User> users = new ArrayList<>();
 
