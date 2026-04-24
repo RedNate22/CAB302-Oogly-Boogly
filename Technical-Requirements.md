@@ -16,22 +16,22 @@ High-level overview of the project purpose is outlined in the project [README.md
 
 - Users earn **XP** by completing math problems.
 - Level progression unlocks:
-  - Higher problem difficulty (e.g., Level 2 problems require cat to be at or above Level 2)  
-  - Access to new shop items and variations
-  - Scaling rewards and bonus multipliers
+    - Higher problem difficulty (e.g., Level 2 problems require cat to be at or above Level 2)
+    - Access to new shop items and variations
+    - Scaling rewards and bonus multipliers
 
 #### 1.1.3 Solving Math Problems
 
 - Completing problems rewards **items + currency**.
 - Rewards scale with difficulty and may include bonus multipliers:
-  - **AI Usage Bonus** – Users can use the AI up to 3 times before the bonus is fully lost; each use reduces the bonus multiplier (e.g., using it 3 times results in no “No AI Used” bonus).
-  - **Difficulty Bonus** – Higher-level problems provide higher rewards.
-  - **Pet Stats Bonus** – Happiness and Fullness influence XP and item gains.
+    - **AI Usage Bonus** – Users can use the AI up to 3 times before the bonus is fully lost; each use reduces the bonus multiplier (e.g., using it 3 times results in no “No AI Used” bonus).
+    - **Difficulty Bonus** – Higher-level problems provide higher rewards.
+    - **Pet Stats Bonus** – Happiness and Fullness influence XP and item gains.
 - Items earned or bought can **restore Energy, increase Happiness, or satisfy Fullness**.
 
 #### 1.1.4 Bonus Challenges
 
-- Users can spend **Energy** to attempt higher-difficulty problems (**(x) levels above current player level**).  
+- Users can spend **Energy** to attempt higher-difficulty problems (**(x) levels above current player level**).
 - Rewards are scaled to difficulty and include extra incentive.
 
 #### 1.1.5 Shop
@@ -50,7 +50,7 @@ High-level overview of the project purpose is outlined in the project [README.md
 - Dynamic pet behaviour system driven by internal need states (e.g. energy, hunger, happiness), affecting animations and interactions
 - Math problem generation and validation
 - User feedback and progression
-- AI Clippy-style helper *[Socratic Method](https://en.wikipedia.org/wiki/Socratic_method) teaching (guides towards answers, but never explicitly gives it))
+- AI Clippy-style helper \*[Socratic Method](https://en.wikipedia.org/wiki/Socratic_method) teaching (guides towards answers, but never explicitly gives it))
 
 #### Out of Scope
 
@@ -89,7 +89,7 @@ The system uses a layered architecture. Core components include:
     - Updates behaviour deterministically based on user interactions and time-based decay.
 
 5. **AI Chatbot Module**
-    - Optional, user-invoked guidance using the [Socratic method](https://en.wikipedia.org/wiki/Socratic_method).  
+    - Optional, user-invoked guidance using the [Socratic method](https://en.wikipedia.org/wiki/Socratic_method).
     - Generates hints/questions rather than direct answers.
     - Queries Business Logic Layer for current problem context or progress.
     - Interacts bidirectionally with Controllers for display and user input.
@@ -133,10 +133,7 @@ Created by [Leonora](https://github.com/smolbebby)
 - Database: SQLite
 - Unit Testing: [JUnit 5](https://docs.junit.org/5.10.5/user-guide/)
 - Other Dependencies:
-  - JavaFX Libraries:
-        - [FormsFX](https://github.com/dlsc-software-consulting-gmbh/FormsFX/)
-        - [FXGL](https://github.com/AlmasB/FXGL)
-        - [Ikonli](https://kordamp.org/ikonli/)
+    - JavaFX Libraries: - [FormsFX](https://github.com/dlsc-software-consulting-gmbh/FormsFX/) - [FXGL](https://github.com/AlmasB/FXGL) - [Ikonli](https://kordamp.org/ikonli/)
 
 ### 2.7 Deployment Environment
 
@@ -161,7 +158,7 @@ Created by [Leonora](https://github.com/smolbebby)
 - Layout: User needs to be able to access different areas of the application to interact with virtual pet.
 - Navigation: User needs to be able to use buttons and other appropriate functions to access separate areas of the application.
 - Navigation Continued: User needs to be able to use buttons and other appropriate functions to interact with the virtual pet.
-- Shop Display  User needs to be able to view available items, their costs, effects.
+- Shop Display User needs to be able to view available items, their costs, effects.
 - Input Validation Registration fields must validate format such as valid email, minimum password length.
 - Incorrect Details: User should be told when login credentials are incorrect.
 
@@ -177,7 +174,7 @@ Created by [Leonora](https://github.com/smolbebby)
 
 ### 3.5 Data Persistence
 
-- Data Saving  Every interation with the virtual pet is recorded and saved to prevent data loss.
+- Data Saving Every interation with the virtual pet is recorded and saved to prevent data loss.
 - Inventory Persistence The user's item inventory and currency balance must be saved and restored between sessions.
 
 ---
@@ -222,46 +219,46 @@ Created by [Leonora](https://github.com/smolbebby)
 ### 5.1 Code Standards
 
 - **Separation of Concerns**
-  - **FXML**: Define UI structure only. Avoid in-line styling unless absolutely necessary.
-  - **CSS**: Define styling with classes/IDs to maintain consistency.
-  - **Controller (.java)**: Handle UI behaviour, event handling, and interaction with the model/data.
-  - **Other .java files**: Contain main application logic, APIs, and database interactions.
-  - **Assets**: Images, icons, and other resources organised in dedicated folders with sub-folders.
+    - **FXML**: Define UI structure only. Avoid in-line styling unless absolutely necessary.
+    - **CSS**: Define styling with classes/IDs to maintain consistency.
+    - **Controller (.java)**: Handle UI behaviour, event handling, and interaction with the model/data.
+    - **Other .java files**: Contain main application logic, APIs, and database interactions.
+    - **Assets**: Images, icons, and other resources organised in dedicated folders with sub-folders.
 
 - **Security, Validation, and Error Handling**
-  - Sanitise user input to prevent invalid data or security issues.
-  - Implement proper exception handling with `try/catch`. Use `throws` only when passing responsibility is intentional.
-  - Provide fallback behaviour (e.g., return to main menu) on failures.
+    - Sanitise user input to prevent invalid data or security issues.
+    - Implement proper exception handling with `try/catch`. Use `throws` only when passing responsibility is intentional.
+    - Provide fallback behaviour (e.g., return to main menu) on failures.
 
 - **Naming Conventions**
-  - **Methods / Properties**: PascalCase (e.g., `FeedPet()`, `PetName`)
-  - **Classes**: PascalCase (e.g., `VirtualPetController`)  
-  - **Interfaces**: PascalCase with `I` prefix if applicable (e.g., `IQuestion`)
-  - **Private Fields (Attributes)**: camelCase (e.g., `petHealth`)  
-  - **Constants / Readonly Fields**: UPPERCASE, or UPPERCASE + underscores (e.g., `HUNGER`, `MAX_HUNGER`)  
-  - **Events**: PascalCase with `EventHandler` suffix if applicable (e.g., `PetFedEventHandler`)  
-  - **Variables / Parameters**: lowerCamelCase (e.g., `petAge`, `mathProblem`)
+    - **Methods / Properties**: PascalCase (e.g., `FeedPet()`, `PetName`)
+    - **Classes**: PascalCase (e.g., `VirtualPetController`)
+    - **Interfaces**: PascalCase with `I` prefix if applicable (e.g., `IQuestion`)
+    - **Private Fields (Attributes)**: camelCase (e.g., `petHealth`)
+    - **Constants / Readonly Fields**: UPPERCASE, or UPPERCASE + underscores (e.g., `HUNGER`, `MAX_HUNGER`)
+    - **Events**: PascalCase with `EventHandler` suffix if applicable (e.g., `PetFedEventHandler`)
+    - **Variables / Parameters**: camelCase (e.g., `petAge`, `mathProblem`)
 
 - **Branching and Version Control**
-  - Use separate branches for each feature or issue (e.g., `user-login`, `issue-6-broken-landing-page`).
-  - Submit pull requests for merges.
-  - Follow [conventional commit standards](https://www.conventionalcommits.org/en/v1.0.0/) with `type(optional scope): description` (e.g., `git commit -m "feat(auth): add login button to landing page"`)
-    - (Optional) include detailed bodies (e.g, `git commit -m -m "feat(auth): add login button to landing page" "Add small login button to landing page header...etc."`)
+    - Use separate branches for each feature or issue (e.g., `user-login`, `issue-6-broken-landing-page`).
+    - Submit pull requests for merges.
+    - Follow [conventional commit standards](https://www.conventionalcommits.org/en/v1.0.0/) with `type(optional scope): description` (e.g., `git commit -m "feat(auth): add login button to landing page"`)
+        - (Optional) include detailed bodies (e.g, `git commit -m -m "feat(auth): add login button to landing page" "Add small login button to landing page header...etc."`)
 
 - **Formatting and Readability**
-  - Maintain consistent indentation and spacing.
-  - Organise code logically for readability and maintainability.
-    - Separate logical blocks with empty lines
+    - Maintain consistent indentation and spacing.
+    - Organise code logically for readability and maintainability.
+        - Separate logical blocks with empty lines
 
 ### 5.2 Documentation requirements
 
 #### Code Documentation
 
 - Use [JavaDoc](https://www.geeksforgeeks.org/java/what-is-javadoc-tool-and-how-to-use-it/) comments for all public classes and methods.
-  - Include `@param`, `@return`, and `@throws` where applicable.
+    - Include `@param`, `@return`, and `@throws` where applicable.
 - Use inline comments to explain:
-  - Complex logic
-  - Non-obvious decisions or edge cases
+    - Complex logic
+    - Non-obvious decisions or edge cases
 - Avoid redundant comments that restate obvious code behaviour.
 - Keep all comments accurate and update them alongside code changes.
 - Maintain consistent formatting and style for all documentation.
@@ -270,9 +267,9 @@ Created by [Leonora](https://github.com/smolbebby)
 
 - Maintain a **Technical Requirements Document** with epics, user stories, architecture diagrams, and non-functional requirements.
 - Maintain a **README** with:
-  - Project overview
-  - Setup instructions
-  - Core functionality summary
+    - Project overview
+    - Setup instructions
+    - Core functionality summary
 - Maintain a **Changelog** or version history for major updates and feature additions.
 
 ---
