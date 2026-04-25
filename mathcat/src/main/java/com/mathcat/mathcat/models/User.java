@@ -11,27 +11,27 @@ public class User {
         this.password = password;
     }
 
-    public String GetUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void SetUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String GetEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void SetEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String GetPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void SetPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

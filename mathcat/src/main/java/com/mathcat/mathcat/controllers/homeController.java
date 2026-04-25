@@ -23,8 +23,8 @@ public class homeController {
     @FXML
     // Initialise current user values
     public void initialize() {
-        usernameLabel.setText(UserSession.currentUser.GetUsername());
-        emailLabel.setText(UserSession.currentUser.GetEmail());
+        usernameLabel.setText(UserSession.currentUser.getUsername());
+        emailLabel.setText(UserSession.currentUser.getEmail());
     }
 
     // Return to start page
