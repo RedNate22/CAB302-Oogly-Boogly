@@ -39,4 +39,18 @@ public class homeController {
         stage.setTitle("Start");
         stage.getScene().setRoot(root);
     }
+
+
+
+    @FXML
+    public void onTestChat(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/mathcat/mathcat/chat-view.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 400, 500);
+        stage.setTitle("Hint Assistant");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
