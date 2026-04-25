@@ -10,7 +10,7 @@ public class AIService {
 
     private final String apiKey;
     private final HttpClient client = HttpClient.newHttpClient();
-
+qq
     public AIService() {
         Dotenv dotenv = Dotenv.configure().directory("mathcat").load();
         this.apiKey = dotenv.get("GROQ_API_KEY");
@@ -75,7 +75,13 @@ public class AIService {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        // Check for errors
+// Check HTTP status code first before parsing JSON
+        if (response.statusCode() != 200) {
+            return "Error: Request failed with status code " + response.statusCode()
+                    + ". Please check your API key.";
+        }
+
+// Parse JSON response
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
         if (json.has("error")) {
             return "Error: " + json.getAsJsonObject("error").get("message").getAsString();
