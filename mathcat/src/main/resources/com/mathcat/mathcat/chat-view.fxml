@@ -3,28 +3,37 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.mathcat.mathcat.ChatController"
-      prefWidth="400" prefHeight="500">
-    <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
-    </padding>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mathcat.mathcat.ChatController"
+            prefWidth="400" prefHeight="500">
 
-    <Label text="💡 Hint Assistant" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
-    <Label text="Ask me for hints — I won't give the answer away!"
-           style="-fx-font-size: 11; -fx-text-fill: grey;"/>
-
-    <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" fitToWidth="true">
-        <VBox fx:id="chatBox" spacing="8">
-            <padding>
-                <Insets top="5" right="5" bottom="5" left="5"/>
-            </padding>
+    <!-- Top: Title section -->
+    <top>
+        <VBox spacing="4" style="-fx-padding: 10;">
+            <Label text="💡Meoww Assistant" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+            <Label text="Having Troubles?? Ask Me Meoww"
+                   style="-fx-font-size: 11; -fx-text-fill: grey;"/>
         </VBox>
-    </ScrollPane>
+    </top>
 
-    <HBox spacing="8">
-        <TextField fx:id="userInput" promptText="Type your question here..."
-                   HBox.hgrow="ALWAYS"/>
-        <Button fx:id="sendButton" text="Send" onAction="#onSendClicked"/>
-    </HBox>
-</VBox>
+    <!-- Center: Scrollable chat messages -->
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true">
+            <VBox fx:id="chatBox" spacing="8">
+                <padding>
+                    <Insets top="5" right="5" bottom="5" left="5"/>
+                </padding>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <!-- Bottom: Input area -->
+    <bottom>
+        <HBox spacing="8" style="-fx-padding: 8;">
+            <TextField fx:id="userInput" promptText="Type your question here..."
+                       HBox.hgrow="ALWAYS"/>
+            <Button fx:id="sendButton" text="Send" onAction="#onSendClicked"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
