@@ -72,7 +72,7 @@ public class authController {
         userSession.currentUser = matchedUser;
 
         Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 400);
         stage.setTitle("MathCat");
