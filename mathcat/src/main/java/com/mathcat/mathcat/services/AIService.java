@@ -7,6 +7,12 @@ import java.net.http.HttpRequest.BodyPublishers;
 import com.google.gson.*;
 import java.util.List;
 
+/**
+ * Service class responsible for communicating with the Groq AI API.
+ * Uses the "I do, We do, You do" teaching method to guide students
+ * through math problems without giving away the answer directly.
+ * Maintains conversation history to provide context-aware hints.
+ */
 public class AIService {
 
     private final String apiKey;
@@ -43,6 +49,15 @@ public class AIService {
         return sb.toString();
     }
 
+    /**
+     * Sends a hint request to the Groq AI API using the I do, We do, You do teaching method.
+     * Builds a full conversation history to maintain context across multiple hints.
+     * @param questionContext the math problem the student is working on
+     * @param userMessage the student's latest message or question
+     * @param history the full conversation history as a list of role/content pairs
+     * @return a Socratic hint from the AI to guide the student without giving the answer
+     * @throws Exception if the HTTP request fails or the response cannot be parsed
+     */
     public String getHint(String questionContext, String userMessage, List<String[]> history) throws Exception {
         String url = "https://api.groq.com/openai/v1/chat/completions";
 
