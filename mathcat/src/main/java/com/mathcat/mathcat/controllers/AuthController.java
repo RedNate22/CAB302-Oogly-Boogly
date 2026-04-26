@@ -74,7 +74,7 @@ public class AuthController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 400);
-        stage.setTitle("Home");
+        stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
     }
@@ -116,12 +116,11 @@ public class AuthController {
         if (!userDAO.UserExists(username, email)) {
             userDAO.NewUser(username, email, password);
 
-            Parent root =
-                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene scene = new Scene(root, 700, 400);
-            stage.setTitle("Home");
+            stage.setTitle("MathCat");
             stage.setScene(scene);
             stage.show();
         } else {
@@ -135,7 +134,7 @@ public class AuthController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setTitle("Start");
+        stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
 }

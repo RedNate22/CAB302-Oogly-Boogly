@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 HelloApplication.class.getResource("/com/mathcat/mathcat/hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setTitle("Hello!");
+        stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
     }
