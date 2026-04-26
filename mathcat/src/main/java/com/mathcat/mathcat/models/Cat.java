@@ -34,6 +34,7 @@ public final class Cat {
         this.catId = 0;
         this.userId = 0;
         this.catName = catName;
+        this.catSprite = null;
         this.happiness = 100.00;
         this.fullness = 100.00;
         this.energy = 0.00;

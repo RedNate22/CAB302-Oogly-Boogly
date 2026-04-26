@@ -13,12 +13,14 @@ public final class Item {
     private double effectAmount;
 
     /**
-     * Creates a new cosmetic Item with the given name, image path, and no stat effects.
-     * 
+     * Creates a new cosmetic Item with the given ID, name, image path, and no stat effects.
+     *
+     * @param itemId unique catalog identifier (e.g. "COSMETIC_HAT")
      * @param itemName the display name of the item
      * @param itemImage path to the item's sprite
      */
-    public Item(String itemName, String itemImage) {
+    public Item(String itemId, String itemName, String itemImage) {
+        this.itemId = itemId;
         this.itemName = itemName;
         this.itemImage = itemImage;
         this.effectType = ItemEffectType.COSMETIC;
@@ -28,13 +30,15 @@ public final class Item {
     /**
      * Creates a new Item that applies a stat effect when used. If effectType is COSMETIC,
      * effectAmount is forced to 0.0.
-     * 
+     *
+     * @param itemId unique catalog identifier (e.g. "FOOD_TUNA")
      * @param itemName the display name of the item
      * @param itemImage path to the item's sprite
      * @param effectType the type of stat this item affects
      * @param effectAmount the magnitude of the effect
      */
-    public Item(String itemName, String itemImage, ItemEffectType effectType, double effectAmount) {
+    public Item(String itemId, String itemName, String itemImage, ItemEffectType effectType, double effectAmount) {
+        this.itemId = itemId;
         this.itemName = itemName;
         this.itemImage = itemImage;
         this.effectType = effectType;
@@ -124,10 +128,27 @@ public final class Item {
         this.effectAmount = effectAmount;
     }
 
-    // TODO
+    /**
+     * Applies this item's effect to the cat by calling the appropriate CatService method.
+     * Cosmetic items have no stat effect.
+     *
+     * @param cat the cat to apply the effect to
+     */
     public void applyItem(Cat cat) {
-        // calls appropriate CatService. methods
-        // switch statement?
+        switch (effectType) {
+            case HAPPINESS:
+                CatService.increaseHappiness(cat, effectAmount);
+                break;
+            case FULLNESS:
+                CatService.increaseFullness(cat, effectAmount);
+                break;
+            case ENERGY:
+                CatService.increaseEnergy(cat, effectAmount);
+                break;
+            case COSMETIC:
+                // no stat effect
+                break;
+        }
     }
 }
 

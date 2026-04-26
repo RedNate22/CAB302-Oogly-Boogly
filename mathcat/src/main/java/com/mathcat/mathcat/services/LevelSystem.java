@@ -1,5 +1,6 @@
 package com.mathcat.mathcat.services;
 
+import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.models.Cat;
 
 /**
@@ -65,6 +66,7 @@ public final class LevelSystem {
         double excessXp = cat.getXp() - XP_THRESHOLDS[cat.getLevel() + 1];
         cat.setLevel(cat.getLevel() + 1);
         cat.setXp(Math.max(0, excessXp));
+        CatDAO.save(cat);
     }
 
     /**
@@ -78,6 +80,7 @@ public final class LevelSystem {
         while (canLevelUp(cat)) {
             levelUp(cat);
         }
+        CatDAO.save(cat);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.mathcat.mathcat.services;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.dao.CatDAO;
 
 /**
@@ -12,9 +14,9 @@ public final class CatService {
     public static final double MIN_STAT = 0.00;
     public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
     public static final double FULLNESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
+    public static final double ENERGY_REGEN_RATE = 1.0;     // per min at max fullness: hits 100 in ~100 min
     public static final double HUNGER_THRESHOLD = 25.0;
 
-    // Prevent instantiation
     private CatService() {}
 
     /**
@@ -68,11 +70,20 @@ public final class CatService {
     /**
      * @param cat the cat to decrease happiness for
      * @param value the amount to decrease by
+     * @param persist whether to save to the DAO after mutating
      */
-    public static void decreaseHappiness(Cat cat, double value) {
+    private static void decreaseHappiness(Cat cat, double value, boolean persist) {
         cat.setHappiness(clampStat(cat.getHappiness() - value));
         cat.setLastSaved(LocalDateTime.now());
-        CatDAO.save(cat);
+        if (persist) CatDAO.save(cat);
+    }
+
+    /**
+     * @param cat the cat to decrease happiness for
+     * @param value the amount to decrease by
+     */
+    public static void decreaseHappiness(Cat cat, double value) {
+        decreaseHappiness(cat, value, true);
     }
 
     /**
@@ -88,11 +99,20 @@ public final class CatService {
     /**
      * @param cat the cat to decrease fullness for
      * @param value the amount to decrease by
+     * @param persist whether to save to the DAO after mutating
      */
-    public static void decreaseFullness(Cat cat, double value) {
+    private static void decreaseFullness(Cat cat, double value, boolean persist) {
         cat.setFullness(clampStat(cat.getFullness() - value));
         cat.setLastSaved(LocalDateTime.now());
-        CatDAO.save(cat);
+        if (persist) CatDAO.save(cat);
+    }
+
+    /**
+     * @param cat the cat to decrease fullness for
+     * @param value the amount to decrease by
+     */
+    public static void decreaseFullness(Cat cat, double value) {
+        decreaseFullness(cat, value, true);
     }
 
     /**
@@ -123,7 +143,7 @@ public final class CatService {
      */
     public static void regenerateEnergy(Cat cat) {
         double proportion = cat.getFullness() / MAX_STAT;
-        double regen = proportion * MAX_STAT;
+        double regen = proportion * ENERGY_REGEN_RATE;
         cat.setEnergy(clampStat(cat.getEnergy() + regen));
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
@@ -139,14 +159,13 @@ public final class CatService {
         if (cat.getLastSaved() == null)
             return;
 
-        long minutesElapsed = java.time.Duration
-                .between(cat.getLastSaved(), java.time.LocalDateTime.now()).toMinutes();
+        long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
 
-        double happinessDecay = minutesElapsed * HAPPINESS_DECAY_RATE;
-        double fullnessDecay = minutesElapsed * FULLNESS_DECAY_RATE;
-
-        decreaseHappiness(cat, happinessDecay);
-        decreaseFullness(cat, fullnessDecay);
+        // persist=false skips the individual saves inside each method; we do one combined save below
+        decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
+        decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
+        cat.setLastSaved(LocalDateTime.now());
+        CatDAO.save(cat); // single save after both stats are updated
     }
 
     /**
@@ -159,12 +178,50 @@ public final class CatService {
 
     /**
      * Applies an additional happiness penalty if the cat's fulness is below HUNGER_THRESHOLD.
-     * 
+     *
      * @param cat the cat to apply the penalty to
      */
     public static void applyHungerPenalty(Cat cat) {
         if (isHungry(cat)) {
             decreaseHappiness(cat, HAPPINESS_DECAY_RATE * 2);
         }
+    }
+
+    /**
+     * Adds an item to the cat's inventory and saves.
+     *
+     * @param cat the cat to give the item to
+     * @param item the item to add
+     */
+    public static void addItem(Cat cat, Item item) {
+        cat.getItems().add(item);
+        CatDAO.save(cat);
+    }
+
+    /**
+     * Uses an item from the cat's inventory, applying its effect then removing it. Saves twice:
+     * once inside applyItem (for the stat change) and once here (for the inventory change).
+     *
+     * @param cat the cat to use the item on
+     * @param item the item to use — must be the exact reference held in the cat's inventory
+     * @return true if the item was found and used, false if it was not in the inventory
+     */
+    public static boolean useItem(Cat cat, Item item) {
+        // remove returns false if the item wasn't in the list
+        if (!cat.getItems().remove(item)) return false;
+        item.applyItem(cat); // applies the stat effect and saves the stat change
+        CatDAO.save(cat);    // save the inventory change (item removed)
+        return true;
+    }
+
+    /**
+     * Removes an item from the cat's inventory without applying its effect.
+     *
+     * @param cat the cat to remove the item from
+     * @param item the item to remove
+     */
+    public static void removeItem(Cat cat, Item item) {
+        cat.getItems().remove(item);
+        CatDAO.save(cat);
     }
 }
