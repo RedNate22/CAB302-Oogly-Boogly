@@ -49,10 +49,18 @@ public class CatDAO {
 
     /**
      * Deletes the cat with the given ID.
-     * 
+     *
      * @param catId the ID of the cat to delete
      */
     public static void delete(int catId) {
         cats.removeIf(cat -> cat.getCatId() == catId);
+    }
+
+    /**
+     * Resets the store to an empty state and resets the ID counter. For use in unit tests only.
+     */
+    public static void clearForTesting() {
+        cats.clear();
+        nextId = 1;
     }
 }
