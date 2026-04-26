@@ -1,7 +1,6 @@
 package com.mathcat.mathcat.dao;
 
 import com.mathcat.mathcat.models.User;
-
 import java.util.ArrayList;
 
 /**
@@ -15,62 +14,88 @@ public class UserDAO {
     public static User currentUser;
     public static int nextId = 1;
 
-    /*
-     * Login page methods
+    /**
+     * @return true if no user accounts have been created yet
      */
-
-    // Checks if any users accounts have been created yet
-    public boolean NoUsersExist() {
+    public static boolean noUsersExist() {
         return UserDAO.users.isEmpty();
     }
 
-    // Looks for user in users to see if it exists
-    public User UserMatch(User matchedUser, String username) {
-        for (User user : UserDAO.users) {
+    /**
+     * Searches for a user by username.
+     * 
+     * @param username the username to search for
+     * @return the matching User, or null if not found
+     */
+    public static User userMatch(String username) {
+        for (User user : users) {
             if (user.getUsername().equals(username)) {
-                matchedUser = user;
-                break; // user found; stop searching
+                return user;
             }
         }
-        return matchedUser;
+        return null;
     }
 
-    // A user was not found if matchedUser is null
-    public boolean NoUserMatchFound(User matchedUser) {
+    /**
+     * @param matchedUser the result of a user lookup
+     * @return true if no matching user was found
+     */
+    public static boolean noUserMatchFound(User matchedUser) {
         return (matchedUser == null);
     }
 
-    // Username has a match, but check if the password matches too
-    public boolean UserPasswordMatch(User matchedUser, String password) {
+    /**
+     * @param matchedUser the user to check the password against
+     * @param password the password to verify
+     * @return true if the password matches
+     */
+    public static boolean userPasswordMatch(User matchedUser, String password) {
         return (password.equals(matchedUser.getPassword()));
     }
 
-    public void SetCurrentUser(User matchedUser) {
-        UserDAO.currentUser = matchedUser;
+    /**
+     * Sets the currently logged in user.
+     * 
+     * @param user the user to set as current
+     */
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 
-    /*
-     * Create Account page methods
+    /**
+     * @return the currently logged in user
      */
-    // Checks if the user exists in the users array. Ignores case sensitivity and only identifies
-    // matching characters
-    public boolean UserExists(String username, String email) {
-        boolean exists = false;
+    public static User getCurrentUser() {
+        return currentUser;
+    }
 
-        for (User user : UserDAO.users) {
+    /**
+     * Checks if a user with the given username or email already exists.
+     * 
+     * @param username the username to check
+     * @param email the email to check
+     * @return true if a matching user exists
+     */
+    public static boolean userExists(String username, String email) {
+        for (User user : users) {
             if (user.getUsername().equalsIgnoreCase(username) || user.getEmail().equals(email)) {
-                exists = true;
-                break;
+                return true;
             }
         }
-        return exists;
+        return false;
     }
 
-    // Creates new user with inputted details, user id is set within the creation of User.
-    public void NewUser(String username, String email, String password) {
-        UserDAO.currentUser = new User(username, email, password);
-        UserDAO.nextId++;
-
-        UserDAO.users.add(UserDAO.currentUser);
+    /**
+     * Creates a new user, assigns an ID, and sets them as the current user.
+     * 
+     * @param username the new user's username
+     * @param email the new user's email
+     * @param password the new user's password
+     */
+    public static void newUser(String username, String email, String password) {
+        User user = new User(username, email, password);
+        user.setId(nextId++);
+        currentUser = user;
+        users.add(user);
     }
 }

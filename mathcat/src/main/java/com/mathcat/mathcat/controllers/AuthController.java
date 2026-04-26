@@ -50,28 +50,26 @@ public class AuthController {
             return;
         }
 
-        if (userDAO.NoUsersExist()) {
+        if (UserDAO.noUsersExist()) {
             error.setText("No Accounts Exist. Please create an account.");
             return;
         }
 
-        User matchedUser = null;
+        User matchedUser = UserDAO.userMatch(username);
 
-        User MatchedUser = userDAO.UserMatch(matchedUser, username);
-
-        if (userDAO.NoUserMatchFound(MatchedUser)) {
+        if (UserDAO.noUserMatchFound(matchedUser)) {
             error.setText("This account does not exist.");
             return;
         }
 
-        if (!userDAO.UserPasswordMatch(MatchedUser, password)) {
+        if (!UserDAO.userPasswordMatch(matchedUser, password)) {
             error.setText("Password is incorrect. Please try again");
             return;
         }
 
         // Only gets here if all above checks pass
         // System.out.println("Login Successful; Matching details");
-        userDAO.SetCurrentUser(MatchedUser);
+        UserDAO.setCurrentUser(matchedUser);
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
@@ -117,8 +115,8 @@ public class AuthController {
             return;
         }
 
-        if (!userDAO.UserExists(username, email)) {
-            userDAO.NewUser(username, email, password);
+        if (!UserDAO.userExists(username, email)) {
+            UserDAO.newUser(username, email, password);
 
             Parent root = FXMLLoader
                     .load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
