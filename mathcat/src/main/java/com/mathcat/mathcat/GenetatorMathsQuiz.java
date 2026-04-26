@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class GenetatorMathsQuiz {
 
-    static void randomize (int arr[], int n){
+    static void randomize (){
         Random r = new Random();
 
         int a = r.nextInt(10)+1;
