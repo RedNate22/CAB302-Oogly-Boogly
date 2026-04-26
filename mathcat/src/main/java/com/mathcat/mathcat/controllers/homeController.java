@@ -33,7 +33,7 @@ public class homeController {
         userSession.currentUser = null;
 
         Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         stage.setTitle("MathCat");

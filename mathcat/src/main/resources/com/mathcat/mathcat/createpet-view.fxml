@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -28,7 +28,7 @@
                         <Group>
                            <children>
                               <Label fx:id="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Pet Name:" textAlignment="CENTER" />
-                              <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" onAction="#setPetName" prefHeight="26.0" prefWidth="284.0" promptText="Name">
+                              <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></TextField>
@@ -76,7 +76,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
                      <children>
-                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogout" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
+                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

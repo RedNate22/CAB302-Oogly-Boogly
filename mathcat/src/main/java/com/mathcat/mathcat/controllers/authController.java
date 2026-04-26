@@ -72,7 +72,7 @@ public class authController {
         userSession.currentUser = matchedUser;
 
         Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 400);
         stage.setTitle("MathCat");
@@ -152,7 +152,7 @@ public class authController {
     // Returns to the starter page
     public void onReturn(ActionEvent event) throws IOException {
         Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         stage.setTitle("MathCat");
