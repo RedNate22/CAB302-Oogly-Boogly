@@ -10,7 +10,17 @@ import java.io.IOException;
 
 import com.mathcat.mathcat.session.userSession;
 
+/**
+ * Controller class responsible for user interactions with the UI in the "createpet-view" screen.
+ * Does not handle persistence.
+ */
 public class CreatePetController {
+
+    /**
+     * Handles logout logic for MathCat in the Create Pet screen.
+     * @param event gets the window/stage for the main screen
+     * @throws IOException if listed screen does not exist
+     */
     public void onLogout(ActionEvent event) throws IOException {
 
         userSession.currentUser = null;
