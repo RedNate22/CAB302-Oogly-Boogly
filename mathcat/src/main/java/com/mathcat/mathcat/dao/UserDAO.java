@@ -1,20 +1,25 @@
 package com.mathcat.mathcat.dao;
 
-import com.mathcat.mathcat.session.UserSession;
 import com.mathcat.mathcat.models.User;
 
+import java.util.ArrayList;
+
 public class UserDAO {
-    // Login methods
-    public boolean fieldsEmpty(String username, String password) {
-        return (username.isEmpty() || password.isEmpty());
+    // Stores the list of registered users, the user that is currently being utilised and the number of ID to be assigned to new users
+    public static ArrayList<User> users = new ArrayList<>();
+    public static User currentUser;
+    public static int Id = 1;
+
+    /*
+     * Login page
+     */
+
+    public boolean NoUsersExist() {
+        return UserDAO.users.isEmpty();
     }
 
-    public boolean noUsersExist() {
-        return userSession.users.isEmpty();
-    }
-
-    public User userMatch(User matchedUser, String username) {
-        for (User user : userSession.users) {
+    public User UserMatch(User matchedUser, String username) {
+        for (User user : UserDAO.users) {
             if (user.getUsername().equals(username)) {
                 matchedUser = user;
                 break; // user found; stop searching
@@ -23,54 +28,38 @@ public class UserDAO {
         return matchedUser;
     }
 
-    public boolean noUserMatchFound(User matchedUser) {
+    public boolean NoUserMatchFound(User matchedUser) {
         return (matchedUser == null);
     }
 
-    public boolean userPasswordMatch(User matchedUser, String password) {
+    public boolean UserPasswordMatch(User matchedUser, String password) {
         return (password.equals(matchedUser.getPassword()));
     }
 
-    public void setCurrentUser(User matchedUser) {
-        userSession.currentUser = matchedUser;
+    public void SetCurrentUser(User matchedUser) {
+        UserDAO.currentUser = matchedUser;
     }
 
     /*
-     * // Create Account methods
+     * Create Account page
      */
-    public boolean fieldsEmpty(String username, String email, String password) {
-        return (username.isEmpty() || email.isEmpty() || password.isEmpty());
-    }
-
-    // Ensures email contains @ and a domain
-    public boolean validEmail(String email) {
-        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-    }
-
-    public boolean validPassword(String password) {
-        return password.matches("^(?=.*[A-Z])" + // at least 1 uppercase
-                "(?=.*[a-z])" + // at least 1 lowercase
-                "(?=.*\\d)" + // at least 1 number
-                "(?=.*[^A-Za-z0-9])" + // at least 1 special character
-                ".{10,}$" // at least 10 characters long
-        );
-    }
-
-    public boolean userExists(String username, String email) {
+    // Checks if the user exists in the users array. Ignores case sensitivity and only identifies matching characters
+    public boolean UserExists(String username, String email) {
         boolean exists = false;
 
-        for (User user : userSession.users) {
-            if (user.getUsername().equals(username) || user.getEmail().equals(email)) {
+        for (User user : UserDAO.users) {
+            if (user.getUsername().equalsIgnoreCase(username) || user.getEmail().equals(email)) {
                 exists = true;
                 break;
             }
         }
         return exists;
     }
+    // Creates new user with inputted details, user id is set within the creation of User.
+    public void NewUser(String username, String email, String password) {
+        UserDAO.currentUser = new User(username, email, password);
+        UserDAO.Id++;
 
-    public void newUser(String username, String email, String password) {
-        userSession.currentUser = new User(username, email, password);
-
-        userSession.users.add(userSession.currentUser);
+        UserDAO.users.add(UserDAO.currentUser);
     }
 }

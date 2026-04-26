@@ -12,9 +12,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.mathcat.mathcat.session.UserSession;
-import com.mathcat.mathcat.models.User;
+import com.mathcat.mathcat.services.UserServices;
 import com.mathcat.mathcat.dao.UserDAO;
+import com.mathcat.mathcat.models.User;
 
 public class authController {
 
@@ -42,33 +42,33 @@ public class authController {
         String password = passwordField.getText();
 
         // check text fields are not empty
-        if (userDAO.fieldsEmpty(username, password)) {
+        if (UserServices.FieldsEmpty(username, password)) {
             error.setText("Please fill out all fields");
             return;
         }
 
-        if (userDAO.noUsersExist()) {
+        if (userDAO.NoUsersExist()) {
             error.setText("No Accounts Exist. Please create an account.");
             return;
         }
 
         User matchedUser = null;
 
-        User MatchedUser = userDAO.userMatch(matchedUser, username);
+        User MatchedUser = userDAO.UserMatch(matchedUser, username);
 
-        if (userDAO.noUserMatchFound(MatchedUser)) {
+        if (userDAO.NoUserMatchFound(MatchedUser)) {
             error.setText("This account does not exist.");
             return;
         }
 
-        if (!userDAO.userPasswordMatch(MatchedUser, password)) {
+        if (!userDAO.UserPasswordMatch(MatchedUser, password)) {
             error.setText("Password is incorrect. Please try again");
             return;
         }
 
         // Only gets here if all above checks pass
         // System.out.println("Login Successful; Matching details");
-        userDAO.setCurrentUser(MatchedUser);
+        userDAO.SetCurrentUser(MatchedUser);
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
@@ -92,24 +92,29 @@ public class authController {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (userDAO.fieldsEmpty(username, email, password)) {
+        if (UserServices.FieldsEmpty(username, email, password)) {
             error.setText("Ensure all details are filled out");
             return;
         }
 
-        if (!userDAO.validEmail(email)) {
+        if (!UserServices.ValidUsername(username)) {
+            error.setText("Ensure username contains 3-20 alphanumeric chacaracters (underscores allowed) and has no spaces");
+            return;
+        }
+
+        if (!UserServices.ValidEmail(email)) {
             error.setText("Please enter a valid email");
             return;
         }
 
-        if (!userDAO.validPassword(password)) {
+        if (!UserServices.ValidPassword(password)) {
             error.setText(
                     "Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
             return;
         }
 
-        if (!userDAO.userExists(username, email)) {
-            userDAO.newUser(username, email, password);
+        if (!userDAO.UserExists(username, email)) {
+            userDAO.NewUser(username, email, password);
 
             Parent root =
                     FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));

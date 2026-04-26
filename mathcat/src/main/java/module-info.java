@@ -13,6 +13,6 @@ module com.mathcat.mathcat {
     exports com.mathcat.mathcat;
     exports com.mathcat.mathcat.controllers;
     exports com.mathcat.mathcat.models;
-    exports com.mathcat.mathcat.session;
+    exports com.mathcat.mathcat.services;
     // exports com.mathcat.mathcat.dao;
 }
