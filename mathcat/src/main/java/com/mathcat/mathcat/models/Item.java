@@ -1,13 +1,15 @@
 package com.mathcat.mathcat.models;
 
+import com.mathcat.mathcat.services.CatService;
+
 /**
  * Represents an item that can be used on the cat to modify its stats or apply a cosmetic effect.
  */
-public class Item {
+public final class Item {
     private String itemId;
     private String itemName;
     private String itemImage; // format, [path/to/image]
-    private EffectType effectType;
+    private ItemEffectType effectType;
     private double effectAmount;
 
     /**
@@ -19,7 +21,7 @@ public class Item {
     public Item(String itemName, String itemImage) {
         this.itemName = itemName;
         this.itemImage = itemImage;
-        this.effectType = EffectType.COSMETIC;
+        this.effectType = ItemEffectType.COSMETIC;
         this.effectAmount = 0.00;
     }
 
@@ -32,55 +34,100 @@ public class Item {
      * @param effectType the type of stat this item affects
      * @param effectAmount the magnitude of the effect
      */
-    public Item(String itemName, String itemImage, EffectType effectType, double effectAmount) {
+    public Item(String itemName, String itemImage, ItemEffectType effectType, double effectAmount) {
         this.itemName = itemName;
         this.itemImage = itemImage;
         this.effectType = effectType;
         this.effectAmount = effectAmount;
 
-        if (this.effectType == EffectType.COSMETIC) {
+        if (this.effectType == ItemEffectType.COSMETIC) {
             this.effectAmount = 0.00;
         }
     }
 
+    /**
+     * @return String
+     */
     public String getItemId() {
         return itemId;
     }
 
+    /**
+     * @param itemId
+     */
     public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
+    /**
+     * @return String
+     */
     public String getItemName() {
         return itemName;
     }
 
+    /**
+     * @param itemName
+     */
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
+    /**
+     * @return String
+     */
     public String getItemImage() {
         return itemImage;
     }
 
+    /**
+     * @param itemImage
+     */
     public void setItemImage(String itemImage) {
         this.itemImage = itemImage;
     }
 
-    public EffectType getEffectType() {
+    /**
+     * @return ItemEffectType
+     */
+    public ItemEffectType getEffectType() {
         return effectType;
     }
 
-    public void setEffectType(EffectType effectType) {
+    /**
+     * @param effectType
+     */
+    public void setEffectType(ItemEffectType effectType) {
+        if (effectType == ItemEffectType.COSMETIC) {
+            this.effectAmount = 0.00;
+            this.effectType = effectType;
+            return;
+        }
         this.effectType = effectType;
     }
 
+    /**
+     * @return double
+     */
     public double getEffectAmount() {
         return effectAmount;
     }
 
+    /**
+     * @param effectAmount
+     */
     public void setEffectAmount(double effectAmount) {
+        if (this.effectType == ItemEffectType.COSMETIC) {
+            this.effectAmount = 0.00;
+            return;
+        }
         this.effectAmount = effectAmount;
+    }
+
+    // TODO
+    public void applyItem(Cat cat) {
+
+
     }
 }
 
