@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -36,7 +37,8 @@ public class homeController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setTitle("Start");
+        stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
+
 }
