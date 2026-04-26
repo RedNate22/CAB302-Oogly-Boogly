@@ -8,235 +8,196 @@ class UserServicesTest {
 
     @Test
     void loginUsernameEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("", "MaisonRose26?"));
+        assertTrue(UserServices.FieldsEmpty("", "MaisonRose26?"));
     }
 
     @Test
     void loginPasswordEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("JakePettigrew", ""));
+        assertTrue(UserServices.FieldsEmpty("JakePettigrew", ""));
     }
 
     @Test
     void loginBothFieldsEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("", ""));
+        assertTrue(UserServices.FieldsEmpty("", ""));
     }
 
     @Test
     void loginUsernameIsSpacesOnlyFieldsEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("", "Rainbow39Wh!te"));
+        assertTrue(UserServices.FieldsEmpty("", "Rainbow39Wh!te"));
     }
 
     @Test
     void loginNoFieldsEmpty() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.FieldsEmpty("Dance", "Guru"));
+        assertFalse(UserServices.FieldsEmpty("Dance", "Guru"));
     }
 
     @Test
     void createAccountUsernameFieldEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("","email","password"));
+        assertTrue(UserServices.FieldsEmpty("", "email", "password"));
     }
 
     @Test
     void createAccountEmailFieldEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("username","","password"));
+        assertTrue(UserServices.FieldsEmpty("username", "", "password"));
     }
 
     @Test
     void createAccountPasswordFieldEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("username","email",""));
+        assertTrue(UserServices.FieldsEmpty("username", "email", ""));
     }
 
     @Test
     void createAccountUsernameAndEmailFieldEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("","","password"));
+        assertTrue(UserServices.FieldsEmpty("", "", "password"));
     }
 
     @Test
     void createAccountUsernameAndPasswordFieldEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("","email",""));
+        assertTrue(UserServices.FieldsEmpty("", "email", ""));
     }
 
     @Test
     void createAccountPasswordAndEmailFieldEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("username","",""));
+        assertTrue(UserServices.FieldsEmpty("username", "", ""));
     }
 
     @Test
     void createAccountAllFieldsEmpty() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.FieldsEmpty("","",""));
+        assertTrue(UserServices.FieldsEmpty("", "", ""));
     }
 
     @Test
     void createAccountNoFieldsEmpty() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.FieldsEmpty("MaisonRose","maison227@outlook.com","H1Delancey!"));
+        assertFalse(UserServices.FieldsEmpty("MaisonRose", "maison227@outlook.com", "H1Delancey!"));
     }
 
     @Test
     void allSpacesUsername() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidUsername("           "));
+        assertFalse(UserServices.ValidUsername("           "));
     }
 
     @Test
     void shortUsername() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidUsername("uh"));
+        assertFalse(UserServices.ValidUsername("uh"));
     }
 
     @Test
     void longUsername() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidUsername("IThinkThatThisUsernameIsGoingToBeToLong"));
+        assertFalse(UserServices.ValidUsername("IThinkThatThisUsernameIsGoingToBeToLong"));
     }
 
     @Test
     void spacesUsername() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidUsername("No Spaces allowed"));
+        assertFalse(UserServices.ValidUsername("No Spaces allowed"));
     }
 
     @Test
     void specialUsername() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidUsername("NotA!!owed"));
+        assertFalse(UserServices.ValidUsername("NotA!!owed"));
     }
 
     @Test
     void threeCharacterUsername() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidUsername("ugh"));
+        assertTrue(UserServices.ValidUsername("ugh"));
     }
 
     @Test
     void twentyCharacterUsername() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidUsername("TwentyCharacters2020"));
+        assertTrue(UserServices.ValidUsername("TwentyCharacters2020"));
     }
 
     @Test
     void twentyOneCharacterUsername() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidUsername("Twenty_One_Characters"));
+        assertFalse(UserServices.ValidUsername("Twenty_One_Characters"));
     }
 
     @Test
     void validUsername1() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidUsername("tomas_ds06"));
+        assertTrue(UserServices.ValidUsername("tomas_ds06"));
     }
 
     @Test
     void validUsername2() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidUsername("Maisonxrose"));
+        assertTrue(UserServices.ValidUsername("Maisonxrose"));
     }
 
     @Test
     void allSpacesEmail() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidEmail("      "));
+        assertFalse(UserServices.ValidEmail("      "));
     }
 
     @Test
     void noATEmail() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidEmail("agrossioutlookcom"));
+        assertFalse(UserServices.ValidEmail("agrossioutlookcom"));
     }
 
     @Test
     void invalidATEmail1() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidEmail("agrossioutlookcom@"));
+        assertFalse(UserServices.ValidEmail("agrossioutlookcom@"));
     }
 
     @Test
     void anATOnlyEmail() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidEmail("@"));
+        assertFalse(UserServices.ValidEmail("@"));
     }
 
     @Test
     void noDomainEmail() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidEmail("agrossi@outlook"));
+        assertFalse(UserServices.ValidEmail("agrossi@outlook"));
     }
 
     @Test
     void invalidATEmail2() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidEmail("@agrossioutlookcom"));
+        assertFalse(UserServices.ValidEmail("@agrossioutlookcom"));
     }
 
     @Test
     void validEmail1() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidEmail("agrossi@outlook.com"));
+        assertTrue(UserServices.ValidEmail("agrossi@outlook.com"));
     }
 
     @Test
     void validEmail2() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidEmail("jpettigrew38@gmail.com"));
+        assertTrue(UserServices.ValidEmail("jpettigrew38@gmail.com"));
     }
 
     @Test
     void allSpacesPassword() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidPassword("           "));
+        assertFalse(UserServices.ValidPassword("           "));
     }
 
     @Test
     void lowercaseOnlyPassword() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidPassword("isthisalongenoughpassword"));
+        assertFalse(UserServices.ValidPassword("isthisalongenoughpassword"));
     }
 
     @Test
     void uppercaseOnlyPassword() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidPassword("ALEXANDERGROSSI"));
+        assertFalse(UserServices.ValidPassword("ALEXANDERGROSSI"));
     }
 
     @Test
     void numberOnlyPassword() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidPassword("12345678910"));
+        assertFalse(UserServices.ValidPassword("12345678910"));
     }
 
     @Test
     void specialCharactersPassword() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidPassword("!?!?!?!??!?!?!"));
+        assertFalse(UserServices.ValidPassword("!?!?!?!??!?!?!"));
     }
 
     @Test
     void shortPassword() {
-        UserServices userServices = new UserServices();
-        assertFalse(userServices.ValidPassword("H0ldSt!ll"));
+        assertFalse(UserServices.ValidPassword("H0ldSt!ll"));
     }
 
     @Test
     void workingPassword1() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidPassword("Delancey19!"));
+        assertTrue(UserServices.ValidPassword("Delancey19!"));
     }
 
     @Test
     void workingPassword2() {
-        UserServices userServices = new UserServices();
-        assertTrue(userServices.ValidPassword("Dy1nOnThisH!ll"));
+        assertTrue(UserServices.ValidPassword("Dy1nOnThisH!ll"));
     }
 }
