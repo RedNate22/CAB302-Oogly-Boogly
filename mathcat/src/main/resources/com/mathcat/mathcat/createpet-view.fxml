@@ -76,7 +76,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
                      <children>
-                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
+                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogout" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
