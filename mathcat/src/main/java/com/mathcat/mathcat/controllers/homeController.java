@@ -1,4 +1,4 @@
-package com.mathcat.mathcat;
+package com.mathcat.mathcat.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
+import com.mathcat.mathcat.session.userSession;
+
 public class homeController {
     // This section is just so that the current user's name is displayed when entering
     @FXML
@@ -20,7 +22,7 @@ public class homeController {
 
     @FXML
     // Initialise current user values
-    public void initialize(){
+    public void initialize() {
         usernameLabel.setText(userSession.currentUser.getUsername());
         emailLabel.setText(userSession.currentUser.getEmail());
     }
@@ -30,7 +32,8 @@ public class homeController {
 
         userSession.currentUser = null;
 
-        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         stage.setTitle("Start");
