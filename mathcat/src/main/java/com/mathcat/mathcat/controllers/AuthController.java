@@ -16,6 +16,9 @@ import com.mathcat.mathcat.services.UserServices;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
 
+/**
+ * Handles UI events for the login and account creation screens.
+ */
 public class AuthController {
 
     @FXML
@@ -98,7 +101,8 @@ public class AuthController {
         }
 
         if (!UserServices.ValidUsername(username)) {
-            error.setText("Ensure username contains 3-20 alphanumeric chacaracters (underscores allowed) and has no spaces");
+            error.setText(
+                    "Ensure username contains 3-20 alphanumeric chacaracters (underscores allowed) and has no spaces");
             return;
         }
 
