@@ -17,11 +17,25 @@ import com.mathcat.mathcat.session.userSession;
 public class CreatePetController {
 
     /**
+     * Handles confirmation of pet creation logic for MathCat in the Create Pet screen.
+     * @param event gets the window/stage for the home screen
+     * @throws IOException if listed screen does not exist
+     */
+    public void onConfirmPetDetails(ActionEvent event) throws IOException {
+        Parent root = 
+            FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
+    }
+
+    /**
      * Handles logout logic for MathCat in the Create Pet screen.
      * @param event gets the window/stage for the main screen
      * @throws IOException if listed screen does not exist
      */
-    public void onLogout(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) throws IOException {
 
         userSession.currentUser = null;
 

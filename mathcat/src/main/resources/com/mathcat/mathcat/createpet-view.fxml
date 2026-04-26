@@ -76,7 +76,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
                      <children>
-                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#confirmLogOut" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
+                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -85,7 +85,7 @@
                            <viewport>
                               <Rectangle2D height="400.0" width="400.0" />
                            </viewport></ImageView>
-                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#completePetCreation" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
+                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>
