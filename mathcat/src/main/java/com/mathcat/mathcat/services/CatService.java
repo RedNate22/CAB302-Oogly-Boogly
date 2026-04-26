@@ -14,7 +14,8 @@ public final class CatService {
     public static final double MIN_STAT = 0.00;
     public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
     public static final double FULLNESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
-    public static final double ENERGY_REGEN_RATE = 1.0;     // per min at max fullness: hits 100 in ~100 min
+    public static final double ENERGY_REGEN_RATE = 1.0; // per min at max fullness: hits 100 in ~100
+                                                        // min
     public static final double HUNGER_THRESHOLD = 25.0;
 
     private CatService() {}
@@ -75,7 +76,8 @@ public final class CatService {
     private static void decreaseHappiness(Cat cat, double value, boolean persist) {
         cat.setHappiness(clampStat(cat.getHappiness() - value));
         cat.setLastSaved(LocalDateTime.now());
-        if (persist) CatDAO.save(cat);
+        if (persist)
+            CatDAO.save(cat);
     }
 
     /**
@@ -104,7 +106,8 @@ public final class CatService {
     private static void decreaseFullness(Cat cat, double value, boolean persist) {
         cat.setFullness(clampStat(cat.getFullness() - value));
         cat.setLastSaved(LocalDateTime.now());
-        if (persist) CatDAO.save(cat);
+        if (persist)
+            CatDAO.save(cat);
     }
 
     /**
@@ -161,7 +164,8 @@ public final class CatService {
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
 
-        // persist=false skips the individual saves inside each method; we do one combined save below
+        // persist=false skips the individual saves inside each method; we do one combined save
+        // below
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
         cat.setLastSaved(LocalDateTime.now());
@@ -177,7 +181,7 @@ public final class CatService {
     }
 
     /**
-     * Applies an additional happiness penalty if the cat's fulness is below HUNGER_THRESHOLD.
+     * Applies an additional happiness penalty if the cat's fullness is below HUNGER_THRESHOLD.
      *
      * @param cat the cat to apply the penalty to
      */
@@ -208,9 +212,10 @@ public final class CatService {
      */
     public static boolean useItem(Cat cat, Item item) {
         // remove returns false if the item wasn't in the list
-        if (!cat.getItems().remove(item)) return false;
+        if (!cat.getItems().remove(item))
+            return false;
         item.applyItem(cat); // applies the stat effect and saves the stat change
-        CatDAO.save(cat);    // save the inventory change (item removed)
+        CatDAO.save(cat); // save the inventory change (item removed)
         return true;
     }
 

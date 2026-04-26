@@ -18,7 +18,7 @@ class CatServiceTest {
     @BeforeEach
     void setUp() {
         CatDAO.clearForTesting();
-        cat = new Cat("Whiskers"); // starts at: happiness=100, fullness=100, energy=0
+        cat = new Cat("Rosie"); // starts at: happiness=100, fullness=100, energy=0
     }
 
     @Nested
@@ -260,7 +260,8 @@ class CatServiceTest {
         void clampedAtMin() {
             cat.setHappiness(1.0);
             cat.setFullness(1.0);
-            cat.setLastSaved(LocalDateTime.now().minusDays(7)); // far enough to guarantee full decay
+            cat.setLastSaved(LocalDateTime.now().minusDays(7)); // far enough to guarantee full
+                                                                // decay
             CatService.applyOfflineDecay(cat);
             assertEquals(CatService.MIN_STAT, cat.getHappiness(), 0.001);
             assertEquals(CatService.MIN_STAT, cat.getFullness(), 0.001);
