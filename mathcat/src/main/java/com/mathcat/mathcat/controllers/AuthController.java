@@ -12,10 +12,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.mathcat.mathcat.session.userSession;
+import com.mathcat.mathcat.services.UserServices;
+import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
 
-public class authController {
+/**
+ * Handles UI events for the login and account creation screens.
+ */
+public class AuthController {
 
     @FXML
     private TextField usernameField;
@@ -27,6 +31,8 @@ public class authController {
     @FXML
     private Label error;
 
+    private final UserDAO userDAO = new UserDAO();
+
     @FXML
     // When pressing Login inside the login page
     // Checks the fields aren't empty, an account exists, and validity of details. Scans over the
@@ -35,41 +41,37 @@ public class authController {
     // set.
     public void onLoginConfirm(ActionEvent event) throws IOException {
 
-        String enteredUsername = usernameField.getText();
-        String enteredPassword = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
         // check text fields are not empty
-        if (enteredUsername.isEmpty() || enteredPassword.isEmpty()) {
+        if (UserServices.FieldsEmpty(username, password)) {
             error.setText("Please fill out all fields");
             return;
         }
 
-        if (userSession.users.isEmpty()) {
+        if (userDAO.NoUsersExist()) {
             error.setText("No Accounts Exist. Please create an account.");
             return;
         }
 
         User matchedUser = null;
-        for (User user : userSession.users) {
-            if (user.getUsername().equals(enteredUsername)) {
-                matchedUser = user;
-                break; // user found; stop searching
-            }
-        }
 
-        if (matchedUser == null) {
+        User MatchedUser = userDAO.UserMatch(matchedUser, username);
+
+        if (userDAO.NoUserMatchFound(MatchedUser)) {
             error.setText("This account does not exist.");
             return;
         }
 
-        if (!enteredPassword.equals(matchedUser.getPassword())) {
+        if (!userDAO.UserPasswordMatch(MatchedUser, password)) {
             error.setText("Password is incorrect. Please try again");
             return;
         }
 
         // Only gets here if all above checks pass
         // System.out.println("Login Successful; Matching details");
-        userSession.currentUser = matchedUser;
+        userDAO.SetCurrentUser(MatchedUser);
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
@@ -89,52 +91,34 @@ public class authController {
     // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
 
-        String email = emailField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
 
-        // Ensures email contains @ symbol and a domain
-        boolean emailisValid = email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-        // Ensures password matches all the given criteria
-        boolean passwordisValid = password.matches("^(?=.*[A-Z])" + // at least 1 uppercase
-                "(?=.*[a-z])" + // at least 1 lowercase
-                "(?=.*\\d)" + // at least 1 number
-                "(?=.*[^A-Za-z0-9])" + // at least 1 special character
-                ".{10,}$" // at least 10 characters long
-        );
-
-        if (usernameField.getLength() == 0 || passwordField.getLength() == 0
-                || emailField.getLength() == 0) {
+        if (UserServices.FieldsEmpty(username, email, password)) {
             error.setText("Ensure all details are filled out");
             return;
         }
 
-        if (!emailisValid) {
+        if (!UserServices.ValidUsername(username)) {
+            error.setText(
+                    "Ensure username contains 3-20 alphanumeric chacaracters (underscores allowed) and has no spaces");
+            return;
+        }
+
+        if (!UserServices.ValidEmail(email)) {
             error.setText("Please enter a valid email");
             return;
         }
 
-        if (!passwordisValid) {
+        if (!UserServices.ValidPassword(password)) {
             error.setText(
                     "Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
             return;
         }
 
-        boolean exists = false;
-
-        for (User user : userSession.users) {
-            if (user.getUsername().equals(usernameField.getText())
-                    || user.getEmail().equals(emailField.getText())) {
-
-                exists = true;
-                break;
-            }
-        }
-
-        if (!exists) {
-            userSession.currentUser = new User(usernameField.getText(), emailField.getText(),
-                    passwordField.getText());
-
-            userSession.users.add(userSession.currentUser);
+        if (!userDAO.UserExists(username, email)) {
+            userDAO.NewUser(username, email, password);
 
             Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -145,7 +129,6 @@ public class authController {
             stage.show();
         } else {
             error.setText("Username or email already exists");
-            return;
         }
     }
 

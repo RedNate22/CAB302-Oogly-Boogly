@@ -231,13 +231,13 @@ Created by [Leonora](https://github.com/smolbebby)
     - Provide fallback behaviour (e.g., return to main menu) on failures.
 
 - **Naming Conventions**
-    - **Methods / Properties**: PascalCase (e.g., `FeedPet()`, `PetName`)
     - **Classes**: PascalCase (e.g., `VirtualPetController`)
-    - **Interfaces**: PascalCase with `I` prefix if applicable (e.g., `IQuestion`)
+    - **Methods / Properties**: camelCase (e.g., `feedPet()`, `petName`)
+    - **Variables / Parameters / Properties**: camelCase (e.g., `petAge`, `mathProblem`)
     - **Private Fields (Attributes)**: camelCase (e.g., `petHealth`)
+    - **Interfaces**: PascalCase with `I` prefix if applicable (e.g., `IQuestion`)
     - **Constants / Readonly Fields**: UPPERCASE, or UPPERCASE + underscores (e.g., `HUNGER`, `MAX_HUNGER`)
     - **Events**: PascalCase with `EventHandler` suffix if applicable (e.g., `PetFedEventHandler`)
-    - **Variables / Parameters**: camelCase (e.g., `petAge`, `mathProblem`)
 
 - **Branching and Version Control**
     - Use separate branches for each feature or issue (e.g., `user-login`, `issue-6-broken-landing-page`).
