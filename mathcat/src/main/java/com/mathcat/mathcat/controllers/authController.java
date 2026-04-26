@@ -38,8 +38,8 @@ public class authController {
     // set.
     public void onLoginConfirm(ActionEvent event) throws IOException {
 
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String password = passwordField.getText().trim();
 
         // check text fields are not empty
         if (UserServices.FieldsEmpty(username, password)) {
@@ -88,9 +88,9 @@ public class authController {
     // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
 
-        String username = usernameField.getText();
-        String email = emailField.getText();
-        String password = passwordField.getText();
+        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
 
         if (UserServices.FieldsEmpty(username, email, password)) {
             error.setText("Ensure all details are filled out");
