@@ -46,16 +46,17 @@ public class AIService {
     public String getHint(String questionContext, String userMessage, List<String[]> history) throws Exception {
         String url = "https://api.groq.com/openai/v1/chat/completions";
 
-        String systemPrompt = "You are a concise math tutor using the Socratic method. "
+        String systemPrompt = "You are a concise math tutor using the 'I do, We do, You do' teaching method. "
                 + "The student is working on this problem: " + questionContext + ". "
+                + "Follow these steps in order across the conversation: "
+                + "STEP 1 - I DO: First, solve a SIMILAR but DIFFERENT example problem out loud, narrating each step simply. Do NOT use the actual question. "
+                + "STEP 2 - WE DO: Then solve another similar example TOGETHER by asking the student to complete each step with your guidance. "
+                + "STEP 3 - YOU DO: Finally, ask the student to try the ACTUAL question on their own using what they have learned. "
                 + "RULES: "
-                + "1. NEVER give the answer directly. "
-                + "2. NEVER start with praise like 'Great', 'That's a great start', 'Good job' etc. "
-                + "3. NEVER repeat a question you already asked. "
-                + "4. Give ONE short, specific hint or question per response. "
-                + "5. Build directly on exactly what the student just said. "
-                + "6. If the student is correct, confirm it and ask the student to press next question. "
-                + "7. Max 2 sentences per response.";
+                + "1. NEVER give the answer to the actual question directly. "
+                + "2. Keep each response concise, max 3 sentences. "
+                + "3. Track which step you are on and progress naturally through the steps. "
+                + "4. Be encouraging but not overly praising.";
 
         // Build conversation history messages
         StringBuilder messagesArray = new StringBuilder();
