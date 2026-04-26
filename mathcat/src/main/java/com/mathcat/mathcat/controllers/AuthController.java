@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import com.mathcat.mathcat.services.UserServices;
+import com.mathcat.mathcat.services.UserService;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
 
@@ -45,7 +45,7 @@ public class AuthController {
         String password = passwordField.getText().trim();
 
         // check text fields are not empty
-        if (UserServices.FieldsEmpty(username, password)) {
+        if (UserService.FieldsEmpty(username, password)) {
             error.setText("Please fill out all fields");
             return;
         }
@@ -95,23 +95,23 @@ public class AuthController {
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserServices.FieldsEmpty(username, email, password)) {
+        if (UserService.FieldsEmpty(username, email, password)) {
             error.setText("Ensure all details are filled out");
             return;
         }
 
-        if (!UserServices.ValidUsername(username)) {
+        if (!UserService.ValidUsername(username)) {
             error.setText(
                     "Ensure username contains 3-20 alphanumeric chacaracters (underscores allowed) and has no spaces");
             return;
         }
 
-        if (!UserServices.ValidEmail(email)) {
+        if (!UserService.ValidEmail(email)) {
             error.setText("Please enter a valid email");
             return;
         }
 
-        if (!UserServices.ValidPassword(password)) {
+        if (!UserService.ValidPassword(password)) {
             error.setText(
                     "Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
             return;
@@ -120,7 +120,8 @@ public class AuthController {
         if (!userDAO.UserExists(username, email)) {
             userDAO.NewUser(username, email, password);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
+            Parent root = FXMLLoader
+                    .load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene scene = new Scene(root, 700, 400);

@@ -126,8 +126,8 @@ public final class Item {
 
     // TODO
     public void applyItem(Cat cat) {
-
-
+        // calls appropriate CatService. methods
+        // switch statement?
     }
 }
 
