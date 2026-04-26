@@ -22,6 +22,11 @@ public class ChatController {
     private static final int MAX_HINTS = 3;
     private final List<String[]> conversationHistory = new ArrayList<>();
 
+    /**
+     * Initialises the chat controller when the FXML is loaded.
+     * Sets up the AI service, auto-scroll behaviour, and displays
+     * the initial warning message about hint penalties.
+     */
     @FXML
     public void initialize() {
         aiService = new AIService();
