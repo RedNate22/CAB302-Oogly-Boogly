@@ -3,7 +3,10 @@ package com.mathcat.mathcat.dao;
 import com.mathcat.mathcat.models.User;
 
 import java.util.ArrayList;
-
+/**
+* Handles user lookup, creation, and session state using an in-memory store.
+* Will be refactored to use SQLite when the database layer is implemented.
+*/
 public class UserDAO {
     // Stores the list of registered users, the user that is currently being utilised and the number of ID to be assigned to new users
     public static ArrayList<User> users = new ArrayList<>();
