@@ -11,13 +11,15 @@ public class UserDAO {
     public static int Id = 1;
 
     /*
-     * Login page
+     * Login page methods
      */
 
+    // Checks if any users accounts have been created yet
     public boolean NoUsersExist() {
         return UserDAO.users.isEmpty();
     }
 
+    // Looks for user in users to see if it exists
     public User UserMatch(User matchedUser, String username) {
         for (User user : UserDAO.users) {
             if (user.getUsername().equals(username)) {
@@ -28,10 +30,12 @@ public class UserDAO {
         return matchedUser;
     }
 
+    // A user was not found if matchedUser is null
     public boolean NoUserMatchFound(User matchedUser) {
         return (matchedUser == null);
     }
 
+    // Username has a match, but check if the password matches too
     public boolean UserPasswordMatch(User matchedUser, String password) {
         return (password.equals(matchedUser.getPassword()));
     }
@@ -41,7 +45,7 @@ public class UserDAO {
     }
 
     /*
-     * Create Account page
+     * Create Account page methods
      */
     // Checks if the user exists in the users array. Ignores case sensitivity and only identifies matching characters
     public boolean UserExists(String username, String email) {
