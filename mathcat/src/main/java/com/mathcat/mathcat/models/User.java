@@ -13,10 +13,12 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.id = UserDAO.Id;
+        this.id = UserDAO.nextId;
     }
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -38,5 +40,7 @@ public class User {
         this.password = password;
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 }

@@ -3,15 +3,17 @@ package com.mathcat.mathcat.dao;
 import com.mathcat.mathcat.models.User;
 
 import java.util.ArrayList;
+
 /**
-* Handles user lookup, creation, and session state using an in-memory store.
-* Will be refactored to use SQLite when the database layer is implemented.
-*/
+ * Handles user lookup, creation, and session state using an in-memory store. Will be refactored to
+ * use SQLite when the database layer is implemented.
+ */
 public class UserDAO {
-    // Stores the list of registered users, the user that is currently being utilised and the number of ID to be assigned to new users
-    public static ArrayList<User> users = new ArrayList<>();
+    // Stores the list of registered users, the user that is currently being utilised and the number
+    // of ID to be assigned to new users
+    private static ArrayList<User> users = new ArrayList<>();
     public static User currentUser;
-    public static int Id = 1;
+    public static int nextId = 1;
 
     /*
      * Login page methods
@@ -50,7 +52,8 @@ public class UserDAO {
     /*
      * Create Account page methods
      */
-    // Checks if the user exists in the users array. Ignores case sensitivity and only identifies matching characters
+    // Checks if the user exists in the users array. Ignores case sensitivity and only identifies
+    // matching characters
     public boolean UserExists(String username, String email) {
         boolean exists = false;
 
@@ -62,10 +65,11 @@ public class UserDAO {
         }
         return exists;
     }
+
     // Creates new user with inputted details, user id is set within the creation of User.
     public void NewUser(String username, String email, String password) {
         UserDAO.currentUser = new User(username, email, password);
-        UserDAO.Id++;
+        UserDAO.nextId++;
 
         UserDAO.users.add(UserDAO.currentUser);
     }
