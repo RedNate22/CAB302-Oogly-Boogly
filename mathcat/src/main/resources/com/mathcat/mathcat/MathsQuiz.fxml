@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox spacing="15" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mathcat.mathcat.GenetatorMathsQuiz">
+
+    <children>
+        <Label fx:id="questionLabel" />
+        <TextField fx:id="answerField" prefWidth="80" />
+
+        <HBox spacing="10" alignment="CENTER">
+            <children>
+                <Button fx:id="submitBtn" text="Submit" onAction="#handleSubmit"/>
+                <Button fx:id="skipBtn" text="Skip" onAction="#handleSkip"/>
+            </children>
+        </HBox>
+
+        <Label fx:id="feedbackLabel" />
+    </children>
+</VBox>
