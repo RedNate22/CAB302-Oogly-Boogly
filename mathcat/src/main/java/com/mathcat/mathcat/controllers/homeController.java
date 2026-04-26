@@ -1,5 +1,6 @@
 package com.mathcat.mathcat.controllers;
 
+import com.mathcat.mathcat.dao.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,13 +9,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
 import java.io.IOException;
-
-import com.mathcat.mathcat.session.userSession;
 
 public class homeController {
     // This section is just so that the current user's name is displayed when entering
+    @FXML
+    private Label idLabel;
+
     @FXML
     private Label usernameLabel;
 
@@ -24,14 +25,15 @@ public class homeController {
     @FXML
     // Initialise current user values
     public void initialize() {
-        usernameLabel.setText(userSession.currentUser.getUsername());
-        emailLabel.setText(userSession.currentUser.getEmail());
+        idLabel.setText(String.valueOf(UserDAO.currentUser.getId()));
+        usernameLabel.setText(UserDAO.currentUser.getUsername());
+        emailLabel.setText(UserDAO.currentUser.getEmail());
     }
 
-    // Return to start page
+    // Return to start page and logs user out
     public void onLogout(ActionEvent event) throws IOException {
 
-        userSession.currentUser = null;
+        UserDAO.currentUser = null;
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
