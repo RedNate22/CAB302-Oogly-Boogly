@@ -34,18 +34,41 @@ public class ChatController {
         addMessage("⚠️ You have " + MAX_HINTS + " hints available. Using hints will reduce your score.", "#FFF9C4", Pos.CENTER);
     }
 
+    /**
+     * Sets the current math question context for the AI tutor.
+     * Should be called by the question screen before the chat is shown,
+     * so the AI knows which problem the student is working on.
+     * @param question the math question the student is attempting to solve
+     */
     public void setQuestion(String question) {
         this.currentQuestion = question;
     }
 
+    /**
+     * Returns the number of hints the student has used so far.
+     * Used by the question screen to calculate the penalty on the student's reward.
+     * @return the number of hints used (0 to MAX_HINTS)
+     */
     public int getHintCount() {
         return hintCount;
     }
 
+    /**
+     * Checks if the student has used all available hints.
+     * If true, no bonus rewards will be given for this question.
+     * @return true if the student has reached the hint limit, false otherwise
+     */
     public boolean hasReachedLimit() {
         return hintCount >= MAX_HINTS;
     }
 
+    /**
+     * Handles the Send button click event.
+     * Increments the hint count, displays the user's message,
+     * adds it to conversation history, and sends it to the AI service
+     * in a background thread to avoid freezing the UI.
+     * Displays the AI's Socratic hint response in the chat window.
+     */
     @FXML
     private void onSendClicked() {
         String message = userInput.getText().trim();
@@ -88,6 +111,12 @@ public class ChatController {
         }).start();
     }
 
+    /**
+     * Creates a styled chat bubble and adds it to the chat window.
+     * @param message the text to display in the bubble
+     * @param color the background color of the bubble in hex format (e.g. "#DCF8C6")
+     * @param alignment the position of the bubble (LEFT for AI hints, RIGHT for user messages, CENTER for warnings)
+     */
     private void addMessage(String message, String color, Pos alignment) {
         Label label = new Label(message);
         label.setWrapText(true);
