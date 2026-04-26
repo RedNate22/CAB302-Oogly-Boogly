@@ -16,5 +16,5 @@ module com.mathcat.mathcat {
     exports com.mathcat.mathcat.models;
     exports com.mathcat.mathcat.session;
     exports com.mathcat.mathcat.dao;
-    // exports com.mathcat.mathcat.dao;
+    exports com.mathcat.mathcat.database;
 }
