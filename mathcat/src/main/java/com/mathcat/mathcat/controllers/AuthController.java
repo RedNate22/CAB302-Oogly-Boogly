@@ -16,7 +16,7 @@ import com.mathcat.mathcat.services.UserServices;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
 
-public class authController {
+public class AuthController {
 
     @FXML
     private TextField usernameField;
