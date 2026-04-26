@@ -55,6 +55,4 @@ public class CatDAO {
     public static void delete(int catId) {
         cats.removeIf(cat -> cat.getCatId() == catId);
     }
-
-
 }
