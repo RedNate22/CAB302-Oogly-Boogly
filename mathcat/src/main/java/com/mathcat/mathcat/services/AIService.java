@@ -5,14 +5,16 @@ import java.net.URI;
 import java.net.http.*;
 import java.net.http.HttpRequest.BodyPublishers;
 import com.google.gson.*;
+import java.util.List;
 
 public class AIService {
 
     private final String apiKey;
     private final HttpClient client = HttpClient.newHttpClient();
-qq
     public AIService() {
-        Dotenv dotenv = Dotenv.configure().directory("mathcat").load();
+        String workingDir = System.getProperty("user.dir");
+        String envDir = workingDir.endsWith("mathcat") ? workingDir : workingDir + "/mathcat";
+        Dotenv dotenv = Dotenv.configure().directory(envDir).load();
         this.apiKey = dotenv.get("GROQ_API_KEY");
     }
 
@@ -41,7 +43,7 @@ qq
         return sb.toString();
     }
 
-    public String getHint(String questionContext, String userMessage) throws Exception {
+    public String getHint(String questionContext, String userMessage, List<String[]> history) throws Exception {
         String url = "https://api.groq.com/openai/v1/chat/completions";
 
         String systemPrompt = "You are a concise math tutor using the Socratic method. "
@@ -55,15 +57,35 @@ qq
                 + "6. If the student is correct, confirm it and ask the student to press next question. "
                 + "7. Max 2 sentences per response.";
 
+        // Build conversation history messages
+        StringBuilder messagesArray = new StringBuilder();
+        messagesArray.append("{\"role\": \"system\", \"content\": \"")
+                .append(escapeJson(systemPrompt))
+                .append("\"}");
+
+        // Add previous messages from history
+        for (String[] message : history) {
+            messagesArray.append(", {\"role\": \"")
+                    .append(message[0])
+                    .append("\", \"content\": \"")
+                    .append(escapeJson(message[1]))
+                    .append("\"}");
+        }
+
+        // Add current user message
+        messagesArray.append(", {\"role\": \"user\", \"content\": \"")
+                .append(escapeJson(userMessage))
+                .append("\"}");
+
         String body = """
-                {
-                  "model": "llama-3.3-70b-versatile",
-                  "messages": [
-                    {"role": "system", "content": "%s"},
-                    {"role": "user", "content": "%s"}
-                  ]
-                }
-                """.formatted(escapeJson(systemPrompt), escapeJson(userMessage));
+            {
+              "model": "llama-3.3-70b-versatile",
+              "messages": [%s]
+            }
+            """.formatted(messagesArray.toString());
+
+        System.out.println("History size: " + history.size());
+        System.out.println("Body: " + body);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -75,17 +97,18 @@ qq
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-// Check HTTP status code first before parsing JSON
+        // Check HTTP status code first before parsing JSON
         if (response.statusCode() != 200) {
             return "Error: Request failed with status code " + response.statusCode()
                     + ". Please check your API key.";
         }
 
-// Parse JSON response
+        // Parse JSON response
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
         if (json.has("error")) {
             return "Error: " + json.getAsJsonObject("error").get("message").getAsString();
         }
+
 
         return json.getAsJsonArray("choices")
                 .get(0).getAsJsonObject()
