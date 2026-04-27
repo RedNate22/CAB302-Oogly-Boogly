@@ -28,7 +28,7 @@ public class homeController {
     }
 
     // Return to start page
-    public void onLogout(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) throws IOException {
 
         userSession.currentUser = null;
 
