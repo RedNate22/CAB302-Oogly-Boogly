@@ -1,28 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="400.0" prefWidth="300.0">
+            <Pane prefHeight="400.0" prefWidth="340.0">
                <children>
-                  <VBox layoutX="12.0" layoutY="11.0" prefHeight="203.0" prefWidth="276.0">
+                  <VBox alignment="CENTER" prefHeight="244.0" prefWidth="236.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="279.0" text="[Pet Name]'s Stats" />
-                        <ProgressBar prefHeight="20.0" prefWidth="248.0" progress="0.0" />
+                        <Label text="[Pet name]'s Stats">
+                           <VBox.margin>
+                              <Insets bottom="25.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="PT Mono" size="13.0" />
+                           </font>
+                        </Label>
+                        <Group>
+                           <children>
+                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
+                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Group>
+                        <Group layoutX="28.0" layoutY="114.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
+                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Group>
+                        <Group layoutX="28.0" layoutY="132.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
+                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Group>
                      </children>
                   </VBox>
                </children>
             </Pane>
-            <Pane prefHeight="400.0" prefWidth="300.0" />
+            <Pane prefHeight="400.0" prefWidth="340.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
+                     <children>
+                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                           <viewport>
+                              <Rectangle2D height="400.0" width="400.0" />
+                           </viewport></ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
          </children>
       </HBox>
    </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </BorderPane>
