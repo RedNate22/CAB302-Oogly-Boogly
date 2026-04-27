@@ -10,6 +10,10 @@ import java.io.IOException;
 
 import com.mathcat.mathcat.session.userSession;
 
+/**
+ * Controller class responsible for user interactions with the UI in the "play-view" screen.
+ * Does not handle persistence.
+ */
 public class PlayController {
     /**
      * Handles return to home screen logic for MathCat in the Play screen.
