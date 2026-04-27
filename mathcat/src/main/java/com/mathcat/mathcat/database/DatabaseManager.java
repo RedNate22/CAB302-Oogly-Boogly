@@ -3,7 +3,7 @@ package com.mathcat.mathcat.database;
 import java.sql.*;
 
 /**
- * Manages the SQLite database connection and initialises tables.
+ * Manages the SQLite database connection and initialises all tables.
  */
 public class DatabaseManager {
 
@@ -11,8 +11,9 @@ public class DatabaseManager {
     private static Connection connection;
 
     /**
-     * Returns the active database connection, creating one if it doesn't exist.
+     * Returns the active database connection, creating one if needed.
      * @return the SQLite connection
+     * @throws SQLException if connection fails
      */
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
@@ -39,22 +40,34 @@ public class DatabaseManager {
                 CREATE TABLE IF NOT EXISTS pets (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER NOT NULL,
-                    pet_name TEXT,
-                    appearance TEXT,
+                    cat_name TEXT,
+                    cat_sprite TEXT,
+                    happiness REAL DEFAULT 100.0,
+                    fullness REAL DEFAULT 100.0,
+                    energy REAL DEFAULT 100.0,
                     level INTEGER DEFAULT 1,
-                    xp INTEGER DEFAULT 0,
-                    happiness INTEGER DEFAULT 100,
-                    energy INTEGER DEFAULT 100,
-                    fullness INTEGER DEFAULT 100,
-                    currency INTEGER DEFAULT 0,
-                    items TEXT DEFAULT '',
+                    xp REAL DEFAULT 0.0,
+                    last_saved TEXT,
+                    daily_energy_gained REAL DEFAULT 0.0,
+                    energy_cap_reset_date TEXT,
                     FOREIGN KEY (user_id) REFERENCES users(id)
+                );
+                """;
+
+        String createItemsTable = """
+                CREATE TABLE IF NOT EXISTS items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    pet_id INTEGER NOT NULL,
+                    item_id TEXT NOT NULL,
+                    quantity INTEGER DEFAULT 1,
+                    FOREIGN KEY (pet_id) REFERENCES pets(id)
                 );
                 """;
 
         try (Statement stmt = getConnection().createStatement()) {
             stmt.execute(createUsersTable);
             stmt.execute(createPetsTable);
+            stmt.execute(createItemsTable);
             System.out.println("Database initialised successfully!");
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());
