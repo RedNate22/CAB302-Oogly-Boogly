@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -14,25 +16,28 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="400.0" prefWidth="340.0">
                <children>
-                  <VBox layoutY="2.0" prefHeight="400.0" prefWidth="310.0">
+                  <VBox alignment="CENTER" layoutY="2.0" prefHeight="400.0" prefWidth="310.0">
                      <children>
                         <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="282.0" text="Customise Your Pet" />
                         <Group>
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="185.0" text="Pet Name:" />
-                              <TextField layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name" />
+                              <Label fx:id="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Pet Name:" textAlignment="CENTER" />
+                              <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></TextField>
                            </children>
                         </Group>
+                        <Label fx:id="error" style="-fx-text-fill: red;" />
                         <Group>
                            <children>
-                              <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="182.0" text="Pet Style:" />
+                              <Label fx:id="petStyleLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Pet Style:" textAlignment="CENTER" />
                               <GridPane alignment="TOP_CENTER" layoutY="60.0" prefHeight="150.0" prefWidth="300.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
@@ -44,21 +49,18 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" prefHeight="17.0" prefWidth="251.0" text="[Style One]" />
-                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="17.0" prefHeight="17.0" prefWidth="251.0" text="[Style Two]" GridPane.columnIndex="1" />
-                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="17.0" prefHeight="17.0" prefWidth="251.0" text="[Style Three]" GridPane.rowIndex="1" />
-                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="47.0" prefHeight="17.0" prefWidth="251.0" text="[Style Four]" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="47.0" prefHeight="17.0" prefWidth="251.0" text="[Style Five]" GridPane.rowIndex="2" />
-                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="77.0" prefHeight="17.0" prefWidth="251.0" text="[Style Six]" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="clickedStyleOne" alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" prefHeight="17.0" prefWidth="251.0" text="[Style One]" />
+                                    <Label fx:id="clickedStyleTwo" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="17.0" prefHeight="17.0" prefWidth="251.0" text="[Style Two]" GridPane.columnIndex="1" />
+                                    <Label fx:id="clickedStyleThree" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="17.0" prefHeight="17.0" prefWidth="251.0" text="[Style Three]" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
                         </Group>
                         <HBox prefHeight="107.0" prefWidth="252.0" spacing="3.0">
                            <children>
-                              <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="182.0" text="[Accessory One]" />
-                              <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="182.0" text="[Accessory Two]" />
-                              <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="17.0" prefWidth="182.0" text="[Accessory Three]" />
+                              <Label fx:id="clickedAccessoryOne" alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="182.0" text="[Accessory One]" />
+                              <Label fx:id="clickedAccessoryTwo" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="182.0" text="[Accessory Two]" />
+                              <Label fx:id="clickedAccessoryThree" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="10.0" prefHeight="17.0" prefWidth="182.0" text="[Accessory Three]" />
                            </children>
                            <padding>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -70,10 +72,21 @@
             </Pane>
             <Pane prefHeight="400.0" prefWidth="340.0">
                <children>
-                  <VBox prefHeight="380.0" prefWidth="290.0">
+                  <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Create Pet" />
+                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                           <viewport>
+                              <Rectangle2D height="400.0" width="400.0" />
+                           </viewport></ImageView>
+                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                      </children>
                   </VBox>
                </children>

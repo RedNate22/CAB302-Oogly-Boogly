@@ -18,7 +18,7 @@ public class MathCatApp extends Application {
                 "/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"), 12);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-                MathCatApp.class.getResource("/com/mathcat/mathcat/hello-view.fxml"));
+                MathCatApp.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);

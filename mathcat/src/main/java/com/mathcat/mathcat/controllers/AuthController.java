@@ -138,7 +138,7 @@ public class AuthController {
     // Returns to the starter page
     public void onReturn(ActionEvent event) throws IOException {
         Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/hello-view.fxml"));
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         stage.setTitle("MathCat");
