@@ -1,9 +1,9 @@
 package com.mathcat.mathcat.services;
 
 /**
-* Validates user input for login and account creation.
-*/
-public class UserServices {
+ * Validates user input for login and account creation.
+ */
+public class UserService {
 
     // FieldsEmpty methods check no fields are empty during the login or account creation process
     public static boolean FieldsEmpty(String username, String password) {
