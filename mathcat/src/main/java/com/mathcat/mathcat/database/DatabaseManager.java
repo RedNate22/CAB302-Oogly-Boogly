@@ -11,6 +11,15 @@ public class DatabaseManager {
     private static Connection connection;
 
     /**
+     * Replaces the active connection with an in-memory SQLite database.
+     * For use in tests only — data is lost when the connection closes.
+     * @throws SQLException if the in-memory connection cannot be created
+     */
+    public static void useInMemoryDatabase() throws SQLException {
+        connection = DriverManager.getConnection("jdbc:sqlite::memory:");
+    }
+
+    /**
      * Returns the active database connection, creating one if needed.
      * @return the SQLite connection
      * @throws SQLException if connection fails

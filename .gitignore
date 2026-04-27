@@ -67,4 +67,4 @@ build/
 .env
 
 ### SQLite ###
-.db
+*.db

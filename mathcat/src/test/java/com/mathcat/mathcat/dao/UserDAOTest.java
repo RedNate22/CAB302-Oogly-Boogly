@@ -1,269 +1,156 @@
 package com.mathcat.mathcat.dao;
 
+import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.User;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.mathcat.mathcat.dao.UserDAO.currentUser;
-import static com.mathcat.mathcat.dao.UserDAO.users;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserDAOTest {
 
-    @Test
-    // RUN INDIVIDUALLY
-    void noUsersExist() {
-        UserDAO userDAO = new UserDAO();
-        assertTrue(userDAO.NoUsersExist());
+    @BeforeAll
+    static void setupDatabase() throws SQLException {
+        DatabaseManager.useInMemoryDatabase();
+        DatabaseManager.initialiseDatabase();
     }
 
-    @Test
-    void oneUserExists() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        assertFalse(userDAO.NoUsersExist());
+    @BeforeEach
+    void clearUsers() throws SQLException {
+        try (Statement stmt = DatabaseManager.getConnection().createStatement()) {
+            stmt.execute("DELETE FROM users");
+        }
     }
 
-    @Test
-    void multipleUsersExist() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        assertFalse(userDAO.NoUsersExist());
+    @Nested
+    class FindAll {
+        @Test
+        void noUsersExist() throws SQLException {
+            assertTrue(UserDAO.findAll().isEmpty());
+        }
+
+        @Test
+        void oneUserExists() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertFalse(UserDAO.findAll().isEmpty());
+        }
+
+        @Test
+        void multipleUsersExist() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            UserDAO.insert(new User("Alex", "alex@gmail.com", "Y0Mama!"));
+            UserDAO.insert(new User("Zayan", "zayan@gmail.com", "Kitt3?%"));
+            assertEquals(3, UserDAO.findAll().size());
+        }
     }
 
-    @Test
-    void userNotNullOnMatch() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Tomas");
+    @Nested
+    class FindByUsername {
+        @Test
+        void returnsCorrectUser() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            User found = UserDAO.findByUsername("Nate");
+            assertNotNull(found);
+            assertEquals("Nate", found.getUsername());
+        }
 
-        assertFalse(userDAO.NoUserMatchFound(MatchedUser));
+        @Test
+        void returnsNullIfNotFound() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertNull(UserDAO.findByUsername("Jake"));
+        }
+
+        @Test
+        void isCaseSensitive() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertNull(UserDAO.findByUsername("nate"));
+        }
+
+        @Test
+        void returnsCorrectUserWithMultipleUsers() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            UserDAO.insert(new User("Alex", "alex@gmail.com", "Y0Mama!"));
+            UserDAO.insert(new User("Zayan", "zayan@gmail.com", "Kitt3?%"));
+            assertEquals("Nate", UserDAO.findByUsername("Nate").getUsername());
+            assertEquals("Alex", UserDAO.findByUsername("Alex").getUsername());
+            assertEquals("Zayan", UserDAO.findByUsername("Zayan").getUsername());
+        }
     }
 
-    @Test
-    void userMatchWithOneUserExisting() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Tomas");
+    @Nested
+    class FindByEmail {
+        @Test
+        void returnsCorrectUser() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            User found = UserDAO.findByEmail("nate@gmail.com");
+            assertNotNull(found);
+            assertEquals("nate@gmail.com", found.getEmail());
+        }
 
-        assertEquals("Tomas", MatchedUser.getUsername());
+        @Test
+        void returnsNullIfNotFound() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertNull(UserDAO.findByEmail("jake@gmail.com"));
+        }
     }
 
-    @Test
-    void userMatchWithMultipleUsersExisting() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
+    @Nested
+    class Password {
+        @Test
+        void storedCorrectly() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertEquals("Slay!22", UserDAO.findByUsername("Nate").getPassword());
+        }
 
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Alex");
-
-        assertEquals("Alex", MatchedUser.getUsername());
+        @Test
+        void wrongPasswordDoesNotMatch() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertNotEquals("WrongPassword1!", UserDAO.findByUsername("Nate").getPassword());
+        }
     }
 
-    @Test
-    void userMatchesWithMultipleUsersExisting() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        User matchedUser = null;
-
-        User MatchedUser1 = userDAO.UserMatch(matchedUser, "Alex");
-        assertEquals("Alex", MatchedUser1.getUsername());
-
-        User MatchedUser2 = userDAO.UserMatch(matchedUser, "Maison");
-        assertEquals("Maison", MatchedUser2.getUsername());
-
-        User MatchedUser3 = userDAO.UserMatch(matchedUser, "Tomas");
-        assertEquals("Tomas", MatchedUser3.getUsername());
+    @Nested
+    class DeleteByUsername {
+        @Test
+        void removesUser() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            UserDAO.deleteByUsername("Nate");
+            assertNull(UserDAO.findByUsername("Nate"));
+        }
     }
 
-    @Test
-    void noUserMatchFoundOneUserExists() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Jake");
-        assertTrue(userDAO.NoUserMatchFound(MatchedUser));
+    @Nested
+    class Id {
+        @Test
+        void assignedByDatabase() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertTrue(UserDAO.findByUsername("Nate").getId() > 0);
+        }
     }
 
-    @Test
-    void noUserMatchFoundMultipleUsersExists() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Jake");
-        assertTrue(userDAO.NoUserMatchFound(MatchedUser));
-    }
+    @Nested
+    class SetCurrentUser {
+        @Test
+        void storesCorrectUser() throws SQLException {
+            UserDAO.insert(new User("Alex", "alex@gmail.com", "Y0Mama!"));
+            UserDAO.setCurrentUser(UserDAO.findByUsername("Alex"));
+            assertEquals("Alex", UserDAO.currentUser.getUsername());
+            assertEquals("alex@gmail.com", UserDAO.currentUser.getEmail());
+            assertEquals("Y0Mama!", UserDAO.currentUser.getPassword());
+        }
 
-    @Test
-    void noUserMatchFoundCaseSensitive() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "tomas");
-        assertTrue(userDAO.NoUserMatchFound(MatchedUser));
-    }
-
-    @Test
-    void userPasswordMatch() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Tomas");
-
-        assertTrue(userDAO.UserPasswordMatch(MatchedUser, "Pi1otInterview!"));
-    }
-
-    @Test
-    void userPasswordDoesNotMatch() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Tomas");
-
-        assertFalse(userDAO.UserPasswordMatch(MatchedUser, "Pi2otInterview!"));
-    }
-
-    @Test
-    void setCurrentUserWithOneUserExisting() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Alex");
-        userDAO.SetCurrentUser(MatchedUser);
-        assertEquals("Alex", MatchedUser.getUsername());
-        assertEquals("alex@gmail.com", MatchedUser.getEmail());
-        assertEquals("Co1dPlay!?", MatchedUser.getPassword());
-    }
-
-    @Test
-    void setCurrentUserWithMultipleUsersExisting() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        User matchedUser = null;
-        User MatchedUser = userDAO.UserMatch(matchedUser, "Alex");
-        userDAO.SetCurrentUser(MatchedUser);
-        assertEquals("Alex", MatchedUser.getUsername());
-        assertEquals("alex@gmail.com", MatchedUser.getEmail());
-        assertEquals("Co1dPlay!?", MatchedUser.getPassword());
-    }
-
-    @Test
-    void userDoesExist() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        assertTrue(userDAO.UserExists("Alex", "alex@gmail.com"));
-    }
-
-    @Test
-    void userDoesNotExist() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        assertFalse(userDAO.UserExists("Dingo", "dingo@gmail.com"));
-    }
-
-    @Test
-    void userDoesExistOnlyUsernameSame() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        assertTrue(userDAO.UserExists("Tomas", "tomasds@gmail.com"));
-    }
-
-    @Test
-    void userDoesExistCaseSensitiveUsername() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        assertTrue(userDAO.UserExists("alex", "alex@gmail.com"));
-    }
-
-    @Test
-    void userDoesExistOnlyEmailSame() {
-        UserDAO userDAO = new UserDAO();
-        userDAO.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDAO.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDAO.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        assertTrue(userDAO.UserExists("Maison", "maisonrose@gmail.com"));
-    }
-
-    @Test
-    // RUN INDIVIDUALLY
-    void newUsers() {
-        UserDAO userDao = new UserDAO();
-        userDao.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDao.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDao.NewUser("Tomas", "tomas@gmail.com", "Pi1otInterview!");
-
-        assertEquals(3, users.size());
-
-        User matchedUser = null;
-
-        User MatchedUser1 = userDao.UserMatch(matchedUser, "Alex");
-        assertEquals(2, MatchedUser1.getId());
-        assertEquals("Alex", MatchedUser1.getUsername());
-        assertEquals("alex@gmail.com", MatchedUser1.getEmail());
-        assertEquals("Co1dPlay!?", MatchedUser1.getPassword());
-
-        User MatchedUser2 = userDao.UserMatch(matchedUser, "Maison");
-        assertEquals(1, MatchedUser2.getId());
-        assertEquals("Maison", MatchedUser2.getUsername());
-        assertEquals("maisonrose@gmail.com", MatchedUser2.getEmail());
-        assertEquals("Delancey26!", MatchedUser2.getPassword());
-
-        User MatchedUser3 = userDao.UserMatch(matchedUser, "Tomas");
-        assertEquals(3, MatchedUser3.getId());
-        assertEquals("Tomas", MatchedUser3.getUsername());
-        assertEquals("tomas@gmail.com", MatchedUser3.getEmail());
-        assertEquals("Pi1otInterview!", MatchedUser3.getPassword());
-    }
-
-    @Test
-    // RUN INDIVIDUALLY
-    void newUsersCurrentUser() {
-        UserDAO userDao = new UserDAO();
-        userDao.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-        userDao.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-
-        assertEquals(2, currentUser.getId());
-        assertEquals("Alex", currentUser.getUsername());
-        assertEquals("alex@gmail.com", currentUser.getEmail());
-        assertEquals("Co1dPlay!?", currentUser.getPassword());
-    }
-
-    @Test
-    void newUsersNotCurrentUser() {
-        UserDAO userDao = new UserDAO();
-        userDao.NewUser("Alex", "alex@gmail.com", "Co1dPlay!?");
-        userDao.NewUser("Maison", "maisonrose@gmail.com", "Delancey26!");
-
-        assertNotEquals(1, currentUser.getId());
-        assertNotEquals("Alex", currentUser.getUsername());
-        assertNotEquals("alex@gmail.com", currentUser.getEmail());
-        assertNotEquals("Co1dPlay!?", currentUser.getPassword());
+        @Test
+        void storesCorrectUserWithMultipleUsers() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            UserDAO.insert(new User("Alex", "alex@gmail.com", "Y0Mama!"));
+            UserDAO.setCurrentUser(UserDAO.findByUsername("Alex"));
+            assertEquals("Alex", UserDAO.currentUser.getUsername());
+            assertNotEquals("Nate", UserDAO.currentUser.getUsername());
+        }
     }
 }
