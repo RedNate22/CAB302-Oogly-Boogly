@@ -28,7 +28,7 @@ public final class Item {
     }
 
     /**
-     * Creates a new Item that applies a stat effect when used. If effectType is COSMETIC,
+     * Creates a new Item that applies a stat effect when used. If effectType is {@link ItemEffectType#COSMETIC},
      * effectAmount is forced to 0.0.
      *
      * @param itemId unique catalog identifier (e.g. "FOOD_TUNA")
@@ -37,7 +37,8 @@ public final class Item {
      * @param effectType the type of stat this item affects
      * @param effectAmount the magnitude of the effect
      */
-    public Item(String itemId, String itemName, String itemImage, ItemEffectType effectType, double effectAmount) {
+    public Item(String itemId, String itemName, String itemImage, ItemEffectType effectType,
+            double effectAmount) {
         this.itemId = itemId;
         this.itemName = itemName;
         this.itemImage = itemImage;
@@ -50,56 +51,58 @@ public final class Item {
     }
 
     /**
-     * @return String
+     * @return the item's unique catalog identifier
      */
     public String getItemId() {
         return itemId;
     }
 
     /**
-     * @param itemId
+     * @param itemId the new catalog identifier
      */
     public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
     /**
-     * @return String
+     * @return the item's display name
      */
     public String getItemName() {
         return itemName;
     }
 
     /**
-     * @param itemName
+     * @param itemName the new display name
      */
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
 
     /**
-     * @return String
+     * @return file path to the item's sprite image
      */
     public String getItemImage() {
         return itemImage;
     }
 
     /**
-     * @param itemImage
+     * @param itemImage file path to the item's sprite image
      */
     public void setItemImage(String itemImage) {
         this.itemImage = itemImage;
     }
 
     /**
-     * @return ItemEffectType
+     * @return the {@link ItemEffectType} describing which stat this item affects
      */
     public ItemEffectType getEffectType() {
         return effectType;
     }
 
     /**
-     * @param effectType
+     * Sets the effect type. If set to {@link ItemEffectType#COSMETIC}, resets effectAmount to 0.
+     *
+     * @param effectType the new effect type
      */
     public void setEffectType(ItemEffectType effectType) {
         if (effectType == ItemEffectType.COSMETIC) {
@@ -111,14 +114,16 @@ public final class Item {
     }
 
     /**
-     * @return double
+     * @return the magnitude of the stat effect applied when this item is used
      */
     public double getEffectAmount() {
         return effectAmount;
     }
 
     /**
-     * @param effectAmount
+     * Sets the effect amount. Has no effect if this item's type is {@link ItemEffectType#COSMETIC}.
+     *
+     * @param effectAmount the new effect magnitude
      */
     public void setEffectAmount(double effectAmount) {
         if (this.effectType == ItemEffectType.COSMETIC) {
@@ -129,8 +134,8 @@ public final class Item {
     }
 
     /**
-     * Applies this item's effect to the cat by calling the appropriate CatService method.
-     * Cosmetic items have no stat effect.
+     * Applies this item's effect to the cat by calling the appropriate {@link CatService} method. Cosmetic
+     * items have no stat effect.
      *
      * @param cat the cat to apply the effect to
      */

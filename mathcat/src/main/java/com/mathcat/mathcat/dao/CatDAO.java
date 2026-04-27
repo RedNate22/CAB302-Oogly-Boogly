@@ -4,7 +4,9 @@ import com.mathcat.mathcat.models.Cat;
 import java.util.ArrayList;
 
 /**
- * 
+ * In-memory data access object for {@link Cat} entities.
+ * Provides static CRUD operations backed by an in-memory list,
+ * with auto-incrementing ID assignment on insert.
  */
 public class CatDAO {
     private static ArrayList<Cat> cats = new ArrayList<>();
@@ -14,7 +16,7 @@ public class CatDAO {
      * Saves a cat. If the cat has no ID, assigns one and adds it. If the cat already has an ID,
      * updates the existing entry.
      * 
-     * @param cat the cat to save
+     * @param cat the {@link Cat} to save
      */
     public static void save(Cat cat) {
         if (cat.getCatId() == 0) {
@@ -36,7 +38,7 @@ public class CatDAO {
      * Retrieves the cat associated with the given user ID.
      * 
      * @param userId the ID of the owning user
-     * @return the cat belonging to the user, or null if not found
+     * @return the {@link Cat} belonging to the user, or {@code null} if not found
      */
     public static Cat load(int userId) {
         for (Cat cat : cats) {

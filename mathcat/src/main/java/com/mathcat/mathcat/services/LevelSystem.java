@@ -4,7 +4,7 @@ import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.models.Cat;
 
 /**
- * Manages XP gain and level progression rules for the cat. The Cat holds current XP and level as
+ * Manages XP gain and level progression rules for the cat. The {@link Cat} holds current XP and level as
  * data; this class owns the rules.
  */
 public final class LevelSystem {
@@ -31,9 +31,9 @@ public final class LevelSystem {
 
     /**
      * Returns the XP required to reach the next level from the given level.
-     * 
+     *
      * @param level the current level
-     * @return the XP threshold for the next level, or -1 if already at max level.
+     * @return the XP threshold for the next level, or -1 if already at {@link #MAX_LEVEL}
      */
     public static double getXpToNextLevel(int level) {
         if (level >= MAX_LEVEL)
@@ -55,7 +55,7 @@ public final class LevelSystem {
 
     /**
      * Increments the cat's level. Excess XP carries over to the next level. Does nothing if the cat
-     * is already at max level.
+     * is already at {@link #MAX_LEVEL}.
      * 
      * @param cat the cat to level up.
      */
@@ -70,7 +70,7 @@ public final class LevelSystem {
     }
 
     /**
-     * Adds XP to the cat and triggers a level up if the threshold is reached.
+     * Adds XP to the cat and triggers a {@link #levelUp(Cat) level up} if the threshold is reached.
      * 
      * @param cat the cat to apply XP to
      * @param amount the amount of XP to add

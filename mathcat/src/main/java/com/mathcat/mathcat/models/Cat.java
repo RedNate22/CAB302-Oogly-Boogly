@@ -1,6 +1,7 @@
 package com.mathcat.mathcat.models;
 
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -24,6 +25,10 @@ public final class Cat {
     // Metadata: to calculate offline stat decay
     private LocalDateTime lastSaved;
 
+    // Daily energy cap tracking
+    private double dailyEnergyGained;
+    private LocalDate energyCapResetDate;
+
     /**
      * Creates a new Cat with default stats at full happiness and fullness, zero energy, level 1, no
      * XP, and no items.
@@ -37,10 +42,12 @@ public final class Cat {
         this.catSprite = null;
         this.happiness = 100.00;
         this.fullness = 100.00;
-        this.energy = 0.00;
+        this.energy = 100.00;
         this.level = 1;
         this.xp = 0.00;
         this.items = new ArrayList<>();
+        this.dailyEnergyGained = 0.0;
+        this.energyCapResetDate = null;
     }
 
     /**
@@ -51,7 +58,7 @@ public final class Cat {
     }
 
     /**
-     * Sets the cat's unique ID. Should only be called by CatDAO after persisting.
+     * Sets the cat's unique ID. Should only be called by {@link com.mathcat.mathcat.dao.CatDAO CatDAO} after persisting.
      * 
      * @param catId the ID assigned by the data store
      */
@@ -88,21 +95,21 @@ public final class Cat {
     }
 
     /**
-     * @return current happiness, between MIN_STAT and MAX_STAT
+     * @return current happiness, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
      */
     public double getHappiness() {
         return happiness;
     }
 
     /**
-     * @param happines the new happiness value
+     * @param happiness the new happiness value
      */
     public void setHappiness(double happiness) {
         this.happiness = happiness;
     }
 
     /**
-     * @return current fullness, between MIN_STAT and MAX_STAT
+     * @return current fullness, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
      */
     public double getFullness() {
         return fullness;
@@ -116,7 +123,7 @@ public final class Cat {
     }
 
     /**
-     * @return the current energy, between MIN_STAT and MAX_STAT
+     * @return the current energy, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
      */
     public double getEnergy() {
         return energy;
@@ -165,7 +172,7 @@ public final class Cat {
     }
 
     /**
-     * @param userId the ID of the owning user, assigned by CatDAO
+     * @param userId the ID of the owning user, assigned by {@link com.mathcat.mathcat.dao.CatDAO CatDAO}
      */
     public void setUserId(int userId) {
         this.userId = userId;
@@ -197,5 +204,33 @@ public final class Cat {
      */
     public void setLastSaved(LocalDateTime lastSaved) {
         this.lastSaved = lastSaved;
+    }
+
+    /**
+     * @return total energy gained today via regeneration
+     */
+    public double getDailyEnergyGained() {
+        return dailyEnergyGained;
+    }
+
+    /**
+     * @param dailyEnergyGained the new daily energy gained total
+     */
+    public void setDailyEnergyGained(double dailyEnergyGained) {
+        this.dailyEnergyGained = dailyEnergyGained;
+    }
+
+    /**
+     * @return the date the daily energy cap was last reset, or {@code null} if never reset
+     */
+    public LocalDate getEnergyCapResetDate() {
+        return energyCapResetDate;
+    }
+
+    /**
+     * @param energyCapResetDate the date to record as the last cap reset
+     */
+    public void setEnergyCapResetDate(LocalDate energyCapResetDate) {
+        this.energyCapResetDate = energyCapResetDate;
     }
 }

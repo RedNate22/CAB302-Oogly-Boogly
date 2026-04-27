@@ -7,7 +7,7 @@ import javafx.util.Duration;
 
 /**
  * Drives the periodic stat decay loop for the cat using a JavaFX Timeline.
- * Singleton — use getInstance() to ensure only one timeline runs at a time.
+ * Singleton — use {@link #getInstance()} to ensure only one timeline runs at a time.
  */
 public class CatScheduler {
     private static CatScheduler instance;
@@ -27,7 +27,7 @@ public class CatScheduler {
 
     /**
      * Starts the decay timeline, firing every minute. Stops any existing timeline first so
-     * calling start() again (e.g. on re-entering the home screen) never stacks decay ticks.
+     * calling {@link #start(Cat)} again (e.g. on re-entering the home screen) never stacks decay ticks.
      *
      * @param cat the cat to apply decay to
      */
@@ -52,7 +52,7 @@ public class CatScheduler {
     }
 
     /**
-     * Called on each timeline tick to apply stat decay and energy regeneration.
+     * Called on each timeline tick to apply stat decay and energy regeneration via {@link CatService}.
      * 
      * @param cat the cat to update
      */
@@ -64,8 +64,8 @@ public class CatScheduler {
     }
 
     /**
-     * Restarts the decay timeline.
-     * 
+     * Restarts the decay timeline. Equivalent to calling {@link #stop()} then {@link #start(Cat)}.
+     *
      * @param cat the cat to apply decay to
      */
     public void restart(Cat cat) {

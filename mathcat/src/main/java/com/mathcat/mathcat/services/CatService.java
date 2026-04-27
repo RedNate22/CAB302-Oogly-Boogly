@@ -1,6 +1,7 @@
 package com.mathcat.mathcat.services;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
@@ -17,6 +18,7 @@ public final class CatService {
     public static final double ENERGY_REGEN_RATE = 1.0; // per min at max fullness: hits 100 in ~100
                                                         // min
     public static final double HUNGER_THRESHOLD = 25.0;
+    public static final double DAILY_ENERGY_CAP = 100.0;
 
     private CatService() {}
 
@@ -30,7 +32,7 @@ public final class CatService {
 
     /**
      * @param value the stat value to validate
-     * @return true if the value is within MIN_STAT and MAX_STAT bounds
+     * @return true if the value is within {@link #MIN_STAT} and {@link #MAX_STAT} bounds
      */
     public static boolean isValidStatValue(double value) {
         return (value >= MIN_STAT && value <= MAX_STAT);
@@ -49,7 +51,7 @@ public final class CatService {
     }
 
     /**
-     * Clamps a stat value between the standard MIN_STAT and MAX_STAT bounds.
+     * Clamps a stat value between the standard {@link #MIN_STAT} and {@link #MAX_STAT} bounds.
      * 
      * @param value the stat value to clamp
      * @return the clamped value
@@ -90,7 +92,7 @@ public final class CatService {
 
     /**
      * @param cat the cat to increase fullness for
-     * @param value the amount to decrease by
+     * @param value the amount to increase by
      */
     public static void increaseFullness(Cat cat, double value) {
         cat.setFullness(clampStat(cat.getFullness() + value));
@@ -139,15 +141,27 @@ public final class CatService {
     }
 
     /**
-     * Called by CatScheduler periodically to regenerate energy proportionally to current state of
-     * fullness.
-     * 
+     * Called by {@link CatScheduler} periodically to regenerate energy proportionally to current fullness,
+     * subject to a daily cap ({@link #DAILY_ENERGY_CAP}). Resets the cap counter at the start of each new calendar day.
+     *
      * @param cat the cat to regenerate energy for
      */
     public static void regenerateEnergy(Cat cat) {
+        LocalDate today = LocalDate.now();
+        if (cat.getEnergyCapResetDate() == null || !cat.getEnergyCapResetDate().equals(today)) {
+            cat.setDailyEnergyGained(0.0);
+            cat.setEnergyCapResetDate(today);
+        }
+
+        if (cat.getDailyEnergyGained() >= DAILY_ENERGY_CAP)
+            return;
+
         double proportion = cat.getFullness() / MAX_STAT;
         double regen = proportion * ENERGY_REGEN_RATE;
+        regen = Math.min(regen, DAILY_ENERGY_CAP - cat.getDailyEnergyGained());
+
         cat.setEnergy(clampStat(cat.getEnergy() + regen));
+        cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
     }
@@ -174,14 +188,14 @@ public final class CatService {
 
     /**
      * @param cat the cat to check hunger of
-     * @return true if the cat's fullness is at or below HUNGER_THRESHOLD
+     * @return true if the cat's fullness is at or below {@link #HUNGER_THRESHOLD}
      */
     public static boolean isHungry(Cat cat) {
         return (cat.getFullness() <= HUNGER_THRESHOLD);
     }
 
     /**
-     * Applies an additional happiness penalty if the cat's fullness is below HUNGER_THRESHOLD.
+     * Applies an additional happiness penalty if the cat's fullness is below {@link #HUNGER_THRESHOLD}.
      *
      * @param cat the cat to apply the penalty to
      */
