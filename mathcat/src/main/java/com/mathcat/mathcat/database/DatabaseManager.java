@@ -11,6 +11,15 @@ public class DatabaseManager {
     private static Connection connection;
 
     /**
+     * Replaces the active connection with an in-memory SQLite database.
+     * For use in tests only — data is lost when the connection closes.
+     * @throws SQLException if the in-memory connection cannot be created
+     */
+    public static void useInMemoryDatabase() throws SQLException {
+        connection = DriverManager.getConnection("jdbc:sqlite::memory:");
+    }
+
+    /**
      * Returns the active database connection, creating one if needed.
      * @return the SQLite connection
      * @throws SQLException if connection fails
@@ -37,32 +46,32 @@ public class DatabaseManager {
                 """;
 
         String createPetsTable = """
-        CREATE TABLE IF NOT EXISTS pets (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
-            cat_name TEXT,
-            cat_sprite TEXT,
-            happiness REAL DEFAULT 100.0,
-            fullness REAL DEFAULT 100.0,
-            energy REAL DEFAULT 100.0,
-            level INTEGER DEFAULT 1,
-            xp REAL DEFAULT 0.0,
-            last_saved TEXT,
-            daily_energy_gained REAL DEFAULT 0.0,
-            energy_cap_reset_date TEXT,
-            FOREIGN KEY (user_id) REFERENCES users(id)
-        );
-        """;
+                CREATE TABLE IF NOT EXISTS pets (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    cat_name TEXT,
+                    cat_sprite TEXT,
+                    happiness REAL DEFAULT 100.0,
+                    fullness REAL DEFAULT 100.0,
+                    energy REAL DEFAULT 100.0,
+                    level INTEGER DEFAULT 1,
+                    xp REAL DEFAULT 0.0,
+                    last_saved TEXT,
+                    daily_energy_gained REAL DEFAULT 0.0,
+                    energy_cap_reset_date TEXT,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                );
+                """;
 
         String createItemsTable = """
-        CREATE TABLE IF NOT EXISTS items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            pet_id INTEGER NOT NULL,
-            item_id TEXT NOT NULL,
-            quantity INTEGER DEFAULT 1,
-            FOREIGN KEY (pet_id) REFERENCES pets(id)
-        );
-        """;
+                CREATE TABLE IF NOT EXISTS items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    pet_id INTEGER NOT NULL,
+                    item_id TEXT NOT NULL,
+                    quantity INTEGER DEFAULT 1,
+                    FOREIGN KEY (pet_id) REFERENCES pets(id)
+                );
+                """;
 
         try (Statement stmt = getConnection().createStatement()) {
             stmt.execute(createUsersTable);

@@ -7,10 +7,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import com.mathcat.mathcat.database.DatabaseManager;
 
-
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class MathCatApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Initialise the SQLite database and create tables if they don't exist
@@ -20,7 +19,7 @@ public class HelloApplication extends Application {
                 "/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"), 12);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-                HelloApplication.class.getResource("/com/mathcat/mathcat/hello-view.fxml"));
+                MathCatApp.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);
