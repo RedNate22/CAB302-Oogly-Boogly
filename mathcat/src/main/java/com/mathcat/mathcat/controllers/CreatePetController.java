@@ -31,7 +31,8 @@ public class CreatePetController {
     }
 
     /**
-     * Handles logout logic for MathCat in the Create Pet screen.
+     * Handles logout logic for MathCat in the Create Pet screen,
+     * returns user to initial screen.
      * @param event gets the window/stage for the main screen
      * @throws IOException if listed screen does not exist
      */
