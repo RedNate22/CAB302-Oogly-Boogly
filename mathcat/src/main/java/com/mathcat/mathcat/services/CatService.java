@@ -13,7 +13,7 @@ import com.mathcat.mathcat.dao.CatDAO;
 public final class CatService {
     public static final double MAX_STAT = 100.0;
     public static final double MIN_STAT = 0.00;
-    public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
+    public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours normally, ~8 hours when hungry (0.07 + 0.07*2 penalty = 0.21/min)
     public static final double FULLNESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
     public static final double ENERGY_REGEN_RATE = 1.0; // per min at max fullness: hits 100 in ~100
                                                         // min
