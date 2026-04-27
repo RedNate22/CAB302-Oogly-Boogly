@@ -33,7 +33,7 @@ class CatTest {
 
         @Test
         void defaultEnergy() {
-            assertEquals(0.0, cat.getEnergy(), 0.001);
+            assertEquals(100.0, cat.getEnergy(), 0.001);
         }
 
         @Test

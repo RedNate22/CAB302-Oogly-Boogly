@@ -14,6 +14,9 @@ module com.mathcat.mathcat {
 
     opens com.mathcat.mathcat to javafx.fxml;
     opens com.mathcat.mathcat.controllers to javafx.fxml;
+    opens com.mathcat.mathcat.models;
+    opens com.mathcat.mathcat.services;
+    opens com.mathcat.mathcat.dao;
 
     exports com.mathcat.mathcat;
     exports com.mathcat.mathcat.controllers;
