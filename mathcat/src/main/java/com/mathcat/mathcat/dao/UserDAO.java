@@ -1,72 +1,103 @@
 package com.mathcat.mathcat.dao;
 
+import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.User;
-
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
 /**
-* Handles user lookup, creation, and session state using an in-memory store.
-* Will be refactored to use SQLite when the database layer is implemented.
-*/
+ * Data Access Object for User database operations.
+ * Handles only raw SQL queries — no business logic.
+ * Business rules should be handled by UserService.
+ */
 public class UserDAO {
-    // Stores the list of registered users, the user that is currently being utilised and the number of ID to be assigned to new users
-    public static ArrayList<User> users = new ArrayList<>();
-    public static User currentUser;
-    public static int Id = 1;
 
-    /*
-     * Login page methods
+    /**
+     * Inserts a new user into the database.
+     * @param user the user to save
      */
-
-    // Checks if any users accounts have been created yet
-    public boolean NoUsersExist() {
-        return UserDAO.users.isEmpty();
+    public static void insert(User user) throws SQLException {
+        String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.executeUpdate();
+        }
     }
 
-    // Looks for user in users to see if it exists
-    public User UserMatch(User matchedUser, String username) {
-        for (User user : UserDAO.users) {
-            if (user.getUsername().equals(username)) {
-                matchedUser = user;
-                break; // user found; stop searching
+    /**
+     * Finds a user by their username.
+     * @param username the username to search for
+     * @return the User if found, null otherwise
+     */
+    public static User findByUsername(String username) throws SQLException {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                );
             }
         }
-        return matchedUser;
+        return null;
     }
 
-    // A user was not found if matchedUser is null
-    public boolean NoUserMatchFound(User matchedUser) {
-        return (matchedUser == null);
-    }
-
-    // Username has a match, but check if the password matches too
-    public boolean UserPasswordMatch(User matchedUser, String password) {
-        return (password.equals(matchedUser.getPassword()));
-    }
-
-    public void SetCurrentUser(User matchedUser) {
-        UserDAO.currentUser = matchedUser;
-    }
-
-    /*
-     * Create Account page methods
+    /**
+     * Finds a user by their email address.
+     * @param email the email to search for
+     * @return the User if found, null otherwise
      */
-    // Checks if the user exists in the users array. Ignores case sensitivity and only identifies matching characters
-    public boolean UserExists(String username, String email) {
-        boolean exists = false;
-
-        for (User user : UserDAO.users) {
-            if (user.getUsername().equalsIgnoreCase(username) || user.getEmail().equals(email)) {
-                exists = true;
-                break;
+    public static User findByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                );
             }
         }
-        return exists;
+        return null;
     }
-    // Creates new user with inputted details, user id is set within the creation of User.
-    public void NewUser(String username, String email, String password) {
-        UserDAO.currentUser = new User(username, email, password);
-        UserDAO.Id++;
 
-        UserDAO.users.add(UserDAO.currentUser);
+    /**
+     * Returns all users from the database.
+     * @return list of all users
+     */
+    public static List<User> findAll() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+        try (Statement stmt = DatabaseManager.getConnection().createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                users.add(new User(
+                        rs.getString("username"),
+                        rs.getString("email"),
+                        rs.getString("password")
+                ));
+            }
+        }
+        return users;
+    }
+
+    /**
+     * Deletes a user by their username.
+     * @param username the username of the user to delete
+     */
+    public static void deleteByUsername(String username) throws SQLException {
+        String sql = "DELETE FROM users WHERE username = ?";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }
     }
 }
