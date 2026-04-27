@@ -37,31 +37,32 @@ public class DatabaseManager {
                 """;
 
         String createPetsTable = """
-                CREATE TABLE IF NOT EXISTS pets (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER NOT NULL,
-                    pet_name TEXT,
-                    appearance TEXT,
-                    level INTEGER DEFAULT 1,
-                    xp INTEGER DEFAULT 0,
-                    happiness INTEGER DEFAULT 100,
-                    energy INTEGER DEFAULT 100,
-                    fullness INTEGER DEFAULT 100,
-                    currency INTEGER DEFAULT 0,
-                    FOREIGN KEY (user_id) REFERENCES users(id)
-                );
-                """;
+        CREATE TABLE IF NOT EXISTS pets (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            cat_name TEXT,
+            cat_sprite TEXT,
+            happiness REAL DEFAULT 100.0,
+            fullness REAL DEFAULT 100.0,
+            energy REAL DEFAULT 100.0,
+            level INTEGER DEFAULT 1,
+            xp REAL DEFAULT 0.0,
+            last_saved TEXT,
+            daily_energy_gained REAL DEFAULT 0.0,
+            energy_cap_reset_date TEXT,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        );
+        """;
 
         String createItemsTable = """
-                CREATE TABLE IF NOT EXISTS items (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    pet_id INTEGER NOT NULL,
-                    item_name TEXT NOT NULL,
-                    item_type TEXT NOT NULL,
-                    quantity INTEGER DEFAULT 1,
-                    FOREIGN KEY (pet_id) REFERENCES pets(id)
-                );
-                """;
+        CREATE TABLE IF NOT EXISTS items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pet_id INTEGER NOT NULL,
+            item_id TEXT NOT NULL,
+            quantity INTEGER DEFAULT 1,
+            FOREIGN KEY (pet_id) REFERENCES pets(id)
+        );
+        """;
 
         try (Statement stmt = getConnection().createStatement()) {
             stmt.execute(createUsersTable);
