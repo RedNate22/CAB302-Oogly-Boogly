@@ -13,7 +13,8 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.id = UserDAO.nextId;
+        // TODO Implement User ID and don't reference it here, (instead reference in service layer?)
+        // ! this.id = UserDAO.nextId;
     }
 
     public String getUsername() {

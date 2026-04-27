@@ -1,101 +1,98 @@
 package com.mathcat.mathcat.dao;
 
+import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.User;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Handles user lookup, creation, and session state using an in-memory store. Will be refactored to
- * use SQLite when the database layer is implemented.
+ * Data Access Object for User database operations. Handles only raw SQL queries — no business
+ * logic. Business rules should be handled by UserService.
  */
 public class UserDAO {
-    // Stores the list of registered users, the user that is currently being utilised and the number
-    // of ID to be assigned to new users
-    private static ArrayList<User> users = new ArrayList<>();
-    public static User currentUser;
-    public static int nextId = 1;
 
     /**
-     * @return true if no user accounts have been created yet
+     * Inserts a new user into the database.
+     * 
+     * @param user the user to save
      */
-    public static boolean noUsersExist() {
-        return UserDAO.users.isEmpty();
+    public static void insert(User user) throws SQLException {
+        String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.executeUpdate();
+        }
     }
 
     /**
-     * Searches for a user by username.
+     * Finds a user by their username.
      * 
      * @param username the username to search for
-     * @return the matching User, or null if not found
+     * @return the User if found, null otherwise
      */
-    public static User userMatch(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return user;
+    public static User findByUsername(String username) throws SQLException {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getString("username"), rs.getString("email"),
+                        rs.getString("password"));
             }
         }
         return null;
     }
 
     /**
-     * @param matchedUser the result of a user lookup
-     * @return true if no matching user was found
-     */
-    public static boolean noUserMatchFound(User matchedUser) {
-        return (matchedUser == null);
-    }
-
-    /**
-     * @param matchedUser the user to check the password against
-     * @param password the password to verify
-     * @return true if the password matches
-     */
-    public static boolean userPasswordMatch(User matchedUser, String password) {
-        return (password.equals(matchedUser.getPassword()));
-    }
-
-    /**
-     * Sets the currently logged in user.
+     * Finds a user by their email address.
      * 
-     * @param user the user to set as current
+     * @param email the email to search for
+     * @return the User if found, null otherwise
      */
-    public static void setCurrentUser(User user) {
-        currentUser = user;
-    }
-
-    /**
-     * @return the currently logged in user
-     */
-    public static User getCurrentUser() {
-        return currentUser;
-    }
-
-    /**
-     * Checks if a user with the given username or email already exists.
-     * 
-     * @param username the username to check
-     * @param email the email to check
-     * @return true if a matching user exists
-     */
-    public static boolean userExists(String username, String email) {
-        for (User user : users) {
-            if (user.getUsername().equalsIgnoreCase(username) || user.getEmail().equals(email)) {
-                return true;
+    public static User findByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(rs.getString("username"), rs.getString("email"),
+                        rs.getString("password"));
             }
         }
-        return false;
+        return null;
     }
 
     /**
-     * Creates a new user, assigns an ID, and sets them as the current user.
+     * Returns all users from the database.
      * 
-     * @param username the new user's username
-     * @param email the new user's email
-     * @param password the new user's password
+     * @return list of all users
      */
-    public static void newUser(String username, String email, String password) {
-        User user = new User(username, email, password);
-        user.setId(nextId++);
-        currentUser = user;
-        users.add(user);
+    public static List<User> findAll() throws SQLException {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+        try (Statement stmt = DatabaseManager.getConnection().createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                users.add(new User(rs.getString("username"), rs.getString("email"),
+                        rs.getString("password")));
+            }
+        }
+        return users;
+    }
+
+    /**
+     * Deletes a user by their username.
+     * 
+     * @param username the username of the user to delete
+     */
+    public static void deleteByUsername(String username) throws SQLException {
+        String sql = "DELETE FROM users WHERE username = ?";
+        try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, username);
+            stmt.executeUpdate();
+        }
     }
 }
