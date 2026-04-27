@@ -10,7 +10,13 @@ import java.util.List;
  * Data Access Object for User database operations. Handles only raw SQL queries — no business
  * logic. Business rules should be handled by UserService.
  */
-public class UserDAO {
+public final class UserDAO {
+
+    public static User currentUser;
+
+    public static void setCurrentUser(User user) {
+        currentUser = user;
+    }
 
     /**
      * Inserts a new user into the database.
@@ -39,8 +45,10 @@ public class UserDAO {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new User(rs.getString("username"), rs.getString("email"),
+                User user = new User(rs.getString("username"), rs.getString("email"),
                         rs.getString("password"));
+                user.setId(rs.getInt("id"));
+                return user;
             }
         }
         return null;
@@ -58,8 +66,10 @@ public class UserDAO {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new User(rs.getString("username"), rs.getString("email"),
+                User user = new User(rs.getString("username"), rs.getString("email"),
                         rs.getString("password"));
+                user.setId(rs.getInt("id"));
+                return user;
             }
         }
         return null;

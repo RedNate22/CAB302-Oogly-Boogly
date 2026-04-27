@@ -10,7 +10,7 @@ module com.mathcat.mathcat {
     requires java.net.http;
     requires com.google.gson;
     requires io.github.cdimascio.dotenv.java;
-    requires java.sql;
+    requires transitive java.sql;
 
     opens com.mathcat.mathcat to javafx.fxml;
     opens com.mathcat.mathcat.controllers to javafx.fxml;

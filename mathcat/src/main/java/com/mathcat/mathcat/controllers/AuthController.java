@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.mathcat.mathcat.services.UserService;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -31,8 +32,6 @@ public class AuthController {
     @FXML
     private Label error;
 
-    private final UserDAO userDAO = new UserDAO();
-
     @FXML
     // When pressing Login inside the login page
     // Checks the fields aren't empty, an account exists, and validity of details. Scans over the
@@ -50,25 +49,24 @@ public class AuthController {
             return;
         }
 
-        if (UserDAO.noUsersExist()) {
-            error.setText("No Accounts Exist. Please create an account.");
+        User matchedUser;
+        try {
+            matchedUser = UserDAO.findByUsername(username);
+        } catch (SQLException e) {
+            error.setText("Database error. Please try again.");
             return;
         }
 
-        User matchedUser = UserDAO.userMatch(username);
-
-        if (UserDAO.noUserMatchFound(matchedUser)) {
+        if (matchedUser == null) {
             error.setText("This account does not exist.");
             return;
         }
 
-        if (!UserDAO.userPasswordMatch(matchedUser, password)) {
+        if (!matchedUser.getPassword().equals(password)) {
             error.setText("Password is incorrect. Please try again");
             return;
         }
 
-        // Only gets here if all above checks pass
-        // System.out.println("Login Successful; Matching details");
         UserDAO.setCurrentUser(matchedUser);
 
         Parent root =
@@ -115,19 +113,25 @@ public class AuthController {
             return;
         }
 
-        if (!UserDAO.userExists(username, email)) {
-            UserDAO.newUser(username, email, password);
+        try {
+            boolean exists = UserDAO.findByUsername(username) != null
+                    || UserDAO.findByEmail(email) != null;
+            if (!exists) {
+                UserDAO.insert(new User(username, email, password));
+                UserDAO.setCurrentUser(UserDAO.findByUsername(username));
 
-            Parent root = FXMLLoader
-                    .load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            Scene scene = new Scene(root, 700, 400);
-            stage.setTitle("MathCat");
-            stage.setScene(scene);
-            stage.show();
-        } else {
-            error.setText("Username or email already exists");
+                Parent root = FXMLLoader
+                        .load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 700, 400);
+                stage.setTitle("MathCat");
+                stage.setScene(scene);
+                stage.show();
+            } else {
+                error.setText("Username or email already exists");
+            }
+        } catch (SQLException e) {
+            error.setText("Database error. Please try again.");
         }
     }
 
