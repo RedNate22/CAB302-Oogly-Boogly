@@ -47,4 +47,14 @@ public class PlayController {
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
+
+    public void onPressPlay(ActionEvent event) throws IOException {
+        Parent root = 
+            FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
+    }
 }

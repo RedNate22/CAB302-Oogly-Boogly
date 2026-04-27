@@ -18,23 +18,23 @@ import com.mathcat.mathcat.session.userSession;
  */
 public class homeController {
     // This section is just so that the current user's name is displayed when entering
-    @FXML
-    private Label usernameLabel;
+    // @FXML
+    // private Label usernameLabel;
 
-    @FXML
-    private Label emailLabel;
+    // @FXML
+    // private Label emailLabel;
 
-    @FXML
-    private Label petName; 
+    // @FXML
+    // private Label petName; 
 
-    @FXML
+    // @FXML
     
-    public void initialize() {
-        usernameLabel.setText(userSession.currentUser.getUsername());
-        emailLabel.setText(userSession.currentUser.getEmail());
-        // below "getPetName" needs to be created for this to work
-        // petName.setText(userSession.currentUser.getPetName());
-    }
+    // public void initialize() {
+    //     usernameLabel.setText(userSession.currentUser.getUsername());
+    //     emailLabel.setText(userSession.currentUser.getEmail());
+    //     // below "getPetName" needs to be created for this to work
+    //     // petName.setText(userSession.currentUser.getPetName());
+    // }
 
     /** 
      * Handles logout logic for MathCat in the Home screen,
