@@ -69,3 +69,4 @@ mathcat/.env
 
 ### SQLite ###
 *.db
+*.db.backup
