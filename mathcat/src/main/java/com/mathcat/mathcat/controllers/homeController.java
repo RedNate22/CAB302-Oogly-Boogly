@@ -2,6 +2,7 @@ package com.mathcat.mathcat.controllers;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
+import com.mathcat.mathcat.database.PetDAO;
 import com.mathcat.mathcat.models.Cat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
@@ -23,9 +25,16 @@ public class homeController {
 
     @FXML
     public void initialize() {
-        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
-        if (cat != null) {
-            petNameLabel.setText(cat.getCatName() + "'s Stats");
+        // Try loading from database first
+        try {
+            Cat cat = PetDAO.loadByUserId(UserDAO.currentUser.getId());
+            if (cat != null) {
+                // Also load into in-memory CatDAO for use during the session
+                CatDAO.save(cat);
+                petNameLabel.setText(cat.getCatName() + "'s Stats");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading pet: " + e.getMessage());
         }
     }
 
