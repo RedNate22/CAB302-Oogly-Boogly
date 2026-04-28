@@ -7,7 +7,7 @@ import java.sql.*;
  */
 public class DatabaseManager {
 
-    private static final String DB_URL = "jdbc:sqlite:mathcat/mathcat.db";
+    private static final String DB_URL = "jdbc:sqlite:mathcat.db";
     private static Connection connection;
 
     /**
