@@ -65,6 +65,7 @@ build/
 ### Mac OS ###
 .DS_Store
 .env
+mathcat/.env
 
 ### SQLite ###
 *.db
