@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,6 +29,12 @@ public class CreatePetController {
 
     @FXML
     private Label error;
+
+    @FXML
+    private ImageView viewCurrentPetImage;
+    Image orangeCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/orange-normal.png"));
+    Image siameseCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png"));
+    Image tuxedoCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
 
     /**
      * Handles confirmation of pet creation logic for MathCat in the Create Pet screen.
@@ -69,5 +77,26 @@ public class CreatePetController {
 
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
+    }
+
+    /**
+     * 
+     */
+    public void onClickOrangeCat() {
+        viewCurrentPetImage.setImage(orangeCat);
+    }
+
+    /**
+     * 
+     */
+    public void onClickSiameseCat() {
+        viewCurrentPetImage.setImage(siameseCat);
+    }
+
+    /**
+     * 
+     */
+    public void onClickTuxedoCat() {
+        viewCurrentPetImage.setImage(tuxedoCat);
     }
 }
