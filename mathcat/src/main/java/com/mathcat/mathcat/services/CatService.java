@@ -243,4 +243,31 @@ public final class CatService {
         cat.getItems().remove(item);
         CatDAO.save(cat);
     }
+
+    /**
+     * Displays the cat's happiness level.
+     *
+     * @param cat the cat to get the happiness level
+     */
+    public static void displayHappiness(Cat cat) {
+        cat.getHappiness();
+    }
+
+    /**
+     * Displays the cat's hunger level.
+     *
+     * @param cat the cat to get the hunger level
+     */
+    public static void displayHunger(Cat cat) {
+        cat.getFullness();
+    }
+
+    /**
+     * Displays the cat's energy level.
+     *
+     * @param cat the cat to get the energy level
+     */
+    public static void displayEnergy(Cat cat) {
+        cat.getEnergy();
+    }
 }

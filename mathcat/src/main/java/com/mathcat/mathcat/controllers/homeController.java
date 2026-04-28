@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -21,13 +22,22 @@ public class homeController {
     @FXML
     private Label petNameLabel;
 
+    private ProgressBar happinessProgressBar;
+    private ProgressBar hungerProgressBar;
+    private ProgressBar energyProgressBar;
+
     @FXML
     public void initialize() {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            happinessProgressBar.setProgress(cat.getHappiness());
+            hungerProgressBar.setProgress(cat.getFullness());
+            energyProgressBar.setProgress(cat.getEnergy());
         }
+
     }
+
 
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
@@ -62,5 +72,4 @@ public class homeController {
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
-
 }
