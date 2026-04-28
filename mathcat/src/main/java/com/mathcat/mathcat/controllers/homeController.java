@@ -3,6 +3,8 @@ package com.mathcat.mathcat.controllers;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatService;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,22 +24,33 @@ public class homeController {
     @FXML
     private Label petNameLabel;
 
-    private ProgressBar happinessProgressBar;
-    private ProgressBar hungerProgressBar;
-    private ProgressBar energyProgressBar;
+    private ProgressBar happinessProgressBar = new ProgressBar(0);
+    private ProgressBar hungerProgressBar = new ProgressBar(0);
+    private ProgressBar energyProgressBar = new ProgressBar(0);
+
 
     @FXML
     public void initialize() {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+
+        Double catHappiness = CatService.displayHappiness(cat);
+        Double catHunger = CatService.displayHunger(cat);
+        Double catEnergy = CatService.displayEnergy(cat);
+
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
-            happinessProgressBar.setProgress(cat.getHappiness());
-            hungerProgressBar.setProgress(cat.getFullness());
-            energyProgressBar.setProgress(cat.getEnergy());
+            happinessProgressBar.setProgress(catHappiness / 100);
+            hungerProgressBar.setProgress(catHunger / 100);
+            energyProgressBar.setProgress(catEnergy / 100);
         }
 
+        System.out.println(catHappiness);
     }
-
+    
+    //     public Double displayStats(double catHappiness) {
+    //     catHappiness = CatService.displayHappiness(cat);
+    //     return catHappiness;
+    // }
 
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.

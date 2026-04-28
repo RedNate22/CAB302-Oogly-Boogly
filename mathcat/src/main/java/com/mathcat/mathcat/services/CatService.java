@@ -249,8 +249,9 @@ public final class CatService {
      *
      * @param cat the cat to get the happiness level
      */
-    public static void displayHappiness(Cat cat) {
-        cat.getHappiness();
+    public static double displayHappiness(Cat cat) {
+        double catHappiness = cat.getHappiness();
+        return catHappiness;
     }
 
     /**
@@ -258,8 +259,9 @@ public final class CatService {
      *
      * @param cat the cat to get the hunger level
      */
-    public static void displayHunger(Cat cat) {
-        cat.getFullness();
+    public static double displayHunger(Cat cat) {
+        double catHunger = cat.getFullness();
+        return catHunger;
     }
 
     /**
@@ -267,7 +269,8 @@ public final class CatService {
      *
      * @param cat the cat to get the energy level
      */
-    public static void displayEnergy(Cat cat) {
-        cat.getEnergy();
+    public static double displayEnergy(Cat cat) {
+        double catEnergy = cat.getEnergy();
+        return catEnergy;
     }
 }
