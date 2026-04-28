@@ -14,7 +14,6 @@ import java.sql.SQLException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
-import com.mathcat.mathcat.database.PetDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.CatService;
 
@@ -43,15 +42,9 @@ public class CreatePetController {
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
 
-        // Save to in-memory CatDAO
+// Save to SQLite database
+        cat.setUserId(UserDAO.currentUser.getId());
         CatDAO.save(cat);
-
-        // Save to SQLite database
-        try {
-            PetDAO.insert(cat, UserDAO.currentUser.getId());
-        } catch (SQLException e) {
-            System.out.println("Error saving pet to database: " + e.getMessage());
-        }
 
         Parent root = FXMLLoader.load(
                 getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
