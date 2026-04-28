@@ -80,21 +80,24 @@ public class CreatePetController {
     }
 
     /**
-     * 
+     * Handles logic of changing the image of the
+     * current cat appearance to the orange sprite
      */
     public void onClickOrangeCat() {
         viewCurrentPetImage.setImage(orangeCat);
     }
 
-    /**
-     * 
+    /**     
+     * Handles logic of changing the image of the
+     * current cat appearance to the siamese sprite
      */
     public void onClickSiameseCat() {
         viewCurrentPetImage.setImage(siameseCat);
     }
 
     /**
-     * 
+     * Handles logic of changing the image of the
+     * current cat appearance to the tuxedo sprite
      */
     public void onClickTuxedoCat() {
         viewCurrentPetImage.setImage(tuxedoCat);

@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
    <center>
@@ -38,6 +39,11 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Group>
+                        <Label fx:id="error" alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" prefHeight="37.0" prefWidth="282.0" textFill="RED" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
                         <Group>
                            <children>
                               <Label fx:id="petStyleLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="42.0" prefHeight="17.0" prefWidth="95.0" text="Pet Style:" textAlignment="CENTER" />
