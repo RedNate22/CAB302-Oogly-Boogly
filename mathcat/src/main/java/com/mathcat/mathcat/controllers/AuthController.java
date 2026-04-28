@@ -22,28 +22,16 @@ import com.mathcat.mathcat.models.User;
  */
 public class AuthController {
 
-    @FXML
-    private TextField usernameField;
-    @FXML
-    private TextField passwordField;
-    @FXML
-    private TextField emailField;
+    @FXML private TextField usernameField;
+    @FXML private TextField passwordField;
+    @FXML private TextField emailField;
+    @FXML private Label error;
 
     @FXML
-    private Label error;
-
-    @FXML
-    // When pressing Login inside the login page
-    // Checks the fields aren't empty, an account exists, and validity of details. Scans over the
-    // user array to identify these.
-    // If details match temp values, log-in is successful, switches to home page with current user
-    // set.
     public void onLoginConfirm(ActionEvent event) throws IOException {
-
         String username = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        // check text fields are not empty
         if (UserService.FieldsEmpty(username, password)) {
             error.setText("Please fill out all fields");
             return;
@@ -69,8 +57,7 @@ public class AuthController {
 
         UserDAO.setCurrentUser(matchedUser);
 
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 400);
         stage.setTitle("MathCat");
@@ -78,15 +65,7 @@ public class AuthController {
         stage.show();
     }
 
-    // When pressing Create Account inside the create account page
-    // Check for no null inputs, password and email meet requirements, and does a check to see if
-    // details already exist now using object list
-    // Given all nescessary requirements, username and password and email values take values
-    // inputted into text fields.
-    // Current user is set to this user, whilst also being added to the users list
-    // Then switches to "Home" page
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
-
         String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
@@ -97,8 +76,7 @@ public class AuthController {
         }
 
         if (!UserService.ValidUsername(username)) {
-            error.setText(
-                    "Ensure username contains 3-20 alphanumeric chacaracters (underscores allowed) and has no spaces");
+            error.setText("Ensure username contains 3-20 alphanumeric characters (underscores allowed) and has no spaces");
             return;
         }
 
@@ -108,8 +86,7 @@ public class AuthController {
         }
 
         if (!UserService.ValidPassword(password)) {
-            error.setText(
-                    "Ensure password length is atleast 10 characters long and contains atleast 1 special character, 1 uppercase character, 1 lowercase character and 1 number");
+            error.setText("Ensure password length is at least 10 characters long and contains at least 1 special character, 1 uppercase, 1 lowercase and 1 number");
             return;
         }
 
@@ -120,8 +97,7 @@ public class AuthController {
                 UserDAO.insert(new User(username, email, password));
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
 
-                Parent root = FXMLLoader
-                        .load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root, 700, 400);
                 stage.setTitle("MathCat");
@@ -135,12 +111,9 @@ public class AuthController {
         }
     }
 
-    // Returns to the starter page
     public void onReturn(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }

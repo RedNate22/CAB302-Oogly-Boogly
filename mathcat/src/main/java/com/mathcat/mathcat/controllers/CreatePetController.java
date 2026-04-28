@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -17,21 +18,18 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.CatService;
 
 /**
- * Controller class responsible for user interactions with the UI in the "createpet-view" screen.
- * Does not handle persistence.
+ * Controller for the Create Pet screen.
+ * Handles pet creation and saves to both in-memory CatDAO and SQLite database.
  */
 public class CreatePetController {
 
-    @FXML
-    private TextField userPetName;
-
-    @FXML
-    private Label error;
+    @FXML private TextField userPetName;
+    @FXML private Label error;
 
     /**
-     * Handles confirmation of pet creation logic for MathCat in the Create Pet screen.
-     * @param event gets the window/stage for the home screen
-     * @throws IOException if listed screen does not exist
+     * Handles pet creation — validates name, saves to database and navigates to home screen.
+     * @param event the button click event
+     * @throws IOException if the home screen cannot be loaded
      */
     public void onConfirmPetDetails(ActionEvent event) throws IOException {
         String name = userPetName.getText().trim();
@@ -43,30 +41,29 @@ public class CreatePetController {
 
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
+
+// Save to SQLite database
+        cat.setUserId(UserDAO.currentUser.getId());
         CatDAO.save(cat);
 
-        Parent root =
-            FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
 
     /**
-     * Handles logout logic for MathCat in the Create Pet screen,
-     * returns user to initial screen.
-     * @param event gets the window/stage for the main screen
-     * @throws IOException if listed screen does not exist
+     * Handles logout — clears current user and returns to initial screen.
+     * @param event the button click event
+     * @throws IOException if the initial screen cannot be loaded
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-
         UserDAO.currentUser = null;
 
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
