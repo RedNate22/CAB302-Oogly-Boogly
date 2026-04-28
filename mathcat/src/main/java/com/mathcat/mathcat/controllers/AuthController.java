@@ -29,17 +29,25 @@ public class AuthController {
 
     @FXML
     public void onLoginConfirm(ActionEvent event) throws IOException {
-        String username = usernameField.getText().trim();
+        String username_email = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserService.FieldsEmpty(username, password)) {
+        if (UserService.FieldsEmpty(username_email, password)) {
             error.setText("Please fill out all fields");
             return;
         }
 
         User matchedUser;
         try {
-            matchedUser = UserDAO.findByUsername(username);
+            matchedUser = UserDAO.findByEmail(username_email);
+            if (matchedUser == null) {
+                try {
+                    matchedUser = UserDAO.findByUsername(username_email);
+                } catch (SQLException e) {
+                    error.setText("Database error. Please try again.");
+                    return;
+                }
+            }
         } catch (SQLException e) {
             error.setText("Database error. Please try again.");
             return;
