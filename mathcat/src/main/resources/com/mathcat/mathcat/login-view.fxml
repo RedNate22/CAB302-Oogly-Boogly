@@ -13,7 +13,7 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-    <Text> Username </Text>
+    <Text> Email or Username </Text>
     <TextField fx:id="usernameField"/>
     <Text> Password </Text>
     <TextField fx:id="passwordField"/>
