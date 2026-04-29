@@ -22,11 +22,9 @@ public class ChatController {
 
     private AIService aiService;
 
-    /// Test question
-    /// Test question
-    /// Test question
 
-    private String currentQuestion = "What is 15 multiplied by 6?";
+
+    private String currentQuestion = "";
     private int hintCount = 0;
     private static final int MAX_HINTS = 3;
     private final List<String[]> conversationHistory = new ArrayList<>();

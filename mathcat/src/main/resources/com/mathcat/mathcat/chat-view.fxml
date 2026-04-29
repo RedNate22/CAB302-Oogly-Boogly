@@ -4,7 +4,7 @@
 <?import javafx.geometry.Insets?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.mathcat.mathcat.ChatController"
+            fx:controller="com.mathcat.mathcat.controllers.ChatController"
             prefWidth="400" prefHeight="500">
 
     <!-- Top: Title section -->
