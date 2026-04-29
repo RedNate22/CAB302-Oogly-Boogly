@@ -13,6 +13,8 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.QuestionService;
+import com.mathcat.mathcat.models.IQuestion;
 
 /**
  * Controller class responsible for user interactions with the UI in the "play-view" screen. Does
@@ -24,12 +26,28 @@ public class PlayController {
     private Label petNameLabel;
 
     @FXML
+    private Label questionLabel;
+
+    private final QuestionService questionService = new QuestionService();
+    private IQuestion currentQuestion;
+    private Cat cat; // needs to be scoped here to be accessible by onSubmit()
+
+    @FXML
     public void initialize() {
-        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            currentQuestion = questionService.nextQuestion(cat.getLevel());
+            questionLabel.setText(currentQuestion.getText());
         }
     }
+
+    public void onSubmit(ActionEvent event) {
+        // compare input to question.getAnswer()
+        // if correct, call questionService.nextQuestion(cat.getLevel()) for next question
+        // update questionLabel with new question text
+    }
+
     /**
      * Handles return to home screen logic for MathCat in the Play screen.
      * 
