@@ -25,8 +25,11 @@ public class ChatController {
 
 
     private String currentQuestion = "";
-    private int hintCount = 0;
-    private static final int MAX_HINTS = 3;
+
+    // Tracks whether the student used the AI hint system at all
+    // If true, no bonus reward is given for this question
+    private boolean aiUsed = false;
+
     private final List<String[]> conversationHistory = new ArrayList<>();
 
     /**
@@ -37,10 +40,6 @@ public class ChatController {
     public void initialize() {
         aiService = new AIService();
         chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
-        addMessage(
-                "⚠️ You have " + MAX_HINTS
-                        + " hints available. Using hints will reduce your score.",
-                "#FFF9C4", Pos.CENTER);
     }
 
     /**
@@ -54,24 +53,16 @@ public class ChatController {
     }
 
     /**
-     * Returns the number of hints the student has used so far. Used by the question screen to
-     * calculate the penalty on the student's reward.
-     * 
-     * @return the number of hints used (0 to MAX_HINTS)
+     * Returns whether the student used the AI hint system for this question.
+     * If true, no bonus reward should be given.
+     * @return true if AI was used at least once
      */
-    public int getHintCount() {
-        return hintCount;
-    }
+    public boolean isAiUsed() { return aiUsed; }
 
     /**
-     * Checks if the student has used all available hints. If true, no bonus rewards will be given
-     * for this question.
-     * 
-     * @return true if the student has reached the hint limit, false otherwise
+     * Resets the AI used flag for a new question.
      */
-    public boolean hasReachedLimit() {
-        return hintCount >= MAX_HINTS;
-    }
+    public void resetAiUsed() { aiUsed = false; }
 
     /**
      * Handles the Send button click event. Increments the hint count, displays the user's message,
@@ -83,21 +74,14 @@ public class ChatController {
         String message = userInput.getText().trim();
         if (message.isEmpty())
             return;
-
-        hintCount++;
+// Change this bool value to false when next question is started
+        aiUsed = true;
 
         // Show user message
         addMessage(message, "#DCF8C6", Pos.CENTER_RIGHT);
         userInput.clear();
         sendButton.setDisable(true);
 
-        // Show penalty warning
-        if (hintCount < MAX_HINTS) {
-            addMessage("💡 Hints remaining: " + (MAX_HINTS - hintCount), "#FFF9C4", Pos.CENTER);
-        } else if (hintCount == MAX_HINTS) {
-            addMessage("⚠️ No more bonus rewards will be given for using hints.", "#FFCCCC",
-                    Pos.CENTER);
-        }
 
         // Add user message to history BEFORE sending
         conversationHistory.add(new String[] {"user", message});
