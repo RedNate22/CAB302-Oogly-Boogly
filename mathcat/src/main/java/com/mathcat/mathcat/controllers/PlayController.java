@@ -27,13 +27,9 @@ public class PlayController {
     // Use chatController to pass the current question to the AI hint system
     @FXML private ChatController chatController;
 
-    // TODO: Replace this placeholder with the actual question from the math question system
+    //Replace this placeholder with the actual question from the math question system
     // To set a question from outside this controller, call setQuestion(String question)
-    // Example usage:
-    //   FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-    //   Parent root = loader.load();
-    //   PlayController controller = loader.getController();
-    //   controller.setQuestion(questions[currentIndex]);
+
     private String currentQuestion = "What is 2 + 2?";
 
     @FXML
