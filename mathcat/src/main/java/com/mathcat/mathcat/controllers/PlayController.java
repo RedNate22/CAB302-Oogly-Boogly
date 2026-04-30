@@ -13,6 +13,8 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.QuestionService;
+import com.mathcat.mathcat.models.IQuestion;
 
 /**
  * Controller for the play screen.
@@ -33,10 +35,19 @@ public class PlayController {
     private String currentQuestion = "What is 2 + 2?";
 
     @FXML
+    private Label questionLabel;
+
+    private final QuestionService questionService = new QuestionService();
+    private IQuestion currentQuestion;
+    private Cat cat; // needs to be scoped here to be accessible by onSubmit()
+
+    @FXML
     public void initialize() {
-        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            currentQuestion = questionService.nextQuestion(cat.getLevel());
+            questionLabel.setText(currentQuestion.getText());
         }
 
         mathQuestionLabel.setText(currentQuestion);
@@ -47,6 +58,12 @@ public class PlayController {
             //chatController.setAnswer(String.valueOf(question.getAnswer()));
 
         }
+    }
+
+    public void onSubmit(ActionEvent event) {
+        // compare input to question.getAnswer()
+        // if correct, call questionService.nextQuestion(cat.getLevel()) for next question
+        // update questionLabel with new question text
     }
 
     /**
