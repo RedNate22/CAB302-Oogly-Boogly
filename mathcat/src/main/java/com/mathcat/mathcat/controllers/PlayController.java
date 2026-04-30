@@ -44,6 +44,8 @@ public class PlayController {
         // Pass the current question to the chat so AI knows what problem the student is on
         if (chatController != null) {
             chatController.setQuestion(currentQuestion);
+            //chatController.setAnswer(String.valueOf(question.getAnswer()));
+
         }
     }
 
@@ -58,6 +60,7 @@ public class PlayController {
         mathQuestionLabel.setText(question);
         if (chatController != null) {
             chatController.setQuestion(question);
+
         }
     }
 

@@ -74,6 +74,9 @@ public class ChatController {
         String message = userInput.getText().trim();
         if (message.isEmpty())
             return;
+
+
+
 // Change this bool value to false when next question is started
         aiUsed = true;
 
@@ -86,10 +89,13 @@ public class ChatController {
         // Add user message to history BEFORE sending
         conversationHistory.add(new String[] {"user", message});
 
+
+
+
         // Get hint from AI in background thread
         new Thread(() -> {
             try {
-                String hint = aiService.getHint(currentQuestion, message, conversationHistory);
+                String hint = aiService.getHint(currentQuestion, currentAnswer, message, conversationHistory);
 
                 javafx.application.Platform.runLater(() -> {
                     // Add AI response to history
@@ -124,5 +130,10 @@ public class ChatController {
         HBox container = new HBox(label);
         container.setAlignment(alignment);
         chatBox.getChildren().add(container);
+    }
+    private String currentAnswer = "";
+
+    public void setAnswer(String answer) {
+        this.currentAnswer = answer;
     }
 }

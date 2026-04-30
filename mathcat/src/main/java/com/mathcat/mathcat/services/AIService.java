@@ -58,11 +58,13 @@ public class AIService {
      * @return a Socratic hint from the AI to guide the student without giving the answer
      * @throws Exception if the HTTP request fails or the response cannot be parsed
      */
-    public String getHint(String questionContext, String userMessage, List<String[]> history) throws Exception {
+    public String getHint(String questionContext, String answer, String userMessage, List<String[]> history) throws Exception {
         String url = "https://api.groq.com/openai/v1/chat/completions";
 
-        String systemPrompt = "You are a concise math tutor using the 'I do, We do, You do' teaching method. "
+        String systemPrompt = "You are a concise math tutor using the Socratic method. "
                 + "The student is working on this problem: " + questionContext + ". "
+                + "The correct answer is: " + answer + ". "
+                + "NEVER reveal the answer directly. Use it only to guide your hints accurately. "
                 + "Follow these steps in order across the conversation: "
                 + "STEP 1 - I DO: First, solve a SIMILAR but DIFFERENT example problem out loud, narrating each step simply. Do NOT use the actual question. "
                 + "STEP 2 - WE DO: Then solve another similar example TOGETHER by asking the student to complete each step with your guidance. "
