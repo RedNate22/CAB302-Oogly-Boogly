@@ -87,7 +87,7 @@
                            <bottom>
                               <HBox alignment="BOTTOM_CENTER" prefHeight="28.0" prefWidth="230.0" spacing="30.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Submit" />
+                                    <Button mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
                                     <Button mnemonicParsing="false" text="Skip" />
                                  </children>
                               </HBox>
@@ -100,11 +100,12 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField>
+                                    <TextField fx:id="answerInput">
                                        <VBox.margin>
                                           <Insets top="5.0" />
                                        </VBox.margin>
                                     </TextField>
+                                    <Label fx:id="feedbackLabel" alignment="CENTER" prefWidth="280.0" text="" style="-fx-font-size: 11;" />
                                  </children>
                                  <BorderPane.margin>
                                     <Insets bottom="10.0" top="10.0" />

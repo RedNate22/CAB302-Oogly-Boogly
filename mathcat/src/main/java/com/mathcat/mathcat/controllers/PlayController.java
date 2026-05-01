@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +32,12 @@ public class PlayController {
     @FXML
     private ChatController chatController;
 
+    @FXML
+    private TextField answerInput;
+
+    @FXML
+    private Label feedbackLabel;
+
     private final QuestionService questionService = new QuestionService();
     private IQuestion currentQuestion;
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
@@ -50,10 +57,41 @@ public class PlayController {
         }
     }
 
+    /**
+     * Handles the Submit button. Parses the student's answer and compares it to the correct answer.
+     * On a correct answer, advances to the next question and resets the AI chat session. If the
+     * student did not use AI hints, a bonus reward can be applied here. On an incorrect answer,
+     * prompts the student to try again without advancing the question.
+     *
+     * @param event the button click event
+     */
     public void onSubmit(ActionEvent event) {
-        // compare input to question.getAnswer()
-        // if correct, call questionService.nextQuestion(cat.getLevel()) for next question
-        // update mathQuestionLabel with new question text
+        String input = answerInput.getText().trim();
+        if (input.isEmpty()) return;
+
+        int userAnswer;
+        try {
+            userAnswer = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            feedbackLabel.setText("Please enter a whole number.");
+            return;
+        }
+
+        if (userAnswer == currentQuestion.getAnswer()) {
+            // TODO: apply bonus reward if !chatController.isAiUsed()
+            currentQuestion = questionService.nextQuestion(cat.getLevel());
+            mathQuestionLabel.setText(currentQuestion.getText());
+            answerInput.clear();
+            feedbackLabel.setText("");
+
+            if (chatController != null) {
+                chatController.resetForNewQuestion();
+                chatController.setQuestion(currentQuestion.getText());
+                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
+            }
+        } else {
+            feedbackLabel.setText("Incorrect, try again!");
+        }
     }
 
     /**

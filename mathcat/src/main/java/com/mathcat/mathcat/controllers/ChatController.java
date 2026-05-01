@@ -21,10 +21,7 @@ public class ChatController {
     private Button sendButton;
 
     private AIService aiService;
-
-
-
-    private String currentQuestion = "";
+    private String currentQuestion;
 
     // Tracks whether the student used the AI hint system at all
     // If true, no bonus reward is given for this question
@@ -62,11 +59,18 @@ public class ChatController {
         return aiUsed;
     }
 
-    /**
-     * Resets the AI used flag for a new question.
-     */
-    public void resetAiUsed() {
+    private void resetAiUsed() {
         aiUsed = false;
+    }
+
+    /**
+     * Resets the chat session for a new question. Clears conversation history, removes all messages
+     * from the chat window, and resets the AI used flag.
+     */
+    public void resetForNewQuestion() {
+        conversationHistory.clear();
+        chatBox.getChildren().clear();
+        resetAiUsed();
     }
 
     /**
@@ -80,8 +84,6 @@ public class ChatController {
         if (message.isEmpty())
             return;
 
-
-
         // Change this bool value to false when next question is started
         aiUsed = true;
 
@@ -90,11 +92,8 @@ public class ChatController {
         userInput.clear();
         sendButton.setDisable(true);
 
-
         // Add user message to history BEFORE sending
         conversationHistory.add(new String[] {"user", message});
-
-
 
         // Get hint from AI in background thread
         new Thread(() -> {
@@ -137,7 +136,7 @@ public class ChatController {
         chatBox.getChildren().add(container);
     }
 
-    private String currentAnswer = "";
+    private String currentAnswer;
 
     public void setAnswer(String answer) {
         this.currentAnswer = answer;

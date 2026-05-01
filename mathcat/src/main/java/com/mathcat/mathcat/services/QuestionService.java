@@ -51,8 +51,8 @@ public class QuestionService {
     // Called by nextQuestion() when the queue is empty.
     // Rolls a weighted random based on the cat's current level and returns the appropriate
     // Difficulty.
+    @SuppressWarnings("unused") // TODO
     private Difficulty pickDifficulty(int level) {
-        // TODO
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
@@ -60,14 +60,14 @@ public class QuestionService {
     // Fetches all questions for the given difficulty from QuestionBank, shuffles them via
     // shuffle(),
     // and populates questionQueue.
+    @SuppressWarnings("unused") // TODO
     private LinkedList<IQuestion> buildQueue(Difficulty difficulty) {
-        // TODO
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     // Called by buildQueue(). Performs an in-place Fisher-Yates shuffle on the question list.
+    @SuppressWarnings("unused") // TODO
     private List<IQuestion> shuffle(List<IQuestion> questions) {
-        // TODO
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 }
