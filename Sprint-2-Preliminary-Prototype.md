@@ -4,7 +4,7 @@
 
 ## 1. Brief Introduction
 
-MathCat is a Java/JavaFX virtual pet application built around the unit theme, "Living, Learning, Working with AI." Users care for a pixelated cat by solving math problems to earn items and XP. The cat has three stats (Happiness, Fullness, and Energy) that decay in real time and must be maintained through item use and regular play. An optional AI chatbot assists using the Socratic method, guiding users toward answers without giving them away.
+MathCat is a Java/JavaFX virtual pet application built around the unit theme, "Living, Learning, Working with AI." Users care for a pixelated cat by solving math problems to earn items and XP. The cat has three stats (Happiness, Fullness, and Energy) that decay in real time and must be maintained through item use and regular play. An optional AI chatbot assists using the "I do, we do, you do" method, guiding users toward answers without giving them away.
 
 The project was developed by team OoglyBoogly: Nathan, Alexander, Leonora, Colin, and Mohamed. Partway through Sprint 2 we lost one team member who had been assigned to the math problem system. As a result, we ran a scope review and re-planned the remaining sprints, which we'll cover in more detail in the planning section.
 
