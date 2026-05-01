@@ -69,6 +69,36 @@ class CatDAOTest {
         }
 
         @Test
+        void updatesCatName() throws SQLException {
+            int userId = insertUser("Nate");
+            Cat cat = new Cat("Whiskers");
+            cat.setUserId(userId);
+            CatDAO.save(cat);
+
+            cat.setCatName("Mittens");
+            CatDAO.save(cat);
+
+            assertEquals("Mittens", CatDAO.load(userId).getCatName());
+        }
+
+        @Test
+        void twoCatsForDifferentUsersDoNotCollide() throws SQLException {
+            int userId1 = insertUser("Nate");
+            int userId2 = insertUser("Alex");
+
+            Cat cat1 = new Cat("Whiskers");
+            cat1.setUserId(userId1);
+            CatDAO.save(cat1);
+
+            Cat cat2 = new Cat("Mittens");
+            cat2.setUserId(userId2);
+            CatDAO.save(cat2);
+
+            assertEquals("Whiskers", CatDAO.load(userId1).getCatName());
+            assertEquals("Mittens", CatDAO.load(userId2).getCatName());
+        }
+
+        @Test
         void savesDefaultStats() throws SQLException {
             int userId = insertUser("Nate");
             Cat cat = new Cat("Whiskers");
@@ -111,6 +141,15 @@ class CatDAOTest {
         }
 
         @Test
+        void returnsCorrectCatId() throws SQLException {
+            int userId = insertUser("Nate");
+            Cat cat = new Cat("Whiskers");
+            cat.setUserId(userId);
+            CatDAO.save(cat);
+            assertEquals(cat.getCatId(), CatDAO.load(userId).getCatId());
+        }
+
+        @Test
         void loadsUpdatedStats() throws SQLException {
             int userId = insertUser("Nate");
             Cat cat = new Cat("Whiskers");
@@ -144,6 +183,24 @@ class CatDAOTest {
         @Test
         void doesNothingIfCatDoesNotExist() throws SQLException {
             assertDoesNotThrow(() -> CatDAO.delete(999));
+        }
+
+        @Test
+        void doesNotAffectSiblingCat() throws SQLException {
+            int userId1 = insertUser("Nate");
+            int userId2 = insertUser("Alex");
+
+            Cat cat1 = new Cat("Whiskers");
+            cat1.setUserId(userId1);
+            CatDAO.save(cat1);
+
+            Cat cat2 = new Cat("Mittens");
+            cat2.setUserId(userId2);
+            CatDAO.save(cat2);
+
+            CatDAO.delete(cat1.getCatId());
+
+            assertNotNull(CatDAO.load(userId2));
         }
     }
 
