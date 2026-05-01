@@ -20,7 +20,7 @@ public class AIService {
     public AIService() {
         String workingDir = System.getProperty("user.dir");
         String envDir = workingDir.endsWith("mathcat") ? workingDir : workingDir + "/mathcat";
-        Dotenv dotenv = Dotenv.configure().directory(envDir).load();
+        Dotenv dotenv = Dotenv.configure().directory(envDir).ignoreIfMissing().load();
         this.apiKey = dotenv.get("GROQ_API_KEY");
     }
 
