@@ -118,7 +118,7 @@ Now we'll demonstrate persistence. Log out, wait a moment, and log back in.
 
 [log out, wait briefly, log back in]
 
-On login, the application calculates how many minutes elapsed since the last save and applies stat decay proportionally. You can see the Happiness and Fullness bars have dropped: that time passed offline, and the cat's stats reflect it. The data survived the session.
+On login, the application calculates how many minutes elapsed since the last save and applies stat decay proportionally. You will eventually see the Happiness and Fullness bars have dropped: that time passed offline, and the cat's stats reflect it. The data survived the session.
 
 [point to the reduced stat bars after login]
 
@@ -169,6 +169,7 @@ All merges go through pull requests. You can see the closed PRs here; each one l
 [show closed pull requests, point out the linked issues]
 
 We also have GitHub Actions set up for CI/CD. On every push, the pipeline builds the project and runs the test suite automatically.
+(I don't think we have this yet tho)
 
 [show the Actions tab, point to a passing workflow run]
 
