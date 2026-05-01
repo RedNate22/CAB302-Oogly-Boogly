@@ -6,53 +6,81 @@
 
 MathCat is a Java/JavaFX virtual pet application built around the unit theme, "Living, Learning, Working with AI." Users care for a pixelated cat by solving math problems to earn items and XP. The cat has three stats (Happiness, Fullness, and Energy) that decay in real time and must be maintained through item use and regular play. An optional AI chatbot assists using the "I do, we do, you do" method, guiding users toward answers without giving them away.
 
-The project was developed by team OoglyBoogly: Nathan, Alexander, Leonora, Colin, and Mohamed. Partway through Sprint 2 we lost one team member who had been assigned to the math problem system. As a result, we ran a scope review and re-planned the remaining sprints, which we'll cover in more detail in the planning section.
+The project was developed by team OoglyBoogly: composed by myself, Nathan, Alexander, Leonora, Colin, and Zayan. Late through Sprint 2 we lost Colin as he dropped out of the unit. He had been assigned to the math problem system, and as a result, his tasks were re-assigned to myself and we ran a scope review and re-planned the remaining sprints, which we'll cover in more detail in the planning section.
 
 ---
 
 ## 2. User Stories
 
-We organised our work into epics, each containing related user stories.
+I will now give an overview of our user stories.
 
 [show User Stories board: `Oogly Boogly - User Stories` GitHub Project]
 
-We have five core epics: User Authentication, User Interface, User Experience, Math Learning System, and Data Persistence. After our scope review, we added three further columns: Enhancements, Refactoring, and Out of Scope.
+We organised our work into epics, each containing related user stories.
+
+We have five core epics: User Authentication, User Interface, User Experience, Math Learning System, and Data Persistence. After our scope review, we added three further columns going forward: Enhancements, Refactoring, and Out of Scope.
 
 [scroll across the board columns, left to right]
 
-For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story complexity estimates.
-
 [show CHONK chart image, our estimation scale]
+
+For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story complexity estimates.
 
 The acceptance criteria for each story are defined on the issue. For example:
 
-[open one completed user story, e.g., #4 "As a user, I want to create an account so that I can save my pet's progress"]
+[open one completed user story, e.g., #4 "1. As a user, I want to create an account so that I can save my pet's progress"]
 
-[show acceptance criteria on that issue]
+The acceptance criteria is listed like a checklist, so as we progressively develop a story, each criteria can be marked off as completed, ensuring our goals stay clear and we never lose track.
 
-Completion status per epic at this milestone:
+On the side we can see further details, including labels to mark this issue as a user story and a matching label for the epic.
 
-- **User Authentication** (#23): 5/5, done
-- **Data Persistence** (#27): 3/4, 75%
-- **Math Learning System** (#25): 2/7, 28%
-- **User Interface** (#24): 1/5, 20%
-- **User Experience** (#26): 0/3, planned for Sprint 3
-- **Enhancements, Refactoring**: planned for Sprint 3
-- **Out of Scope** (#51): items removed from scope
+[Click on 'Labels']
+
+If we click here, we can see the many other labels an issue or user story can have. For the user stories these are very rigid, but in further sprints when refactoring and improvements come into play, these labels become very handy in tracking what is a: Bug Fix, an enhancement such as a new feature or an improvement upon an existing one, or a refactor.
+
+[Close 'Labels']
+
+[Scroll down]
+
+Further, each story has a priority, and estimate in days. As seen on the chonk chart, 'A Heckin Chonker' is roughly equivalent to 1 day, so the estimate is set to '1'. And we've decided this story is very important, so it's priority has been set to 'P0'.
+
+While each user story is listed in the appropriate columns, they are also linked to the associated epics using Github's relationship feature.
+
+As we can see this user story's parent issue is the epic itself. As a user story is closed, it is tracked by the parent issue and updated at the top of the column.
+
+User stories are also linked directly to their associated pull requests. This means there is a traceable path from the backlog item through to the branch, commits, and code review that delivered it.
+
+[close user story]
+
+We can see for the User Authentication epic, 5 out of 5 user stories have been completed, as indicated by the progress bar and 100% completion.
+
+[open Epic: User Authentication]
+
+And if we click on this epic, we can quickly see all user stories linked as sub-issues, and the state of each.
+
+This tight integration into our repository allows us to dynamically track and close issues, gives us a traceable history throughout development, and a clear view into the overall progress of each epic at any point in the project.
 
 ---
 
 ## 3. Planning Artefacts
 
+Moving onto our sprint planning...
+
+[switch to 'Oogly Boogly - Sprint Board' GitHub Project]
+
+Each user story is listed in either of 3 columns: Todo, In Progress, and Done. The Todo column contains all user stories within our backlog to be completed, and as a user story is being worked on, we move it to the In Progress column, finish it, make a Pull Request to merge, and then finally move it into the Done column.
+
+If we now switch over to the Roadmap view...
+
 [switch to `Oogly Boogly - Sprint Board` GitHub Project, Roadmap view]
 
-Our roadmap shows two active sprints. Sprint 2 ran from April 15 to April 28 and contained 10 items. Sprint 3 runs from April 29 to May 12 and contains the bulk of the remaining work.
+This shows all sprints throughout the development lifecycle. Starting in Sprint 2, which ran from April 15 till the 28th, it contained the first 10 user stories to be completed. Sprint 3 runs from April 29 to May 12 and contains the bulk of the remaining work. And Sprint 4 will be the final run on refactoring and improvement.
 
 [scroll right on roadmap to show Sprint 3 stories]
 
-When we lost our team member mid-Sprint 2, we ran an informal sprint retrospective and redesigned the scope. The changes are visible in the board:
+When we lost our team member in Sprint 2, we ran an informal sprint retrospective and redesigned the scope. The changes are visible in the board:
 
-[switch to Sprint Board kanban view]
+[switch back to User Stories]
 
 - We added three new columns (Enhancements, Refactoring, and Out of Scope) to categorise work that was deprioritised or deferred
 - The item shop and bonus challenge system were moved to Out of Scope
@@ -60,13 +88,17 @@ When we lost our team member mid-Sprint 2, we ran an informal sprint retrospecti
 
 [show the Math Learning System epic (#25) with its sub-issues]
 
-- The energy system was reworked: energy no longer gates whether the user can attempt problems; it only determines whether they receive a reward. This removes a dependency on the shop while keeping the daily reward cap meaningful.
+Originally, the cat's energy was to be spent on bonus challenges which would provide much greater rewards, and the amount of energy that could be refilled by food items was capped at a daily limit. As these challenges have now been deemed out of scope, we were left wondering what purpose could energy serve. This led us to come up with a rework:
+
+- Energy is now spent on all challenges
+- When energy depletes fully, the user can still continue solving problems, but rewards are no longer received.
+- This puts a soft cap on the amount of items and XP the user can receive per day, but encourages repetitive but spaced learning
 
 ---
 
 ## 4. Low-Fidelity UI Prototypes
 
-We produced three design artefacts before writing code, all stored in the `Diagrams/` folder.
+In this section I'll walk through the three design artefacts we produced before writing any code: an architecture diagram outlining the system's layers, a state machine modelling the cat's behaviour, and a medium-fidelity wireframe mapping the UI flow. All three are stored in the `Diagrams/` folder.
 
 [open `Diagrams/` folder in file tree]
 
