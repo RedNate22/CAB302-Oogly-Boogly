@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AIServiceTest {
+public final class AIServiceTest {
 
     private AIService aiService;
 
@@ -46,7 +46,8 @@ class AIServiceTest {
         @Test
         void worksWithEmptyHistory() throws Exception {
             List<String[]> history = new ArrayList<>();
-            assertDoesNotThrow(() -> aiService.getHint("What is 2 + 2?", "4", "I don't know", history));
+            assertDoesNotThrow(
+                    () -> aiService.getHint("What is 2 + 2?", "4", "I don't know", history));
         }
 
         @Test

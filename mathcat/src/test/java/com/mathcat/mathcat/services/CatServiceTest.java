@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CatServiceTest {
+public final class CatServiceTest {
     private Cat cat;
 
     @BeforeEach

@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDAOTest {
+public final class UserDAOTest {
 
     @BeforeAll
     static void setupDatabase() throws SQLException {

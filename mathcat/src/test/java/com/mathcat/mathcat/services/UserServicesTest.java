@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServicesTest {
+public final class UserServicesTest {
 
     @Nested
-    class LoginFieldsEmpty{
+    class LoginFieldsEmpty {
         @Test
         void loginUsernameEmpty() {
             assertTrue(UserService.fieldsEmpty("", "MaisonRose26?"));
@@ -74,7 +74,8 @@ class UserServicesTest {
 
         @Test
         void createAccountNoFieldsEmpty() {
-            assertFalse(UserService.fieldsEmpty("MaisonRose", "maison227@outlook.com", "H1Delancey!"));
+            assertFalse(
+                    UserService.fieldsEmpty("MaisonRose", "maison227@outlook.com", "H1Delancey!"));
         }
     }
 
