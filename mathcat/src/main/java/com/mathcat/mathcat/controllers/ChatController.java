@@ -53,21 +53,26 @@ public class ChatController {
     }
 
     /**
-     * Returns whether the student used the AI hint system for this question.
-     * If true, no bonus reward should be given.
+     * Returns whether the student used the AI hint system for this question. If true, no bonus
+     * reward should be given.
+     * 
      * @return true if AI was used at least once
      */
-    public boolean isAiUsed() { return aiUsed; }
+    public boolean isAiUsed() {
+        return aiUsed;
+    }
 
     /**
      * Resets the AI used flag for a new question.
      */
-    public void resetAiUsed() { aiUsed = false; }
+    public void resetAiUsed() {
+        aiUsed = false;
+    }
 
     /**
      * Handles the Send button click event. Increments the hint count, displays the user's message,
      * adds it to conversation history, and sends it to the AI service in a background thread to
-     * avoid freezing the UI. Displays the AI's Socratic hint response in the chat window.
+     * avoid freezing the UI. Displays the AI's hint response in the chat window.
      */
     @FXML
     private void onSendClicked() {
@@ -77,7 +82,7 @@ public class ChatController {
 
 
 
-// Change this bool value to false when next question is started
+        // Change this bool value to false when next question is started
         aiUsed = true;
 
         // Show user message
@@ -91,11 +96,11 @@ public class ChatController {
 
 
 
-
         // Get hint from AI in background thread
         new Thread(() -> {
             try {
-                String hint = aiService.getHint(currentQuestion, currentAnswer, message, conversationHistory);
+                String hint = aiService.getHint(currentQuestion, currentAnswer, message,
+                        conversationHistory);
 
                 javafx.application.Platform.runLater(() -> {
                     // Add AI response to history
@@ -131,6 +136,7 @@ public class ChatController {
         container.setAlignment(alignment);
         chatBox.getChildren().add(container);
     }
+
     private String currentAnswer = "";
 
     public void setAnswer(String answer) {
