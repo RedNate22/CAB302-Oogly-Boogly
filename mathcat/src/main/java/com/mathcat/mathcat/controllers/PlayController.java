@@ -17,8 +17,8 @@ import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.models.IQuestion;
 
 /**
- * Controller class responsible for user interactions with the UI in the "play-view" screen. Does
- * not handle persistence.
+ * Controller for the play screen. Handles math questions and delegates AI hint chat to
+ * ChatController.
  */
 public class PlayController {
 
@@ -26,7 +26,10 @@ public class PlayController {
     private Label petNameLabel;
 
     @FXML
-    private Label questionLabel;
+    private Label mathQuestionLabel;
+
+    @FXML
+    private ChatController chatController;
 
     private final QuestionService questionService = new QuestionService();
     private IQuestion currentQuestion;
@@ -38,46 +41,40 @@ public class PlayController {
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             currentQuestion = questionService.nextQuestion(cat.getLevel());
-            questionLabel.setText(currentQuestion.getText());
+            mathQuestionLabel.setText(currentQuestion.getText());
+
+            if (chatController != null) {
+                chatController.setQuestion(currentQuestion.getText());
+                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
+            }
         }
     }
 
     public void onSubmit(ActionEvent event) {
         // compare input to question.getAnswer()
         // if correct, call questionService.nextQuestion(cat.getLevel()) for next question
-        // update questionLabel with new question text
+        // update mathQuestionLabel with new question text
     }
 
     /**
-     * Handles return to home screen logic for MathCat in the Play screen.
-     * 
-     * @param event gets the window/stage for the home screen
-     * @throws IOException if listed screen does not exist
+     * Handles return to home screen.
      */
     public void onConfirmGoBack(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
 
     /**
-     * Handles logout logic for MathCat in the Create Pet screen, returns user to initial screen.
-     * 
-     * @param event gets the window/stage for the main screen
-     * @throws IOException if listed screen does not exist
+     * Handles logout.
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-
         UserDAO.currentUser = null;
-
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
@@ -85,9 +82,7 @@ public class PlayController {
     public void onPressPlay(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }

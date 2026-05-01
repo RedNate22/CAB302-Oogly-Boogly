@@ -22,13 +22,14 @@ public class ChatController {
 
     private AIService aiService;
 
-    /// Test question
-    /// Test question
-    /// Test question
 
-    private String currentQuestion = "What is 15 multiplied by 6?";
-    private int hintCount = 0;
-    private static final int MAX_HINTS = 3;
+
+    private String currentQuestion = "";
+
+    // Tracks whether the student used the AI hint system at all
+    // If true, no bonus reward is given for this question
+    private boolean aiUsed = false;
+
     private final List<String[]> conversationHistory = new ArrayList<>();
 
     /**
@@ -39,10 +40,6 @@ public class ChatController {
     public void initialize() {
         aiService = new AIService();
         chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
-        addMessage(
-                "⚠️ You have " + MAX_HINTS
-                        + " hints available. Using hints will reduce your score.",
-                "#FFF9C4", Pos.CENTER);
     }
 
     /**
@@ -56,29 +53,26 @@ public class ChatController {
     }
 
     /**
-     * Returns the number of hints the student has used so far. Used by the question screen to
-     * calculate the penalty on the student's reward.
+     * Returns whether the student used the AI hint system for this question. If true, no bonus
+     * reward should be given.
      * 
-     * @return the number of hints used (0 to MAX_HINTS)
+     * @return true if AI was used at least once
      */
-    public int getHintCount() {
-        return hintCount;
+    public boolean isAiUsed() {
+        return aiUsed;
     }
 
     /**
-     * Checks if the student has used all available hints. If true, no bonus rewards will be given
-     * for this question.
-     * 
-     * @return true if the student has reached the hint limit, false otherwise
+     * Resets the AI used flag for a new question.
      */
-    public boolean hasReachedLimit() {
-        return hintCount >= MAX_HINTS;
+    public void resetAiUsed() {
+        aiUsed = false;
     }
 
     /**
      * Handles the Send button click event. Increments the hint count, displays the user's message,
      * adds it to conversation history, and sends it to the AI service in a background thread to
-     * avoid freezing the UI. Displays the AI's Socratic hint response in the chat window.
+     * avoid freezing the UI. Displays the AI's hint response in the chat window.
      */
     @FXML
     private void onSendClicked() {
@@ -86,28 +80,27 @@ public class ChatController {
         if (message.isEmpty())
             return;
 
-        hintCount++;
+
+
+        // Change this bool value to false when next question is started
+        aiUsed = true;
 
         // Show user message
         addMessage(message, "#DCF8C6", Pos.CENTER_RIGHT);
         userInput.clear();
         sendButton.setDisable(true);
 
-        // Show penalty warning
-        if (hintCount < MAX_HINTS) {
-            addMessage("💡 Hints remaining: " + (MAX_HINTS - hintCount), "#FFF9C4", Pos.CENTER);
-        } else if (hintCount == MAX_HINTS) {
-            addMessage("⚠️ No more bonus rewards will be given for using hints.", "#FFCCCC",
-                    Pos.CENTER);
-        }
 
         // Add user message to history BEFORE sending
         conversationHistory.add(new String[] {"user", message});
 
+
+
         // Get hint from AI in background thread
         new Thread(() -> {
             try {
-                String hint = aiService.getHint(currentQuestion, message, conversationHistory);
+                String hint = aiService.getHint(currentQuestion, currentAnswer, message,
+                        conversationHistory);
 
                 javafx.application.Platform.runLater(() -> {
                     // Add AI response to history
@@ -142,5 +135,11 @@ public class ChatController {
         HBox container = new HBox(label);
         container.setAlignment(alignment);
         chatBox.getChildren().add(container);
+    }
+
+    private String currentAnswer = "";
+
+    public void setAnswer(String answer) {
+        this.currentAnswer = answer;
     }
 }
