@@ -4,10 +4,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Static catalog of all math questions, grouped by difficulty and operation type. Each difficulty
+ * level contains three arrays of 10 questions (addition, subtraction, multiplication), giving 30
+ * questions per difficulty. Questions are accessed via {@link #getByDifficulty(Difficulty)}.
+ */
 public final class QuestionBank {
         // Prevent instantiation
         private QuestionBank() {}
 
+        /**
+         * Returns all questions for the given difficulty as a single flat list, in the order:
+         * addition, subtraction, multiplication.
+         *
+         * @param difficulty the difficulty tier to retrieve
+         * @return a mutable list of all questions at that difficulty
+         */
         public static List<IQuestion> getByDifficulty(Difficulty difficulty) {
                 List<IQuestion> combined = new ArrayList<>();
 

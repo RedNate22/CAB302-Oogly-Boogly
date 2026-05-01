@@ -41,9 +41,6 @@ public class CreatePetController {
 
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
-
-// Save to SQLite database
-        cat.setUserId(UserDAO.currentUser.getId());
         CatDAO.save(cat);
 
         Parent root = FXMLLoader.load(

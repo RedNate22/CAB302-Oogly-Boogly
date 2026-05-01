@@ -9,6 +9,10 @@ import javafx.geometry.Pos;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the AI hint chat panel. Manages the conversation history, renders chat bubbles,
+ * and communicates with {@link com.mathcat.mathcat.services.AIService} on a background thread.
+ */
 public class ChatController {
 
     @FXML
