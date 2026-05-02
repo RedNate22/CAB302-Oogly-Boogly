@@ -10,36 +10,32 @@ High-level overview of the project purpose is outlined in the project [README.md
 
 - **Happiness** – Measures the pet’s emotional state. Increases through interactions via items (e.g., brush, catnip, toys etc.), continously solving problems, and gradually decreases over **real-world time** to encourage regular engagement. Additionally, Happiness decreases when Fullness is low.
 - **Fullness** – Tracks how well the pet has been fed. Feeding increases Fullness, which also restores Energy proportionally. Depletes over **real-world time** as it does with Happiness, and cannot exceed its maximum value, preventing repeated feeding for infinite Energy gains.
-- **Energy** – Represents how active the pet is. Depletes when the player spends it on bonus challenges. Restores automatically proportionally to current Fullness state or via specific items.
+- **Energy** – Represents how active the pet is. Depletes each time the user solves a problem. When Energy reaches zero, the user can still attempt problems but receives no items or XP as rewards. Regenerates automatically at a rate proportional to current Fullness, subject to a daily cap of 100, resetting each calendar day. Can also be restored via specific items.
 
 #### 1.1.2 Cat Level System
 
 - Users earn **XP** by completing math problems.
 - Level progression unlocks:
     - Higher problem difficulty (e.g., Level 2 problems require cat to be at or above Level 2)
-    - Access to new shop items and variations
-    - Scaling rewards and bonus multipliers
+    - Increased item rewards from problems
 
 #### 1.1.3 Solving Math Problems
 
-- Completing problems rewards **items + currency**.
-- Rewards scale with difficulty and may include bonus multipliers:
-    - **AI Usage Bonus** – Users can use the AI up to 3 times before the bonus is fully lost; each use reduces the bonus multiplier (e.g., using it 3 times results in no “No AI Used” bonus).
-    - **Difficulty Bonus** – Higher-level problems provide higher rewards.
-    - **Pet Stats Bonus** – Happiness and Fullness influence XP and item gains.
-- Items earned or bought can **restore Energy, increase Happiness, or satisfy Fullness**.
+- Completing problems rewards **items + XP**.
+- Rewards are only given when the cat has Energy remaining; once Energy is depleted for the day, problems can still be attempted but yield no rewards.
+- Rewards scale with difficulty:
+    - Easy: +5 Energy spent, base item/XP reward
+    - Medium: +10 Energy spent, increased reward
+    - Hard: +20 Energy spent, highest reward
+- Items earned can **restore Energy, increase Happiness, or satisfy Fullness**.
 
-#### 1.1.4 Bonus Challenges
+#### 1.1.4 Bonus Challenges *(Out of Scope)*
 
-- Users can spend **Energy** to attempt higher-difficulty problems (**(x) levels above current player level**).
-- Rewards are scaled to difficulty and include extra incentive.
+Moved out of scope. Energy-based bonus challenge system has been replaced by the daily Energy cap on rewards (see 1.1.3).
 
-#### 1.1.5 Shop
+#### 1.1.5 Shop *(Out of Scope)*
 
-- Users use currency earned from math problems to buy items or sell (TBD) for more currency.
-- Items vary in effect (stronger items cost more).
-- Some cosmetic items can be bought; they have no effect on the cat's needs or gameplay but encourage progression.
-- Some items are **locked behind player level**, further encouraging progression.
+Moved out of scope. Currency and item purchasing system deferred. Items are earned exclusively through solving problems.
 
 ### 1.2 Scope
 
@@ -47,18 +43,22 @@ High-level overview of the project purpose is outlined in the project [README.md
 
 - Virtual pet interaction system
 - Core actions: Feeding, playing, petting (via item use)
-- Dynamic pet behaviour system driven by internal need states (e.g. energy, hunger, happiness), affecting animations and interactions
-- Math problem generation and validation
-- User feedback and progression
-- AI Clippy-style helper \*[Socratic Method](https://en.wikipedia.org/wiki/Socratic_method) teaching (guides towards answers, but never explicitly gives it))
+- Dynamic pet behaviour system driven by internal need states (Happiness, Fullness, Energy) with real-time decay and offline catch-up
+- Math problem generation and validation (addition, subtraction, multiplication across Easy/Medium/Hard difficulties)
+- Daily Energy cap to limit rewards and encourage spaced learning
+- User feedback and progression (XP, levelling)
+- AI chatbot helper using an "I do, we do, you do" guided approach (guides toward answers without giving them directly)
+- All cosmetic customisation options available from account creation, changeable at any time
 
 #### Out of Scope
 
+- Item shop and currency system
+- Bonus challenges (energy-gated higher-difficulty problems)
 - Advanced mathematics beyond defined difficulty levels
 - Additional subjects (e.g. Science, History, English/Languages etc.)
 - Multiplayer or social features
 - Additional external integrations (e.g., browser support)
-- Android/IOS Support
+- Android/iOS support
 
 ---
 
@@ -119,7 +119,9 @@ Created by [Colin](https://github.com/Ka-319)
 
 Created by [Nathan](https://github.com/RedNate22)
 
-### 2.5 Wireframe of Project (Screens + Flow)
+### 2.5 Wireframes of Project (Screens + Flow)
+
+![Low Wireframe Diagram](Diagrams/CAB302_Project-LowWireframe-withInteractions.png)
 
 ![Medium Wireframe Diagram](Diagrams/CAB302_Project-MediumWireframe-withInteractions.png)
 
@@ -127,13 +129,19 @@ Created by [Leonora](https://github.com/smolbebby)
 
 ### 2.6 Technology Stack
 
-- Language: Java21 (Amazon Corretto 21)
-- Frameworks: JavaFX
+- Language: Java 21 (Amazon Corretto 21)
+- Frameworks: JavaFX 21.0.6
 - Build Tool: Maven
-- Database: SQLite
-- Unit Testing: [JUnit 5](https://docs.junit.org/5.10.5/user-guide/)
+- Database: SQLite (via `sqlite-jdbc` 3.45.1.0)
+- Unit Testing: [JUnit 5](https://docs.junit.org/5.10.5/user-guide/) 5.12.1
 - Other Dependencies:
-    - JavaFX Libraries: - [FormsFX](https://github.com/dlsc-software-consulting-gmbh/FormsFX/) - [FXGL](https://github.com/AlmasB/FXGL) - [Ikonli](https://kordamp.org/ikonli/)
+    - [FormsFX](https://github.com/dlsc-software-consulting-gmbh/FormsFX/) 11.6.0 - form building utilities
+    - [FXGL](https://github.com/AlmasB/FXGL) 17.3 - game framework utilities
+    - [Ikonli](https://kordamp.org/ikonli/) 12.3.1 - icon packs for JavaFX
+    - [Gson](https://github.com/google/gson) 2.10.1 - JSON parsing for AI API responses
+    - [dotenv-java](https://github.com/cdimascio/dotenv-java) 3.2.0 - loading API keys from `.env`
+    - `java.net.http` (JDK built-in) - HTTP client for AI API calls
+    - `slf4j-nop` 1.7.36 - suppresses SQLite JDBC logging output
 
 ### 2.7 Deployment Environment
 
@@ -158,7 +166,6 @@ Created by [Leonora](https://github.com/smolbebby)
 - Layout: User needs to be able to access different areas of the application to interact with virtual pet.
 - Navigation: User needs to be able to use buttons and other appropriate functions to access separate areas of the application.
 - Navigation Continued: User needs to be able to use buttons and other appropriate functions to interact with the virtual pet.
-- Shop Display User needs to be able to view available items, their costs, effects.
 - Input Validation Registration fields must validate format such as valid email, minimum password length.
 - Incorrect Details: User should be told when login credentials are incorrect.
 
@@ -174,8 +181,8 @@ Created by [Leonora](https://github.com/smolbebby)
 
 ### 3.5 Data Persistence
 
-- Data Saving Every interation with the virtual pet is recorded and saved to prevent data loss.
-- Inventory Persistence The user's item inventory and currency balance must be saved and restored between sessions.
+- Data Saving: Every interaction with the virtual pet is recorded and saved to prevent data loss.
+- Inventory Persistence: The user's item inventory must be saved and restored between sessions.
 
 ---
 
@@ -210,7 +217,7 @@ Created by [Leonora](https://github.com/smolbebby)
 
 - Reliability All game state and user progress must be saved after every meaningful interaction with no data loss on normal exit.
 - Integrity The database must maintain consistent state at all times; partial writes must not corrupt saved data.
-- Consistency Inventory, currency, pet stats, and level progress must all remain in sync
+- Consistency Inventory, pet stats, and level progress must all remain in sync
 
 ---
 

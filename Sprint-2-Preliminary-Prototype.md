@@ -4,9 +4,11 @@
 
 ## 1. Brief Introduction
 
-MathCat is a Java/JavaFX virtual pet application built around the unit theme, "Living, Learning, Working with AI." Users care for a pixelated cat by solving math problems to earn items and XP. The cat has three stats (Happiness, Fullness, and Energy) that decay in real time and must be maintained through item use and regular play. An optional AI chatbot assists using the "I do, we do, you do" method, guiding users toward answers without giving them away.
+[show powerpoint - intro slide]
 
-The project was developed by team OoglyBoogly: composed by myself, Nathan, Alexander, Leonora, Colin, and Zayan. Late through Sprint 2 we lost Colin as he dropped out of the unit. He had been assigned to the math problem system, and as a result, his tasks were re-assigned to myself and we ran a scope review and re-planned the remaining sprints, which we'll cover in more detail in the planning section.
+MathCat is a Java virtual pet application built around the unit theme, "Living, Learning, Working with AI." Users care for a pixelated cat by solving math problems to earn items and XP. The cat has three stats (Happiness, Fullness, and Energy) that decay in real time and must be maintained through item use and regular problem solving. An optional AI chatbot assists using the "I do, we do, you do" method, guiding users toward answers without giving them away.
+
+The project is being developed by team OoglyBoogly: composed by myself, Nathan, Alexander, Leonora, and Zayan. Late through Sprint 2 we lost a group member as he dropped out of the unit. He had been assigned to the math problem system, and as a result, his tasks were re-assigned to myself and we ran a scope review and re-planned the remaining sprints, which we'll cover in more detail in the planning section.
 
 ---
 
@@ -22,97 +24,75 @@ We have five core epics: User Authentication, User Interface, User Experience, M
 
 [scroll across the board columns, left to right]
 
-[show CHONK chart image, our estimation scale]
+[show powerpoint - Chonk chart]
 
-For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates. To prioritse stories, a 3 level system was implemented from P0 to P2, where P0 stories claim the highest priority and the function of the application is dependent on them. P1 represents user stories which are significant to the application's functionality and user experience but are not required for the app to function whilst P2 stories are features that rather polish the app and provide a finished product.
+For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates, and also account for the busy schedule of us uni students. To prioritse stories, a 3 level system was implemented from P0 to P2, where P0 stories claim the highest priority and the function of the application is dependent on them. P1 represents user stories which are significant to the application's functionality and user experience but are not required for the app to function, whilst P2 stories are features that rather polish the app and provide a finished product.
 
 The acceptance criteria for each story are defined on the issue. For example:
 
 [open one completed user story, e.g., #4 "1. As a user, I want to create an account so that I can save my pet's progress"]
 
-The acceptance criteria is listed like a checklist, so as we progressively develop a story, each criteria can be marked off as completed, ensuring our goals stay clear and we never lose track.
+The acceptance criteria is listed as a checklist, so as we progressively develop a story, each criteria can be marked off as completed, ensuring our goals stay clear and we never lose track.
 
 On the side we can see further details, including labels to mark this issue as a user story and a matching label for the epic.
 
-[Click on 'Labels']
+Labels also track issue type, which becomes useful in later sprints for distinguishing Bug Fixes, Enhancements, and Refactors. Each story also carries a priority (P0 to P2) and a size estimate mapped to the chonk scale.
 
-If we click here, we can see the many other labels an issue or user story can have. For the user stories these are very rigid, but in further sprints when refactoring and improvements come into play, these labels become very handy in tracking what is a: Bug Fix, an enhancement such as a new feature or an improvement upon an existing one, or a refactor.
+[Scroll down to show priority and estimate fields]
 
-[Close 'Labels']
-
-[Scroll down]
-
-Further, each story has a priority, and time estimate for successful implementation. As seen on the chonk chart, 'A Heckin Chonker' is roughly equivalent to a 1 day task, so the estimate is set to '1'. And we've decided this story is very important, so it's priority has been set to 'P0'.
-
-While each user story is listed in the appropriate columns, they are also linked to the associated epics using Github's relationship feature.
-
-As we can see this user story's parent issue is the epic itself. As a user story is closed, it is tracked by the parent issue and updated at the top of the column.
-
-User stories are also linked directly to their associated pull requests. This means there is a traceable path from the backlog item through to the branch, commits, and code review that delivered it.
-
-[close user story]
-
-We can see for the User Authentication epic, 5 out of 5 user stories have been completed, as indicated by the progress bar and 100% completion.
+Stories are linked to their parent epic via GitHub's relationship feature, and directly to their associated pull request, giving a traceable path from backlog item to code review. As stories close, the epic's progress bar updates automatically.
 
 [open Epic: User Authentication]
 
-And if we click on this epic, we can quickly see all user stories linked as sub-issues, and the state of each.
-
-This tight integration into our repository allows us to dynamically track and close issues, gives us a traceable history throughout development, and a clear view into the overall progress of each epic at any point in the project.
+This tight integration lets us track progress dynamically and maintain a clear view of each epic at any point in the project.
 
 ---
 
 ## 3. Planning Artefacts
 
-Moving onto our sprint planning...
+Moving onto our planning artefacts...
 
 [switch to 'Oogly Boogly - Sprint Board' GitHub Project]
 
-Each user story is listed in either of 3 columns: Todo, In Progress, and Done. The Todo column contains all user stories within our backlog to be completed, and as a user story is being worked on, we move it to the In Progress column, finish it, make a Pull Request to merge, and then finally move it into the Done column.
-
-If we now switch over to the Roadmap view...
+Each user story is listed in either of 3 columns: Todo, In Progress, and Done. These columns are self explanatory, as development progresses, the stories are moved to the next column, and once a PR has been closed and merged for an associated story, it is automatically moved to the complete column by Github.
 
 [switch to `Oogly Boogly - Sprint Board` GitHub Project, Roadmap view]
 
-This shows all sprints throughout the development lifecycle. Starting in Sprint 2, which ran from April 15 till the 28th, it contained the first 10 user stories to be completed. Sprint 3 runs from April 29 to May 12 and contains the bulk of the remaining work. And Sprint 4 will be the final run on refactoring and improvement.
-
-[scroll right on roadmap to show Sprint 3 stories]
+The roadmap view gives us a clear picture of what needs to be done within each sprint. Each sprint is marked as a distinct iteration with a defined start and end date, and the stories assigned to it are laid out visually across that timeframe. We can also once again see each epic's progress at a glance, so it is immediately obvious how much work remains in any given area.
 
 When we lost our team member in Sprint 2, we ran an informal sprint retrospective and redesigned the scope. The changes are visible in the board:
 
 [switch back to User Stories]
 
-- We added three new columns (Enhancements, Refactoring, and Out of Scope) to categorise work that was deprioritised or deferred
-- The item shop and bonus challenge system were moved to Out of Scope
-- The math question system was split from one large story into three smaller ones: basic question generation, randomisation, and difficulty weighting, so we could deliver the core functionality first without being blocked by the full feature
+We added three new columns, Enhancements, Refactoring, and Out of Scope, to categorise work that was deprioritised or deferred. The item shop and bonus challenge system were moved to Out of Scope. The math question system was split from one large story into three smaller ones covering basic question generation, randomisation, and difficulty weighting, so we could deliver the core functionality first without being blocked by the full feature.
 
 [show the Math Learning System epic (#25) with its sub-issues]
 
 Originally, the cat's energy was to be spent on bonus challenges which would provide much greater rewards, and the amount of energy that could be refilled by food items was capped at a daily limit. As these challenges have now been deemed out of scope, we were left wondering what purpose could energy serve. This led us to come up with a rework:
 
-- Energy is now spent on all challenges
-- When energy depletes fully, the user can still continue solving problems, but rewards are no longer received.
-- This puts a soft cap on the amount of items and XP the user can receive per day, but encourages repetitive but spaced learning
+Energy is now spent on all challenges, and when it depletes fully the user can still continue solving problems, but rewards are no longer received. This puts a soft cap on the amount of items and XP the user can receive per day, while still encouraging repetitive but spaced learning.
 
 ---
 
 ## 4. Low-Fidelity UI Prototypes
 
-In this section I'll walk through the three design artefacts we produced before writing any code: an architecture diagram outlining the system's layers, a state machine modelling the cat's behaviour, and a medium-fidelity wireframe mapping the UI flow. All three are stored in the `Diagrams/` folder.
-
-[open `Diagrams/` folder in file tree]
-
-**Architecture Diagram**, created by Colin. Shows the five-layer architecture: Presentation, Controller, Business Logic, Pet State Machine, and Data Access.
+I will now walk through the design artefacts we produced during the planning stage.
 
 [show `Diagrams/Desktop Pet Architecture Diagram.png`]
 
-**State Machine Diagram**, created by Nathan. Shows how the cat's stats transition based on user actions, time decay, and hunger thresholds.
+First, our **Architecture Diagram**, created by former member, Colin, shows the four-layer architecture: Presentation, Controller, Business Logic, and Data Access.
 
 [show `Diagrams/MathCat_StateMachine.png`]
 
-**Medium-Fidelity Wireframe**, created by Leonora. Shows all application screens and the navigation flow, from the initial screen through login, account creation, cat creation, home, and play screens.
+The **State Machine Diagram**, created by myself, shows how the cat's stats transition based on user actions, time decay, and hunger thresholds.
+
+[show `Diagrams/CAB302_Project-LowWireframe-withInteractions.png`]
+
+Both wireframes were created by Leonora. Here is the **Low-Fidelity Wireframe**...
 
 [show `Diagrams/CAB302_Project-MediumWireframe-withInteractions.png`]
+
+And the **Medium-Fidelity Wireframe**. These show all application screens and the navigation flow, from the initial screen through login, account creation, cat creation, home, and play screen.
 
 These artefacts shaped the code structure; the layered architecture diagram maps one-to-one with our package layout, and the wireframe was the reference used when building the FXML files.
 
@@ -120,45 +100,55 @@ These artefacts shaped the code structure; the layered architecture diagram maps
 
 ## 5. Functional Prototype Demo
 
-[launch the MathCat application]
+Now for the demo.
 
-Starting at the initial screen. We'll walk through the core workflow.
+[launch app]
+
+Starting at the initial screen, we can create an account or login.
 
 [click "Create Account"]
 
-On the registration screen, the form validates all fields before submission. We'll cover that in the code section, but for now: try submitting with a weak password.
+On the registration screen, the form validates all fields before submission. I will quickly demonstrate that with a weak password.
 
 [attempt to register with a bad password, show the error message]
 
+And now with a valid one.
+
 [register successfully with valid credentials]
 
-After account creation the user goes straight to the cat creation screen. Name your cat and confirm.
+After account creation the user goes straight to the cat creation screen where three cat appearances and three accessories can be chosen. This is obviously still in development.
 
 [create a cat, name it and submit]
 
-We're now on the home screen. The heading shows the cat's name loaded from the database. The three stat bars (Happiness, Fullness, and Energy) are also loaded from the saved record.
+We're now on the home screen. The heading shows the cat's name loaded from the database. The three stat bars right now are just static, but they will display the live stats, loaded from the database on screen load and updated periodically on a separate thread.
 
-[show home screen with cat name and stats]
+The functionality of the customisation button has been reworked from a full fledged customisation screen to a simple modal for changing accessories and accessing items during our sprint retrospective. This is also still in development, but we _can_ go into the play screen.
 
 [click "Play"]
 
-The play screen presents a math question. Answering correctly will update the cat's stats and eventually reward items.
+This view presents a math question generated from the in-memory storage. Answering correctly will update the cat's stats and eventually reward items. The skip button will also let users skip a question but receive no rewards.
 
 [answer a question]
 
-Now we'll demonstrate persistence. Log out, wait a moment, and log back in.
+Our chatbot, Chatty, was just recently implemented into the UI skeleton.
 
-[log out, wait briefly, log back in]
+[write a message to the Chatty]
 
-On login, the application calculates how many minutes elapsed since the last save and applies stat decay proportionally. You will eventually see the Happiness and Fullness bars have dropped: that time passed offline, and the cat's stats reflect it. The data survived the session.
+We can see Chatty is happy to walk us through how to solve a math equation similar to our current one.
 
-[point to the reduced stat bars after login]
+And I can quickly demonstrate persistance through our database by logging out completely.
+
+[log out, close, open, log back in]
+
+On login, the application will calculate how many minutes elapsed since the last save and applies the happiness stat decay proportionally, as seen in our state machine diagram. You will eventually see the Happiness and Fullness bars have dropped, and if you fed your cat, the Energy will be regained.
 
 ---
 
 ## 6. PM Tool Usage
 
-We used two separate GitHub Projects to manage our work.
+[show 'Projects' page with the two projects listed]
+
+Onto project management tools. As discussed earlier, we used two separate but tightly integrated GitHub Projects to manage our work.
 
 [show `Oogly Boogly - User Stories` GitHub Project]
 
@@ -168,15 +158,11 @@ The User Stories project is our backlog. It has four views: User Stories (groupe
 
 [switch to `Oogly Boogly - Sprint Board` GitHub Project]
 
-The Sprint Board is our iteration-level tool. The Roadmap view shows which stories are assigned to which sprint and their duration.
+The Sprint Board is our iteration-level tool. The Roadmap view shows which stories are assigned to which sprint and their duration (if set).
 
-[show Roadmap, pointing to Sprint 2 and Sprint 3 bars]
-
-[switch to Board view, scroll through columns]
+[switch to Sprint Board view, scroll through columns]
 
 Tasks are assigned to team members on the issue. Completed items are closed and marked done on the board automatically through our GitHub workflow automation.
-
-[click into one issue, show the assignee, sprint label, and linked PR or commits]
 
 ---
 
@@ -184,133 +170,96 @@ Tasks are assigned to team members on the issue. Completed items are closed and 
 
 [open GitHub repository, go to commit history on the `dev` branch]
 
-We committed regularly throughout the project. You can see contributions from all active team members across the history.
+[scroll commits]
 
-[scroll through commits, point out different author names]
+We commit regularly throughout the project. You can see contributions from all active team members across the history.
 
-We follow the Conventional Commits standard, documented in `Technical-Requirements.md`. Every commit follows the format `type(scope): description`, for example `feat(auth): add login button` or `fix(db): handle null last saved on load`.
+We follow the Conventional Commits standard, documented in `Technical-Requirements` file. Every commit follows the format: type, with optional scope, and description.
 
-[highlight a few well-formed commit messages in the history]
+[show the branch list - `Git Graph`]
 
-For branching, each feature or issue gets its own branch named after the feature or the issue number, e.g. `user-login` or `issue-6-broken-landing-page`.
+For branching, each feature or issue gets its own branch named after the feature or the issue number, for example one of my branches, `Math Problems 56`, where 56 corresponds to the auto-assigned issue number.
 
-[show the branch list]
+[show pull requests tab]
 
 All merges go through pull requests. You can see the closed PRs here; each one links back to the issue it resolves.
 
 [show closed pull requests, point out the linked issues]
 
-We also have GitHub Actions set up for CI/CD. On every push, the pipeline builds the project and runs the test suite automatically.
-(I don't think we have this yet tho)
-
 [show the Actions tab, point to a passing workflow run]
+
+We also have GitHub Actions set up for continous intregration. On every push, the pipeline builds the project and runs the test suite automatically.
+
+We also adopted a `dev` branch as our default after `main` kept breaking between merges. All ongoing work goes into `dev`, while `main` is reserved for verified snapshots, giving us a stable branch to demo at any time.
 
 ---
 
-## 8. Java Code Walkthrough
+## 8. Source Code Walkthrough
+
+I will now briefly walk you through the source code.
 
 ### 8a. JavaFX UI Structure
 
-[open project in IDE, show `src/main/java/com/mathcat/mathcat/` folder structure]
+Starting with how the UI is structured and how it connects to the rest of the application.
 
-Our screens are defined in FXML files under `src/main/resources/`. Each screen has a paired controller in the `controllers/` package. This maps to the MVC pattern: the FXML is the View, the controller is the Controller, and the models and services form the Model layer.
+[open project in IDE, show folder structure]
 
-[show `resources/` folder, list the FXML files: initial-view, login-view, createpet-view, home-view, play-view]
+Our screens are defined in FXML files under `resources/`, each paired with a controller in the `controllers/` package. This is MVC: the FXML is the View, the controller is the Controller, and the models and serviIces form the Model layer.
 
-[open `AuthController.java`]
+[open `AuthController.java`, highlight `onLoginConfirm`]
 
-`AuthController` handles both the login and registration screens. It reads from the FXML text fields annotated with `@FXML`, delegates validation to `UserService`, and delegates DB queries to `UserDAO`. The controller itself contains no business logic and no SQL.
+`AuthController` handles both login and registration. It reads the `FXML` text fields, delegates validation to the `UserService` class, and delegates database queries to `UserDAO`. The controller itself contains no business logic and no SQL, which is the key principle here: each layer only does its own job.
 
-[highlight the `onLoginConfirm` method, point to the delegation to `UserService` and `UserDAO`]
+[open `homeController.java`, highlight `onPressPlay()`]
 
-[open `homeController.java`]
-
-The `initialize()` method is called automatically by JavaFX when the FXML loads. Here it pulls the current user's cat from the database via `CatDAO.load()` and populates the cat name label. Navigation between screens is handled by loading a new FXML root onto the existing stage; no new windows, just root-swapping.
-
-[highlight `initialize()` and `onPressPlay()`]
+Navigation between screens is handled by swapping the FXML root on the existing stage, so no new windows are opened.
 
 ### 8b. Persistence Layer
 
+Moving on to how the application stores and retrieves data.
+
 [open `DatabaseManager.java`]
 
-`DatabaseManager` manages the SQLite connection. It exposes a `useInMemoryDatabase()` method (covered in the test section) and an `initialiseDatabase()` method that creates tables if they don't exist.
+`DatabaseManager` manages the SQLite connection and exposes `initialiseDatabase()` to create tables on first run. It also has a `useInMemoryDatabase()` method used in testing, which we will cover shortly.
 
-[open `CatDAO.java`]
+[open `CatDAO.java`, highlight the `if (cat.getCatId() == 0)` branch in `save()`]
 
-`CatDAO` is a pure data access object: no business logic, only SQL. The `save()` method implements an upsert: if the cat's ID is 0 it hasn't been persisted yet, so we INSERT and capture the generated key; otherwise we UPDATE the existing row. Callers never need to know whether they're doing a create or an update; `save()` handles both.
-
-[highlight the `if (cat.getCatId() == 0)` branch in `save()`]
-
-[open `UserDAO.java`]
-
-`UserDAO` follows the same pattern. `findByEmail` and `findByUsername` are separate methods because login accepts either, so the controller tries both.
-
-[show `findByEmail` and `findByUsername` side by side]
+`CatDAO` is a pure data access object: no business logic, only SQL. The `save()` method is an upsert; if the cat has no ID yet it INSERTs and captures the generated key, otherwise it UPDATEs. `UserDAO` follows the same pattern, with separate `findByEmail` and `findByUsername` methods since login accepts either.
 
 ### 8c. OO Design Elements
 
-[open `IQuestion.java`]
+Finally, a few examples of OO principles.
 
-`IQuestion` is an interface defining the contract for any math question: `getText()`, `getAnswer()`, `getType()`, and `getDifficulty()`. The system works against this interface, not a concrete class.
+[open `IQuestion.java` and `Question.java` side by side]
 
-[open `Question.java`]
+`IQuestion` is an interface defining the contract for any math question. `Question` is the concrete implementation; its fields are all `final`, making it immutable once constructed.
 
-`Question` is the concrete implementation. The constructor takes a `QuestionType`, a `Difficulty`, and an array of operands; it calculates the answer and formats the question text at construction time. The fields are all `final`, so a `Question` is immutable once built.
+['go to definition' (quickly) open either enum def]
 
-[highlight the `final` fields and the constructor]
+`QuestionType` and `Difficulty` are both enums, giving us type-safe representations instead of raw strings or integers.
 
-`QuestionType` and `Difficulty` are both enums, type-safe representations of the question's operation and difficulty level. `ItemEffectType` is the same pattern for items.
+[open `CatService.java`, highlight `applyOfflineDecay()`]
 
-[open `CatService.java`]
+`CatService` is a static utility class with a private constructor, enforcing that it cannot be instantiated. All stat mutations go through `clampStat()`, keeping bounds logic in one place. `applyOfflineDecay()` compares `LocalDateTime.now()` to the cat's last saved timestamp and subtracts proportional decay, simulating time that passed while the app was closed.
 
-`CatService` is a static utility class; the constructor is private so it can't be instantiated. It handles all stat mutations, enforcing the min/max bounds through `clampStat()` on every operation. The key method here is `applyOfflineDecay()`:
-
-[highlight `applyOfflineDecay()`]
-
-When the user logs in, we compare `LocalDateTime.now()` to the cat's `lastSaved` timestamp, calculate minutes elapsed, and subtract proportional decay. The cat's stats reflect real time that passed while the app was closed; this is the offline simulation the state machine diagram described.
-
-To summarise the layers: `Cat` holds state, `CatService` mutates it, `CatDAO` persists it. Controllers call services, services call DAOs.
+To summarise the separation of concerns: `Cat` holds state, `CatService` mutates it, `CatDAO` persists it. Controllers call services, services call DAOs.
 
 ---
 
 ## 9. Test Suite
 
-### 9a. Test Purpose
+[open `src/test/` folder, open test panel with a few tests expanded]
 
-[open `src/test/` folder, show the test files: `CatDAOTest`, `CatServiceTest`, `UserDAOTest`, `UserServicesTest`, `AIServiceTest`]
+Our tests focus on behaviour, not implementation. `CatServiceTest` covers the business logic layer (stat clamping, energy regeneration, and offline decay) and runs entirely in memory. `CatDAOTest` covers the persistence layer; in `@BeforeAll` we swap to an in-memory SQLite instance so tests are isolated and fast without mocking. Tests are organised into nested classes by method, so the structure mirrors the class being tested.
 
-Our tests focus on behaviour: what the system does, not how it's implemented internally. We avoid testing getters and setters in isolation.
+[run the test suite]
 
-[open `CatServiceTest.java`]
+You will notice a failing test in `AIServiceTest`. Zayan recently opened a pull request to fix the root cause.
 
-`CatServiceTest` covers the core business logic: stat increases and decreases clamp correctly at 0 and 100, energy regenerates proportionally to fullness, offline decay applies the correct amount based on elapsed minutes, and item use applies the effect and removes the item from inventory. These tests run entirely in memory, no database required.
+[open Zayan's pull request, point to the CI check]
 
-[open `CatDAOTest.java`]
+This is a good example of the TDD cycle in practice: the failing test was committed first, the fix came in a separate commit, and the CI action running on the pull request confirms it now passes. As the math question system is added in Sprint 3, tests for `QuestionService` and `QuestionBank` will follow the same pattern.
 
-`CatDAOTest` tests the persistence layer. Notice the `@BeforeAll` setup:
+### 10. Final Remarks
 
-[highlight `DatabaseManager.useInMemoryDatabase()` in `@BeforeAll`]
-
-We swap the database to an in-memory SQLite instance before any test runs. This means tests are isolated, fast, and don't touch any file on disk. It's how we tested DAO behaviour without mocking; we use a real database engine with a real schema, just in memory.
-
-The tests are organised into Nested classes by method (`Save`, `Load`, `Delete`, `ClearForTesting`), so the structure mirrors the class being tested.
-
-[scroll through the nested classes briefly]
-
-### 9b. Red-Green-Refactor Evidence
-
-[open GitHub commit history, filter to commits touching `CatService` and `CatServiceTest`]
-
-You can see the TDD cycle in the commit history. Tests for a feature were written first; the commit adds a failing test. The next commit adds the minimal implementation to make it pass. Any cleanup or generalisation after that is a separate refactor commit.
-
-[point to a specific group of commits showing this pattern, e.g., the offline decay feature]
-
-### 9c. Run Tests
-
-[open the test runner in IntelliJ, run the full test suite]
-
-All tests pass. You can see the breakdown by class: `CatServiceTest`, `CatDAOTest`, `UserDAOTest`, and `UserServicesTest` all green.
-
-[let the results load, point out the pass count and zero failures]
-
-The test suite currently covers the authentication layer, the persistence layer for both users and cats, and the core cat stat business logic. As we add the math question system in Sprint 3, tests for `QuestionService` and `QuestionBank` will be added the same way.
+Thank you for watching.
