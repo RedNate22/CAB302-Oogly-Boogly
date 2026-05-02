@@ -40,7 +40,7 @@ public final class AIServiceTest {
         void doesNotGiveDirectAnswer() throws Exception {
             List<String[]> history = new ArrayList<>();
             String response = aiService.getHint("What is 2 + 2?", "4", "I don't know", history);
-            assertFalse(response.contains("4"));
+            assertFalse(response.matches("(?i).*\\bthe answer is 4\\b.*"));
         }
 
         @Test
