@@ -174,7 +174,7 @@ Tasks are assigned to team members on the issue. Completed items are closed and 
 
 We commit regularly throughout the project. You can see contributions from all active team members across the history.
 
-We follow the Conventional Commits standard, documented in `Technical-Requirements` file. Every commit follows the format: type, with optional scope, and description.
+We follow the Conventional Commits standard, and all code conventions, dependencies, and full project details are documented in `Technical-Requirements.md`, which serves as the single source of truth for the project. Every commit follows the format: type, with optional scope, and description.
 
 [show the branch list - `Git Graph`]
 
