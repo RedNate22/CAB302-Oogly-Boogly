@@ -24,7 +24,7 @@ We have five core epics: User Authentication, User Interface, User Experience, M
 
 [show CHONK chart image, our estimation scale]
 
-For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates.
+For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates. To prioritse stories, a 3 level system was implemented from P0 to P2, where P0 stories claim the highest priority and the function of the application is dependent on them. P1 represents user stories which are significant to the application's functionality and user experience but are not required for the app to function whilst P2 stories are features that rather polish the app and provide a finished product.
 
 The acceptance criteria for each story are defined on the issue. For example:
 
