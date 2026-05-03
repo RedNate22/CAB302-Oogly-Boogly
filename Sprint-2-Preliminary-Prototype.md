@@ -1,4 +1,4 @@
-# Sprint 2 - Preliminary Prototype Video Walkthrough
+# Sprint 3 - Preliminary Prototype Video Walkthrough
 
 ---
 
@@ -24,7 +24,9 @@ We organised our work into five core epics: User Authentication, User Interface,
 
 [show powerpoint - Chonk chart]
 
-For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates, and also account for the busy schedule of us uni students. To prioritse stories, a 3 level system was implemented from P0 to P2, where P0 stories claim the highest priority and the function of the application is dependent on them. P1 represents user stories which are significant to the application's functionality and user experience but are not required for the app to function, whilst P2 stories are features that rather polish the app and provide a finished product.
+For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates.
+
+Stories are prioritised P0 to P2: P0 is must-have, P1 is significant but non-critical, and P2 is polish.
 
 [show User Story board]
 
@@ -122,7 +124,9 @@ After account creation the user goes straight to the cat creation screen where t
 
 We're now on the home screen. The heading shows the cat's name loaded from the database. The three stat bars right now are just static, but they will display the live stats, loaded from the database on screen load and updated periodically on a separate thread.
 
-The functionality of the customisation button has been reworked from a full fledged customisation screen to a simple modal for changing accessories and accessing items during our sprint retrospective. This is also still in development, but we _can_ go into the play screen.
+During our sprint retrospective, the functionality of the customise button has been redesigned from a separate screen into a simple modal. The purpose however remains the same, for accessing customisation and items.
+
+This is also still in development, but we _can_ go into the play screen.
 
 [click "Play"]
 
@@ -148,21 +152,11 @@ On login, the application will calculate how many minutes elapsed since the last
 
 [show 'Projects' page with the two projects listed]
 
-Onto project management tools. As discussed earlier, we used two separate but tightly integrated GitHub Projects to manage our work.
+In addition to the already discussed project management tools, both projects give us a Priority Board, Team Items view, and a My Items view for tracking workload.
 
-[show `Oogly Boogly - User Stories` GitHub Project]
+[show `Priority Board view`, `Team Items view`, and `My items view`]
 
-The User Stories project is our backlog. It has four views: User Stories (grouped by epic), Priority Board, Team Items, and My Items. Each card links to a GitHub issue with acceptance criteria, story size estimate, and assignee.
-
-[show Priority Board view, point out the swimlanes and priority ordering]
-
-[switch to `Oogly Boogly - Sprint Board` GitHub Project]
-
-The Sprint Board is our iteration-level tool. The Roadmap view shows which stories are assigned to which sprint and their duration (if set).
-
-[switch to Sprint Board view, scroll through columns]
-
-Tasks are assigned to team members on the issue. Completed items are closed and marked done on the board automatically through our GitHub workflow automation.
+Completed items are closed and marked done on the board automatically through our GitHub workflow automation.
 
 ---
 
@@ -194,7 +188,7 @@ All merges go through pull requests. You can see the closed PRs here; each one l
 
 We also have GitHub Actions set up for continous intregration. On every push, the pipeline builds the project and runs the test suite automatically.
 
-We also adopted a `dev` branch as our default after `main` kept breaking between merges. All ongoing work goes into `dev`, while `main` is reserved for verified snapshots, giving us a stable branch to demo at any time.
+We also adopted a `dev` branch as our default to keep the `main` branch stable.
 
 ---
 
@@ -252,6 +246,8 @@ To summarise the separation of concerns: `Cat` holds state, `CatService` mutates
 
 ## 9. Test Suite
 
+And now an example of our test suite.
+
 [open `src/test/` folder, open test panel with a few tests expanded]
 
 Our tests focus on behaviour, not implementation. `CatServiceTest` covers the business logic layer (stat clamping, energy regeneration, and offline decay) and runs entirely in memory. `CatDAOTest` covers the persistence layer; in `@BeforeAll` we swap to an in-memory SQLite instance so tests are isolated and fast without mocking. Tests are organised into nested classes by method, so the structure mirrors the class being tested.
@@ -262,7 +258,7 @@ You will notice a failing test in `AIServiceTest`. Zayan recently opened a pull 
 
 [open Zayan's pull request, point to the CI check]
 
-This is a good example of the TDD cycle in practice: the failing test was committed first, the fix came in a separate commit, and the CI action running on the pull request confirms it now passes. As the math question system is added in Sprint 3, tests for `QuestionService` and `QuestionBank` will follow the same pattern.
+This is a good example of the TDD cycle in practice: the failing test was committed first, the fix came in a separate commit, and the CI action running on the pull request confirms it now passes.
 
 ### 10. Final Remarks
 
