@@ -121,7 +121,7 @@ Created by [Nathan](https://github.com/RedNate22)
 
 ### 2.5 Wireframes of Project (Screens + Flow)
 
-![Low Wireframe Diagram](Diagrams/CAB302_Project-LowWireframe-withInteractions.png)
+![Low Wireframe Diagram](Diagrams/CAB302_Project-LowFidel.png)
 
 ![Medium Wireframe Diagram](Diagrams/CAB302_Project-MediumWireframe-withInteractions.png)
 
