@@ -18,15 +18,15 @@ I will now give an overview of our user stories.
 
 [show User Stories board: `Oogly Boogly - User Stories` GitHub Project]
 
-We organised our work into epics, each containing related user stories.
-
-We have five core epics: User Authentication, User Interface, User Experience, Math Learning System, and Data Persistence. After our scope review, we added three further columns going forward: Enhancements, Refactoring, and Out of Scope.
+We organised our work into five core epics: User Authentication, User Interface, User Experience, Math Learning System, and Data Persistence. After our scope review, we added three further columns going forward: Enhancements, Refactoring, and Out of Scope.
 
 [scroll across the board columns, left to right]
 
 [show powerpoint - Chonk chart]
 
 For story sizing, we took a light-hearted approach and used a custom estimation scale based on the CHONK chart, a meme that grades cat body fat from "A Fine Boi" (smallest) up to "OH LAWD HE COMIN" (largest). These labels map to our story size complexity estimates, and also account for the busy schedule of us uni students. To prioritse stories, a 3 level system was implemented from P0 to P2, where P0 stories claim the highest priority and the function of the application is dependent on them. P1 represents user stories which are significant to the application's functionality and user experience but are not required for the app to function, whilst P2 stories are features that rather polish the app and provide a finished product.
+
+[show User Story board]
 
 The acceptance criteria for each story are defined on the issue. For example:
 
@@ -54,7 +54,7 @@ Moving onto our planning artefacts...
 
 [switch to 'Oogly Boogly - Sprint Board' GitHub Project]
 
-Each user story is listed in either of 3 columns: Todo, In Progress, and Done. These columns are self explanatory, as development progresses, the stories are moved to the next column, and once a PR has been closed and merged for an associated story, it is automatically moved to the complete column by Github.
+Each user story is listed in either of 3 self-explanatory columns: Todo, In Progress, and Done. As development progresses, the stories are moved to the next column, and once a PR has been closed and merged for an associated story, it is automatically moved to the complete column by Github.
 
 [switch to `Oogly Boogly - Sprint Board` GitHub Project, Roadmap view]
 
@@ -170,9 +170,13 @@ Tasks are assigned to team members on the issue. Completed items are closed and 
 
 [open GitHub repository, go to commit history on the `dev` branch]
 
+I will now discuss our version control workflow.
+
 [scroll commits]
 
 We commit regularly throughout the project. You can see contributions from all active team members across the history.
+
+[powerpoint - commit]
 
 We follow the Conventional Commits standard, and all code conventions, dependencies, and full project details are documented in `Technical-Requirements.md`, which serves as the single source of truth for the project. Every commit follows the format: type, with optional scope, and description.
 
@@ -204,7 +208,7 @@ Starting with how the UI is structured and how it connects to the rest of the ap
 
 [open project in IDE, show folder structure]
 
-Our screens are defined in FXML files under `resources/`, each paired with a controller in the `controllers/` package. This is MVC: the FXML is the View, the controller is the Controller, and the models and serviIces form the Model layer.
+Our screens are defined in FXML files under `resources/`, each paired with a controller in the `controllers/` package. This is MVC: the FXML is the View, the controller is the Controller, and the models and services form the Model layer.
 
 [open `AuthController.java`, highlight `onLoginConfirm`]
 
