@@ -27,12 +27,18 @@ public class AuthController {
     @FXML private TextField emailField;
     @FXML private Label error;
 
+    /**
+     * Validates credentials and navigates to the home screen on success.
+     *
+     * @param event the button click event
+     * @throws IOException if the home screen FXML cannot be loaded
+     */
     @FXML
     public void onLoginConfirm(ActionEvent event) throws IOException {
         String username_email = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserService.FieldsEmpty(username_email, password)) {
+        if (UserService.fieldsEmpty(username_email, password)) {
             error.setText("Please fill out all fields");
             return;
         }
@@ -73,27 +79,34 @@ public class AuthController {
         stage.show();
     }
 
+    /**
+     * Validates registration fields, creates the account, and navigates to the create pet screen.
+     *
+     * @param event the button click event
+     * @throws IOException if the create pet screen FXML cannot be loaded
+     */
+    @FXML
     public void onCreateAccountConfirm(ActionEvent event) throws IOException {
         String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserService.FieldsEmpty(username, email, password)) {
+        if (UserService.fieldsEmpty(username, email, password)) {
             error.setText("Ensure all details are filled out");
             return;
         }
 
-        if (!UserService.ValidUsername(username)) {
+        if (!UserService.validUsername(username)) {
             error.setText("Ensure username contains 3-20 alphanumeric characters (underscores allowed) and has no spaces");
             return;
         }
 
-        if (!UserService.ValidEmail(email)) {
+        if (!UserService.validEmail(email)) {
             error.setText("Please enter a valid email");
             return;
         }
 
-        if (!UserService.ValidPassword(password)) {
+        if (!UserService.validPassword(password)) {
             error.setText("Ensure password length is at least 10 characters long and contains at least 1 special character, 1 uppercase, 1 lowercase and 1 number");
             return;
         }
@@ -119,6 +132,13 @@ public class AuthController {
         }
     }
 
+    /**
+     * Returns to the initial screen without logging in.
+     *
+     * @param event the button click event
+     * @throws IOException if the initial screen FXML cannot be loaded
+     */
+    @FXML
     public void onReturn(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

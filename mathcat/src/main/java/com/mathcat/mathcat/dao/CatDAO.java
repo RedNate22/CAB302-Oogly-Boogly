@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * Data Access Object for Cat database operations.
  * Handles only raw SQL queries — no business logic.
  */
-public class CatDAO {
+public final class CatDAO {
 
     /**
      * Saves a cat to the database. Inserts if new, updates if existing.

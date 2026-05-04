@@ -9,6 +9,7 @@ import com.mathcat.mathcat.database.DatabaseManager;
 
 import java.io.IOException;
 
+/** JavaFX application entry point. Initialises the database and loads the initial screen. */
 public class MathCatApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {

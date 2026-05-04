@@ -21,6 +21,9 @@ public class homeController {
     @FXML
     private Label petNameLabel;
 
+    /**
+     * Loads the current user's cat name into the stats label on screen load.
+     */
     @FXML
     public void initialize() {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());

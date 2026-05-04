@@ -10,10 +10,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/** Controller for the initial screen, handling navigation to login and account creation. */
 public class HelloController {
-    @FXML
 
-    // Clicking the login button on the homescreen results being in taken to the login scene
+    /**
+     * Navigates to the login screen.
+     *
+     * @param event the button click event
+     * @throws IOException if the login screen FXML cannot be loaded
+     */
+    @FXML
     public void onLoginClick(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/login-view.fxml"));
@@ -25,8 +31,13 @@ public class HelloController {
         stage.show();
     }
 
-    // Clicking the Create Account button on the home screen results in being taken to the create
-    // account scene
+    /**
+     * Navigates to the create account screen.
+     *
+     * @param event the button click event
+     * @throws IOException if the create account screen FXML cannot be loaded
+     */
+    @FXML
     public void onCreateClick(ActionEvent event) throws IOException {
         Parent root = FXMLLoader
                 .load(getClass().getResource("/com/mathcat/mathcat/createaccount-view.fxml"));
