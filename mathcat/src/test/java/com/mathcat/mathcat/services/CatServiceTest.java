@@ -1,19 +1,28 @@
 package com.mathcat.mathcat.services;
 
 import com.mathcat.mathcat.dao.CatDAO;
+import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.ItemEffectType;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public final class CatServiceTest {
     private Cat cat;
+
+    @BeforeAll
+    static void setupDatabase() throws SQLException {
+        DatabaseManager.useInMemoryDatabase();
+        DatabaseManager.initialiseDatabase();
+    }
 
     @BeforeEach
     void setUp() {
