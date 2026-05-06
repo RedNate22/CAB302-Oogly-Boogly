@@ -80,8 +80,6 @@ public class homeController {
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> dev
+
+
