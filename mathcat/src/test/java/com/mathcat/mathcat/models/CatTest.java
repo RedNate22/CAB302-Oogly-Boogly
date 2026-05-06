@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CatTest {
+public final class CatTest {
     private Cat cat;
 
     @BeforeEach

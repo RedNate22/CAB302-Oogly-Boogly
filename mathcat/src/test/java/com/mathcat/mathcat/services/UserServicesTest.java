@@ -1,203 +1,220 @@
 package com.mathcat.mathcat.services;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServicesTest {
+public final class UserServicesTest {
 
-    @Test
-    void loginUsernameEmpty() {
-        assertTrue(UserService.FieldsEmpty("", "MaisonRose26?"));
+    @Nested
+    class LoginFieldsEmpty {
+        @Test
+        void loginUsernameEmpty() {
+            assertTrue(UserService.fieldsEmpty("", "MaisonRose26?"));
+        }
+
+        @Test
+        void loginPasswordEmpty() {
+            assertTrue(UserService.fieldsEmpty("JakePettigrew", ""));
+        }
+
+        @Test
+        void loginBothFieldsEmpty() {
+            assertTrue(UserService.fieldsEmpty("", ""));
+        }
+
+        @Test
+        void loginUsernameIsSpacesOnlyFieldsEmpty() {
+            assertTrue(UserService.fieldsEmpty("", "Rainbow39Wh!te"));
+        }
+
+        @Test
+        void loginNoFieldsEmpty() {
+            assertFalse(UserService.fieldsEmpty("Dance", "Guru"));
+        }
     }
 
-    @Test
-    void loginPasswordEmpty() {
-        assertTrue(UserService.FieldsEmpty("JakePettigrew", ""));
+    @Nested
+    class CreateAccountFieldsEmpty {
+        @Test
+        void createAccountUsernameFieldEmpty() {
+            assertTrue(UserService.fieldsEmpty("", "email", "password"));
+        }
+
+        @Test
+        void createAccountEmailFieldEmpty() {
+            assertTrue(UserService.fieldsEmpty("username", "", "password"));
+        }
+
+        @Test
+        void createAccountPasswordFieldEmpty() {
+            assertTrue(UserService.fieldsEmpty("username", "email", ""));
+        }
+
+        @Test
+        void createAccountUsernameAndEmailFieldEmpty() {
+            assertTrue(UserService.fieldsEmpty("", "", "password"));
+        }
+
+        @Test
+        void createAccountUsernameAndPasswordFieldEmpty() {
+            assertTrue(UserService.fieldsEmpty("", "email", ""));
+        }
+
+        @Test
+        void createAccountPasswordAndEmailFieldEmpty() {
+            assertTrue(UserService.fieldsEmpty("username", "", ""));
+        }
+
+        @Test
+        void createAccountAllFieldsEmpty() {
+            assertTrue(UserService.fieldsEmpty("", "", ""));
+        }
+
+        @Test
+        void createAccountNoFieldsEmpty() {
+            assertFalse(
+                    UserService.fieldsEmpty("MaisonRose", "maison227@outlook.com", "H1Delancey!"));
+        }
     }
 
-    @Test
-    void loginBothFieldsEmpty() {
-        assertTrue(UserService.FieldsEmpty("", ""));
+    @Nested
+    class ValidUsername {
+        @Test
+        void allSpacesUsername() {
+            assertFalse(UserService.validUsername("           "));
+        }
+
+        @Test
+        void shortUsername() {
+            assertFalse(UserService.validUsername("uh"));
+        }
+
+        @Test
+        void longUsername() {
+            assertFalse(UserService.validUsername("IThinkThatThisUsernameIsGoingToBeToLong"));
+        }
+
+        @Test
+        void spacesUsername() {
+            assertFalse(UserService.validUsername("No Spaces allowed"));
+        }
+
+        @Test
+        void specialUsername() {
+            assertFalse(UserService.validUsername("NotA!!owed"));
+        }
+
+        @Test
+        void threeCharacterUsername() {
+            assertTrue(UserService.validUsername("ugh"));
+        }
+
+        @Test
+        void twentyCharacterUsername() {
+            assertTrue(UserService.validUsername("TwentyCharacters2020"));
+        }
+
+        @Test
+        void twentyOneCharacterUsername() {
+            assertFalse(UserService.validUsername("Twenty_One_Characters"));
+        }
+
+        @Test
+        void validUsername1() {
+            assertTrue(UserService.validUsername("tomas_ds06"));
+        }
+
+        @Test
+        void validUsername2() {
+            assertTrue(UserService.validUsername("Maisonxrose"));
+        }
     }
 
-    @Test
-    void loginUsernameIsSpacesOnlyFieldsEmpty() {
-        assertTrue(UserService.FieldsEmpty("", "Rainbow39Wh!te"));
+    @Nested
+    class ValidEmail {
+        @Test
+        void allSpacesEmail() {
+            assertFalse(UserService.validEmail("      "));
+        }
+
+        @Test
+        void noATEmail() {
+            assertFalse(UserService.validEmail("agrossioutlookcom"));
+        }
+
+        @Test
+        void invalidATEmail1() {
+            assertFalse(UserService.validEmail("agrossioutlookcom@"));
+        }
+
+        @Test
+        void anATOnlyEmail() {
+            assertFalse(UserService.validEmail("@"));
+        }
+
+        @Test
+        void noDomainEmail() {
+            assertFalse(UserService.validEmail("agrossi@outlook"));
+        }
+
+        @Test
+        void invalidATEmail2() {
+            assertFalse(UserService.validEmail("@agrossioutlookcom"));
+        }
+
+        @Test
+        void validEmail1() {
+            assertTrue(UserService.validEmail("agrossi@outlook.com"));
+        }
+
+        @Test
+        void validEmail2() {
+            assertTrue(UserService.validEmail("jpettigrew38@gmail.com"));
+        }
     }
 
-    @Test
-    void loginNoFieldsEmpty() {
-        assertFalse(UserService.FieldsEmpty("Dance", "Guru"));
-    }
+    @Nested
+    class ValidPassword {
+        @Test
+        void allSpacesPassword() {
+            assertFalse(UserService.validPassword("           "));
+        }
 
-    @Test
-    void createAccountUsernameFieldEmpty() {
-        assertTrue(UserService.FieldsEmpty("", "email", "password"));
-    }
+        @Test
+        void lowercaseOnlyPassword() {
+            assertFalse(UserService.validPassword("isthisalongenoughpassword"));
+        }
 
-    @Test
-    void createAccountEmailFieldEmpty() {
-        assertTrue(UserService.FieldsEmpty("username", "", "password"));
-    }
+        @Test
+        void uppercaseOnlyPassword() {
+            assertFalse(UserService.validPassword("ALEXANDERGROSSI"));
+        }
 
-    @Test
-    void createAccountPasswordFieldEmpty() {
-        assertTrue(UserService.FieldsEmpty("username", "email", ""));
-    }
+        @Test
+        void numberOnlyPassword() {
+            assertFalse(UserService.validPassword("12345678910"));
+        }
 
-    @Test
-    void createAccountUsernameAndEmailFieldEmpty() {
-        assertTrue(UserService.FieldsEmpty("", "", "password"));
-    }
+        @Test
+        void specialCharactersPassword() {
+            assertFalse(UserService.validPassword("!?!?!?!??!?!?!"));
+        }
 
-    @Test
-    void createAccountUsernameAndPasswordFieldEmpty() {
-        assertTrue(UserService.FieldsEmpty("", "email", ""));
-    }
+        @Test
+        void shortPassword() {
+            assertFalse(UserService.validPassword("H0ldSt!ll"));
+        }
 
-    @Test
-    void createAccountPasswordAndEmailFieldEmpty() {
-        assertTrue(UserService.FieldsEmpty("username", "", ""));
-    }
+        @Test
+        void workingPassword1() {
+            assertTrue(UserService.validPassword("Delancey19!"));
+        }
 
-    @Test
-    void createAccountAllFieldsEmpty() {
-        assertTrue(UserService.FieldsEmpty("", "", ""));
-    }
-
-    @Test
-    void createAccountNoFieldsEmpty() {
-        assertFalse(UserService.FieldsEmpty("MaisonRose", "maison227@outlook.com", "H1Delancey!"));
-    }
-
-    @Test
-    void allSpacesUsername() {
-        assertFalse(UserService.ValidUsername("           "));
-    }
-
-    @Test
-    void shortUsername() {
-        assertFalse(UserService.ValidUsername("uh"));
-    }
-
-    @Test
-    void longUsername() {
-        assertFalse(UserService.ValidUsername("IThinkThatThisUsernameIsGoingToBeToLong"));
-    }
-
-    @Test
-    void spacesUsername() {
-        assertFalse(UserService.ValidUsername("No Spaces allowed"));
-    }
-
-    @Test
-    void specialUsername() {
-        assertFalse(UserService.ValidUsername("NotA!!owed"));
-    }
-
-    @Test
-    void threeCharacterUsername() {
-        assertTrue(UserService.ValidUsername("ugh"));
-    }
-
-    @Test
-    void twentyCharacterUsername() {
-        assertTrue(UserService.ValidUsername("TwentyCharacters2020"));
-    }
-
-    @Test
-    void twentyOneCharacterUsername() {
-        assertFalse(UserService.ValidUsername("Twenty_One_Characters"));
-    }
-
-    @Test
-    void validUsername1() {
-        assertTrue(UserService.ValidUsername("tomas_ds06"));
-    }
-
-    @Test
-    void validUsername2() {
-        assertTrue(UserService.ValidUsername("Maisonxrose"));
-    }
-
-    @Test
-    void allSpacesEmail() {
-        assertFalse(UserService.ValidEmail("      "));
-    }
-
-    @Test
-    void noATEmail() {
-        assertFalse(UserService.ValidEmail("agrossioutlookcom"));
-    }
-
-    @Test
-    void invalidATEmail1() {
-        assertFalse(UserService.ValidEmail("agrossioutlookcom@"));
-    }
-
-    @Test
-    void anATOnlyEmail() {
-        assertFalse(UserService.ValidEmail("@"));
-    }
-
-    @Test
-    void noDomainEmail() {
-        assertFalse(UserService.ValidEmail("agrossi@outlook"));
-    }
-
-    @Test
-    void invalidATEmail2() {
-        assertFalse(UserService.ValidEmail("@agrossioutlookcom"));
-    }
-
-    @Test
-    void validEmail1() {
-        assertTrue(UserService.ValidEmail("agrossi@outlook.com"));
-    }
-
-    @Test
-    void validEmail2() {
-        assertTrue(UserService.ValidEmail("jpettigrew38@gmail.com"));
-    }
-
-    @Test
-    void allSpacesPassword() {
-        assertFalse(UserService.ValidPassword("           "));
-    }
-
-    @Test
-    void lowercaseOnlyPassword() {
-        assertFalse(UserService.ValidPassword("isthisalongenoughpassword"));
-    }
-
-    @Test
-    void uppercaseOnlyPassword() {
-        assertFalse(UserService.ValidPassword("ALEXANDERGROSSI"));
-    }
-
-    @Test
-    void numberOnlyPassword() {
-        assertFalse(UserService.ValidPassword("12345678910"));
-    }
-
-    @Test
-    void specialCharactersPassword() {
-        assertFalse(UserService.ValidPassword("!?!?!?!??!?!?!"));
-    }
-
-    @Test
-    void shortPassword() {
-        assertFalse(UserService.ValidPassword("H0ldSt!ll"));
-    }
-
-    @Test
-    void workingPassword1() {
-        assertTrue(UserService.ValidPassword("Delancey19!"));
-    }
-
-    @Test
-    void workingPassword2() {
-        assertTrue(UserService.ValidPassword("Dy1nOnThisH!ll"));
+        @Test
+        void workingPassword2() {
+            assertTrue(UserService.validPassword("Dy1nOnThisH!ll"));
+        }
     }
 }

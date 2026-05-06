@@ -12,8 +12,14 @@ import java.util.List;
  */
 public final class UserDAO {
 
+    /** The currently authenticated user. Null when no user is logged in. */
     public static User currentUser;
 
+    /**
+     * Sets the currently authenticated user.
+     *
+     * @param user the logged-in user, or null to clear the session
+     */
     public static void setCurrentUser(User user) {
         currentUser = user;
     }

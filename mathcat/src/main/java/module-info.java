@@ -25,4 +25,3 @@ module com.mathcat.mathcat {
     exports com.mathcat.mathcat.database;
     exports com.mathcat.mathcat.services;
 }
-

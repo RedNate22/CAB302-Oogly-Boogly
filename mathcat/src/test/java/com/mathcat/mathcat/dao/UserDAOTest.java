@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDAOTest {
+public final class UserDAOTest {
 
     @BeforeAll
     static void setupDatabase() throws SQLException {
@@ -37,7 +37,7 @@ class UserDAOTest {
         @Test
         void oneUserExists() throws SQLException {
             UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
-            assertFalse(UserDAO.findAll().isEmpty());
+            assertEquals(1, UserDAO.findAll().size());
         }
 
         @Test
@@ -97,20 +97,20 @@ class UserDAOTest {
             UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
             assertNull(UserDAO.findByEmail("jake@gmail.com"));
         }
+
+        @Test
+        void isCaseSensitive() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            assertNull(UserDAO.findByEmail("NATE@GMAIL.COM"));
+        }
     }
 
     @Nested
-    class Password {
+    class Insert {
         @Test
-        void storedCorrectly() throws SQLException {
+        void passwordStoredCorrectly() throws SQLException {
             UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
             assertEquals("Slay!22", UserDAO.findByUsername("Nate").getPassword());
-        }
-
-        @Test
-        void wrongPasswordDoesNotMatch() throws SQLException {
-            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
-            assertNotEquals("WrongPassword1!", UserDAO.findByUsername("Nate").getPassword());
         }
     }
 
@@ -122,6 +122,19 @@ class UserDAOTest {
             UserDAO.deleteByUsername("Nate");
             assertNull(UserDAO.findByUsername("Nate"));
         }
+
+        @Test
+        void doesNothingIfUserDoesNotExist() throws SQLException {
+            assertDoesNotThrow(() -> UserDAO.deleteByUsername("ghost"));
+        }
+
+        @Test
+        void doesNotAffectOtherUsers() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            UserDAO.insert(new User("Alex", "alex@gmail.com", "Y0Mama!"));
+            UserDAO.deleteByUsername("Nate");
+            assertNotNull(UserDAO.findByUsername("Alex"));
+        }
     }
 
     @Nested
@@ -130,6 +143,15 @@ class UserDAOTest {
         void assignedByDatabase() throws SQLException {
             UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
             assertTrue(UserDAO.findByUsername("Nate").getId() > 0);
+        }
+
+        @Test
+        void twoInsertsDifferentIds() throws SQLException {
+            UserDAO.insert(new User("Nate", "nate@gmail.com", "Slay!22"));
+            UserDAO.insert(new User("Alex", "alex@gmail.com", "Y0Mama!"));
+            int id1 = UserDAO.findByUsername("Nate").getId();
+            int id2 = UserDAO.findByUsername("Alex").getId();
+            assertNotEquals(id1, id2);
         }
     }
 

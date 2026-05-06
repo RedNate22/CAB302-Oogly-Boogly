@@ -16,8 +16,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
- * not handle persistence.
+ * Controller class responsible for user interactions with the UI in the "home-view" screen.
+ * Does not handle persistence.
  */
 public class homeController {
 
@@ -28,7 +28,9 @@ public class homeController {
     private ProgressBar hungerProgressBar = new ProgressBar(0);
     private ProgressBar energyProgressBar = new ProgressBar(0);
 
-
+    /**
+     * Loads the current user's cat name into the stats label on screen load.
+     */
     @FXML
     public void initialize() {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
@@ -54,35 +56,32 @@ public class homeController {
 
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
-     * 
      * @param event gets the window/stage for the home screen
      * @throws IOException if listed screen does not exist
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-
         UserDAO.currentUser = null;
-
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
 
     /**
      * Handles play screen logic for MathCat in the home screen.
-     * 
      * @param event gets the window/stage for the main screen
      * @throws IOException if listed screen does not exist
      */
     public void onPressPlay(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> dev
