@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
-import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
 
 /**
@@ -72,14 +71,7 @@ public class CreatePetController {
      * @throws IOException if the initial screen cannot be loaded
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-        CatScheduler.getInstance().stop();
-        UserDAO.currentUser = null;
-
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        NavigationUtil.logout(event);
     }
 
     /**

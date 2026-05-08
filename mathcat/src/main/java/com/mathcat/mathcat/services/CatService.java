@@ -180,6 +180,8 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
+        System.out.printf("[Offline decay] %d minutes elapsed — happiness=%.2f  fullness=%.2f  energy=%.2f%n",
+                minutesElapsed, cat.getHappiness(), cat.getFullness(), cat.getEnergy());
 
         // persist=false skips the individual saves inside each method; we do one combined save
         // below

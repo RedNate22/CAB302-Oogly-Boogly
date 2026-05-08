@@ -65,13 +65,7 @@ public class homeController {
      * @throws IOException if listed screen does not exist
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-        CatScheduler.getInstance().stop();
-        UserDAO.currentUser = null;
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        NavigationUtil.logout(event);
     }
 
     /**
