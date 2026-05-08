@@ -14,6 +14,7 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.models.IQuestion;
 
@@ -67,7 +68,8 @@ public class PlayController {
      */
     public void onSubmit(ActionEvent event) {
         String input = answerInput.getText().trim();
-        if (input.isEmpty()) return;
+        if (input.isEmpty())
+            return;
 
         int userAnswer;
         try {
@@ -109,6 +111,7 @@ public class PlayController {
      * Handles logout.
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
+        CatScheduler.getInstance().stop();
         UserDAO.currentUser = null;
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
