@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -88,6 +89,28 @@ public class homeController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
+    }
+
+    public void openInventoryModal(ActionEvent event) throws IOException {
+        Stage homeStage = getRoot(event);
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(homeController.class.getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
+        loader.load();
+        InventoryModalController addDataController = loader.getController();
+        addDataController.setMainController(this);
+
+        Parent root = loader.getRoot();
+        Stage modalStage = new Stage();
+
+        modalStage.initOwner(homeStage);
+        modalStage.initModality(Modality.APPLICATION_MODAL);
+        modalStage.setResizable(false);
+
+        Scene scene = new Scene(root);
+        modalStage.setScene(scene);
+        modalStage.setTitle("Inventory Modal");
+        modalStage.show();
     }
 }
 
