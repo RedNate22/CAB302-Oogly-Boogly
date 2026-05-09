@@ -2,7 +2,7 @@ package com.mathcat.mathcat.services;
 
 import java.util.List;
 import java.util.LinkedList;
-// import java.util.Random;
+import java.util.Random;
 
 import com.mathcat.mathcat.models.QuestionBank;
 import com.mathcat.mathcat.models.Difficulty;
@@ -30,8 +30,7 @@ public class QuestionService {
      */
     public IQuestion nextQuestion(int level) {
         if (questionQueue.isEmpty()) {
-            // ! hardcoded difficulty for now
-            questionQueue.addAll(QuestionBank.getByDifficulty(Difficulty.MEDIUM));
+            buildQueue(pickDifficulty(level));
         }
         return questionQueue.poll();
     }
@@ -51,23 +50,30 @@ public class QuestionService {
     // Called by nextQuestion() when the queue is empty.
     // Rolls a weighted random based on the cat's current level and returns the appropriate
     // Difficulty.
-    @SuppressWarnings("unused")
     private Difficulty pickDifficulty(int level) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        // TODO
+        return Difficulty.MEDIUM; // ! hardcoded difficulty
     }
 
     // Called by nextQuestion() when the queue is empty, after pickDifficulty().
     // Fetches all questions for the given difficulty from QuestionBank, shuffles them via
     // shuffle(),
     // and populates questionQueue.
-    @SuppressWarnings("unused")
-    private LinkedList<IQuestion> buildQueue(Difficulty difficulty) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    private void buildQueue(Difficulty difficulty) {
+        List<IQuestion> questions = QuestionBank.getByDifficulty(difficulty);
+        shuffle(questions);
+        questionQueue.addAll(questions);
     }
 
     // Called by buildQueue(). Performs an in-place Fisher-Yates shuffle on the question list.
-    @SuppressWarnings("unused")
     private List<IQuestion> shuffle(List<IQuestion> questions) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        Random random = new Random();
+        for (int i = questions.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            IQuestion temp = questions.get(i);
+            questions.set(i, questions.get(j));
+            questions.set(j, temp);
+        }
+        return questions;
     }
 }
