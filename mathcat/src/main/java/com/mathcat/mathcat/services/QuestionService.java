@@ -31,7 +31,7 @@ public class QuestionService {
     public IQuestion nextQuestion(int level) {
         if (questionQueue.isEmpty()) {
             // ! hardcoded difficulty for now
-            questionQueue.addAll(QuestionBank.getByDifficulty(Difficulty.EASY));
+            questionQueue.addAll(QuestionBank.getByDifficulty(Difficulty.MEDIUM));
         }
         return questionQueue.poll();
     }
@@ -51,7 +51,7 @@ public class QuestionService {
     // Called by nextQuestion() when the queue is empty.
     // Rolls a weighted random based on the cat's current level and returns the appropriate
     // Difficulty.
-    @SuppressWarnings("unused") // TODO
+    @SuppressWarnings("unused")
     private Difficulty pickDifficulty(int level) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
@@ -60,13 +60,13 @@ public class QuestionService {
     // Fetches all questions for the given difficulty from QuestionBank, shuffles them via
     // shuffle(),
     // and populates questionQueue.
-    @SuppressWarnings("unused") // TODO
+    @SuppressWarnings("unused")
     private LinkedList<IQuestion> buildQueue(Difficulty difficulty) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
     // Called by buildQueue(). Performs an in-place Fisher-Yates shuffle on the question list.
-    @SuppressWarnings("unused") // TODO
+    @SuppressWarnings("unused")
     private List<IQuestion> shuffle(List<IQuestion> questions) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }

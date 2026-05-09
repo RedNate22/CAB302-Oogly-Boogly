@@ -5,9 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import com.mathcat.mathcat.dao.CatDAO;
+import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.database.DatabaseManager;
-
+import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatScheduler;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /** JavaFX application entry point. Initialises the database and loads the initial screen. */
 public class MathCatApp extends Application {
@@ -25,5 +29,18 @@ public class MathCatApp extends Application {
         stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
+    }
+
+    /** Exit safely by stopping the scheduler and saving the cat's latest progress. */
+    @Override
+    public void stop() throws IOException {
+        CatScheduler.getInstance().stop();
+        if (UserDAO.currentUser != null) {
+            Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+            if (cat != null) {
+                cat.setLastSaved(LocalDateTime.now());
+                CatDAO.save(cat);
+            }
+        }
     }
 }

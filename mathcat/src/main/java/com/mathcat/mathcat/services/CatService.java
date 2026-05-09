@@ -180,7 +180,8 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
-        System.out.printf("[Offline decay] %d minutes elapsed — happiness=%.2f  fullness=%.2f  energy=%.2f%n",
+        System.out.printf(
+                "[Offline decay] %d minutes elapsed - happiness=%.2f  fullness=%.2f  energy=%.2f%n",
                 minutesElapsed, cat.getHappiness(), cat.getFullness(), cat.getEnergy());
 
         // persist=false skips the individual saves inside each method; we do one combined save
@@ -188,7 +189,7 @@ public final class CatService {
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
         cat.setLastSaved(LocalDateTime.now());
-        CatDAO.save(cat); // single save after both stats are updated
+        CatDAO.save(cat);
     }
 
     /**
