@@ -35,45 +35,6 @@ public class CreatePetController {
     Image tuxedoCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
 
     /**
-     * Handles pet creation — validates name, saves to database and navigates to home screen.
-     * @param event the button click event
-     * @throws IOException if the home screen cannot be loaded
-     */
-    public void onConfirmPetDetails(ActionEvent event) throws IOException {
-        String name = userPetName.getText().trim();
-
-        if (!CatService.isValidCatName(name)) {
-            error.setText("Pet name must be 1-10 letters only, no spaces or numbers.");
-            return;
-        }
-
-        Cat cat = new Cat(name);
-        cat.setUserId(UserDAO.currentUser.getId());
-        CatDAO.save(cat);
-
-        Parent root = FXMLLoader.load(
-                getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
-    }
-
-    /**
-     * Handles logout — clears current user and returns to initial screen.
-     * @param event the button click event
-     * @throws IOException if the initial screen cannot be loaded
-     */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
-        UserDAO.currentUser = null;
-
-        Parent root = FXMLLoader.load(
-                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
-    }
-
-    /**
      * Handles logic of changing the image of the
      * current cat appearance to the orange sprite
      */
@@ -95,6 +56,48 @@ public class CreatePetController {
      */
     public void onClickTuxedoCat() {
         viewCurrentPetImage.setImage(tuxedoCat);
+    }
+    
+    /**
+     * Handles pet creation — validates name, saves to database and navigates to home screen.
+     * @param event the button click event
+     * @throws IOException if the home screen cannot be loaded
+     */
+    public void onConfirmPetDetails(ActionEvent event) throws IOException {
+        String name = userPetName.getText().trim();
+        String catSprite = viewCurrentPetImage.toString();
+
+        if (!CatService.isValidCatName(name)) {
+            error.setText("Pet name must be 1-10 letters only, no spaces or numbers.");
+            return;
+        }
+
+        Cat cat = new Cat(name);
+        cat.setUserId(UserDAO.currentUser.getId());
+        CatDAO.save(cat);
+
+        cat.setCatSprite(catSprite);
+
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
+    }
+
+    /**
+     * Handles logout — clears current user and returns to initial screen.
+     * @param event the button click event
+     * @throws IOException if the initial screen cannot be loaded
+     */
+    public void onLogoutConfirm(ActionEvent event) throws IOException {
+        UserDAO.currentUser = null;
+
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
     }
 }
 

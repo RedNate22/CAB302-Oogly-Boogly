@@ -8,10 +8,15 @@ import com.mathcat.mathcat.services.CatService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+// import javafx.scene.Node;
+// import javafx.scene.Parent;
+// import javafx.scene.control.Label;
+// import javafx.scene.control.ProgressBar;
+// import javafx.scene.image.Image;
+// import javafx.scene.image.ImageView;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -27,6 +32,9 @@ public class homeController {
     private ProgressBar happinessProgressBar = new ProgressBar(0);
     private ProgressBar hungerProgressBar = new ProgressBar(0);
     private ProgressBar energyProgressBar = new ProgressBar(0);
+
+    @FXML
+    private Image image;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
@@ -46,7 +54,7 @@ public class homeController {
             energyProgressBar.setProgress(catEnergy / 100);
         }
 
-        System.out.println(catHappiness);
+        // System.out.println(catHappiness);
     }
     
     //     public Double displayStats(double catHappiness) {
