@@ -1,7 +1,7 @@
 # MathCat: Virtual Pet Application
 ---
 ## Overview
-This project is for CAB302 Agile Project Development at Queensland University of Technology. It is a group-based project, with the group "OoglyBoogly" ([Mohamed Zayan Eangapadalil](https://github.com/notzayan), [Alexander Grossi](https://github.com/agrossi178), [Nathan Pithie](https://github.com/RedNate22), [Leonora Van de Sande](https://github.com/smolbebby), and [Hui Colin Wu](https://github.com/Ka-319)) being equal collaborators.
+This project is for CAB302 Agile Project Development at Queensland University of Technology. It is a group-based project, with the group "OoglyBoogly" ([Mohamed Zayan Eangapadalil](https://github.com/notzayan), [Alexander Grossi](https://github.com/agrossi178), [Nathan Pithie](https://github.com/RedNate22), and [Leonora Van de Sande](https://github.com/smolbebby) being equal collaborators.
 
 **MathCat** is a Java-based GUI application that simulates a virtual pixelated cat. Users care for the pet by solving simple math problems to earn items, currency, and XP. The pet has dynamic attributes that change over time and in response to user interactions. The virtual cat has three distinct stats the user must manage; Happiness, Energy, Fullness.
 
