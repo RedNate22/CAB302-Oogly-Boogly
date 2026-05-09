@@ -67,7 +67,8 @@ public class PlayController {
      */
     public void onSubmit(ActionEvent event) {
         String input = answerInput.getText().trim();
-        if (input.isEmpty()) return;
+        if (input.isEmpty())
+            return;
 
         int userAnswer;
         try {
@@ -109,12 +110,7 @@ public class PlayController {
      * Handles logout.
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-        UserDAO.currentUser = null;
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        NavigationUtil.logout(event);
     }
 
     public void onPressPlay(ActionEvent event) throws IOException {

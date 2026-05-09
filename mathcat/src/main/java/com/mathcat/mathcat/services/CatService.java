@@ -13,7 +13,9 @@ import com.mathcat.mathcat.dao.CatDAO;
 public final class CatService {
     public static final double MAX_STAT = 100.0;
     public static final double MIN_STAT = 0.00;
-    public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours normally, ~8 hours when hungry (0.07 + 0.07*2 penalty = 0.21/min)
+    public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
+                                                            // normally, ~8 hours when hungry (0.07
+                                                            // + 0.07*2 penalty = 0.21/min)
     public static final double FULLNESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
     public static final double ENERGY_REGEN_RATE = 1.0; // per min at max fullness: hits 100 in ~100
                                                         // min
@@ -141,8 +143,9 @@ public final class CatService {
     }
 
     /**
-     * Called by {@link CatScheduler} periodically to regenerate energy proportionally to current fullness,
-     * subject to a daily cap ({@link #DAILY_ENERGY_CAP}). Resets the cap counter at the start of each new calendar day.
+     * Called by {@link CatScheduler} periodically to regenerate energy proportionally to current
+     * fullness, subject to a daily cap ({@link #DAILY_ENERGY_CAP}). Resets the cap counter at the
+     * start of each new calendar day.
      *
      * @param cat the cat to regenerate energy for
      */
@@ -177,13 +180,16 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
+        System.out.printf(
+                "[Offline decay] %d minutes elapsed - happiness=%.2f  fullness=%.2f  energy=%.2f%n",
+                minutesElapsed, cat.getHappiness(), cat.getFullness(), cat.getEnergy());
 
         // persist=false skips the individual saves inside each method; we do one combined save
         // below
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
         cat.setLastSaved(LocalDateTime.now());
-        CatDAO.save(cat); // single save after both stats are updated
+        CatDAO.save(cat);
     }
 
     /**
@@ -195,7 +201,8 @@ public final class CatService {
     }
 
     /**
-     * Applies an additional happiness penalty if the cat's fullness is below {@link #HUNGER_THRESHOLD}.
+     * Applies an additional happiness penalty if the cat's fullness is below
+     * {@link #HUNGER_THRESHOLD}.
      *
      * @param cat the cat to apply the penalty to
      */

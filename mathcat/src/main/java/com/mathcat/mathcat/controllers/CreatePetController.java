@@ -20,39 +20,41 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.CatService;
 
 /**
- * Controller for the Create Pet screen.
- * Handles pet creation and saves to both in-memory CatDAO and SQLite database.
+ * Controller for the Create Pet screen. Handles pet creation and saves to both in-memory CatDAO and
+ * SQLite database.
  */
 public class CreatePetController {
 
-    @FXML private TextField userPetName;
-    @FXML private Label error;
+    @FXML
+    private TextField userPetName;
+    @FXML
+    private Label error;
 
     @FXML
     private ImageView viewCurrentPetImage;
-    Image orangeCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/orange-normal.png"));
-    Image siameseCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png"));
-    Image tuxedoCat = new Image(getClass().getResourceAsStream("/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
+    Image orangeCat = new Image(getClass().getResourceAsStream(
+            "/com/mathcat/mathcat/assets/images/sprites/cats/orange-normal.png"));
+    Image siameseCat = new Image(getClass().getResourceAsStream(
+            "/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png"));
+    Image tuxedoCat = new Image(getClass().getResourceAsStream(
+            "/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
 
     /**
-     * Handles logic of changing the image of the
-     * current cat appearance to the orange sprite
+     * Handles logic of changing the image of the current cat appearance to the orange sprite
      */
     public void onClickOrangeCat() {
         viewCurrentPetImage.setImage(orangeCat);
     }
 
-    /**     
-     * Handles logic of changing the image of the
-     * current cat appearance to the siamese sprite
+    /**
+     * Handles logic of changing the image of the current cat appearance to the siamese sprite
      */
     public void onClickSiameseCat() {
         viewCurrentPetImage.setImage(siameseCat);
     }
 
     /**
-     * Handles logic of changing the image of the
-     * current cat appearance to the tuxedo sprite
+     * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
      */
     public void onClickTuxedoCat() {
         viewCurrentPetImage.setImage(tuxedoCat);
