@@ -26,7 +26,7 @@
         </StackPane>
         <Button text="👁" onAction="#togglePassword"/>
     </HBox>
-    <Button text="Login" onAction="#onLoginConfirm"/>
     <Label fx:id="error"/>
+    <Button text="Login" onAction="#onLoginConfirm"/>
     <Button text="Return" onAction="#onReturn"/>
 </VBox>
