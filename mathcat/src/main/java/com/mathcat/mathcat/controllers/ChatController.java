@@ -15,6 +15,12 @@ import java.util.List;
  */
 public class ChatController {
 
+    /**
+     * Maximum number of characters a user may type in a single message.
+     * Prevents excessively long inputs from being sent to the AI API.
+     */
+    private static final int MAX_INPUT_LENGTH = 500;
+
     @FXML
     private VBox chatBox;
     @FXML
@@ -34,13 +40,21 @@ public class ChatController {
     private final List<String[]> conversationHistory = new ArrayList<>();
 
     /**
-     * Initialises the chat controller when the FXML is loaded. Sets up the AI service, auto-scroll
-     * behaviour, and displays the initial warning message about hint penalties.
+     * Initialises the chat controller when the FXML is loaded. Sets up the AI service,
+     * auto-scroll behaviour, and enforces a per-message character limit on the input field.
      */
     @FXML
     public void initialize() {
         aiService = new AIService();
         chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
+
+        // Enforce max input length in real time — reject any keystroke that would exceed the limit.
+        // Also guards against paste — if someone pastes 1000 chars, the whole paste is rejected.
+        userInput.textProperty().addListener((obs, oldText, newText) -> {
+            if (newText.length() > MAX_INPUT_LENGTH) {
+                userInput.setText(oldText);
+            }
+        });
     }
 
     /**
@@ -78,9 +92,12 @@ public class ChatController {
     }
 
     /**
-     * Handles the Send button click event. Increments the hint count, displays the user's message,
-     * adds it to conversation history, and sends it to the AI service in a background thread to
-     * avoid freezing the UI. Displays the AI's hint response in the chat window.
+     * Handles the Send button click event. Validates and sanitises the user's message,
+     * displays it in the chat window, adds it to conversation history, and sends it to
+     * the AI service on a background thread to avoid freezing the UI.
+     *
+     * Input is rejected if null, blank, or if sanitising removes all content
+     * (e.g. a message made up entirely of HTML tags or control characters).
      */
     @FXML
     private void onSendClicked() {
@@ -144,6 +161,12 @@ public class ChatController {
 
     private String currentAnswer;
 
+    /**
+     * Sets the correct answer for the current question. Passed to the AI system prompt only —
+     * never shown directly to the student.
+     *
+     * @param answer the correct answer as a string
+     */
     public void setAnswer(String answer) {
         this.currentAnswer = answer;
     }
