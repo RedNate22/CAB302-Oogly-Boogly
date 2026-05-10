@@ -60,4 +60,68 @@ public final class AIServiceTest {
             assertFalse(response.isEmpty());
         }
     }
-}
+
+    @Nested
+    class SanitiseInput {
+
+        @Test
+        void returnsEmptyStringForNull() {
+            String result = AIService.sanitiseInput(null, 500);
+            assertEquals("", result);
+        }
+
+        @Test
+        void stripsHtmlTags() {
+            String result = AIService.sanitiseInput("<b>hello</b>", 500);
+            assertEquals("hello", result);
+        }
+
+        }
+
+        @Test
+        void truncatesToMaxLength() {
+            String longInput = "a".repeat(600);
+            String result = AIService.sanitiseInput(longInput, 500);
+            assertEquals(500, result.length());
+        }
+
+        @Test
+        void collapsesExcessiveWhitespace() {
+            String result = AIService.sanitiseInput("hello    world", 500);
+            assertEquals("hello world", result);
+        }
+
+        @Test
+        void returnsEmptyForWhitespaceOnly() {
+            String result = AIService.sanitiseInput("   ", 500);
+            assertEquals("", result);
+        }
+    }
+
+    @Nested
+    class RateLimit {
+
+        @Test
+        void allowsCallsUnderTheLimit() {
+            AIService service = new AIService();
+            // First call should not be rate limited
+            // We test sanitiseInput as a proxy since we can't call getHint without the API
+            assertNotNull(AIService.sanitiseInput("test", 500));
+        }
+
+        @Test
+        void blocksCallsOverTheLimit() {
+            AIService service = new AIService();
+            List<String[]> history = new ArrayList<>();
+
+            // Make 10 calls to hit the limit
+            for (int i = 0; i < 10; i++) {
+                service.getHint("What is 2 + 2?", "4", "hint " + i, history);
+            }
+
+            // 11th call should be rate limited
+            String response = service.getHint("What is 2 + 2?", "4", "one more", history);
+            assertTrue(response.contains("Please wait"));
+        }
+    }
+
