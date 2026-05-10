@@ -17,7 +17,7 @@
     <TextField fx:id="usernameField"/>
     <Text> Password </Text>
     <TextField fx:id="passwordField"/>
-    <Button text="Login" onAction="#onLoginConfirm"/>
+    <Button text="Login" defaultButton="true" onAction="#onLoginConfirm"/>
     <Label fx:id="error"/>
     <Button text="Return" onAction="#onReturn"/>
 </VBox>

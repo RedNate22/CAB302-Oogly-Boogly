@@ -20,6 +20,6 @@
     <Text> Password </Text>
     <TextField fx:id="passwordField"/>
     <Label fx:id="error"/>
-    <Button text="Create Account" onAction="#onCreateAccountConfirm"/>
+    <Button text="Create Account" defaultButton="true" onAction="#onCreateAccountConfirm"/>
     <Button text="Return" onAction="#onReturn"/>
 </VBox>
