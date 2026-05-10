@@ -24,9 +24,30 @@ import com.mathcat.mathcat.models.User;
 public class AuthController {
 
     @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;
     @FXML private TextField emailField;
+
+    @FXML private PasswordField passwordField;
+    @FXML private TextField visiblePasswordField;
+
     @FXML private Label error;
+
+    @FXML
+    public void initialize() {
+        // Keeps both password fields synced automatically when switching between visibility
+        visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
+    }
+
+    @FXML
+    private void togglePassword() {
+
+        boolean showing = visiblePasswordField.isVisible();
+
+        visiblePasswordField.setVisible(!showing);
+        visiblePasswordField.setManaged(!showing);
+
+        passwordField.setVisible(showing);
+        passwordField.setManaged(showing);
+    }
 
     /**
      * Validates credentials and navigates to the home screen on success.
