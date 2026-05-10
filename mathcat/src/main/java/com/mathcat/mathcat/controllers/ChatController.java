@@ -84,9 +84,11 @@ public class ChatController {
      */
     @FXML
     private void onSendClicked() {
-        String message = userInput.getText().trim();
-        if (message.isEmpty())
-            return;
+        String rawMessage = userInput.getText();
+        if (rawMessage == null || rawMessage.isBlank()) return;
+
+        String message = AIService.sanitiseInput(rawMessage, 500);
+        if (message.isBlank()) return;
 
         // Change this bool value to false when next question is started
         aiUsed = true;

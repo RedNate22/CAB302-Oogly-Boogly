@@ -24,6 +24,27 @@ public class AIService {
         this.apiKey = dotenv.get("GROQ_API_KEY");
     }
 
+    public static String sanitiseInput(String input, int maxLen) {
+        if (input == null) return "";
+
+        // Remove HTML/XML tags
+        String stripped = input.replaceAll("<[^>]*>", "");
+
+        // Remove ASCII control characters (keep normal whitespace: \t \n \r)
+        stripped = stripped.replaceAll("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F]", "");
+
+        // Collapse excessive whitespace and trim
+        stripped = stripped.replaceAll("\\s{2,}", " ").trim();
+
+        // Enforce max length
+        if (stripped.length() > maxLen) {
+            stripped = stripped.substring(0, maxLen);
+        }
+        return stripped;
+    }
+
+
+
     // Escapes special characters in a string to make it safe for JSON
     private String escapeJson(String input) {
         if (input == null)
