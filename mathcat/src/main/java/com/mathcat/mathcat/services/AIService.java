@@ -7,6 +7,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 import com.google.gson.*;
 import java.util.List;
 import java.time.Duration;
+import java.time.Instant;
 
 /**
  * Service class responsible for communicating with the Groq AI API. Uses the "I do, We do, You do"
@@ -17,6 +18,18 @@ public class AIService {
 
     private final String apiKey;
     private final HttpClient client;
+
+    /** Maximum AI calls allowed within a single time window. */
+    private static final int MAX_CALLS_PER_WINDOW = 10;
+
+    /** Length of the rate-limit time window in seconds. */
+    private static final long RATE_WINDOW_SECONDS = 60;
+
+    // Tracks how many calls have been made in the current window
+    private int windowCallCount = 0;
+
+    // The moment the current rate-limit window started
+    private Instant windowStart = Instant.now();
 
     public AIService() {
         String workingDir = System.getProperty("user.dir");
@@ -81,6 +94,36 @@ public class AIService {
             }
         }
         return sb.toString();
+    }
+
+
+    /**
+     * Checks whether the current request should be blocked by the rate limiter.
+     * Uses a sliding window — if 60 seconds have passed since the window started,
+     * the counter resets. Synchronized to prevent race conditions from background threads.
+     *
+     * @return a user-friendly error message if rate limited, or null if the call is allowed
+     */
+    private synchronized String checkRateLimit() {
+        Instant now = Instant.now();
+        long elapsed = Duration.between(windowStart, now).getSeconds();
+
+        // Reset the window if enough time has passed
+        if (elapsed >= RATE_WINDOW_SECONDS) {
+            windowStart = now;
+            windowCallCount = 0;
+        }
+
+        if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
+            long waitSecs = RATE_WINDOW_SECONDS - elapsed;
+            return String.format(
+                    "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
+                    waitSecs, waitSecs == 1 ? "" : "s");
+        }
+
+        // Allow the call — consume one slot
+        windowCallCount++;
+        return null;
     }
 
 
@@ -152,16 +195,22 @@ public class AIService {
     }
 
     /**
-     * Sends a hint request to the Groq AI API using the I do, We do, You do teaching method. Builds
-     * a full conversation history to maintain context across multiple hints.
-     * 
+     * Sends a hint request to the Groq AI API using the I do, We do, You do teaching method.
+     * Applies rate limiting before making the request. Builds a full conversation history
+     * to maintain context across multiple hints.
+     *
      * @param questionContext the math problem the student is working on
-     * @param userMessage the student's latest message or question
-     * @param history the full conversation history as a list of role/content pairs
-     * @return a hint from the AI to guide the student without giving the answer
+     * @param answer          the correct answer, used only in the system prompt — never shown directly
+     * @param userMessage     the student's latest message or question
+     * @param history         the full conversation history as a list of role/content pairs
+     * @return a hint from the AI, or a user-friendly error/limit message
      */
     public String getHint(String questionContext, String answer, String userMessage,
                           List<String[]> history) {
+
+        // Block the request if the user is sending too many hints too quickly
+        String rateLimitMessage = checkRateLimit();
+        if (rateLimitMessage != null) return rateLimitMessage;
 
         String systemPrompt =
                 // Identity & Personality
