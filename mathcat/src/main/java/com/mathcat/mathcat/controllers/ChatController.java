@@ -95,7 +95,6 @@ public class ChatController {
      * Handles the Send button click event. Validates and sanitises the user's message,
      * displays it in the chat window, adds it to conversation history, and sends it to
      * the AI service on a background thread to avoid freezing the UI.
-     *
      * Input is rejected if null, blank, or if sanitising removes all content
      * (e.g. a message made up entirely of HTML tags or control characters).
      */
@@ -119,23 +118,17 @@ public class ChatController {
         conversationHistory.add(new String[] {"user", message});
 
         // Get hint from AI in background thread
+        // getHint() always returns a non-null string — errors are returned as friendly messages
         new Thread(() -> {
-            try {
-                String hint = aiService.getHint(currentQuestion, currentAnswer, message,
-                        conversationHistory);
+            String hint = aiService.getHint(currentQuestion, currentAnswer, message,
+                    conversationHistory);
 
-                javafx.application.Platform.runLater(() -> {
-                    // Add AI response to history
-                    conversationHistory.add(new String[] {"assistant", hint});
-                    addMessage(hint, "#F1F0F0", Pos.CENTER_LEFT);
-                    sendButton.setDisable(false);
-                });
-            } catch (Exception e) {
-                javafx.application.Platform.runLater(() -> {
-                    addMessage("Error: " + e.getMessage(), "#FFCCCC", Pos.CENTER_LEFT);
-                    sendButton.setDisable(false);
-                });
-            }
+            javafx.application.Platform.runLater(() -> {
+                // Add AI response to history
+                conversationHistory.add(new String[] {"assistant", hint});
+                addMessage(hint, "#F1F0F0", Pos.CENTER_LEFT);
+                sendButton.setDisable(false);
+            });
         }).start();
     }
 
