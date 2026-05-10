@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -23,7 +24,7 @@ import com.mathcat.mathcat.models.User;
 public class AuthController {
 
     @FXML private TextField usernameField;
-    @FXML private TextField passwordField;
+    @FXML private PasswordField passwordField;
     @FXML private TextField emailField;
     @FXML private Label error;
 
