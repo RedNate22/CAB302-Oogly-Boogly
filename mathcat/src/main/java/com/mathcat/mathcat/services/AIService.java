@@ -98,13 +98,7 @@ public class AIService {
     }
 
 
-    /**
-     * Checks whether the current request should be blocked by the rate limiter.
-     * Uses a sliding window — if 60 seconds have passed since the window started,
-     * the counter resets. Synchronized to prevent race conditions from background threads.
-     *
-     * @return a user-friendly error message if rate limited, or null if the call is allowed
-     */
+
     /**
      * Checks the sliding-window rate limit before allowing a call.
      * Synchronized to prevent race conditions from background threads.
