@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,6 +27,23 @@ public class CreatePetController {
 
     @FXML private TextField userPetName;
     @FXML private Label error;
+
+    @FXML private Label confirmationMessage;
+
+    public void initialize() {
+        setConfirmationMessage();
+    }
+
+    public void setConfirmationMessage() {
+        confirmationMessage.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+
+        pause.setOnFinished((ActionEvent event) -> {
+            confirmationMessage.setVisible(false);
+        });
+        pause.play();
+    }
 
     /**
      * Handles pet creation — validates name, saves to database and navigates to home screen.
