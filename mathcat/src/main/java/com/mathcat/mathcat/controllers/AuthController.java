@@ -1,6 +1,5 @@
 package com.mathcat.mathcat.controllers;
 
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,6 @@ import java.sql.SQLException;
 import com.mathcat.mathcat.services.UserService;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
-import javafx.util.Duration;
 
 /**
  * Handles UI events for the login and account creation screens.
