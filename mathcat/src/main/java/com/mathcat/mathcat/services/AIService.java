@@ -29,6 +29,13 @@ public class AIService {
                 .build();
     }
 
+    /**
+     * Strips HTML tags and control characters from user input, then truncates to maxLen.
+     *
+     * @param input  raw input from the UI
+     * @param maxLen maximum allowed length after stripping
+     * @return sanitised string, or empty string if input is null
+     */
     public static String sanitiseInput(String input, int maxLen) {
         if (input == null) return "";
 
@@ -76,6 +83,74 @@ public class AIService {
         return sb.toString();
     }
 
+
+    /**
+     * Sends a single HTTP POST request to the Groq API and returns the response text.
+     * Throws an exception on non-200 status or any network error so the retry
+     * wrapper can decide whether to try again.
+     *
+     * @param requestBody the JSON string to send as the request body
+     * @return the raw response text from the AI
+     * @throws Exception if the request fails for any reason
+     */
+    private String callApi(String requestBody) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + apiKey)
+                // Per-request timeout covers slow responses, not just slow connections
+                .timeout(Duration.ofSeconds(10))
+                .POST(BodyPublishers.ofString(requestBody))
+                .build();
+
+        HttpResponse<String> response =
+                client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("HTTP " + response.statusCode() + ": " + response.body());
+        }
+
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        if (json.has("error")) {
+            throw new RuntimeException(
+                    json.getAsJsonObject("error").get("message").getAsString());
+        }
+
+        return json.getAsJsonArray("choices").get(0).getAsJsonObject()
+                .getAsJsonObject("message").get("content").getAsString();
+    }
+
+    /**
+     * Calls {@link #callApi(String)} with exponential back-off retry on failure.
+     * Attempts the request up to 3 times total (1 initial + 2 retries).
+     * Timeouts are not retried since the server is clearly unresponsive.
+     *
+     * @param requestBody the JSON string to send as the request body
+     * @return the raw response text from the AI
+     * @throws Exception if all attempts fail
+     */
+    private String callApiWithRetry(String requestBody) throws Exception {
+        Exception lastException = null;
+
+        for (int attempt = 0; attempt <= 2; attempt++) {
+            if (attempt > 0) {
+                // Exponential back-off: 1000ms after attempt 1, 2000ms after attempt 2
+                long backoffMs = (long) Math.pow(2, attempt) * 500L;
+                Thread.sleep(backoffMs);
+            }
+            try {
+                return callApi(requestBody);
+            } catch (java.net.http.HttpTimeoutException te) {
+                // Timeout means server is unresponsive — no point retrying
+                throw te;
+            } catch (Exception e) {
+                // Any other failure — store it and try again
+                lastException = e;
+            }
+        }
+        throw lastException;
+    }
+
     /**
      * Sends a hint request to the Groq AI API using the I do, We do, You do teaching method. Builds
      * a full conversation history to maintain context across multiple hints.
@@ -86,8 +161,7 @@ public class AIService {
      * @return a hint from the AI to guide the student without giving the answer
      */
     public String getHint(String questionContext, String answer, String userMessage,
-            List<String[]> history) throws Exception {
-        String url = "https://api.groq.com/openai/v1/chat/completions";
+                          List<String[]> history) {
 
         String systemPrompt =
                 // Identity & Personality
@@ -179,34 +253,13 @@ public class AIService {
         // System.out.println("History size: " + history.size());
         // System.out.println("Body: " + body);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + apiKey)
-                // Per-request timeout covers slow responses, not just slow connections
-                .timeout(Duration.ofSeconds(10))
-                .POST(BodyPublishers.ofString(body))
-                .build();
-
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // Check HTTP status code before attempting to parse the response body
-            if (response.statusCode() != 200) {
-                return "Error: Request failed with status code " + response.statusCode()
-                        + ". Please check your API key.";
-            }
-
-            JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-            if (json.has("error")) {
-                return "Error: " + json.getAsJsonObject("error").get("message").getAsString();
-            }
-
-            return json.getAsJsonArray("choices").get(0).getAsJsonObject()
-                    .getAsJsonObject("message").get("content").getAsString();
-
-        } catch (java.net.http.HttpTimeoutException e) {
-            // Thrown when either the connect timeout or request timeout is exceeded
+            return callApiWithRetry(body);
+        } catch (InterruptedException ie) {
+            // Thread was interrupted during back-off sleep
+            Thread.currentThread().interrupt();
+            return "The request was interrupted. Please try again.";
+        } catch (java.net.http.HttpTimeoutException te) {
             return "Chatty is taking too long to respond. Please try again in a moment!";
         } catch (Exception e) {
             return "Chatty couldn't connect right now. Check your internet and try again!";
