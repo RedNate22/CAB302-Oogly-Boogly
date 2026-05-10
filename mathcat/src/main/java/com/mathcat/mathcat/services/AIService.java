@@ -9,6 +9,7 @@ import java.util.List;
 import java.time.Duration;
 import java.time.Instant;
 
+
 /**
  * Service class responsible for communicating with the Groq AI API. Uses the "I do, We do, You do"
  * teaching method to guide students through math problems without giving away the answer directly.
@@ -104,6 +105,12 @@ public class AIService {
      *
      * @return a user-friendly error message if rate limited, or null if the call is allowed
      */
+    /**
+     * Checks the sliding-window rate limit before allowing a call.
+     * Synchronized to prevent race conditions from background threads.
+     *
+     * @return a user-friendly error message if rate limited, or null if the call is allowed
+     */
     private synchronized String checkRateLimit() {
         Instant now = Instant.now();
         long elapsed = Duration.between(windowStart, now).getSeconds();
@@ -116,6 +123,8 @@ public class AIService {
 
         if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
             long waitSecs = RATE_WINDOW_SECONDS - elapsed;
+            System.out.printf("[AIService] RATE LIMIT hit (%d calls in window). Wait %ds.%n",
+                    windowCallCount, waitSecs);
             return String.format(
                     "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
                     waitSecs, waitSecs == 1 ? "" : "s");
@@ -123,6 +132,8 @@ public class AIService {
 
         // Allow the call — consume one slot
         windowCallCount++;
+        System.out.printf("[AIService] Call allowed — window: %d/%d%n",
+                windowCallCount, MAX_CALLS_PER_WINDOW);
         return null;
     }
 
