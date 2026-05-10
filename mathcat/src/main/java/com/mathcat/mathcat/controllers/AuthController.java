@@ -29,21 +29,6 @@ public class AuthController {
     @FXML private TextField emailField;
     @FXML private Label error;
 
-
-    @FXML private Label confirmationMessage;
-
-    public void setConfirmationMessage() {
-        // Showing the message
-        confirmationMessage.setVisible(true);
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-
-        pause.setOnFinished((ActionEvent event) -> {
-            confirmationMessage.setVisible(false);
-        });
-        pause.play();
-    }
-
     /**
      * Validates credentials and navigates to the home screen on success.
      *

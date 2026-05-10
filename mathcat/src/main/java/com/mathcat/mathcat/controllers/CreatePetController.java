@@ -30,10 +30,14 @@ public class CreatePetController {
 
     @FXML private Label confirmationMessage;
 
+    // Initially sets the confirmation message once
     public void initialize() {
         setConfirmationMessage();
     }
 
+    /**
+     * Handles timed confirmation message — Indicates to user that account creation was successful.
+     */
     public void setConfirmationMessage() {
         confirmationMessage.setVisible(true);
 
