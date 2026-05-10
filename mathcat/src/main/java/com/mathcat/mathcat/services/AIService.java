@@ -6,6 +6,7 @@ import java.net.http.*;
 import java.net.http.HttpRequest.BodyPublishers;
 import com.google.gson.*;
 import java.util.List;
+import java.time.Duration;
 
 /**
  * Service class responsible for communicating with the Groq AI API. Uses the "I do, We do, You do"
@@ -15,13 +16,17 @@ import java.util.List;
 public class AIService {
 
     private final String apiKey;
-    private final HttpClient client = HttpClient.newHttpClient();
+    private final HttpClient client;
 
     public AIService() {
         String workingDir = System.getProperty("user.dir");
         String envDir = workingDir.endsWith("mathcat") ? workingDir : workingDir + "/mathcat";
         Dotenv dotenv = Dotenv.configure().directory(envDir).ignoreIfMissing().load();
         this.apiKey = dotenv.get("GROQ_API_KEY");
+        // Build the HTTP client with a connect timeout so the app never hangs indefinitely
+        this.client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
     }
 
     public static String sanitiseInput(String input, int maxLen) {
@@ -79,7 +84,6 @@ public class AIService {
      * @param userMessage the student's latest message or question
      * @param history the full conversation history as a list of role/content pairs
      * @return a hint from the AI to guide the student without giving the answer
-     * @throws Exception if the HTTP request fails or the response cannot be parsed
      */
     public String getHint(String questionContext, String answer, String userMessage,
             List<String[]> history) throws Exception {
@@ -175,27 +179,37 @@ public class AIService {
         // System.out.println("History size: " + history.size());
         // System.out.println("Body: " + body);
 
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url))
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
                 .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + apiKey).POST(BodyPublishers.ofString(body))
+                .header("Authorization", "Bearer " + apiKey)
+                // Per-request timeout covers slow responses, not just slow connections
+                .timeout(Duration.ofSeconds(10))
+                .POST(BodyPublishers.ofString(body))
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Check HTTP status code first before parsing JSON
-        if (response.statusCode() != 200) {
-            return "Error: Request failed with status code " + response.statusCode()
-                    + ". Please check your API key.";
+            // Check HTTP status code before attempting to parse the response body
+            if (response.statusCode() != 200) {
+                return "Error: Request failed with status code " + response.statusCode()
+                        + ". Please check your API key.";
+            }
+
+            JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+            if (json.has("error")) {
+                return "Error: " + json.getAsJsonObject("error").get("message").getAsString();
+            }
+
+            return json.getAsJsonArray("choices").get(0).getAsJsonObject()
+                    .getAsJsonObject("message").get("content").getAsString();
+
+        } catch (java.net.http.HttpTimeoutException e) {
+            // Thrown when either the connect timeout or request timeout is exceeded
+            return "Chatty is taking too long to respond. Please try again in a moment!";
+        } catch (Exception e) {
+            return "Chatty couldn't connect right now. Check your internet and try again!";
         }
-
-        // Parse JSON response
-        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        if (json.has("error")) {
-            return "Error: " + json.getAsJsonObject("error").get("message").getAsString();
-        }
-
-
-        return json.getAsJsonArray("choices").get(0).getAsJsonObject().getAsJsonObject("message")
-                .get("content").getAsString();
     }
 }
