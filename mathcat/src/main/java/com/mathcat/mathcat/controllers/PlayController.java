@@ -80,9 +80,7 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
-
-            double xpReturn = RewardSystem.playerXpReturn(cat, currentQuestion, chatController);
-            LevelSystem.applyXp(cat, xpReturn);
+            RewardSystem.userReward(cat, currentQuestion, chatController);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());

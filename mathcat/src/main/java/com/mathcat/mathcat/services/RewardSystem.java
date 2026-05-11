@@ -12,25 +12,26 @@ import com.mathcat.mathcat.models.IQuestion;
 public class RewardSystem {
 
     /**
-     * Returns the base XP a user will receive based on the difficulty of the question.
+     * Returns the base XP a user will receive based on the difficulty of the question and whether they have enough energy
+     * to receive a reward.
      *
      * @param question the current question
      * @return the XP user will receive based on difficulty
      */
-    public static double baseXpReturn(IQuestion question) {
+    public static double baseXpReturn(IQuestion question, Cat car) {
         double xp = 0;
 
-        if (question.getDifficulty() == Difficulty.EASY) {
+        if (question.getDifficulty() == Difficulty.EASY && car.getEnergy() >= 5) {
             xp = 10;
             return xp;
         }
 
-        if (question.getDifficulty() == Difficulty.MEDIUM) {
+        if (question.getDifficulty() == Difficulty.MEDIUM && car.getEnergy() >= 10) {
             xp = 20;
             return xp;
         }
 
-        if (question.getDifficulty() == Difficulty.HARD) {
+        if (question.getDifficulty() == Difficulty.HARD && car.getEnergy() >= 20) {
             xp = 35;
             return xp;
         }
@@ -40,14 +41,19 @@ public class RewardSystem {
     /**
      * Returns the bonus XP a user will receive based on criteria of when and how the user answered the question.
      * To receive full bonus XP, the user must be in surplus of 75 happiness, 25 fullness and has answered
-     * the question unassisted
+     * the question unassisted. On the contrary if not enough energy (no baseXP has been awarded), then there will be
+     * no bonus XP
      *
      * @param car the current user
      * @param chatController the AI chatcontroller
      * @return the bonus XP user will receive based on criteria
      */
-    public static double xpBonus(Cat car, ChatController chatController) {
+    public static double xpBonus(Cat car, ChatController chatController, IQuestion question) {
         double bonus = 0;
+
+        if (baseXpReturn(question, car) == 0) {
+            return 0;
+        }
 
         if (car.getHappiness() >= 75) {
             bonus += 5;
@@ -75,10 +81,18 @@ public class RewardSystem {
     public static double playerXpReturn(Cat car, IQuestion question, ChatController chatController) {
         double totalXp = 0;
 
-        totalXp += baseXpReturn(question);
-        totalXp += xpBonus(car, chatController);
+        totalXp += baseXpReturn(question, car);
+        totalXp += xpBonus(car, chatController, question);
 
         return totalXp;
     }
 
+    public static void userReward(Cat car, IQuestion question, ChatController chatController) {
+        double xpReturn = playerXpReturn(car, question, chatController);
+
+        if (xpReturn == 0) {
+            return;
+        }
+        LevelSystem.applyXp(car, xpReturn);
+    }
 }
