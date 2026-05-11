@@ -9,7 +9,6 @@ import com.mathcat.mathcat.models.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.LinkedList;
 import java.util.Random;
 
 /**
