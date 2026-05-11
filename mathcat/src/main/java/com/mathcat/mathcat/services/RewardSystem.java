@@ -3,7 +3,7 @@ package com.mathcat.mathcat.services;
 import com.mathcat.mathcat.controllers.ChatController;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Difficulty;
-import com.mathcat.mathcat.models.Question;
+import com.mathcat.mathcat.models.IQuestion;
 
 public class RewardSystem {
     // prototype system
@@ -12,7 +12,9 @@ public class RewardSystem {
     // 3 SEPERATE METHODS FOR BONUS XP, NO AI, HAPPY CAR AND WELL FED
     // NEEDS TO BE ABLE TO ACCESS CURRENT USERS XP AND LEVEL
 
-    public double baseXpReturn(Question question) {
+    private RewardSystem () {}
+
+    public static double baseXpReturn(IQuestion question) {
         double xp = 0;
 
         if (question.getDifficulty() == Difficulty.EASY) {
@@ -32,7 +34,7 @@ public class RewardSystem {
         return xp;
     }
 
-    public double xpBonus(Cat car, ChatController chatController) {
+    public static double xpBonus(Cat car, ChatController chatController) {
         double bonus = 0;
 
         if (car.getHappiness() >= 75) {
@@ -49,7 +51,7 @@ public class RewardSystem {
         return bonus;
     }
 
-    public double playerXpReturn(Cat car, Question question, ChatController chatController) {
+    public static double playerXpReturn(Cat car, IQuestion question, ChatController chatController) {
         double totalXp = 0;
 
         totalXp += baseXpReturn(question);

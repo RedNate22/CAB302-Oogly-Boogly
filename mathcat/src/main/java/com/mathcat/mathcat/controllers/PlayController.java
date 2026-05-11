@@ -1,5 +1,7 @@
 package com.mathcat.mathcat.controllers;
 
+import com.mathcat.mathcat.services.LevelSystem;
+import com.mathcat.mathcat.services.RewardSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +18,6 @@ import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.models.IQuestion;
-import com.mathcat.mathcat.services.RewardSystem;
 
 /**
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
@@ -79,7 +80,10 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
-            // TODO: apply bonus reward if !chatController.isAiUsed()
+
+            double xpReturn = RewardSystem.playerXpReturn(cat, currentQuestion, chatController);
+            LevelSystem.applyXp(cat, xpReturn);
+
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();
