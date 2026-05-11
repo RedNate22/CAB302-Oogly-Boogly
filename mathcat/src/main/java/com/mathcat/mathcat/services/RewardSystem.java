@@ -1,5 +1,6 @@
 package com.mathcat.mathcat.services;
 
+import com.mathcat.mathcat.controllers.ChatController;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.Question;
@@ -31,7 +32,7 @@ public class RewardSystem {
         return xp;
     }
 
-    public int xpBonus(Cat car) {
+    public int xpBonus(Cat car, ChatController chatController) {
         int bonus = 0;
 
         if (car.getHappiness() >= 75) {
@@ -41,14 +42,18 @@ public class RewardSystem {
         if (car.getFullness() >= 25) {
             bonus += 3;
         }
+
+        if (!chatController.isAiUsed()) {
+            bonus += 5;
+        }
         return bonus;
     }
 
-    public int playerXpReturn(Cat car, Question question) {
+    public int playerXpReturn(Cat car, Question question, ChatController chatController) {
         int totalXp = 0;
 
         totalXp += baseXpReturn(question);
-        totalXp += xpBonus(car);
+        totalXp += xpBonus(car, chatController);
 
         return totalXp;
     }
