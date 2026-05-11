@@ -4,7 +4,10 @@ import com.mathcat.mathcat.controllers.ChatController;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
+import com.mathcat.mathcat.dao.ItemDAO;
+import com.mathcat.mathcat.models.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Random;
@@ -14,7 +17,6 @@ import java.util.Random;
  * This class contains rules for subsequent XP gain and returns it.
  */
 public class RewardSystem {
-    private final LinkedList<IQuestion> itemRewardQueue = new LinkedList<>();
 
     /**
      * Returns the base XP a user will receive based on the difficulty of the question and whether they have enough energy
@@ -98,6 +100,20 @@ public class RewardSystem {
         return (random.nextDouble(max - min + 1))/100;
     }
 
+    public static List<Item> fisherYatesShuffle(List<Item> arr) {
+        List<Item> output = new ArrayList<>();
+        boolean[] visited = new boolean[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            int j = new Random().nextInt(arr.size());
+            while (visited[j]) {
+                j = new Random().nextInt(arr.size());
+            }
+            output.add(arr.get(j));
+            visited[j] = true;
+        }
+        return output;
+    }
+
     public static void userReward(Cat car, IQuestion question, ChatController chatController) {
         double xpReturn = playerXpReturn(car, question, chatController);
 
@@ -108,18 +124,23 @@ public class RewardSystem {
 
         double percentage = randomNumberGenerator();
 
-        if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
+        List<Item> shuffledCatalog = fisherYatesShuffle(ItemDAO.getAll());
+        ArrayList<Item> newUserItemList = car.getItems();
+        Item newItem = shuffledCatalog.getFirst();
+        newUserItemList.add(newItem);
 
+        if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
+            car.setItems(newUserItemList);
             return;
         }
 
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
-
+            car.setItems(newUserItemList);
             return;
         }
 
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
-
+            car.setItems(newUserItemList);
             return;
         }
     }
