@@ -12,8 +12,8 @@ public class RewardSystem {
     // 3 SEPERATE METHODS FOR BONUS XP, NO AI, HAPPY CAR AND WELL FED
     // NEEDS TO BE ABLE TO ACCESS CURRENT USERS XP AND LEVEL
 
-    public int baseXpReturn(Question question) {
-        int xp = 0;
+    public double baseXpReturn(Question question) {
+        double xp = 0;
 
         if (question.getDifficulty() == Difficulty.EASY) {
             xp = 10;
@@ -32,8 +32,8 @@ public class RewardSystem {
         return xp;
     }
 
-    public int xpBonus(Cat car, ChatController chatController) {
-        int bonus = 0;
+    public double xpBonus(Cat car, ChatController chatController) {
+        double bonus = 0;
 
         if (car.getHappiness() >= 75) {
             bonus += 5;
@@ -49,8 +49,8 @@ public class RewardSystem {
         return bonus;
     }
 
-    public int playerXpReturn(Cat car, Question question, ChatController chatController) {
-        int totalXp = 0;
+    public double playerXpReturn(Cat car, Question question, ChatController chatController) {
+        double totalXp = 0;
 
         totalXp += baseXpReturn(question);
         totalXp += xpBonus(car, chatController);

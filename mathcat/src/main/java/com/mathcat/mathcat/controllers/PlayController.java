@@ -16,6 +16,7 @@ import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.models.IQuestion;
+import com.mathcat.mathcat.services.RewardSystem;
 
 /**
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
