@@ -32,6 +32,17 @@ public class RewardSystem {
         return xp;
     }
 
+    public int xpBonus(Cat car) {
+        int bonus = 0;
 
+        if (car.getHappiness() >= 75) {
+            bonus += 5;
+        }
+
+        if (car.getFullness() >= 25) {
+            bonus += 3;
+        }
+        return bonus;
+    }
 
 }
