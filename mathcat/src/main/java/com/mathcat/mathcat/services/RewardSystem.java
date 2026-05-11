@@ -1,6 +1,5 @@
 package com.mathcat.mathcat.services;
 
-import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.Question;
@@ -43,6 +42,15 @@ public class RewardSystem {
             bonus += 3;
         }
         return bonus;
+    }
+
+    public int playerXpReturn(Cat car, Question question) {
+        int totalXp = 0;
+
+        totalXp += baseXpReturn(question);
+        totalXp += xpBonus(car);
+
+        return totalXp;
     }
 
 }
