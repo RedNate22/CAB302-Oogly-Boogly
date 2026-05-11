@@ -12,8 +12,6 @@ public class RewardSystem {
     // 3 SEPERATE METHODS FOR BONUS XP, NO AI, HAPPY CAR AND WELL FED
     // NEEDS TO BE ABLE TO ACCESS CURRENT USERS XP AND LEVEL
 
-    private RewardSystem () {}
-
     public static double baseXpReturn(IQuestion question) {
         double xp = 0;
 
