@@ -5,11 +5,16 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
 
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Random;
+
 /**
  * Manages the XP gain a user will receive upon successfully completing a question.
  * This class contains rules for subsequent XP gain and returns it.
  */
 public class RewardSystem {
+    private final LinkedList<IQuestion> itemRewardQueue = new LinkedList<>();
 
     /**
      * Returns the base XP a user will receive based on the difficulty of the question and whether they have enough energy
@@ -87,6 +92,12 @@ public class RewardSystem {
         return totalXp;
     }
 
+    public static double randomNumberGenerator() {
+        Random random = new Random();
+        double min = 0, max = 1000;
+        return (random.nextDouble(max - min + 1))/100;
+    }
+
     public static void userReward(Cat car, IQuestion question, ChatController chatController) {
         double xpReturn = playerXpReturn(car, question, chatController);
 
@@ -94,5 +105,22 @@ public class RewardSystem {
             return;
         }
         LevelSystem.applyXp(car, xpReturn);
+
+        double percentage = randomNumberGenerator();
+
+        if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
+
+            return;
+        }
+
+        if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
+
+            return;
+        }
+
+        if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
+
+            return;
+        }
     }
 }
