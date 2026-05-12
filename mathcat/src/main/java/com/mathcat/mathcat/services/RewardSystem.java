@@ -93,12 +93,24 @@ public class RewardSystem {
         return totalXp;
     }
 
+    /**
+     * Generates a pseudorandom double that represents a percentage
+     *
+     * @return a pseudorandom double between 0-100
+     */
     public static double randomNumberGenerator() {
         Random random = new Random();
         double min = 0, max = 1000;
         return (random.nextDouble(max - min + 1))/100;
     }
 
+    /**
+     * Creates a shuffle array of items based on the original catalog it is provided
+     *
+     * @param arr ...
+     *
+     * @return a shuffled array
+     */
     public static List<Item> fisherYatesShuffle(List<Item> arr) {
         List<Item> output = new ArrayList<>();
         boolean[] visited = new boolean[arr.size()];
@@ -113,6 +125,15 @@ public class RewardSystem {
         return output;
     }
 
+    /**
+     * Apply the XP a user will receive to their account, as well as choosing the first item in a shuffled
+     * catalog array (randomised item), and the user has a chance to earn this item with chance increasing
+     * based on the difficulty of the question they solved
+     *
+     * @param car the current user
+     * @param question the current question
+     * @param chatController the AI chatcontroller
+     */
     public static void userReward(Cat car, IQuestion question, ChatController chatController) {
         double xpReturn = playerXpReturn(car, question, chatController);
 
