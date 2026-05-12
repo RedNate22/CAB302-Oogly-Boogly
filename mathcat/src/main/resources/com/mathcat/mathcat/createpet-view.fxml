@@ -169,9 +169,6 @@
                                  <viewport>
                                     <Rectangle2D />
                                  </viewport>
-                                 <image>
-                                    <Image url="@assets/images/sprites/accessories/baby-cowboy-hat.png" />
-                                 </image>
                               </ImageView>
                            </children>
                         </StackPane>

@@ -40,6 +40,7 @@ public class CreatePetController {
     private ImageView viewCurrentAccessoryImage;
 
     private String selectedSpritePath = SpriteConstants.ORANGE_CAT;
+    private String selectedAccessorySpritePath;
 
     /**
      * Handles logic of changing the image of the current cat appearance to the orange sprite
@@ -72,18 +73,18 @@ public class CreatePetController {
      * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
      */
     public void onClickCowboyHat() {
-        selectedSpritePath = SpriteConstants.COWBOY_HAT;
+        selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
         
-        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedSpritePath));
+        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
 
     /**
      * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
      */
     public void onClickBowtieHat() {
-        selectedSpritePath = SpriteConstants.RED_BOWTIE_HAT;
+        selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
         
-        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedSpritePath));
+        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
     
     /**
