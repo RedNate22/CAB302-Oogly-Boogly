@@ -83,9 +83,21 @@ public class InventoryModalController {
      * @throws IOException
      */
     @FXML
-    private void confirmSaveDetails(ActionEvent event) throws IOException {
+    private void onConfirmSaveDetails(ActionEvent event) throws IOException {
+        // save details
 
+        // close modal
+        getRoot(event).close();
+        getRoot(event).close();
     }
+
+    // probably not going to use
+    // private void onConfirmCloseModal(ActionEvent event) throws IOException {
+    //     // create toast
+    //     // "any changes will not be saved"
+    //     // confirm > close
+    //     // cancel > keep modal open
+    // }
 
     /**
      * @param inventoryModalController
