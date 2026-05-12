@@ -15,10 +15,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -117,13 +118,23 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true" smooth="false">
-                           <viewport>
-                              <Rectangle2D height="175.0" minY="-25.0" width="175.0" />
-                           </viewport>
-                           <image>
-                              <Image url="@assets/images/sprites/cats/orange-normal.png" />
-                           </image></ImageView>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                                 <viewport>
+                                    <Rectangle2D height="175.0" minY="-25.0" width="175.0" />
+                                 </viewport>
+                                 <image>
+                                    <Image url="@assets/images/sprites/cats/orange-normal.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="displayAccessory" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                                 <viewport>
+                                    <Rectangle2D height="175.0" minY="-25.0" width="175.0" />
+                                 </viewport>
+                              </ImageView>
+                           </children>
+                        </StackPane>
                         <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
                            <cursor>
                               <Cursor fx:constant="HAND" />
