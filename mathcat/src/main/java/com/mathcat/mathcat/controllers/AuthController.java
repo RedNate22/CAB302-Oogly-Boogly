@@ -73,7 +73,7 @@ public class AuthController {
 
         Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 400);
+        Scene scene = new Scene(root, 700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
@@ -120,7 +120,7 @@ public class AuthController {
 
                 Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 700, 400);
+                Scene scene = new Scene(root, 700, 500);
                 stage.setTitle("MathCat");
                 stage.setScene(scene);
                 stage.show();

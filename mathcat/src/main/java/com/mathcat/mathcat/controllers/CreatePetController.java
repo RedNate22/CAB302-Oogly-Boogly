@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -34,12 +35,6 @@ public class CreatePetController {
 
     @FXML
     private ImageView viewCurrentPetImage;
-    // Image orangeCat = new Image(getClass().getResourceAsStream(
-    //         "/com/mathcat/mathcat/assets/images/sprites/cats/orange-normal.png"));
-    // Image siameseCat = new Image(getClass().getResourceAsStream(
-    //         "/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png"));
-    // Image tuxedoCat = new Image(getClass().getResourceAsStream(
-    //         "/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
 
     private String selectedSpritePath = SpriteConstants.ORANGE_CAT;
 
@@ -91,8 +86,10 @@ public class CreatePetController {
         Parent root = FXMLLoader.load(
                 getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root,700, 500);
+
         stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        stage.setScene(scene);
     }
 
     /**
@@ -106,8 +103,11 @@ public class CreatePetController {
         Parent root = FXMLLoader.load(
                 getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root,700, 500);
+
         stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        stage.setScene(scene);
     }
 }
 

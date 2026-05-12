@@ -94,8 +94,12 @@ public class homeController {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root,700, 500);
+        
         stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        stage.setScene(scene);
+
     }
 
     // public void openInventoryModal(ActionEvent event) throws IOException {

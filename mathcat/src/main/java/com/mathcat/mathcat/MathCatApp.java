@@ -28,6 +28,7 @@ public class MathCatApp extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
