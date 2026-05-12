@@ -36,6 +36,9 @@ public class CreatePetController {
     @FXML
     private ImageView viewCurrentPetImage;
 
+    @FXML
+    private ImageView viewCurrentAccessoryImage;
+
     private String selectedSpritePath = SpriteConstants.ORANGE_CAT;
 
     /**
@@ -63,6 +66,24 @@ public class CreatePetController {
         selectedSpritePath = SpriteConstants.TUXEDO_CAT;
         
         viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
+    }
+
+    /**
+     * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
+     */
+    public void onClickCowboyHat() {
+        selectedSpritePath = SpriteConstants.COWBOY_HAT;
+        
+        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedSpritePath));
+    }
+
+    /**
+     * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
+     */
+    public void onClickBowtieHat() {
+        selectedSpritePath = SpriteConstants.RED_BOWTIE_HAT;
+        
+        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedSpritePath));
     }
     
     /**

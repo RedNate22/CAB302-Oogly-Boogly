@@ -18,7 +18,7 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="400.0" prefWidth="340.0">
+            <Pane prefHeight="500.0" prefWidth="340.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="244.0" prefWidth="236.0">
                      <children>
@@ -56,17 +56,17 @@
                         </Group>
                      </children>
                   </VBox>
-                  <Group layoutX="49.0" layoutY="323.0">
+                  <Group layoutX="46.0" layoutY="400.0">
                      <children>
                         <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" mnemonicParsing="false" onAction="#onPressPlay" text="Play" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Customise" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Inventory" />
                      </children>
                   </Group>
                </children>
             </Pane>
-            <Pane prefHeight="400.0" prefWidth="340.0">
+            <Pane prefHeight="500.0" prefWidth="340.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
+                  <VBox alignment="CENTER" prefHeight="479.0" prefWidth="290.0">
                      <children>
                         <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER">
                            <cursor>

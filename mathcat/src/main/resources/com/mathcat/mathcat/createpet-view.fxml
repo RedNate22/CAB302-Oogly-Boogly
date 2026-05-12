@@ -23,9 +23,9 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="400.0" prefWidth="340.0">
+            <Pane prefHeight="500.0" prefWidth="340.0">
                <children>
-                  <VBox alignment="CENTER" layoutY="-1.0" prefHeight="381.0" prefWidth="262.0">
+                  <VBox alignment="CENTER" layoutY="-1.0" prefHeight="482.0" prefWidth="294.0">
                      <children>
                         <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="282.0" text="Customise Your Cat" />
                         <Group>
@@ -65,7 +65,7 @@
                                                 <Image url="@assets/images/sprites/cats/orange-normal.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="clickedStyleOrange" alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Orange" />
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Orange" />
                                        </children>
                                     </Group>
                                     <Group layoutX="20.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -75,7 +75,7 @@
                                                 <Image url="@assets/images/sprites/cats/siamese-normal.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="clickedStyleSiamese" alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Siamese" />
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Siamese" />
                                        </children>
                                     </Group>
                                     <Group layoutX="120.0" layoutY="10.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
@@ -85,7 +85,7 @@
                                                 <Image url="@assets/images/sprites/cats/tuxedo-normal.png" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="clickedStyleTuxedo" alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Tuxedo" />
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Tuxedo" />
                                        </children>
                                     </Group>
                                  </children>
@@ -95,22 +95,60 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </Group>
-                        <HBox prefHeight="107.0" prefWidth="252.0" spacing="3.0">
+                        <Label fx:id="error1" alignment="TOP_LEFT" contentDisplay="TEXT_ONLY" layoutX="16.0" layoutY="105.0" prefHeight="37.0" prefWidth="282.0" textFill="RED" wrapText="true">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                        <Group layoutX="26.0" layoutY="157.0">
                            <children>
-                              <Label fx:id="clickedAccessoryOne" alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="182.0" text="[Accessory One]" />
-                              <Label fx:id="clickedAccessoryTwo" alignment="BASELINE_CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="182.0" text="[Accessory Two]" />
+                              <Label fx:id="petStyleLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="42.0" prefHeight="17.0" prefWidth="95.0" text="Cat Accesory:" textAlignment="CENTER" />
+                              <GridPane alignment="TOP_CENTER" gridLinesVisible="true" layoutY="60.0" prefHeight="86.0" prefWidth="246.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Group GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                       <children>
+                                          <ImageView fx:id="CowboyAccessorySelection" fitHeight="75.0" fitWidth="75.0" layoutX="3.0" layoutY="1.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/images/sprites/accessories/baby-cowboy-hat.png" />
+                                             </image>
+                                             <viewport>
+                                                <Rectangle2D height="145.0" minX="50.0" minY="30.0" width="145.0" />
+                                             </viewport>
+                                          </ImageView>
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Cowboy Hat" />
+                                       </children>
+                                    </Group>
+                                    <Group layoutX="20.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                       <children>
+                                          <ImageView fx:id="BowtieAccessorySelection" fitHeight="75.0" fitWidth="75.0" layoutX="3.0" layoutY="1.0" onMouseClicked="#onClickBowtieHat" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/images/sprites/accessories/red-bowtie-hat.png" />
+                                             </image>
+                                             <viewport>
+                                                <Rectangle2D height="80.0" minX="105.0" minY="60.0" width="80.0" />
+                                             </viewport>
+                                          </ImageView>
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Bow Tie" />
+                                       </children>
+                                    </Group>
+                                 </children>
+                              </GridPane>
                            </children>
-                           <padding>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </padding>
-                        </HBox>
+                        </Group>
                      </children>
                   </VBox>
                </children>
             </Pane>
-            <Pane prefHeight="400.0" prefWidth="340.0">
+            <Pane prefHeight="500.0" prefWidth="340.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
+                  <VBox alignment="CENTER" prefHeight="481.0" prefWidth="290.0">
                      <children>
                         <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
                            <cursor>
@@ -119,11 +157,6 @@
                         </Button>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView id="displayAccessory" fx:id="viewCurrentAccessoryImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
-                                 <viewport>
-                                    <Rectangle2D height="175.0" minY="15.0" width="175.0" />
-                                 </viewport>
-                              </ImageView>
                               <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                                  <viewport>
                                     <Rectangle2D height="175.0" minY="15.0" width="175.0" />
@@ -131,6 +164,11 @@
                                  <image>
                                     <Image url="@assets/images/sprites/cats/orange-normal.png" />
                                  </image>
+                              </ImageView>
+                              <ImageView id="displayAccessory" fx:id="viewCurrentAccessoryImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                                 <viewport>
+                                    <Rectangle2D height="175.0" minY="15.0" width="175.0" />
+                                 </viewport>
                               </ImageView>
                            </children>
                         </StackPane>
