@@ -3,8 +3,10 @@ package com.mathcat.mathcat.controllers;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +33,8 @@ public class homeController {
     @FXML
     private Label petNameLabel;
 
+    private ImageView viewCurrentPetImage;
+
     private ProgressBar happinessProgressBar = new ProgressBar(0);
     private ProgressBar hungerProgressBar = new ProgressBar(0);
     private ProgressBar energyProgressBar = new ProgressBar(0);
@@ -43,7 +47,11 @@ public class homeController {
      */
     @FXML
     public void initialize() {
+
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+
+        String selectedSpritePath = cat.getCatSprite();
+
 
         CatService.applyOfflineDecay(cat);
         CatScheduler.getInstance().start(cat); // begin live stats
@@ -54,6 +62,7 @@ public class homeController {
 
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             happinessProgressBar.setProgress(catHappiness / 100);
             hungerProgressBar.setProgress(catHunger / 100);
             energyProgressBar.setProgress(catEnergy / 100);
@@ -91,27 +100,27 @@ public class homeController {
         stage.getScene().setRoot(root);
     }
 
-    public void openInventoryModal(ActionEvent event) throws IOException {
-        Stage homeStage = getRoot(event);
+    // public void openInventoryModal(ActionEvent event) throws IOException {
+    //     Stage homeStage = getRoot(event);
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(homeController.class.getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
-        loader.load();
-        InventoryModalController addDataController = loader.getController();
-        addDataController.setMainController(this);
+    //     FXMLLoader loader = new FXMLLoader();
+    //     loader.setLocation(homeController.class.getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
+    //     loader.load();
+    //     InventoryModalController addDataController = loader.getController();
+    //     addDataController.setMainController(this);
 
-        Parent root = loader.getRoot();
-        Stage modalStage = new Stage();
+    //     Parent root = loader.getRoot();
+    //     Stage modalStage = new Stage();
 
-        modalStage.initOwner(homeStage);
-        modalStage.initModality(Modality.APPLICATION_MODAL);
-        modalStage.setResizable(false);
+    //     modalStage.initOwner(homeStage);
+    //     modalStage.initModality(Modality.APPLICATION_MODAL);
+    //     modalStage.setResizable(false);
 
-        Scene scene = new Scene(root);
-        modalStage.setScene(scene);
-        modalStage.setTitle("Inventory Modal");
-        modalStage.show();
-    }
+    //     Scene scene = new Scene(root);
+    //     modalStage.setScene(scene);
+    //     modalStage.setTitle("Inventory Modal");
+    //     modalStage.show();
+    // }
 }
 
 

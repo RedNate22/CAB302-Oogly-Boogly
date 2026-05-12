@@ -55,10 +55,10 @@ public class InventoryModalController {
      * @param event
      * @return Stage
      */
-    private static Stage getRoot(MouseEvent event) {
-        Node root = (Node) event.getSource();
-        return (Stage) root.getScene().getWindow();
-    }
+    // private static Stage getRoot(MouseEvent event) {
+    //     Node root = (Node) event.getSource();
+    //     return (Stage) root.getScene().getWindow();
+    // }
 
     /**
      * @param event

@@ -17,7 +17,9 @@ import java.sql.SQLException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.SpriteService;
 
 /**
  * Controller for the Create Pet screen. Handles pet creation and saves to both in-memory CatDAO and
@@ -32,32 +34,40 @@ public class CreatePetController {
 
     @FXML
     private ImageView viewCurrentPetImage;
-    Image orangeCat = new Image(getClass().getResourceAsStream(
-            "/com/mathcat/mathcat/assets/images/sprites/cats/orange-normal.png"));
-    Image siameseCat = new Image(getClass().getResourceAsStream(
-            "/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png"));
-    Image tuxedoCat = new Image(getClass().getResourceAsStream(
-            "/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
+    // Image orangeCat = new Image(getClass().getResourceAsStream(
+    //         "/com/mathcat/mathcat/assets/images/sprites/cats/orange-normal.png"));
+    // Image siameseCat = new Image(getClass().getResourceAsStream(
+    //         "/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png"));
+    // Image tuxedoCat = new Image(getClass().getResourceAsStream(
+    //         "/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png"));
+
+    private String selectedSpritePath = SpriteConstants.ORANGE_CAT;
 
     /**
      * Handles logic of changing the image of the current cat appearance to the orange sprite
      */
     public void onClickOrangeCat() {
-        viewCurrentPetImage.setImage(orangeCat);
+        selectedSpritePath = SpriteConstants.ORANGE_CAT;
+
+        viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
     }
 
     /**
      * Handles logic of changing the image of the current cat appearance to the siamese sprite
      */
     public void onClickSiameseCat() {
-        viewCurrentPetImage.setImage(siameseCat);
+        selectedSpritePath = SpriteConstants.SIAMESE_CAT;
+
+        viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
     }
 
     /**
      * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
      */
     public void onClickTuxedoCat() {
-        viewCurrentPetImage.setImage(tuxedoCat);
+        selectedSpritePath = SpriteConstants.TUXEDO_CAT;
+        
+        viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
     }
     
     /**
@@ -67,7 +77,6 @@ public class CreatePetController {
      */
     public void onConfirmPetDetails(ActionEvent event) throws IOException {
         String name = userPetName.getText().trim();
-        String catSprite = viewCurrentPetImage.toString();
 
         if (!CatService.isValidCatName(name)) {
             error.setText("Pet name must be 1-10 letters only, no spaces or numbers.");
@@ -76,9 +85,8 @@ public class CreatePetController {
 
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
+        cat.setCatSprite(selectedSpritePath);
         CatDAO.save(cat);
-
-        cat.setCatSprite(catSprite);
 
         Parent root = FXMLLoader.load(
                 getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
