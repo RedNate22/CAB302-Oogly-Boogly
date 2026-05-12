@@ -33,14 +33,13 @@ public class homeController {
     @FXML
     private Label petNameLabel;
 
+    @FXML
     private ImageView viewCurrentPetImage;
 
+    @FXML
     private ProgressBar happinessProgressBar = new ProgressBar(0);
     private ProgressBar hungerProgressBar = new ProgressBar(0);
     private ProgressBar energyProgressBar = new ProgressBar(0);
-
-    @FXML
-    private Image image;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
@@ -51,7 +50,6 @@ public class homeController {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
 
         String selectedSpritePath = cat.getCatSprite();
-
 
         CatService.applyOfflineDecay(cat);
         CatScheduler.getInstance().start(cat); // begin live stats

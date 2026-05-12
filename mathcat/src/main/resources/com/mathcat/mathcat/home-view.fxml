@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.homeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.homeController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -73,9 +73,9 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView id="viewCurrentPetImage" fx:id="viewCurrentPetImage" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                            <viewport>
-                              <Rectangle2D height="175.0" minY="-25.0" width="175.0" />
+                              <Rectangle2D height="175.0" minY="15.0" width="175.0" />
                            </viewport>
                            <image>
                               <Image url="@assets/images/sprites/cats/orange-normal.png" />
