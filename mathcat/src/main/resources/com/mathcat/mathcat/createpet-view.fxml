@@ -157,18 +157,21 @@
                         </Button>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+                              <ImageView id="displayUserPet" fx:id="viewCurrentPetImage" fitHeight="225.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                                  <viewport>
-                                    <Rectangle2D height="175.0" minY="15.0" width="175.0" />
+                                    <Rectangle2D />
                                  </viewport>
                                  <image>
                                     <Image url="@assets/images/sprites/cats/orange-normal.png" />
                                  </image>
                               </ImageView>
-                              <ImageView id="displayAccessory" fx:id="viewCurrentAccessoryImage" fitHeight="225.0" fitWidth="225.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="displayAccessory" fx:id="viewCurrentAccessoryImage" fitHeight="225.0" fitWidth="261.0" pickOnBounds="true" preserveRatio="true">
                                  <viewport>
-                                    <Rectangle2D height="175.0" minY="15.0" width="175.0" />
+                                    <Rectangle2D />
                                  </viewport>
+                                 <image>
+                                    <Image url="@assets/images/sprites/accessories/baby-cowboy-hat.png" />
+                                 </image>
                               </ImageView>
                            </children>
                         </StackPane>
