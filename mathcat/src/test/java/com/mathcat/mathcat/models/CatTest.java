@@ -65,5 +65,34 @@ public final class CatTest {
         void defaultUserIdIsZero() {
             assertEquals(0, cat.getUserId());
         }
+
+        @Test
+        void defaultCatAccessoryIsNull() {
+            assertNull(cat.getCatAccessory());
+        }
+    }
+
+    @Nested
+    class Accessory {
+        @Test
+        void setsAndGetsAccessory() {
+            String accessoryPath = "path/to/accessory.png";
+            cat.setCatAccessory(accessoryPath);
+            assertEquals(accessoryPath, cat.getCatAccessory());
+        }
+
+        @Test
+        void canSetAccessoryToNull() {
+            cat.setCatAccessory("path/to/accessory.png");
+            cat.setCatAccessory(null);
+            assertNull(cat.getCatAccessory());
+        }
+
+        @Test
+        void canUpdateAccessory() {
+            cat.setCatAccessory("path/to/cowboy-hat.png");
+            cat.setCatAccessory("path/to/bowtie.png");
+            assertEquals("path/to/bowtie.png", cat.getCatAccessory());
+        }
     }
 }

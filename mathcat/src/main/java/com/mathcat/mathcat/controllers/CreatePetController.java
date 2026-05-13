@@ -65,7 +65,7 @@ public class CreatePetController {
      */
     public void onClickTuxedoCat() {
         selectedSpritePath = SpriteConstants.TUXEDO_CAT;
-        
+
         viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
     }
 
@@ -74,7 +74,7 @@ public class CreatePetController {
      */
     public void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
-        
+
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
 
@@ -83,12 +83,13 @@ public class CreatePetController {
      */
     public void onClickBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
-        
+
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
-    
+
     /**
      * Handles pet creation — validates name, saves to database and navigates to home screen.
+     * 
      * @param event the button click event
      * @throws IOException if the home screen cannot be loaded
      */
@@ -103,12 +104,13 @@ public class CreatePetController {
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
         cat.setCatSprite(selectedSpritePath);
+        cat.setCatAccessory(selectedAccessorySpritePath);
         CatDAO.save(cat);
 
-        Parent root = FXMLLoader.load(
-                getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root,700, 500);
+        Scene scene = new Scene(root, 700, 500);
 
         stage.setTitle("MathCat");
         stage.setScene(scene);
@@ -116,6 +118,7 @@ public class CreatePetController {
 
     /**
      * Handles logout — clears current user and returns to initial screen.
+     * 
      * @param event the button click event
      * @throws IOException if the initial screen cannot be loaded
      */
