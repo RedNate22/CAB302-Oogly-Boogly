@@ -7,36 +7,42 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Data Access Object for Cat database operations.
- * Handles only raw SQL queries — no business logic.
+ * Data Access Object for Cat database operations. Handles only raw SQL queries — no business logic.
  */
 public final class CatDAO {
 
     /**
      * Saves a cat to the database. Inserts if new, updates if existing.
+     * 
      * @param cat the cat to save
      */
     public static void save(Cat cat) {
         try {
             if (cat.getCatId() == 0) {
-                String sql = """
-                        INSERT INTO pets (user_id, cat_name, cat_sprite, happiness, fullness, energy,
-                        level, xp, last_saved, daily_energy_gained, energy_cap_reset_date)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """;
+                String sql =
+                        """
+                                INSERT INTO pets (user_id, cat_name, cat_sprite, cat_accessory, happiness, fullness, energy,
+                                level, xp, last_saved, daily_energy_gained, energy_cap_reset_date)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                """;
                 try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql,
                         Statement.RETURN_GENERATED_KEYS)) {
                     stmt.setInt(1, cat.getUserId());
                     stmt.setString(2, cat.getCatName());
                     stmt.setString(3, cat.getCatSprite());
-                    stmt.setDouble(4, cat.getHappiness());
-                    stmt.setDouble(5, cat.getFullness());
-                    stmt.setDouble(6, cat.getEnergy());
-                    stmt.setInt(7, cat.getLevel());
-                    stmt.setDouble(8, cat.getXp());
-                    stmt.setString(9, cat.getLastSaved() != null ? cat.getLastSaved().toString() : null);
-                    stmt.setDouble(10, cat.getDailyEnergyGained());
-                    stmt.setString(11, cat.getEnergyCapResetDate() != null ? cat.getEnergyCapResetDate().toString() : null);
+                    stmt.setString(4, cat.getCatAccessory());
+                    stmt.setDouble(5, cat.getHappiness());
+                    stmt.setDouble(6, cat.getFullness());
+                    stmt.setDouble(7, cat.getEnergy());
+                    stmt.setInt(8, cat.getLevel());
+                    stmt.setDouble(9, cat.getXp());
+                    stmt.setString(10,
+                            cat.getLastSaved() != null ? cat.getLastSaved().toString() : null);
+                    stmt.setDouble(11, cat.getDailyEnergyGained());
+                    stmt.setString(12,
+                            cat.getEnergyCapResetDate() != null
+                                    ? cat.getEnergyCapResetDate().toString()
+                                    : null);
                     stmt.executeUpdate();
 
                     ResultSet keys = stmt.getGeneratedKeys();
@@ -45,23 +51,30 @@ public final class CatDAO {
                     }
                 }
             } else {
-                String sql = """
-                        UPDATE pets SET cat_name = ?, cat_sprite = ?, happiness = ?, fullness = ?,
-                        energy = ?, level = ?, xp = ?, last_saved = ?, daily_energy_gained = ?,
-                        energy_cap_reset_date = ? WHERE id = ?
-                        """;
-                try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
+                String sql =
+                        """
+                                UPDATE pets SET cat_name = ?, cat_sprite = ?, cat_accessory = ?, happiness = ?, fullness = ?,
+                                energy = ?, level = ?, xp = ?, last_saved = ?, daily_energy_gained = ?,
+                                energy_cap_reset_date = ? WHERE id = ?
+                                """;
+                try (PreparedStatement stmt =
+                        DatabaseManager.getConnection().prepareStatement(sql)) {
                     stmt.setString(1, cat.getCatName());
                     stmt.setString(2, cat.getCatSprite());
-                    stmt.setDouble(3, cat.getHappiness());
-                    stmt.setDouble(4, cat.getFullness());
-                    stmt.setDouble(5, cat.getEnergy());
-                    stmt.setInt(6, cat.getLevel());
-                    stmt.setDouble(7, cat.getXp());
-                    stmt.setString(8, cat.getLastSaved() != null ? cat.getLastSaved().toString() : null);
-                    stmt.setDouble(9, cat.getDailyEnergyGained());
-                    stmt.setString(10, cat.getEnergyCapResetDate() != null ? cat.getEnergyCapResetDate().toString() : null);
-                    stmt.setInt(11, cat.getCatId());
+                    stmt.setString(3, cat.getCatAccessory());
+                    stmt.setDouble(4, cat.getHappiness());
+                    stmt.setDouble(5, cat.getFullness());
+                    stmt.setDouble(6, cat.getEnergy());
+                    stmt.setInt(7, cat.getLevel());
+                    stmt.setDouble(8, cat.getXp());
+                    stmt.setString(9,
+                            cat.getLastSaved() != null ? cat.getLastSaved().toString() : null);
+                    stmt.setDouble(10, cat.getDailyEnergyGained());
+                    stmt.setString(11,
+                            cat.getEnergyCapResetDate() != null
+                                    ? cat.getEnergyCapResetDate().toString()
+                                    : null);
+                    stmt.setInt(12, cat.getCatId());
                     stmt.executeUpdate();
                 }
             }
@@ -72,6 +85,7 @@ public final class CatDAO {
 
     /**
      * Loads a cat from the database by user ID.
+     * 
      * @param userId the database ID of the owning user
      * @return the Cat, or null if not found
      */
@@ -85,16 +99,19 @@ public final class CatDAO {
                 cat.setCatId(rs.getInt("id"));
                 cat.setUserId(userId);
                 cat.setCatSprite(rs.getString("cat_sprite"));
+                cat.setCatAccessory(rs.getString("cat_accessory"));
                 cat.setHappiness(rs.getDouble("happiness"));
                 cat.setFullness(rs.getDouble("fullness"));
                 cat.setEnergy(rs.getDouble("energy"));
                 cat.setLevel(rs.getInt("level"));
                 cat.setXp(rs.getDouble("xp"));
                 String lastSaved = rs.getString("last_saved");
-                if (lastSaved != null) cat.setLastSaved(LocalDateTime.parse(lastSaved));
+                if (lastSaved != null)
+                    cat.setLastSaved(LocalDateTime.parse(lastSaved));
                 cat.setDailyEnergyGained(rs.getDouble("daily_energy_gained"));
                 String resetDate = rs.getString("energy_cap_reset_date");
-                if (resetDate != null) cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                if (resetDate != null)
+                    cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
                 return cat;
             }
         } catch (SQLException e) {
@@ -105,6 +122,7 @@ public final class CatDAO {
 
     /**
      * Deletes a cat from the database by cat ID.
+     * 
      * @param catId the cat's database ID
      */
     public static void delete(int catId) {

@@ -12,6 +12,7 @@ public final class Cat {
     private int userId; // associates cat with its owner
     private String catName;
     private String catSprite; // path/to/file to match cat with a sprite
+    private String catAccessory;
 
     private double happiness;
     private double fullness;
@@ -58,7 +59,8 @@ public final class Cat {
     }
 
     /**
-     * Sets the cat's unique ID. Should only be called by {@link com.mathcat.mathcat.dao.CatDAO CatDAO} after persisting.
+     * Sets the cat's unique ID. Should only be called by {@link com.mathcat.mathcat.dao.CatDAO
+     * CatDAO} after persisting.
      * 
      * @param catId the ID assigned by the data store
      */
@@ -95,7 +97,22 @@ public final class Cat {
     }
 
     /**
-     * @return current happiness, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
+     * @return file path to the cat's accessory image
+     */
+    public String getCatAccessory() {
+        return catAccessory;
+    }
+
+    /**
+     * @param catAccessory file path to the cat's accessory image
+     */
+    public void setCatAccessory(String catAccessory) {
+        this.catAccessory = catAccessory;
+    }
+
+    /**
+     * @return current happiness, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT
+     *         MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
      */
     public double getHappiness() {
         return happiness;
@@ -109,7 +126,8 @@ public final class Cat {
     }
 
     /**
-     * @return current fullness, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
+     * @return current fullness, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT
+     *         MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
      */
     public double getFullness() {
         return fullness;
@@ -123,7 +141,8 @@ public final class Cat {
     }
 
     /**
-     * @return the current energy, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
+     * @return the current energy, between {@link com.mathcat.mathcat.services.CatService#MIN_STAT
+     *         MIN_STAT} and {@link com.mathcat.mathcat.services.CatService#MAX_STAT MAX_STAT}
      */
     public double getEnergy() {
         return energy;
@@ -172,7 +191,8 @@ public final class Cat {
     }
 
     /**
-     * @param userId the ID of the owning user, assigned by {@link com.mathcat.mathcat.dao.CatDAO CatDAO}
+     * @param userId the ID of the owning user, assigned by {@link com.mathcat.mathcat.dao.CatDAO
+     *        CatDAO}
      */
     public void setUserId(int userId) {
         this.userId = userId;
