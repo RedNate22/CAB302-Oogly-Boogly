@@ -123,4 +123,4 @@ public final class AIServiceTest {
             assertTrue(response.contains("Please wait"));
         }
     }
-
+}
