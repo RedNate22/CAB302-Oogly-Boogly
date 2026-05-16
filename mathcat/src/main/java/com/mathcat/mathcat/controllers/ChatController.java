@@ -118,7 +118,7 @@ public class ChatController {
         conversationHistory.add(new String[] {"user", message});
 
         // Get hint from AI in background thread
-        // getHint() always returns a non-null string — errors are returned as friendly messages
+        // getHint() always returns a non-null string - errors are returned as friendly messages
         new Thread(() -> {
             String hint = aiService.getHint(currentQuestion, currentAnswer, message,
                     conversationHistory);
