@@ -48,8 +48,8 @@ public class ChatController {
         aiService = new AIService();
         chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
 
-        // Enforce max input length in real time — reject any keystroke that would exceed the limit.
-        // Also guards against paste — if someone pastes 1000 chars, the whole paste is rejected.
+        // Enforce max input length in real time - reject any keystroke that would exceed the limit.
+        // Also guards against paste - if someone pastes 1000 chars, the whole paste is rejected.
         userInput.textProperty().addListener((obs, oldText, newText) -> {
             if (newText.length() > MAX_INPUT_LENGTH) {
                 userInput.setText(oldText);
