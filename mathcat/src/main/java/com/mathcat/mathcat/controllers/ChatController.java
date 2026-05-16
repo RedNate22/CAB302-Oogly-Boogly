@@ -155,7 +155,7 @@ public class ChatController {
     private String currentAnswer;
 
     /**
-     * Sets the correct answer for the current question. Passed to the AI system prompt only —
+     * Sets the correct answer for the current question. Passed to the AI system prompt only -
      * never shown directly to the student.
      *
      * @param answer the correct answer as a string
