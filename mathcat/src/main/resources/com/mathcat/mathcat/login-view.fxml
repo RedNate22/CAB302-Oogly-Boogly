@@ -27,6 +27,6 @@
         <Button text="👁" onAction="#togglePassword"/>
     </HBox>
     <Label fx:id="error"/>
-    <Button text="Login" onAction="#onLoginConfirm"/>
+    <Button text="Login" defaultButton="true" onAction="#onLoginConfirm"/>
     <Button text="Return" onAction="#onReturn"/>
 </VBox>
