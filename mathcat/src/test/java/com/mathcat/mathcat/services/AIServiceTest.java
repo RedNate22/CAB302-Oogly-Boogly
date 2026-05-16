@@ -76,7 +76,6 @@ public final class AIServiceTest {
             assertEquals("hello", result);
         }
 
-        }
 
         @Test
         void truncatesToMaxLength() {
