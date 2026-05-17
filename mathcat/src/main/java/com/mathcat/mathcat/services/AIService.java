@@ -74,32 +74,6 @@ public class AIService {
 
 
 
-    // Escapes special characters in a string to make it safe for JSON
-    private String escapeJson(String input) {
-        if (input == null)
-            return "null";
-        StringBuilder sb = new StringBuilder();
-        for (char c : input.toCharArray()) {
-            switch (c) {
-                case '"' -> sb.append("\\\"");
-                case '\\' -> sb.append("\\\\");
-                case '\b' -> sb.append("\\b");
-                case '\f' -> sb.append("\\f");
-                case '\n' -> sb.append("\\n");
-                case '\r' -> sb.append("\\r");
-                case '\t' -> sb.append("\\t");
-                default -> {
-                    if (c < ' ') {
-                        sb.append(String.format("\\u%04x", (int) c));
-                    } else {
-                        sb.append(c);
-                    }
-                }
-            }
-        }
-        return sb.toString();
-    }
-
 
 
     /**
@@ -285,31 +259,37 @@ public class AIService {
                         + "3. Do not suggest websites, apps, or external resources. "
                         + "4. If a student says something that suggests they are upset, in danger, or need help, respond kindly and tell them to talk to a trusted adult.";
 
-        // Build conversation history messages
-        StringBuilder messagesArray = new StringBuilder();
-        messagesArray.append("{\"role\": \"system\", \"content\": \"")
-                .append(escapeJson(systemPrompt)).append("\"}");
+// Build request body using Gson so escaping is handled correctly
+// This removes the risk of a manual escaping mistake causing malformed JSON
+        JsonArray messages = new JsonArray();
 
-        // Only send the most recent MAX_HISTORY_ENTRIES messages to avoid hitting the token limit
+        JsonObject systemMsg = new JsonObject();
+        systemMsg.addProperty("role", "system");
+        systemMsg.addProperty("content", systemPrompt);
+        messages.add(systemMsg);
+
+// Only send the most recent MAX_HISTORY_ENTRIES messages to avoid hitting the token limit
         List<String[]> trimmedHistory = history.size() > MAX_HISTORY_ENTRIES
                 ? history.subList(history.size() - MAX_HISTORY_ENTRIES, history.size())
                 : history;
 
         for (String[] message : trimmedHistory) {
-            messagesArray.append(", {\"role\": \"").append(message[0]).append("\", \"content\": \"")
-                    .append(escapeJson(message[1])).append("\"}");
+            JsonObject msg = new JsonObject();
+            msg.addProperty("role", message[0]);
+            msg.addProperty("content", message[1]);
+            messages.add(msg);
         }
 
-        // Add current user message
-        messagesArray.append(", {\"role\": \"user\", \"content\": \"")
-                .append(escapeJson(userMessage)).append("\"}");
+        JsonObject userMsg = new JsonObject();
+        userMsg.addProperty("role", "user");
+        userMsg.addProperty("content", userMessage);
+        messages.add(userMsg);
 
-        String body = """
-                {
-                  "model": "llama-3.3-70b-versatile",
-                  "messages": [%s]
-                }
-                """.formatted(messagesArray.toString());
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("model", "llama-3.3-70b-versatile");
+        requestBody.add("messages", messages);
+
+        String body = requestBody.toString();
 
         // System.out.println("History size: " + history.size());
         // System.out.println("Body: " + body);
