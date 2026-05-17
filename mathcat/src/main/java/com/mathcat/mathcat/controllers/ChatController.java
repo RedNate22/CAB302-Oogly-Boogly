@@ -32,6 +32,7 @@ public class ChatController {
 
     private AIService aiService;
     private String currentQuestion;
+    private String currentAnswer;
 
     // Tracks whether the student used the AI hint system at all
     // If true, no bonus reward is given for this question
@@ -152,7 +153,7 @@ public class ChatController {
         chatBox.getChildren().add(container);
     }
 
-    private String currentAnswer;
+
 
     /**
      * Sets the correct answer for the current question. Passed to the AI system prompt only -
