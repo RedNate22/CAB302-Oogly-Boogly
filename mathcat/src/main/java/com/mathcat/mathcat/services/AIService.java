@@ -86,18 +86,7 @@ public class AIService {
                 case '\r' -> sb.append("\\r");
                 case '\t' -> sb.append("\\t");
                 default -> {
-                    if (c < ' ') {
-                        sb.append(String.format("\\u%04x", (int) c));
-                    } else {
-                        sb.append(c);
-                    }
-                }
-            }
-        }
-        return sb.toString();
     }
-
-
 
     /**
      * Checks the sliding-window rate limit before allowing a call.
