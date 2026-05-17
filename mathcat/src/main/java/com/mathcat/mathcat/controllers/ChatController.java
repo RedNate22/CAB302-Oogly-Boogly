@@ -107,7 +107,7 @@ public class ChatController {
         String message = AIService.sanitiseInput(rawMessage, 500);
         if (message.isBlank()) return;
 
-        // Change this bool value to false when next question is started
+
         aiUsed = true;
 
         // Show user message
@@ -118,9 +118,9 @@ public class ChatController {
         // Add user message to history BEFORE sending
         conversationHistory.add(new String[] {"user", message});
 
-        // Get hint from AI in background thread
-        // getHint() always returns a non-null string - errors are returned as friendly messages
-        new Thread(() -> {
+        // Daemon thread so the JVM exits immediately if the window is closed mid-request
+        // instead of hanging until the 10s timeout completes
+        Thread hintThread = new Thread(() -> {
             String hint = aiService.getHint(currentQuestion, currentAnswer, message,
                     conversationHistory);
 
@@ -130,7 +130,9 @@ public class ChatController {
                 addMessage(hint, "#F1F0F0", Pos.CENTER_LEFT);
                 sendButton.setDisable(false);
             });
-        }).start();
+        });
+        hintThread.setDaemon(true);
+        hintThread.start();
     }
 
     /**
@@ -152,8 +154,6 @@ public class ChatController {
         container.setAlignment(alignment);
         chatBox.getChildren().add(container);
     }
-
-
 
     /**
      * Sets the correct answer for the current question. Passed to the AI system prompt only -
