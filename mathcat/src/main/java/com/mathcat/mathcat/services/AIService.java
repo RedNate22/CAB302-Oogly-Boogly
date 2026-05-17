@@ -6,6 +6,9 @@ import java.net.http.*;
 import java.net.http.HttpRequest.BodyPublishers;
 import com.google.gson.*;
 import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
+
 
 /**
  * Service class responsible for communicating with the Groq AI API. Uses the "I do, We do, You do"
@@ -15,54 +18,181 @@ import java.util.List;
 public class AIService {
 
     private final String apiKey;
-    private final HttpClient client = HttpClient.newHttpClient();
+    private final HttpClient client;
+
+    /** Maximum AI calls allowed within a single time window. */
+    private static final int MAX_CALLS_PER_WINDOW = 10;
+
+    /** Length of the rate-limit time window in seconds. */
+    private static final long RATE_WINDOW_SECONDS = 60;
+
+    /** Maximum number of past messages to include in the API request to avoid hitting the token limit. */
+    private static final int MAX_HISTORY_ENTRIES = 20;
+
+    // Tracks how many calls have been made in the current window
+    private int windowCallCount = 0;
+
+    // The moment the current rate-limit window started
+    private Instant windowStart = Instant.now();
 
     public AIService() {
         String workingDir = System.getProperty("user.dir");
         String envDir = workingDir.endsWith("mathcat") ? workingDir : workingDir + "/mathcat";
         Dotenv dotenv = Dotenv.configure().directory(envDir).ignoreIfMissing().load();
         this.apiKey = dotenv.get("GROQ_API_KEY");
-    }
-
-    // Escapes special characters in a string to make it safe for JSON
-    private String escapeJson(String input) {
-        if (input == null)
-            return "null";
-        StringBuilder sb = new StringBuilder();
-        for (char c : input.toCharArray()) {
-            switch (c) {
-                case '"' -> sb.append("\\\"");
-                case '\\' -> sb.append("\\\\");
-                case '\b' -> sb.append("\\b");
-                case '\f' -> sb.append("\\f");
-                case '\n' -> sb.append("\\n");
-                case '\r' -> sb.append("\\r");
-                case '\t' -> sb.append("\\t");
-                default -> {
-                    if (c < ' ') {
-                        sb.append(String.format("\\u%04x", (int) c));
-                    } else {
-                        sb.append(c);
-                    }
-                }
-            }
-        }
-        return sb.toString();
+        // Build the HTTP client with a connect timeout so the app never hangs indefinitely
+        this.client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(10))
+                .build();
     }
 
     /**
-     * Sends a hint request to the Groq AI API using the I do, We do, You do teaching method. Builds
-     * a full conversation history to maintain context across multiple hints.
-     * 
+     * Strips HTML tags and control characters from user input, then truncates to maxLen.
+     *
+     * @param input  raw input from the UI
+     * @param maxLen maximum allowed length after stripping
+     * @return sanitised string, or empty string if input is null
+     */
+    public static String sanitiseInput(String input, int maxLen) {
+        if (input == null) return "";
+
+        // Remove HTML/XML tags
+        String stripped = input.replaceAll("<[^>]*>", "");
+
+        // Remove ASCII control characters (keep normal whitespace: \t \n \r)
+        stripped = stripped.replaceAll("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F\\x7F]", "");
+
+        // Collapse excessive whitespace and trim
+        stripped = stripped.replaceAll("\\s{2,}", " ").trim();
+
+        // Enforce max length
+        if (stripped.length() > maxLen) {
+            stripped = stripped.substring(0, maxLen);
+        }
+        return stripped;
+    }
+
+
+
+
+
+    /**
+     * Checks the sliding-window rate limit before allowing a call.
+     * Synchronized to prevent race conditions from background threads.
+     *
+     * @return a user-friendly error message if rate limited, or null if the call is allowed
+     */
+    private synchronized String checkRateLimit() {
+        Instant now = Instant.now();
+        long elapsed = Duration.between(windowStart, now).getSeconds();
+
+        // Reset the window if enough time has passed
+        if (elapsed >= RATE_WINDOW_SECONDS) {
+            windowStart = now;
+            windowCallCount = 0;
+        }
+
+        if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
+            long waitSecs = RATE_WINDOW_SECONDS - elapsed;
+            System.out.printf("[AIService] RATE LIMIT hit (%d calls in window). Wait %ds.%n",
+                    windowCallCount, waitSecs);
+            return String.format(
+                    "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
+                    waitSecs, waitSecs == 1 ? "" : "s");
+        }
+
+        // Allow the call — consume one slot
+        windowCallCount++;
+        System.out.printf("[AIService] Call allowed - window: %d/%d%n",
+                windowCallCount, MAX_CALLS_PER_WINDOW);
+        return null;
+    }
+
+
+    /**
+     * Sends a single HTTP POST request to the Groq API and returns the response text.
+     * Throws an exception on non-200 status or any network error so the retry
+     * wrapper can decide whether to try again.
+     *
+     * @param requestBody the JSON string to send as the request body
+     * @return the raw response text from the AI
+     * @throws Exception if the request fails for any reason
+     */
+    private String callApi(String requestBody) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + apiKey)
+                // Per-request timeout covers slow responses, not just slow connections
+                .timeout(Duration.ofSeconds(10))
+                .POST(BodyPublishers.ofString(requestBody))
+                .build();
+
+        HttpResponse<String> response =
+                client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("HTTP " + response.statusCode() + ": " + response.body());
+        }
+
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        if (json.has("error")) {
+            throw new RuntimeException(
+                    json.getAsJsonObject("error").get("message").getAsString());
+        }
+
+        return json.getAsJsonArray("choices").get(0).getAsJsonObject()
+                .getAsJsonObject("message").get("content").getAsString();
+    }
+
+    /**
+     * Calls {@link #callApi(String)} with exponential back-off retry on failure.
+     * Attempts the request up to 3 times total (1 initial + 2 retries).
+     * Timeouts are not retried since the server is clearly unresponsive.
+     *
+     * @param requestBody the JSON string to send as the request body
+     * @return the raw response text from the AI
+     * @throws Exception if all attempts fail
+     */
+    private String callApiWithRetry(String requestBody) throws Exception {
+        Exception lastException = null;
+
+        for (int attempt = 0; attempt <= 2; attempt++) {
+            if (attempt > 0) {
+                // Exponential back-off: 1000ms after attempt 1, 2000ms after attempt 2
+                long backoffMs = (long) Math.pow(2, attempt) * 500L;
+                Thread.sleep(backoffMs);
+            }
+            try {
+                return callApi(requestBody);
+            } catch (java.net.http.HttpTimeoutException te) {
+                // Timeout means server is unresponsive — no point retrying
+                throw te;
+            } catch (Exception e) {
+                // Any other failure — store it and try again
+                lastException = e;
+            }
+        }
+        throw lastException;
+    }
+
+    /**
+     * Sends a hint request to the Groq AI API using the I do, We do, You do teaching method.
+     * Applies rate limiting before making the request. Builds a full conversation history
+     * to maintain context across multiple hints.
+     *
      * @param questionContext the math problem the student is working on
-     * @param userMessage the student's latest message or question
-     * @param history the full conversation history as a list of role/content pairs
-     * @return a hint from the AI to guide the student without giving the answer
-     * @throws Exception if the HTTP request fails or the response cannot be parsed
+     * @param answer          the correct answer, used only in the system prompt — never shown directly
+     * @param userMessage     the student's latest message or question
+     * @param history         the full conversation history as a list of role/content pairs
+     * @return a hint from the AI, or a user-friendly error/limit message
      */
     public String getHint(String questionContext, String answer, String userMessage,
-            List<String[]> history) throws Exception {
-        String url = "https://api.groq.com/openai/v1/chat/completions";
+                          List<String[]> history) {
+
+        // Block the request if the user is sending too many hints too quickly
+        String rateLimitMessage = checkRateLimit();
+        if (rateLimitMessage != null) return rateLimitMessage;
 
         String systemPrompt =
                 // Identity & Personality
@@ -129,52 +259,51 @@ public class AIService {
                         + "3. Do not suggest websites, apps, or external resources. "
                         + "4. If a student says something that suggests they are upset, in danger, or need help, respond kindly and tell them to talk to a trusted adult.";
 
-        // Build conversation history messages
-        StringBuilder messagesArray = new StringBuilder();
-        messagesArray.append("{\"role\": \"system\", \"content\": \"")
-                .append(escapeJson(systemPrompt)).append("\"}");
+// Build request body using Gson so escaping is handled correctly
+// This removes the risk of a manual escaping mistake causing malformed JSON
+        JsonArray messages = new JsonArray();
 
-        // Add previous messages from history
-        for (String[] message : history) {
-            messagesArray.append(", {\"role\": \"").append(message[0]).append("\", \"content\": \"")
-                    .append(escapeJson(message[1])).append("\"}");
+        JsonObject systemMsg = new JsonObject();
+        systemMsg.addProperty("role", "system");
+        systemMsg.addProperty("content", systemPrompt);
+        messages.add(systemMsg);
+
+// Only send the most recent MAX_HISTORY_ENTRIES messages to avoid hitting the token limit
+        List<String[]> trimmedHistory = history.size() > MAX_HISTORY_ENTRIES
+                ? history.subList(history.size() - MAX_HISTORY_ENTRIES, history.size())
+                : history;
+
+        for (String[] message : trimmedHistory) {
+            JsonObject msg = new JsonObject();
+            msg.addProperty("role", message[0]);
+            msg.addProperty("content", message[1]);
+            messages.add(msg);
         }
 
-        // Add current user message
-        messagesArray.append(", {\"role\": \"user\", \"content\": \"")
-                .append(escapeJson(userMessage)).append("\"}");
+        JsonObject userMsg = new JsonObject();
+        userMsg.addProperty("role", "user");
+        userMsg.addProperty("content", userMessage);
+        messages.add(userMsg);
 
-        String body = """
-                {
-                  "model": "llama-3.3-70b-versatile",
-                  "messages": [%s]
-                }
-                """.formatted(messagesArray.toString());
+        JsonObject requestBody = new JsonObject();
+        requestBody.addProperty("model", "llama-3.3-70b-versatile");
+        requestBody.add("messages", messages);
+
+        String body = requestBody.toString();
 
         // System.out.println("History size: " + history.size());
         // System.out.println("Body: " + body);
 
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + apiKey).POST(BodyPublishers.ofString(body))
-                .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        // Check HTTP status code first before parsing JSON
-        if (response.statusCode() != 200) {
-            return "Error: Request failed with status code " + response.statusCode()
-                    + ". Please check your API key.";
+        try {
+            return callApiWithRetry(body);
+        } catch (InterruptedException ie) {
+            // Thread was interrupted during back-off sleep
+            Thread.currentThread().interrupt();
+            return "The request was interrupted. Please try again.";
+        } catch (java.net.http.HttpTimeoutException te) {
+            return "Chatty is taking too long to respond. Please try again in a moment!";
+        } catch (Exception e) {
+            return "Chatty couldn't connect right now. Check your internet and try again!";
         }
-
-        // Parse JSON response
-        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        if (json.has("error")) {
-            return "Error: " + json.getAsJsonObject("error").get("message").getAsString();
-        }
-
-
-        return json.getAsJsonArray("choices").get(0).getAsJsonObject().getAsJsonObject("message")
-                .get("content").getAsString();
     }
 }
