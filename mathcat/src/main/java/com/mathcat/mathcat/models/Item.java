@@ -27,7 +27,7 @@ public final class Item {
         this.itemImage = itemImage;
         this.effectType = ItemEffectType.COSMETIC;
         this.effectAmount = 0.00;
-ad
+
     }
 
     /**
