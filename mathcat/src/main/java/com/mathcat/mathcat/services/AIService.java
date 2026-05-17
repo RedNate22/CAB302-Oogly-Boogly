@@ -126,7 +126,7 @@ public class AIService {
 
         // Allow the call — consume one slot
         windowCallCount++;
-        System.out.printf("[AIService] Call allowed — window: %d/%d%n",
+        System.out.printf("[AIService] Call allowed - window: %d/%d%n",
                 windowCallCount, MAX_CALLS_PER_WINDOW);
         return null;
     }
