@@ -103,9 +103,10 @@ public final class AIServiceTest {
         @Test
         void allowsCallsUnderTheLimit() {
             AIService service = new AIService();
-            // First call should not be rate limited
-            // We test sanitiseInput as a proxy since we can't call getHint without the API
-            assertNotNull(AIService.sanitiseInput("test", 500));
+            List<String[]> history = new ArrayList<>();
+            // A single call should never trigger the rate limit message
+            String response = service.getHint("What is 2 + 2?", "4", "hint", history);
+            assertFalse(response.contains("Please wait"));
         }
 
         @Test
