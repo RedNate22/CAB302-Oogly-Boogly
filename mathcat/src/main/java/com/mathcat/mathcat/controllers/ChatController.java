@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,8 +108,6 @@ public class ChatController {
 
         String message = AIService.sanitiseInput(rawMessage, 500);
         if (message.isBlank()) return;
-
-
         aiUsed = true;
 
         // Show user message
@@ -120,6 +120,20 @@ public class ChatController {
 
         // Daemon thread so the JVM exits immediately if the window is closed mid-request
         // instead of hanging until the 10s timeout completes
+        Thread hintThread = getThread(message);
+        hintThread.start();
+    }
+
+    /**
+     * Creates and configures the background thread used to fetch an AI hint.
+     * Marked as a daemon thread so the JVM exits cleanly if the window is closed mid-request.
+     *
+     * @param message the sanitised user message to send to the AI
+     * @return a configured daemon thread ready to start
+     */
+
+    @NotNull
+    private Thread getThread(String message) {
         Thread hintThread = new Thread(() -> {
             String hint = aiService.getHint(currentQuestion, currentAnswer, message,
                     conversationHistory);
@@ -132,7 +146,7 @@ public class ChatController {
             });
         });
         hintThread.setDaemon(true);
-        hintThread.start();
+        return hintThread;
     }
 
     /**
