@@ -1,6 +1,7 @@
 package com.mathcat.mathcat.database;
 
 import java.sql.*;
+import com.mathcat.mathcat.util.DebugLogger;
 
 /**
  * Manages the SQLite database connection and initialises all tables.
@@ -77,9 +78,9 @@ public class DatabaseManager {
             stmt.execute(createUsersTable);
             stmt.execute(createPetsTable);
             stmt.execute(createItemsTable);
-            System.out.println("Database initialised successfully!");
+            DebugLogger.log("Database", "Initialised successfully");
         } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+            DebugLogger.log("Database", "Error: " + e.getMessage());
         }
     }
 }

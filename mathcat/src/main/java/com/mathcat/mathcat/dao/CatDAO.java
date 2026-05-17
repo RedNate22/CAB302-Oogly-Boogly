@@ -2,6 +2,7 @@ package com.mathcat.mathcat.dao;
 
 import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.util.DebugLogger;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,7 +67,7 @@ public final class CatDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error saving cat: " + e.getMessage());
+            DebugLogger.log("CatDAO", "Error saving cat: " + e.getMessage());
         }
     }
 
@@ -98,7 +99,7 @@ public final class CatDAO {
                 return cat;
             }
         } catch (SQLException e) {
-            System.out.println("Error loading cat: " + e.getMessage());
+            DebugLogger.log("CatDAO", "Error loading cat: " + e.getMessage());
         }
         return null;
     }
@@ -113,7 +114,7 @@ public final class CatDAO {
             stmt.setInt(1, catId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error deleting cat: " + e.getMessage());
+            DebugLogger.log("CatDAO", "Error deleting cat: " + e.getMessage());
         }
     }
 
@@ -125,7 +126,7 @@ public final class CatDAO {
         try (Statement stmt = DatabaseManager.getConnection().createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
-            System.out.println("Error clearing cats: " + e.getMessage());
+            DebugLogger.log("CatDAO", "Error clearing cats: " + e.getMessage());
         }
     }
 }

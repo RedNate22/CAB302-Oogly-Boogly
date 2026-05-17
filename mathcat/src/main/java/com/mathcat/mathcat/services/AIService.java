@@ -1,5 +1,6 @@
 package com.mathcat.mathcat.services;
 
+import com.mathcat.mathcat.util.DebugLogger;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.net.URI;
 import java.net.http.*;
@@ -94,8 +95,7 @@ public class AIService {
 
         if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
             long waitSecs = RATE_WINDOW_SECONDS - elapsed;
-            System.out.printf("[AIService] RATE LIMIT hit (%d calls in window). Wait %ds.%n",
-                    windowCallCount, waitSecs);
+            DebugLogger.log("AIService", String.format("RATE LIMIT hit (%d calls in window). Wait %ds.", windowCallCount, waitSecs));
             return String.format(
                     "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
                     waitSecs, waitSecs == 1 ? "" : "s");
@@ -103,8 +103,7 @@ public class AIService {
 
         // Allow the call — consume one slot
         windowCallCount++;
-        System.out.printf("[AIService] Call allowed - window: %d/%d%n",
-                windowCallCount, MAX_CALLS_PER_WINDOW);
+        DebugLogger.log("AIService", String.format("Call allowed - window: %d/%d", windowCallCount, MAX_CALLS_PER_WINDOW));
         return null;
     }
 
@@ -291,8 +290,8 @@ public class AIService {
 
         String body = requestBody.toString();
 
-        // System.out.println("History size: " + history.size());
-        // System.out.println("Body: " + body);
+        DebugLogger.log("AIService", "History size: " + history.size());
+        DebugLogger.log("AIService", "Body: " + body);
 
         try {
             return callApiWithRetry(body);
