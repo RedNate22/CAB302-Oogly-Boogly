@@ -110,16 +110,16 @@ public final class AIServiceTest {
         }
 
         @Test
-        void blocksCallsOverTheLimit() {
+        void blocksCallsOverTheLimit() throws Exception {
             AIService service = new AIService();
             List<String[]> history = new ArrayList<>();
 
-            // Make 10 calls to hit the limit
-            for (int i = 0; i < 10; i++) {
-                service.getHint("What is 2 + 2?", "4", "hint " + i, history);
-            }
+            // Use reflection to set windowCallCount to 10 instantly — avoids making 10 real API calls
+            java.lang.reflect.Field field = AIService.class.getDeclaredField("windowCallCount");
+            field.setAccessible(true);
+            field.set(service, 10);
 
-            // 11th call should be rate limited
+            // Next call should be rate limited
             String response = service.getHint("What is 2 + 2?", "4", "one more", history);
             assertTrue(response.contains("Please wait"));
         }
