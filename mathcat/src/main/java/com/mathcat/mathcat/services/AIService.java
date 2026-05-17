@@ -26,6 +26,9 @@ public class AIService {
     /** Length of the rate-limit time window in seconds. */
     private static final long RATE_WINDOW_SECONDS = 60;
 
+    /** Maximum number of past messages to include in the API request to avoid hitting the token limit. */
+    private static final int MAX_HISTORY_ENTRIES = 20;
+
     // Tracks how many calls have been made in the current window
     private int windowCallCount = 0;
 
@@ -287,8 +290,12 @@ public class AIService {
         messagesArray.append("{\"role\": \"system\", \"content\": \"")
                 .append(escapeJson(systemPrompt)).append("\"}");
 
-        // Add previous messages from history
-        for (String[] message : history) {
+        // Only send the most recent MAX_HISTORY_ENTRIES messages to avoid hitting the token limit
+        List<String[]> trimmedHistory = history.size() > MAX_HISTORY_ENTRIES
+                ? history.subList(history.size() - MAX_HISTORY_ENTRIES, history.size())
+                : history;
+
+        for (String[] message : trimmedHistory) {
             messagesArray.append(", {\"role\": \"").append(message[0]).append("\", \"content\": \"")
                     .append(escapeJson(message[1])).append("\"}");
         }
