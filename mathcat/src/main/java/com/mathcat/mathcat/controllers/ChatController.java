@@ -106,7 +106,6 @@ public class ChatController {
         String message = AIService.sanitiseInput(rawMessage, 500);
         if (message.isBlank()) return;
 
-        // Change this bool value to false when next question is started
         aiUsed = true;
 
         // Show user message
