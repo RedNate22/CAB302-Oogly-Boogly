@@ -2,6 +2,8 @@ package com.mathcat.mathcat.dao;
 
 import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
  * logic. Business rules should be handled by UserService.
  */
 public final class UserDAO {
+    private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
 
     /** The currently authenticated user. Null when no user is logged in. */
     public static User currentUser;
@@ -22,6 +25,7 @@ public final class UserDAO {
      */
     public static void setCurrentUser(User user) {
         currentUser = user;
+        log.debug("current user set to: {}", user != null ? user.getUsername() : "null");
     }
 
     /**
@@ -36,6 +40,7 @@ public final class UserDAO {
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.executeUpdate();
+            log.debug("inserted user: {}", user.getUsername());
         }
     }
 
@@ -109,6 +114,7 @@ public final class UserDAO {
         try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.executeUpdate();
+            log.debug("deleted user: {}", username);
         }
     }
 }

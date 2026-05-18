@@ -18,12 +18,15 @@ import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.CatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller for the Create Pet screen.
  * Handles pet creation and saves to both in-memory CatDAO and SQLite database.
  */
 public class CreatePetController {
+    private static final Logger log = LoggerFactory.getLogger(CreatePetController.class);
 
     @FXML private TextField userPetName;
     @FXML private Label error;
@@ -65,6 +68,7 @@ public class CreatePetController {
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
         CatDAO.save(cat);
+        log.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
         Parent root = FXMLLoader.load(
                 getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
