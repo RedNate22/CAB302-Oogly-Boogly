@@ -70,3 +70,6 @@ mathcat/.env
 ### SQLite ###
 *.db
 *.db.backup
+
+### Javadocs ###
+docs/javadoc
