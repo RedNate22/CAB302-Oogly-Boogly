@@ -6,7 +6,10 @@
         </encoder>
     </appender>
 
-    <!-- Change level to INFO to silence debug logs, DEBUG to enable them -->
+    <!-- level="DEBUG" shows debug, info, warn, error -->
+    <!-- level="INFO" hides debug, shows info, warn, error -->
+    <!-- level="WARN" hides debug and info, shows warn, error -->
+    <!-- level="OFF" hides everything -->
     <logger name="com.mathcat" level="DEBUG"/>
 
     <root level="WARN">
