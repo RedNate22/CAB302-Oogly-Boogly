@@ -291,7 +291,7 @@ public class AIService {
         String body = requestBody.toString();
 
         DebugLogger.log("AIService", "History size: " + history.size());
-        DebugLogger.log("AIService", "Body: " + body);
+        // DebugLogger.log("AIService", "Body: " + body);
 
         try {
             return callApiWithRetry(body);
