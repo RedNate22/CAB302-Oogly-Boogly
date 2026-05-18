@@ -83,6 +83,7 @@ public class CreatePetController {
      * @throws IOException if the initial screen cannot be loaded
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
+        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
         UserDAO.currentUser = null;
 
         Parent root = FXMLLoader.load(
