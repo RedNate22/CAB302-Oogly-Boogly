@@ -5,7 +5,8 @@ import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
 import com.mathcat.mathcat.dao.ItemDAO;
 import com.mathcat.mathcat.models.Item;
-import com.mathcat.mathcat.util.DebugLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Random;
  * This class contains rules for subsequent XP gain and returns it.
  */
 public class RewardSystem {
+    private static final Logger log = LoggerFactory.getLogger(RewardSystem.class);
 
     /**
      * Returns the base XP a user will receive based on the difficulty of the question and whether they have enough energy
@@ -132,11 +134,11 @@ public class RewardSystem {
 
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
-            DebugLogger.log("RewardSystem", "No XP - insufficient energy (difficulty: " + question.getDifficulty() + ", energy: " + String.format("%.2f", cat.getEnergy()) + ")");
+            log.debug("No XP - insufficient energy (difficulty: {}, energy: {})", question.getDifficulty(), cat.getEnergy());
             return;
         }
 
-        DebugLogger.log("RewardSystem", "XP: " + xpReturn + " (base: " + baseXpReturn(question, cat) + ", bonus: " + xpBonus(cat, isAiUsed, question) + ", aiUsed: " + isAiUsed + ")");
+        log.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", xpReturn, baseXpReturn(question, cat), xpBonus(cat, isAiUsed, question), isAiUsed);
         LevelSystem.applyXp(cat, xpReturn);
 
         if (question.getDifficulty() == Difficulty.EASY) {
@@ -148,26 +150,26 @@ public class RewardSystem {
         if (question.getDifficulty() == Difficulty.HARD) {
             cat.setEnergy(cat.getEnergy() - 20);
         }
-        DebugLogger.log("RewardSystem", "Energy after deduction: " + String.format("%.2f", cat.getEnergy()));
+        log.debug("Energy after deduction: {}", cat.getEnergy());
 
         double percentage = randomNumberGenerator();
         Item newItem = fisherYatesShuffle(ItemDAO.getAll()).getFirst();
 
         if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
             cat.getItems().add(newItem);
-            DebugLogger.log("RewardSystem", "Item dropped: " + newItem.getItemName() + " (roll: " + String.format("%.2f", percentage) + ")");
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
             cat.getItems().add(newItem);
-            DebugLogger.log("RewardSystem", "Item dropped: " + newItem.getItemName() + " (roll: " + String.format("%.2f", percentage) + ")");
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
             cat.getItems().add(newItem);
-            DebugLogger.log("RewardSystem", "Item dropped: " + newItem.getItemName() + " (roll: " + String.format("%.2f", percentage) + ")");
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
-        DebugLogger.log("RewardSystem", "No item dropped (roll: " + String.format("%.2f", percentage) + ")");
+        log.debug("No item dropped (roll: {})", percentage);
     }
 }

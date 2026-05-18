@@ -7,7 +7,8 @@ import java.util.LinkedList;
 import com.mathcat.mathcat.models.QuestionBank;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
-import com.mathcat.mathcat.util.DebugLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the flow of math questions to the player.
@@ -20,6 +21,7 @@ import com.mathcat.mathcat.util.DebugLogger;
  * one at a time until the pool is exhausted, at which point the process repeats.
  */
 public class QuestionService {
+    private static final Logger log = LoggerFactory.getLogger(QuestionService.class);
     private final LinkedList<IQuestion> questionQueue = new LinkedList<>();
 
     /**
@@ -33,12 +35,11 @@ public class QuestionService {
         if (questionQueue.isEmpty()) {
             // ! hardcoded difficulty for now
             questionQueue.addAll(QuestionBank.getByDifficulty(Difficulty.EASY));
-            DebugLogger.log("QuestionService", "Queue refilled - difficulty: EASY (hardcoded), pool size: " + questionQueue.size());
+            log.debug("Queue refilled - difficulty: EASY (hardcoded), pool size: {}", questionQueue.size());
         }
         IQuestion question = questionQueue.poll();
-        DebugLogger.log("QuestionService", "Serving question - difficulty: " + question.getDifficulty()
-                + ", text: \"" + question.getText() + "\", answer: " + question.getAnswer()
-                + ", queue remaining: " + questionQueue.size());
+        log.debug("Serving question - difficulty: {}, text: \"{}\", answer: {}, queue remaining: {}",
+                question.getDifficulty(), question.getText(), question.getAnswer(), questionQueue.size());
         return question;
     }
 

@@ -2,7 +2,8 @@ package com.mathcat.mathcat.services;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.models.Cat;
-import com.mathcat.mathcat.util.DebugLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages XP gain and level progression rules for the cat. The {@link Cat} holds current XP and level as
@@ -27,7 +28,8 @@ public final class LevelSystem {
 
     public static final int MAX_LEVEL = XP_THRESHOLDS.length - 1;
 
-    // Prevent instantiation
+    private static final Logger log = LoggerFactory.getLogger(LevelSystem.class);
+
     private LevelSystem() {}
 
     /**
@@ -69,7 +71,7 @@ public final class LevelSystem {
         cat.setLevel(cat.getLevel() + 1);
         cat.setXp(Math.max(0, excessXp));
         CatDAO.save(cat);
-        DebugLogger.log("LevelSystem", "Level up! " + oldLevel + " -> " + cat.getLevel() + ", excess XP carried: " + String.format("%.2f", cat.getXp()));
+        log.debug("Level up! {} -> {}, excess XP carried: {}", oldLevel, cat.getLevel(), cat.getXp());
     }
 
     /**
@@ -80,7 +82,7 @@ public final class LevelSystem {
      */
     public static void applyXp(Cat cat, double amount) {
         cat.setXp(cat.getXp() + amount);
-        DebugLogger.log("LevelSystem", "+" + amount + " XP applied. Total: " + String.format("%.2f", cat.getXp()) + " (level " + cat.getLevel() + ")");
+        log.debug("+{} XP applied. Total: {} (level {})", amount, cat.getXp(), cat.getLevel());
         while (canLevelUp(cat)) {
             levelUp(cat);
         }

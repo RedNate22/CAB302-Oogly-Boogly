@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import com.mathcat.mathcat.database.DatabaseManager;
-import com.mathcat.mathcat.util.DebugLogger;
 
 import java.io.IOException;
 
@@ -14,8 +13,6 @@ import java.io.IOException;
 public class MathCatApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        DebugLogger.enable();
-
         // Initialise the SQLite database and create tables if they don't exist
         DatabaseManager.initialiseDatabase();
 

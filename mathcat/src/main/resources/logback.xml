@@ -1,0 +1,15 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- %logger{N} controls class name length: 0 = class name only, higher N = more of the package shown -->
+            <pattern>%d{HH:mm:ss} [%-5level] %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Change level to INFO to silence debug logs, DEBUG to enable them -->
+    <logger name="com.mathcat" level="DEBUG"/>
+
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>

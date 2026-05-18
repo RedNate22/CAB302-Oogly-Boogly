@@ -2,7 +2,8 @@ package com.mathcat.mathcat.dao;
 
 import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.Cat;
-import com.mathcat.mathcat.util.DebugLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
  * Handles only raw SQL queries — no business logic.
  */
 public final class CatDAO {
+    private static final Logger log = LoggerFactory.getLogger(CatDAO.class);
 
     /**
      * Saves a cat to the database. Inserts if new, updates if existing.
@@ -67,7 +69,7 @@ public final class CatDAO {
                 }
             }
         } catch (SQLException e) {
-            DebugLogger.log("CatDAO", "Error saving cat: " + e.getMessage());
+            log.error("Error saving cat", e);
         }
     }
 
@@ -99,7 +101,7 @@ public final class CatDAO {
                 return cat;
             }
         } catch (SQLException e) {
-            DebugLogger.log("CatDAO", "Error loading cat: " + e.getMessage());
+            log.error("Error loading cat", e);
         }
         return null;
     }
@@ -114,7 +116,7 @@ public final class CatDAO {
             stmt.setInt(1, catId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            DebugLogger.log("CatDAO", "Error deleting cat: " + e.getMessage());
+            log.error("Error deleting cat", e);
         }
     }
 
@@ -126,7 +128,7 @@ public final class CatDAO {
         try (Statement stmt = DatabaseManager.getConnection().createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
-            DebugLogger.log("CatDAO", "Error clearing cats: " + e.getMessage());
+            log.error("Error clearing cats", e);
         }
     }
 }

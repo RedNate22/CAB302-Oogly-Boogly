@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.dao.CatDAO;
-import com.mathcat.mathcat.util.DebugLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles stat modification, validation, decay calculation, and persistence for the cat.
@@ -20,6 +21,8 @@ public final class CatService {
                                                         // min
     public static final double HUNGER_THRESHOLD = 25.0;
     public static final double DAILY_ENERGY_CAP = 100.0;
+
+    private static final Logger log = LoggerFactory.getLogger(CatService.class);
 
     private CatService() {}
 
@@ -165,9 +168,7 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
-        DebugLogger.log("CatService", "Energy regen +" + String.format("%.2f", regen)
-                + " (fullness: " + String.format("%.2f", cat.getFullness())
-                + ") daily total: " + String.format("%.2f", cat.getDailyEnergyGained()) + "/" + DAILY_ENERGY_CAP);
+        log.debug("Energy regen +{} (fullness: {}) daily total: {}/{}", regen, cat.getFullness(), cat.getDailyEnergyGained(), DAILY_ENERGY_CAP);
     }
 
     /**
@@ -181,9 +182,7 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
-        DebugLogger.log("CatService", "Offline decay - " + minutesElapsed + " min elapsed, happiness -"
-                + String.format("%.2f", minutesElapsed * HAPPINESS_DECAY_RATE)
-                + ", fullness -" + String.format("%.2f", minutesElapsed * FULLNESS_DECAY_RATE));
+        log.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed, minutesElapsed * HAPPINESS_DECAY_RATE, minutesElapsed * FULLNESS_DECAY_RATE);
 
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
@@ -232,7 +231,7 @@ public final class CatService {
     public static boolean useItem(Cat cat, Item item) {
         if (!cat.getItems().remove(item))
             return false;
-        DebugLogger.log("CatService", "Item used: " + item.getItemName() + " (" + item.getEffectType() + " +" + item.getEffectAmount() + ")");
+        log.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(), item.getEffectAmount());
         item.applyItem(cat);
         CatDAO.save(cat);
         return true;

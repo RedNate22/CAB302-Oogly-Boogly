@@ -1,7 +1,8 @@
 package com.mathcat.mathcat.services;
 
-import com.mathcat.mathcat.util.DebugLogger;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.http.*;
 import java.net.http.HttpRequest.BodyPublishers;
@@ -17,6 +18,8 @@ import java.time.Instant;
  * Maintains conversation history to provide context-aware hints.
  */
 public class AIService {
+
+    private static final Logger log = LoggerFactory.getLogger(AIService.class);
 
     private final String apiKey;
     private final HttpClient client;
@@ -95,7 +98,7 @@ public class AIService {
 
         if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
             long waitSecs = RATE_WINDOW_SECONDS - elapsed;
-            DebugLogger.log("AIService", String.format("RATE LIMIT hit (%d calls in window). Wait %ds.", windowCallCount, waitSecs));
+            log.debug("Rate limit hit ({} calls in window). Wait {}s.", windowCallCount, waitSecs);
             return String.format(
                     "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
                     waitSecs, waitSecs == 1 ? "" : "s");
@@ -103,7 +106,7 @@ public class AIService {
 
         // Allow the call — consume one slot
         windowCallCount++;
-        DebugLogger.log("AIService", String.format("Call allowed - window: %d/%d", windowCallCount, MAX_CALLS_PER_WINDOW));
+        log.debug("Call allowed - window: {}/{}", windowCallCount, MAX_CALLS_PER_WINDOW);
         return null;
     }
 
@@ -290,8 +293,7 @@ public class AIService {
 
         String body = requestBody.toString();
 
-        DebugLogger.log("AIService", "History size: " + history.size());
-        // DebugLogger.log("AIService", "Body: " + body);
+        log.debug("History size: {}", history.size());
 
         try {
             return callApiWithRetry(body);
