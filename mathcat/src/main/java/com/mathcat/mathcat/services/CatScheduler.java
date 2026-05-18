@@ -1,6 +1,7 @@
 package com.mathcat.mathcat.services;
 
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.util.DebugLogger;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -57,10 +58,16 @@ public class CatScheduler {
      * @param cat the cat to update
      */
     public void onTick(Cat cat) {
+        DebugLogger.log("CatScheduler", "Tick fired - happiness: " + String.format("%.2f", cat.getHappiness())
+                + ", fullness: " + String.format("%.2f", cat.getFullness())
+                + ", energy: " + String.format("%.2f", cat.getEnergy()));
         CatService.decreaseHappiness(cat, CatService.HAPPINESS_DECAY_RATE);
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
+        DebugLogger.log("CatScheduler", "After tick - happiness: " + String.format("%.2f", cat.getHappiness())
+                + ", fullness: " + String.format("%.2f", cat.getFullness())
+                + ", energy: " + String.format("%.2f", cat.getEnergy()));
     }
 
     /**

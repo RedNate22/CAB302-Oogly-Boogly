@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.dao.CatDAO;
+import com.mathcat.mathcat.util.DebugLogger;
 
 /**
  * Handles stat modification, validation, decay calculation, and persistence for the cat.
@@ -164,6 +165,9 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
+        DebugLogger.log("CatService", "Energy regen +" + String.format("%.2f", regen)
+                + " (fullness: " + String.format("%.2f", cat.getFullness())
+                + ") daily total: " + String.format("%.2f", cat.getDailyEnergyGained()) + "/" + DAILY_ENERGY_CAP);
     }
 
     /**
@@ -177,13 +181,14 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
+        DebugLogger.log("CatService", "Offline decay - " + minutesElapsed + " min elapsed, happiness -"
+                + String.format("%.2f", minutesElapsed * HAPPINESS_DECAY_RATE)
+                + ", fullness -" + String.format("%.2f", minutesElapsed * FULLNESS_DECAY_RATE));
 
-        // persist=false skips the individual saves inside each method; we do one combined save
-        // below
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
         cat.setLastSaved(LocalDateTime.now());
-        CatDAO.save(cat); // single save after both stats are updated
+        CatDAO.save(cat);
     }
 
     /**
@@ -225,11 +230,11 @@ public final class CatService {
      * @return true if the item was found and used, false if it was not in the inventory
      */
     public static boolean useItem(Cat cat, Item item) {
-        // remove returns false if the item wasn't in the list
         if (!cat.getItems().remove(item))
             return false;
-        item.applyItem(cat); // applies the stat effect and saves the stat change
-        CatDAO.save(cat); // save the inventory change (item removed)
+        DebugLogger.log("CatService", "Item used: " + item.getItemName() + " (" + item.getEffectType() + " +" + item.getEffectAmount() + ")");
+        item.applyItem(cat);
+        CatDAO.save(cat);
         return true;
     }
 

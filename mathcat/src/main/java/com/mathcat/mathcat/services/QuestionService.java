@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import com.mathcat.mathcat.models.QuestionBank;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
+import com.mathcat.mathcat.util.DebugLogger;
 
 /**
  * Manages the flow of math questions to the player.
@@ -32,8 +33,13 @@ public class QuestionService {
         if (questionQueue.isEmpty()) {
             // ! hardcoded difficulty for now
             questionQueue.addAll(QuestionBank.getByDifficulty(Difficulty.EASY));
+            DebugLogger.log("QuestionService", "Queue refilled - difficulty: EASY (hardcoded), pool size: " + questionQueue.size());
         }
-        return questionQueue.poll();
+        IQuestion question = questionQueue.poll();
+        DebugLogger.log("QuestionService", "Serving question - difficulty: " + question.getDifficulty()
+                + ", text: \"" + question.getText() + "\", answer: " + question.getAnswer()
+                + ", queue remaining: " + questionQueue.size());
+        return question;
     }
 
     // @formatter:off don't remove pls - Nate
