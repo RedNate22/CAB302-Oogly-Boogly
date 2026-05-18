@@ -80,7 +80,8 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
-            RewardSystem.userReward(cat, currentQuestion, chatController);
+            RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
+            CatDAO.save(cat);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());

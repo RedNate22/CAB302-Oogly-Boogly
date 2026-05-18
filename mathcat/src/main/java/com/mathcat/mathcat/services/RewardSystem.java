@@ -1,6 +1,5 @@
 package com.mathcat.mathcat.services;
 
-import com.mathcat.mathcat.controllers.ChatController;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
@@ -24,20 +23,20 @@ public class RewardSystem {
      * @param question the current question
      * @return the XP user will receive based on difficulty
      */
-    public static double baseXpReturn(IQuestion question, Cat car) {
+    public static double baseXpReturn(IQuestion question, Cat cat) {
         double xp = 0;
 
-        if (question.getDifficulty() == Difficulty.EASY && car.getEnergy() >= 5) {
+        if (question.getDifficulty() == Difficulty.EASY && cat.getEnergy() >= 5) {
             xp = 10;
             return xp;
         }
 
-        if (question.getDifficulty() == Difficulty.MEDIUM && car.getEnergy() >= 10) {
+        if (question.getDifficulty() == Difficulty.MEDIUM && cat.getEnergy() >= 10) {
             xp = 20;
             return xp;
         }
 
-        if (question.getDifficulty() == Difficulty.HARD && car.getEnergy() >= 20) {
+        if (question.getDifficulty() == Difficulty.HARD && cat.getEnergy() >= 20) {
             xp = 35;
             return xp;
         }
@@ -50,26 +49,22 @@ public class RewardSystem {
      * the question unassisted. On the contrary if not enough energy (no baseXP has been awarded), then there will be
      * no bonus XP
      *
-     * @param car the current user
-     * @param chatController the AI chatcontroller
+     * @param cat the current user
+     * @param isAiUsed determines whether Ai was used for the question
      * @return the bonus XP user will receive based on criteria
      */
-    public static double xpBonus(Cat car, ChatController chatController, IQuestion question) {
+    public static double xpBonus(Cat cat, Boolean isAiUsed, IQuestion question) {
         double bonus = 0;
-
-        if (baseXpReturn(question, car) == 0) {
+        if (baseXpReturn(question, cat) == 0) {
             return 0;
         }
-
-        if (car.getHappiness() >= 75) {
+        if (cat.getHappiness() >= 75) {
             bonus += 5;
         }
-
-        if (car.getFullness() >= 25) {
+        if (cat.getFullness() >= 25) {
             bonus += 3;
         }
-
-        if (!chatController.isAiUsed()) {
+        if (!isAiUsed) {
             bonus += 5;
         }
         return bonus;
@@ -78,17 +73,17 @@ public class RewardSystem {
     /**
      * Returns the total XP a user will receive based on the criteria of baseXP and bonusXP
      *
-     * @param car the current user
+     * @param cat the current user
      * @param question the current question
-     * @param chatController the AI chatcontroller
+     * @param isAiUsed boolean for whether AI was used for the question
      *
      * @return the total XP the user will receive
      */
-    public static double playerXpReturn(Cat car, IQuestion question, ChatController chatController) {
+    public static double playerXpReturn(Cat cat, IQuestion question, Boolean isAiUsed) {
         double totalXp = 0;
 
-        totalXp += baseXpReturn(question, car);
-        totalXp += xpBonus(car, chatController, question);
+        totalXp += baseXpReturn(question, cat);
+        totalXp += xpBonus(cat, isAiUsed, question);
 
         return totalXp;
     }
@@ -100,8 +95,7 @@ public class RewardSystem {
      */
     public static double randomNumberGenerator() {
         Random random = new Random();
-        double min = 0, max = 1000;
-        return (random.nextDouble(max - min + 1))/100;
+        return random.nextDouble() * 100;
     }
 
     /**
@@ -111,16 +105,14 @@ public class RewardSystem {
      *
      * @return a shuffled array
      */
-    public static List<Item> fisherYatesShuffle(List<Item> arr) {
-        List<Item> output = new ArrayList<>();
-        boolean[] visited = new boolean[arr.size()];
-        for (int i = 0; i < arr.size(); i++) {
-            int j = new Random().nextInt(arr.size());
-            while (visited[j]) {
-                j = new Random().nextInt(arr.size());
-            }
-            output.add(arr.get(j));
-            visited[j] = true;
+    private static List<Item> fisherYatesShuffle(List<Item> arr) {
+        List<Item> output = new ArrayList<>(arr);
+        Random random = new Random();
+        for (int i = output.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            Item temp = output.get(i);
+            output.set(i, output.get(j));
+            output.set(j, temp);
         }
         return output;
     }
@@ -130,37 +122,38 @@ public class RewardSystem {
      * catalog array (randomised item), and the user has a chance to earn this item with chance increasing
      * based on the difficulty of the question they solved
      *
-     * @param car the current user
+     * @param cat the current user
      * @param question the current question
-     * @param chatController the AI chatcontroller
+     * @param isAiUsed the AI chatcontroller
      */
-    public static void userReward(Cat car, IQuestion question, ChatController chatController) {
-        double xpReturn = playerXpReturn(car, question, chatController);
-
+    public static void userReward(Cat cat, IQuestion question, Boolean isAiUsed) {
+        cat.setHappiness(cat.getHappiness() + 1);
+        double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
             return;
         }
-        LevelSystem.applyXp(car, xpReturn);
-
+        LevelSystem.applyXp(cat, xpReturn);
+        if (question.getDifficulty() == Difficulty.EASY) {
+            cat.setEnergy(cat.getEnergy() - 5);
+        }
+        if (question.getDifficulty() == Difficulty.MEDIUM) {
+            cat.setEnergy(cat.getEnergy() - 10);
+        }
+        if (question.getDifficulty() == Difficulty.HARD) {
+            cat.setEnergy(cat.getEnergy() - 20);
+        }
         double percentage = randomNumberGenerator();
-
-        List<Item> shuffledCatalog = fisherYatesShuffle(ItemDAO.getAll());
-        ArrayList<Item> newUserItemList = car.getItems();
-        Item newItem = shuffledCatalog.getFirst();
-        newUserItemList.add(newItem);
-
+        Item newItem = fisherYatesShuffle(ItemDAO.getAll()).getFirst();
         if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
-            car.setItems(newUserItemList);
+            cat.getItems().add(newItem);
             return;
         }
-
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
-            car.setItems(newUserItemList);
+            cat.getItems().add(newItem);
             return;
         }
-
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
-            car.setItems(newUserItemList);
+            cat.getItems().add(newItem);
             return;
         }
     }
