@@ -11,3 +11,26 @@ Users maintain and improve their pet's stats through earned items. Items can als
 
 ## Technical Requirements
 For a low-level overview of the gameplay loop and technical specifications, see [Technical-Requirements.md](https://github.com/RedNate22/CAB302-Oogly-Boogly/blob/main/Technical-Requirements.md).
+
+## Building the project
+Run the following commands:
+
+```bash
+cd mathcat/
+```
+
+```bash
+./mvnw package -DskipTests
+```
+
+## Generating Javadocs
+Run the following commands:
+
+(Skip if already in `mathcat/`)
+```bash
+cd mathcat/
+```
+
+```bash
+./mvnw javadoc:javadoc
+```
