@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.CreatePetController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -74,6 +74,11 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="380.0" prefWidth="290.0">
                      <children>
+                        <Label fx:id="confirmationMessage" alignment="TOP_RIGHT" text="Account was Created Successfully" visible="false">
+                           <VBox.margin>
+                              <Insets bottom="60.0" left="80.0" />
+                           </VBox.margin>
+                        </Label>
                         <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
