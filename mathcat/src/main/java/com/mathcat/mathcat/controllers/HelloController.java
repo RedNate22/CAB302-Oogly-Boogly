@@ -25,7 +25,7 @@ public class HelloController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/login-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root, 700, 400);
+        Scene scene = new Scene(root, 700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
@@ -43,7 +43,7 @@ public class HelloController {
                 .load(getClass().getResource("/com/mathcat/mathcat/createaccount-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root,700, 400);
+        Scene scene = new Scene(root,700, 500);
         stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();

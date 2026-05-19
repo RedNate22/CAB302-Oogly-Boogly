@@ -12,6 +12,7 @@ public final class Cat {
     private int userId; // associates cat with its owner
     private String catName;
     private String catSprite; // path/to/file to match cat with a sprite
+    private String catAccessory;
 
     private double happiness;
     private double fullness;
@@ -40,6 +41,7 @@ public final class Cat {
         this.userId = 0;
         this.catName = catName;
         this.catSprite = null;
+        this.catAccessory = null;
         this.happiness = 100.00;
         this.fullness = 100.00;
         this.energy = 100.00;
@@ -93,6 +95,20 @@ public final class Cat {
      */
     public void setCatSprite(String catSprite) {
         this.catSprite = catSprite;
+    }
+
+    /**
+     * @return file path to the cat's accessory image
+     */
+    public String getCatAccessory() {
+        return catAccessory;
+    }
+
+    /**
+     * @param catAccessory file path to the cat's accessory image
+     */
+    public void setCatAccessory(String catAccessory) {
+        this.catAccessory = catAccessory;
     }
 
     /**

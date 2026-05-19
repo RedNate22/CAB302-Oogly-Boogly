@@ -12,6 +12,7 @@ module com.mathcat.mathcat {
     requires io.github.cdimascio.dotenv.java;
     requires transitive java.sql;
     requires annotations;
+    requires org.slf4j;
 
     opens com.mathcat.mathcat to javafx.fxml;
     opens com.mathcat.mathcat.controllers to javafx.fxml;
