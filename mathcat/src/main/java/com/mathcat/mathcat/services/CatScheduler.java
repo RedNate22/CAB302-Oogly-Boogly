@@ -61,6 +61,8 @@ public class CatScheduler {
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
+        System.out.printf("[Scheduler tick] happiness=%.2f  fullness=%.2f  energy=%.2f  hungry=%b%n",
+                cat.getHappiness(), cat.getFullness(), cat.getEnergy(), CatService.isHungry(cat));
     }
 
     /**
