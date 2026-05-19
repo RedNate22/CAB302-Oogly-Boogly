@@ -18,6 +18,7 @@ public class SpriteConstants {
     public static final String BLUE_BOWTIE_HAT = "/com/mathcat/mathcat/assets/images/sprites/accessories/blue-bowtie-hat.png";
     public static final String GREEN_BOWTIE_HAT = "/com/mathcat/mathcat/assets/images/sprites/accessories/green-bowtie-hat.png";
     public static final String PURPLE_BOWTIE_HAT = "/com/mathcat/mathcat/assets/images/sprites/accessories/purple-bowtie-hat.png";
+    public static final String NO_ACCESSORY_SELECTED = "/com/mathcat/mathcat/assets/images/sprites/accessories/no-accessory-selected.png";
 
     // Reactions
     public static final String HEART_REACTION = "/com/mathcat/mathcat/assets/images/sprites/reactions/heart-reaction.png";

@@ -40,7 +40,7 @@ public class CreatePetController {
     private ImageView viewCurrentAccessoryImage;
 
     private String selectedSpritePath = SpriteConstants.ORANGE_CAT;
-    private String selectedAccessorySpritePath;
+    private String selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
 
     /**
      * Handles logic of changing the image of the current cat appearance to the orange sprite
@@ -91,7 +91,9 @@ public class CreatePetController {
      * Handles logic of clearing accessory image of current cat appearance
      */
     public void onClickClearAccessory() {
-        viewCurrentAccessoryImage.setImage(null);
+        selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
+
+        viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
 
     /**
