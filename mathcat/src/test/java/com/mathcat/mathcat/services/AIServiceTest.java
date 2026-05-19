@@ -60,4 +60,68 @@ public final class AIServiceTest {
             assertFalse(response.isEmpty());
         }
     }
+
+    @Nested
+    class SanitiseInput {
+
+        @Test
+        void returnsEmptyStringForNull() {
+            String result = AIService.sanitiseInput(null, 500);
+            assertEquals("", result);
+        }
+
+        @Test
+        void stripsHtmlTags() {
+            String result = AIService.sanitiseInput("<b>hello</b>", 500);
+            assertEquals("hello", result);
+        }
+
+
+        @Test
+        void truncatesToMaxLength() {
+            String longInput = "a".repeat(600);
+            String result = AIService.sanitiseInput(longInput, 500);
+            assertEquals(500, result.length());
+        }
+
+        @Test
+        void collapsesExcessiveWhitespace() {
+            String result = AIService.sanitiseInput("hello    world", 500);
+            assertEquals("hello world", result);
+        }
+
+        @Test
+        void returnsEmptyForWhitespaceOnly() {
+            String result = AIService.sanitiseInput("   ", 500);
+            assertEquals("", result);
+        }
+    }
+
+    @Nested
+    class RateLimit {
+
+        @Test
+        void allowsCallsUnderTheLimit() {
+            AIService service = new AIService();
+            List<String[]> history = new ArrayList<>();
+            // A single call should never trigger the rate limit message
+            String response = service.getHint("What is 2 + 2?", "4", "hint", history);
+            assertFalse(response.contains("Please wait"));
+        }
+
+        @Test
+        void blocksCallsOverTheLimit() throws Exception {
+            AIService service = new AIService();
+            List<String[]> history = new ArrayList<>();
+
+            // Use reflection to set windowCallCount to 10 instantly — avoids making 10 real API calls
+            java.lang.reflect.Field field = AIService.class.getDeclaredField("windowCallCount");
+            field.setAccessible(true);
+            field.set(service, 10);
+
+            // Next call should be rate limited
+            String response = service.getHint("What is 2 + 2?", "4", "one more", history);
+            assertTrue(response.contains("Please wait"));
+        }
+    }
 }
