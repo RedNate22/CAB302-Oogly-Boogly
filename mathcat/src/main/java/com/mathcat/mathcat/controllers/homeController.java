@@ -51,23 +51,16 @@ public class homeController {
 
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
 
-        String selectedSpritePath = cat.getCatSprite();
-        String selectedAccessorySpritePath = cat.getCatAccessory();
-
-        CatService.applyOfflineDecay(cat);
-        CatScheduler.getInstance().start(cat); // begin live stats
-
-        Double catHappiness = CatService.displayHappiness(cat);
-        Double catHunger = CatService.displayHunger(cat);
-        Double catEnergy = CatService.displayEnergy(cat);
-
         if (cat != null) {
+            CatService.applyOfflineDecay(cat);
+            CatScheduler.getInstance().start(cat); // begin live stats
+
             petNameLabel.setText(cat.getCatName() + "'s Stats");
-            viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
-            viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
-            happinessProgressBar.setProgress(catHappiness / 100);
-            hungerProgressBar.setProgress(catHunger / 100);
-            energyProgressBar.setProgress(catEnergy / 100);
+            viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
+            happinessProgressBar.setProgress(CatService.displayHappiness(cat) / 100);
+            hungerProgressBar.setProgress(CatService.displayHunger(cat) / 100);
+            energyProgressBar.setProgress(CatService.displayEnergy(cat) / 100);
         }
 
         // System.out.println(catHappiness);
