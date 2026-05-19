@@ -1,6 +1,8 @@
 package com.mathcat.mathcat.services;
 
 import com.mathcat.mathcat.models.Cat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.util.Duration;
@@ -12,6 +14,8 @@ import javafx.util.Duration;
 public class CatScheduler {
     private static CatScheduler instance;
     private Timeline timeline;
+
+    private static final Logger log = LoggerFactory.getLogger(CatScheduler.class);
 
     private CatScheduler() {}
 
@@ -57,12 +61,12 @@ public class CatScheduler {
      * @param cat the cat to update
      */
     public void onTick(Cat cat) {
+        log.debug("Tick fired - happiness: {}, fullness: {}, energy: {}", cat.getHappiness(), cat.getFullness(), cat.getEnergy());
         CatService.decreaseHappiness(cat, CatService.HAPPINESS_DECAY_RATE);
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
-        System.out.printf("[Scheduler tick] happiness=%.2f  fullness=%.2f  energy=%.2f  hungry=%b%n",
-                cat.getHappiness(), cat.getFullness(), cat.getEnergy(), CatService.isHungry(cat));
+        log.debug("After tick - happiness: {}, fullness: {}, energy: {}", cat.getHappiness(), cat.getFullness(), cat.getEnergy());
     }
 
     /**

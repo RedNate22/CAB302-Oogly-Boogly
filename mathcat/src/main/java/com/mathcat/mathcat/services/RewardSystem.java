@@ -5,6 +5,8 @@ import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
 import com.mathcat.mathcat.dao.ItemDAO;
 import com.mathcat.mathcat.models.Item;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.Random;
  * This class contains rules for subsequent XP gain and returns it.
  */
 public class RewardSystem {
+    private static final Logger log = LoggerFactory.getLogger(RewardSystem.class);
 
     /**
      * Returns the base XP a user will receive based on the difficulty of the question and whether they have enough energy
@@ -128,11 +131,16 @@ public class RewardSystem {
      */
     public static void userReward(Cat cat, IQuestion question, Boolean isAiUsed) {
         cat.setHappiness(cat.getHappiness() + 1);
+
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
+            log.debug("No XP - insufficient energy (difficulty: {}, energy: {})", question.getDifficulty(), cat.getEnergy());
             return;
         }
+
+        log.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", xpReturn, baseXpReturn(question, cat), xpBonus(cat, isAiUsed, question), isAiUsed);
         LevelSystem.applyXp(cat, xpReturn);
+
         if (question.getDifficulty() == Difficulty.EASY) {
             cat.setEnergy(cat.getEnergy() - 5);
         }
@@ -142,19 +150,26 @@ public class RewardSystem {
         if (question.getDifficulty() == Difficulty.HARD) {
             cat.setEnergy(cat.getEnergy() - 20);
         }
+        log.debug("Energy after deduction: {}", cat.getEnergy());
+
         double percentage = randomNumberGenerator();
         Item newItem = fisherYatesShuffle(ItemDAO.getAll()).getFirst();
+
         if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
             cat.getItems().add(newItem);
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
             cat.getItems().add(newItem);
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
             cat.getItems().add(newItem);
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
+        log.debug("No item dropped (roll: {})", percentage);
     }
 }

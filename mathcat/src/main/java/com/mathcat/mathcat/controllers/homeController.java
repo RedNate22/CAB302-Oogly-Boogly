@@ -23,12 +23,15 @@ import javafx.scene.image.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
  * not handle persistence.
  */
 public class homeController {
+    private static final Logger log = LoggerFactory.getLogger(homeController.class);
 
     @FXML
     private Label petNameLabel;
@@ -78,6 +81,13 @@ public class homeController {
      * @throws IOException if listed screen does not exist
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
+        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        UserDAO.currentUser = null;
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
         NavigationUtil.logout(event);
     }
 

@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.dao.CatDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles stat modification, validation, decay calculation, and persistence for the cat.
@@ -21,6 +23,8 @@ public final class CatService {
                                                         // min
     public static final double HUNGER_THRESHOLD = 25.0;
     public static final double DAILY_ENERGY_CAP = 100.0;
+
+    private static final Logger log = LoggerFactory.getLogger(CatService.class);
 
     private CatService() {}
 
@@ -167,6 +171,7 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
+        log.debug("Energy regen +{} (fullness: {}) daily total: {}/{}", regen, cat.getFullness(), cat.getDailyEnergyGained(), DAILY_ENERGY_CAP);
     }
 
     /**
@@ -180,9 +185,7 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
-        System.out.printf(
-                "[Offline decay] %d minutes elapsed - happiness=%.2f  fullness=%.2f  energy=%.2f%n",
-                minutesElapsed, cat.getHappiness(), cat.getFullness(), cat.getEnergy());
+        log.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed, minutesElapsed * HAPPINESS_DECAY_RATE, minutesElapsed * FULLNESS_DECAY_RATE);
 
         // Estimate how long the cat was hungry during the offline window.
         // Fullness decays linearly, so we calculate when it crossed HUNGER_THRESHOLD and apply
@@ -191,8 +194,6 @@ public final class CatService {
                 Math.max(0.0, (cat.getFullness() - HUNGER_THRESHOLD) / FULLNESS_DECAY_RATE);
         double hungryMinutes = Math.max(0.0, minutesElapsed - minutesUntilHungry);
 
-        // persist=false skips the individual saves inside each method; we do one combined save
-        // below
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
         decreaseHappiness(cat, hungryMinutes * HAPPINESS_DECAY_RATE * 2, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
@@ -228,6 +229,8 @@ public final class CatService {
      */
     public static void addItem(Cat cat, Item item) {
         cat.getItems().add(item);
+        log.debug("Item added: {} ({} +{})", item.getItemName(), item.getEffectType(),
+                item.getEffectAmount());
         CatDAO.save(cat);
     }
 
@@ -240,11 +243,12 @@ public final class CatService {
      * @return true if the item was found and used, false if it was not in the inventory
      */
     public static boolean useItem(Cat cat, Item item) {
-        // remove returns false if the item wasn't in the list
         if (!cat.getItems().remove(item))
             return false;
-        item.applyItem(cat); // applies the stat effect and saves the stat change
-        CatDAO.save(cat); // save the inventory change (item removed)
+        item.applyItem(cat);
+        log.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(),
+                item.getEffectAmount());
+        CatDAO.save(cat);
         return true;
     }
 

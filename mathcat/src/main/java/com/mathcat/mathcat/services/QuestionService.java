@@ -7,6 +7,8 @@ import java.util.Random;
 import com.mathcat.mathcat.models.QuestionBank;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the flow of math questions to the player.
@@ -19,6 +21,7 @@ import com.mathcat.mathcat.models.IQuestion;
  * one at a time until the pool is exhausted, at which point the process repeats.
  */
 public class QuestionService {
+    private static final Logger log = LoggerFactory.getLogger(QuestionService.class);
     private final LinkedList<IQuestion> questionQueue = new LinkedList<>();
     private final Random random = new Random();
 
@@ -32,8 +35,12 @@ public class QuestionService {
     public IQuestion nextQuestion(int level) {
         if (questionQueue.isEmpty()) {
             buildQueue(pickDifficulty(level));
+            log.debug("Queue refilled - cat level: {}, pool size: {}", level, questionQueue.size());
         }
-        return questionQueue.poll();
+        IQuestion question = questionQueue.poll();
+        log.debug("Serving question - difficulty: {}, text: \"{}\", answer: {}, queue remaining: {}",
+                question.getDifficulty(), question.getText(), question.getAnswer(), questionQueue.size());
+        return question;
     }
 
     // @formatter:off don't remove pls - Nate

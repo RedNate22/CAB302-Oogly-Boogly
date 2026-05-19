@@ -22,6 +22,8 @@ import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.mathcat.mathcat.services.SpriteService;
 
 /**
@@ -29,6 +31,7 @@ import com.mathcat.mathcat.services.SpriteService;
  * SQLite database.
  */
 public class CreatePetController {
+    private static final Logger log = LoggerFactory.getLogger(CreatePetController.class);
 
     @FXML
     private TextField userPetName;
@@ -138,6 +141,7 @@ public class CreatePetController {
         cat.setCatSprite(selectedSpritePath);
         cat.setCatAccessory(selectedAccessorySpritePath);
         CatDAO.save(cat);
+        log.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
@@ -155,6 +159,14 @@ public class CreatePetController {
      * @throws IOException if the initial screen cannot be loaded
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
+        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        UserDAO.currentUser = null;
+
+        Parent root = FXMLLoader.load(
+                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
         NavigationUtil.logout(event);
     }
 }
