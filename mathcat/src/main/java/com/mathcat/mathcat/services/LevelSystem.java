@@ -71,7 +71,7 @@ public final class LevelSystem {
         cat.setLevel(cat.getLevel() + 1);
         cat.setXp(Math.max(0, excessXp));
         CatDAO.save(cat);
-        log.debug("Level up! {} -> {}, excess XP carried: {}", oldLevel, cat.getLevel(), cat.getXp());
+        log.debug("Level up! {} -> {}, excess XP carried: {}", oldLevel, cat.getLevel(), String.format("%.2f", cat.getXp()));
     }
 
     /**
@@ -82,7 +82,7 @@ public final class LevelSystem {
      */
     public static void applyXp(Cat cat, double amount) {
         cat.setXp(cat.getXp() + amount);
-        log.debug("+{} XP applied. Total: {} (level {})", amount, cat.getXp(), cat.getLevel());
+        log.debug("+{} XP applied. Total: {} (level {})", String.format("%.2f", amount), String.format("%.2f", cat.getXp()), cat.getLevel());
         while (canLevelUp(cat)) {
             levelUp(cat);
         }
