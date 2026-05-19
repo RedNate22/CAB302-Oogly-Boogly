@@ -73,6 +73,9 @@
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/no-accessory-selected.png" />
+                           </image>
                         </ImageView>
                      </children>
                   </StackPane>
