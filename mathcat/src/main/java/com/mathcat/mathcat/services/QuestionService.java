@@ -20,6 +20,7 @@ import com.mathcat.mathcat.models.IQuestion;
  */
 public class QuestionService {
     private final LinkedList<IQuestion> questionQueue = new LinkedList<>();
+    private final Random random = new Random();
 
     /**
      * Returns the next question from the queue. If the queue is empty, builds a new shuffled queue
@@ -51,8 +52,17 @@ public class QuestionService {
     // Rolls a weighted random based on the cat's current level and returns the appropriate
     // Difficulty.
     private Difficulty pickDifficulty(int level) {
-        // TODO
-        return Difficulty.MEDIUM; // ! hardcoded difficulty
+        int roll = random.nextInt(100); // 0-99
+
+        if (level <= 2) {
+            return Difficulty.EASY;
+        } else if (level <= 4) {
+            return roll < 40 ? Difficulty.EASY : Difficulty.MEDIUM;
+        } else if (level <= 6) {
+            return roll < 60 ? Difficulty.MEDIUM : Difficulty.HARD;
+        } else {
+            return roll < 20 ? Difficulty.MEDIUM : Difficulty.HARD;
+        }
     }
 
     // Called by nextQuestion() when the queue is empty, after pickDifficulty().
@@ -67,7 +77,6 @@ public class QuestionService {
 
     // Called by buildQueue(). Performs an in-place Fisher-Yates shuffle on the question list.
     private List<IQuestion> shuffle(List<IQuestion> questions) {
-        Random random = new Random();
         for (int i = questions.size() - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
             IQuestion temp = questions.get(i);
