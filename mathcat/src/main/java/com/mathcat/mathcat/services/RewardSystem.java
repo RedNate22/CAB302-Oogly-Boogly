@@ -157,16 +157,19 @@ public class RewardSystem {
 
         if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
             cat.getItems().add(newItem);
+            ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
             log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
             cat.getItems().add(newItem);
+            ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
             log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
             cat.getItems().add(newItem);
+            ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
             log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
             return;
         }
