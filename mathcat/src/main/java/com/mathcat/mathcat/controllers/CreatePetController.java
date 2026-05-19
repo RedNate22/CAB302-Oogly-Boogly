@@ -159,14 +159,6 @@ public class CreatePetController {
      * @throws IOException if the initial screen cannot be loaded
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
-        UserDAO.currentUser = null;
-
-        Parent root = FXMLLoader.load(
-                getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
         NavigationUtil.logout(event);
     }
 }
