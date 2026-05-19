@@ -229,6 +229,8 @@ public final class CatService {
      */
     public static void addItem(Cat cat, Item item) {
         cat.getItems().add(item);
+        log.debug("Item added: {} ({} +{})", item.getItemName(), item.getEffectType(),
+                item.getEffectAmount());
         CatDAO.save(cat);
     }
 
@@ -243,8 +245,9 @@ public final class CatService {
     public static boolean useItem(Cat cat, Item item) {
         if (!cat.getItems().remove(item))
             return false;
-        log.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(), item.getEffectAmount());
         item.applyItem(cat);
+        log.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(),
+                item.getEffectAmount());
         CatDAO.save(cat);
         return true;
     }
