@@ -58,6 +58,7 @@ public class PlayController {
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
+            log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
             String selectedSpritePath = cat.getCatSprite();
             String selectedAccessorySpritePath = cat.getCatAccessory();
             petNameLabel.setText(cat.getCatName() + "'s Stats");
@@ -95,6 +96,7 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
+            log.debug("correct answer: {} (difficulty: {})", userAnswer, currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
 
@@ -109,6 +111,7 @@ public class PlayController {
                 chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
             }
         } else {
+            log.debug("incorrect answer: {}", userAnswer);
             feedbackLabel.setText("Incorrect, try again!");
         }
     }
