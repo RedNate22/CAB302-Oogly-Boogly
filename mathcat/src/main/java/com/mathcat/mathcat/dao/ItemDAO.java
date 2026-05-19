@@ -3,19 +3,20 @@ package com.mathcat.mathcat.dao;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.ItemEffectType;
 import com.mathcat.mathcat.database.DatabaseManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.sql.*;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.sql.*;
 
 /**
  * Provides access to the static item catalog. Items are predefined and shared across all users;
  * the catalog is populated once on class load.
  */
-public class ItemDAO {
+public final class ItemDAO {
+    private static final Logger log = LoggerFactory.getLogger(ItemDAO.class);
 
     // Ordered map so getAll() returns items in insertion order (useful for shop display)
     private static final Map<String, Item> catalog = new LinkedHashMap<>();
@@ -81,7 +82,6 @@ public class ItemDAO {
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
-                // Cat already has this item — increment quantity
                 try (PreparedStatement updateStmt =
                              DatabaseManager.getConnection().prepareStatement(updateSql)) {
                     updateStmt.setInt(1, catId);
@@ -89,7 +89,6 @@ public class ItemDAO {
                     updateStmt.executeUpdate();
                 }
             } else {
-                // Cat does not have this item — insert a new row with quantity 1
                 try (PreparedStatement insertStmt =
                              DatabaseManager.getConnection().prepareStatement(insertSql)) {
                     insertStmt.setInt(1, catId);
@@ -98,7 +97,7 @@ public class ItemDAO {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("[ItemDAO] Error adding item: " + e.getMessage());
+            log.error("error adding item", e);
         }
     }
 
@@ -120,18 +119,15 @@ public class ItemDAO {
         try {
             conn = DatabaseManager.getConnection();
 
-            // Check the cat actually has this item before doing anything
             try (PreparedStatement checkStmt = conn.prepareStatement(checkSql)) {
                 checkStmt.setInt(1, catId);
                 checkStmt.setString(2, itemId);
                 ResultSet rs = checkStmt.executeQuery();
                 if (!rs.next() || rs.getInt("quantity") <= 0) {
-                    return false; // cat has none of this item
+                    return false;
                 }
             }
 
-            // Use a transaction — decrement then delete if 0, atomically
-            // This ensures we never end up with a row sitting at 0 quantity
             conn.setAutoCommit(false);
 
             try (PreparedStatement decrementStmt = conn.prepareStatement(decrementSql)) {
@@ -150,23 +146,21 @@ public class ItemDAO {
             return true;
 
         } catch (SQLException e) {
-            System.err.println("[ItemDAO] Error using item: " + e.getMessage());
-            // Roll back if anything went wrong so inventory stays consistent
+            log.error("error using item", e);
             if (conn != null) {
                 try {
                     conn.rollback();
                 } catch (SQLException re) {
-                    System.err.println("[ItemDAO] Rollback failed: " + re.getMessage());
+                    log.error("rollback failed", re);
                 }
             }
             return false;
         } finally {
-            // Always restore auto-commit so other queries are not affected
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
                 } catch (SQLException e) {
-                    System.err.println("[ItemDAO] Failed to restore auto-commit: " + e.getMessage());
+                    log.error("failed to restore auto-commit", e);
                 }
             }
         }
@@ -193,15 +187,12 @@ public class ItemDAO {
                 String itemId = rs.getString("item_id");
                 int quantity = rs.getInt("quantity");
 
-                // Look up full item details from the static catalog
                 Item catalogItem = catalog.get(itemId);
                 if (catalogItem == null) {
-                    // Item ID in database does not match any catalog entry — skip it
-                    System.err.println("[ItemDAO] Unknown item in inventory: " + itemId);
+                    log.warn("unknown item in inventory: {}", itemId);
                     continue;
                 }
 
-                // Create a copy so each inventory entry is independent from the catalog object
                 Item item = new Item(
                         catalogItem.getItemId(),
                         catalogItem.getItemName(),
@@ -213,7 +204,7 @@ public class ItemDAO {
                 inventory.add(item);
             }
         } catch (SQLException e) {
-            System.err.println("[ItemDAO] Error loading inventory: " + e.getMessage());
+            log.error("error loading inventory", e);
         }
 
         return inventory;
