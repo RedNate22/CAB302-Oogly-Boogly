@@ -70,7 +70,7 @@ public class CreatePetController {
     }
 
     /**
-     * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
+     * Handles logic of changing the image of the current cat appearance to the top hat accessory sprite
      */
     public void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
@@ -79,12 +79,19 @@ public class CreatePetController {
     }
 
     /**
-     * Handles logic of changing the image of the current cat appearance to the tuxedo sprite
+     * Handles logic of changing the image of the current cat appearance to the red bow tie accessory sprite
      */
     public void onClickBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
 
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
+    }
+
+    /**
+     * Handles logic of clearing accessory image of current cat appearance
+     */
+    public void onClickClearAccessory() {
+        viewCurrentAccessoryImage.setImage(null);
     }
 
     /**

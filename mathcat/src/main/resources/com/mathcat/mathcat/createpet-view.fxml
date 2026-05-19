@@ -107,6 +107,7 @@
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -136,6 +137,16 @@
                                              </viewport>
                                           </ImageView>
                                           <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="Bow Tie" />
+                                       </children>
+                                    </Group>
+                                    <Group layoutX="155.0" layoutY="13.0" GridPane.columnIndex="2">
+                                       <children>
+                                          <ImageView fx:id="NoAccessorySelection" fitHeight="75.0" fitWidth="75.0" layoutX="3.0" layoutY="1.0" onMouseClicked="#onClickClearAccessory" pickOnBounds="true" preserveRatio="true">
+                                             <viewport>
+                                                <Rectangle2D height="80.0" minX="105.0" minY="60.0" width="80.0" />
+                                             </viewport>
+                                          </ImageView>
+                                          <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutY="63.0" prefHeight="17.0" prefWidth="80.0" text="None" />
                                        </children>
                                     </Group>
                                  </children>
