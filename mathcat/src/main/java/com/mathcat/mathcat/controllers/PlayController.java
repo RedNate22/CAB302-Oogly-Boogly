@@ -1,5 +1,7 @@
 package com.mathcat.mathcat.controllers;
 
+import com.mathcat.mathcat.services.LevelSystem;
+import com.mathcat.mathcat.services.RewardSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -90,7 +92,9 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
-            // TODO: apply bonus reward if !chatController.isAiUsed()
+            RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
+            CatDAO.save(cat);
+
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();

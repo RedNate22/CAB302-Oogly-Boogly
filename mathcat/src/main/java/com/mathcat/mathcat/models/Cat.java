@@ -31,8 +31,8 @@ public final class Cat {
     private LocalDate energyCapResetDate;
 
     /**
-     * Creates a new Cat with default stats at full happiness and fullness, zero energy, level 1, no
-     * XP, and no items.
+     * Creates a new Cat with default stats at full happiness, fullness, and energy, level 1, no XP,
+     * and no items.
      * 
      * @param catName the display name of the cat
      */

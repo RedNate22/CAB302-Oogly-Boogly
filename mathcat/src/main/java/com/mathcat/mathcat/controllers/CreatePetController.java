@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -94,6 +96,27 @@ public class CreatePetController {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
 
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
+    }
+
+    @FXML private Label confirmationMessage;
+
+    // Initially sets the confirmation message once
+    public void initialize() {
+        setConfirmationMessage();
+    }
+
+    /**
+     * Handles timed confirmation message — Indicates to user that account creation was successful.
+     */
+    public void setConfirmationMessage() {
+        confirmationMessage.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+
+        pause.setOnFinished((ActionEvent event) -> {
+            confirmationMessage.setVisible(false);
+        });
+        pause.play();
     }
 
     /**

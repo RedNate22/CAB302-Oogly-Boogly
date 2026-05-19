@@ -2,11 +2,13 @@ package com.mathcat.mathcat.dao;
 
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.ItemEffectType;
+import com.mathcat.mathcat.database.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.sql.*;
 
 /**
  * Provides access to the static item catalog. Items are predefined and shared across all users;

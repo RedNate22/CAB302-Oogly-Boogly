@@ -11,6 +11,7 @@ module com.mathcat.mathcat {
     requires com.google.gson;
     requires io.github.cdimascio.dotenv.java;
     requires transitive java.sql;
+    requires annotations;
 
     opens com.mathcat.mathcat to javafx.fxml;
     opens com.mathcat.mathcat.controllers to javafx.fxml;
