@@ -30,6 +30,7 @@ public class PlayController {
 
     @FXML
     private ImageView viewCurrentPetImage;
+    @FXML
     private ImageView viewCurrentAccessoryImage;
 
     @FXML
@@ -50,11 +51,10 @@ public class PlayController {
 
     @FXML
     public void initialize() {
-        String selectedSpritePath = cat.getCatSprite();
-        String selectedAccessorySpritePath = cat.getCatAccessory();
-
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
+            String selectedSpritePath = cat.getCatSprite();
+            String selectedAccessorySpritePath = cat.getCatAccessory();
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));

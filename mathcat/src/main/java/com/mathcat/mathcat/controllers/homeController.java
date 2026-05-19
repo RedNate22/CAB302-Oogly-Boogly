@@ -35,6 +35,7 @@ public class homeController {
 
     @FXML
     private ImageView viewCurrentPetImage;
+    @FXML
     private ImageView viewCurrentAccessoryImage;
 
     @FXML
