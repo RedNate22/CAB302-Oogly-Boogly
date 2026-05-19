@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.QuestionService;
+import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
 
 /**
@@ -25,6 +27,10 @@ public class PlayController {
 
     @FXML
     private Label petNameLabel;
+
+    @FXML
+    private ImageView viewCurrentPetImage;
+    private ImageView viewCurrentAccessoryImage;
 
     @FXML
     private Label mathQuestionLabel;
@@ -44,9 +50,14 @@ public class PlayController {
 
     @FXML
     public void initialize() {
+        String selectedSpritePath = cat.getCatSprite();
+        String selectedAccessorySpritePath = cat.getCatAccessory();
+
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 

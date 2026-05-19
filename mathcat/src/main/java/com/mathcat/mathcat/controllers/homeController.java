@@ -35,6 +35,7 @@ public class homeController {
 
     @FXML
     private ImageView viewCurrentPetImage;
+    private ImageView viewCurrentAccessoryImage;
 
     @FXML
     private ProgressBar happinessProgressBar = new ProgressBar(0);
@@ -50,6 +51,7 @@ public class homeController {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
 
         String selectedSpritePath = cat.getCatSprite();
+        String selectedAccessorySpritePath = cat.getCatAccessory();
 
         CatService.applyOfflineDecay(cat);
         CatScheduler.getInstance().start(cat); // begin live stats
@@ -61,6 +63,7 @@ public class homeController {
         if (cat != null) {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
             happinessProgressBar.setProgress(catHappiness / 100);
             hungerProgressBar.setProgress(catHunger / 100);
             energyProgressBar.setProgress(catEnergy / 100);
