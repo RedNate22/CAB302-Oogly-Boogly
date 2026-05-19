@@ -8,33 +8,27 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml"
-           fx:controller="com.mathcat.mathcat.controllers.HelloController">
+<StackPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.HelloController">
 
-    <ImageView fitWidth="700.0" fitHeight="500.0" preserveRatio="false">
+    <ImageView fitHeight="500.0" fitWidth="700.0" preserveRatio="false">
         <image>
-            <Image url="@assets/images/pixelated.png"/>
+            <Image url="@assets/images/pixelated.png" />
         </image>
     </ImageView>
 
     <VBox alignment="CENTER" spacing="20.0">
         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
         </padding>
 
-        <Label text="MATHCAT"
-               style="
-              -fx-font-family: 'Press Start 2P';
-              -fx-font-size: 40px;
-              -fx-font-weight: bold;
-              -fx-text-fill: #f5f5ce;
-
-              -fx-effect: dropshadow(gaussian, black, 0, 0, 4, 4)
-                          dropshadow(gaussian, black, 0, 0, -4, -4)
-                          dropshadow(gaussian, black, 0, 0, 4, -4)
-                          dropshadow(gaussian, black, 0, 0, -4, 4);" />
-        <Button text="Login" onAction="#onLoginClick"/>
-        <Button text="Create Account" onAction="#onCreateClick"/>
+        <Label style="               -fx-font-family: 'Press Start 2P';               -fx-font-size: 40px;               -fx-font-weight: bold;               -fx-text-fill: #f5f5ce;                -fx-effect: dropshadow(gaussian, black, 0, 0, 4, 4)                           dropshadow(gaussian, black, 0, 0, -4, -4)                           dropshadow(gaussian, black, 0, 0, 4, -4)                           dropshadow(gaussian, black, 0, 0, -4, 4);" text="MATHCAT" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@assets/images/sprites/cats/orange-normal.png" />
+         </image>
+      </ImageView>
+        <Button onAction="#onLoginClick" text="Login" />
+        <Button onAction="#onCreateClick" text="Create Account" />
     </VBox>
 
 </StackPane>

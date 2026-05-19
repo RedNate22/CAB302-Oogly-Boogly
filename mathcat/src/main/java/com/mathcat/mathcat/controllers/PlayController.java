@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.QuestionService;
+import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,11 @@ public class PlayController {
 
     @FXML
     private Label petNameLabel;
+
+    @FXML
+    private ImageView viewCurrentPetImage;
+    @FXML
+    private ImageView viewCurrentAccessoryImage;
 
     @FXML
     private Label mathQuestionLabel;
@@ -51,7 +58,11 @@ public class PlayController {
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
+            String selectedSpritePath = cat.getCatSprite();
+            String selectedAccessorySpritePath = cat.getCatAccessory();
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
@@ -72,7 +83,8 @@ public class PlayController {
      */
     public void onSubmit(ActionEvent event) {
         String input = answerInput.getText().trim();
-        if (input.isEmpty()) return;
+        if (input.isEmpty())
+            return;
 
         int userAnswer;
         try {
@@ -123,6 +135,7 @@ public class PlayController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("MathCat");
         stage.getScene().setRoot(root);
+        NavigationUtil.logout(event);
     }
 
     public void onPressPlay(ActionEvent event) throws IOException {

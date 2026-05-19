@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 public final class CatService {
     public static final double MAX_STAT = 100.0;
     public static final double MIN_STAT = 0.00;
-    public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours normally, ~8 hours when hungry (0.07 + 0.07*2 penalty = 0.21/min)
+    public static final double HAPPINESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hrs normally,
+                                                            // ~8 hrs when hungry (0.07 base + 0.14
+                                                            // hunger penalty = 0.21/min)
     public static final double FULLNESS_DECAY_RATE = 0.07; // per min: hits 0 in ~24 hours
     public static final double ENERGY_REGEN_RATE = 1.0; // per min at max fullness: hits 100 in ~100
                                                         // min
@@ -145,8 +147,9 @@ public final class CatService {
     }
 
     /**
-     * Called by {@link CatScheduler} periodically to regenerate energy proportionally to current fullness,
-     * subject to a daily cap ({@link #DAILY_ENERGY_CAP}). Resets the cap counter at the start of each new calendar day.
+     * Called by {@link CatScheduler} periodically to regenerate energy proportionally to current
+     * fullness, subject to a daily cap ({@link #DAILY_ENERGY_CAP}). Resets the cap counter at the
+     * start of each new calendar day.
      *
      * @param cat the cat to regenerate energy for
      */
@@ -184,7 +187,15 @@ public final class CatService {
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
         log.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed, minutesElapsed * HAPPINESS_DECAY_RATE, minutesElapsed * FULLNESS_DECAY_RATE);
 
+        // Estimate how long the cat was hungry during the offline window.
+        // Fullness decays linearly, so we calculate when it crossed HUNGER_THRESHOLD and apply
+        // the hunger penalty (HAPPINESS_DECAY_RATE * 2) only for those minutes.
+        double minutesUntilHungry =
+                Math.max(0.0, (cat.getFullness() - HUNGER_THRESHOLD) / FULLNESS_DECAY_RATE);
+        double hungryMinutes = Math.max(0.0, minutesElapsed - minutesUntilHungry);
+
         decreaseHappiness(cat, minutesElapsed * HAPPINESS_DECAY_RATE, false);
+        decreaseHappiness(cat, hungryMinutes * HAPPINESS_DECAY_RATE * 2, false);
         decreaseFullness(cat, minutesElapsed * FULLNESS_DECAY_RATE, false);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
@@ -199,7 +210,8 @@ public final class CatService {
     }
 
     /**
-     * Applies an additional happiness penalty if the cat's fullness is below {@link #HUNGER_THRESHOLD}.
+     * Applies an additional happiness penalty if the cat's fullness is below
+     * {@link #HUNGER_THRESHOLD}.
      *
      * @param cat the cat to apply the penalty to
      */
@@ -246,5 +258,35 @@ public final class CatService {
     public static void removeItem(Cat cat, Item item) {
         cat.getItems().remove(item);
         CatDAO.save(cat);
+    }
+
+    /**
+     * Displays the cat's happiness level.
+     *
+     * @param cat the cat to get the happiness level
+     */
+    public static double displayHappiness(Cat cat) {
+        double catHappiness = cat.getHappiness();
+        return catHappiness;
+    }
+
+    /**
+     * Displays the cat's hunger level.
+     *
+     * @param cat the cat to get the hunger level
+     */
+    public static double displayHunger(Cat cat) {
+        double catHunger = cat.getFullness();
+        return catHunger;
+    }
+
+    /**
+     * Displays the cat's energy level.
+     *
+     * @param cat the cat to get the energy level
+     */
+    public static double displayEnergy(Cat cat) {
+        double catEnergy = cat.getEnergy();
+        return catEnergy;
     }
 }
