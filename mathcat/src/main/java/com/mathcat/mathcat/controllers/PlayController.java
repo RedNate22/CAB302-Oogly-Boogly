@@ -20,12 +20,15 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
  * ChatController.
  */
 public class PlayController {
+    private static final Logger log = LoggerFactory.getLogger(PlayController.class);
 
     @FXML
     private Label petNameLabel;
@@ -125,6 +128,13 @@ public class PlayController {
      * Handles logout.
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
+        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        UserDAO.currentUser = null;
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("MathCat");
+        stage.getScene().setRoot(root);
         NavigationUtil.logout(event);
     }
 
