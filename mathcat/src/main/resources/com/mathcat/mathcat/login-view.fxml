@@ -17,9 +17,9 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <Text styleClass="field-label"> Email or Username </Text>
-    <TextField fx:id="usernameField"/>
+    <TextField fx:id="usernameField" maxWidth="400"/>
     <Text styleClass="field-label"> Password </Text>
-    <HBox>
+    <HBox maxWidth="400">
         <StackPane HBox.hgrow="ALWAYS">
             <PasswordField fx:id="passwordField"/>
             <TextField fx:id="visiblePasswordField" visible="false" managed="false"/>

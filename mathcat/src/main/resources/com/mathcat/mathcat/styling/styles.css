@@ -52,19 +52,19 @@
         -fx-background-color: #414559;
         -fx-background-radius: 2px;
         -fx-border-radius: 4px;
-        -fx-border-color: #babbf1;
-        -fx-border-width: 2px;
-        /* 4px 8px, 6px 12px, 8px 16px */
-        /* -fx-padding: ; */
+        -fx-border-color: #babbf1 #babbf1 #7a7eb8 #babbf1;
+            -fx-border-width: 2px 2px 5px 2px;
     -fx-cursor: hand;
     }
-    
+
     .button:hover {
     -fx-background-color: #51576d;
     }
-    
+
     .button:pressed {
     -fx-background-color: #51576d;
+    -fx-border-width: 2px;
+        -fx-translate-y: 3px;
 }
 
 .button:focused {
@@ -95,6 +95,17 @@
         /* -fx-background-insets: ; */
 }
 
+#petNameLabel {
+    -fx-font-size: 24px;
+}
+
+#mathEquationTitle {
+    -fx-font-size: 24px;
+}
+
+#mathQuestionLabel {
+    -fx-font-size: 24px;
+}
 /* Password fields */
 
 .password-field {
@@ -149,6 +160,46 @@
 
 #energyProgressBar>.bar {
     -fx-background-color: #ef9f76;
+}
+#happinessLabel,
+#hungerLabel,
+#energyLabel {
+    -fx-text-fill: #303446;
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER;
+}
+
+/* AI */
+#chat {
+    -fx-background-color: #303446;
+    -fx-background-radius: 8px;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
+
+#scrollPane {
+    -fx-background-color: #303446;
+    -fx-background-radius: 4px;
+}
+
+#scrollPane>.viewport {
+    -fx-background-color: #303446;
+    -fx-background-radius: 4px;
+}
+
+.chat-bubble-user {
+    -fx-background-color: #ca9ee6;
+    -fx-text-fill: #303446;
+    -fx-padding: 8px;
+    -fx-background-radius: 10px;
+}
+
+.chat-bubble-ai {
+    -fx-background-color: #414559;
+    -fx-text-fill: #c6d0f5;
+    -fx-padding: 8px;
+    -fx-background-radius: 10px;
 }
 /* Tooltips */
 
