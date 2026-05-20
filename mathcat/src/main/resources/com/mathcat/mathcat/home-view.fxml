@@ -31,7 +31,10 @@
                         <Group>
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
-                              <ProgressBar fx:id="happinessProgressBar" layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <StackPane layoutY="17.0" prefWidth="200.0">
+                                 <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="happinessLabel" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -40,7 +43,10 @@
                         <Group layoutX="28.0" layoutY="114.0">
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
-                              <ProgressBar fx:id="hungerProgressBar" layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <StackPane layoutY="17.0" prefWidth="200.0">
+                                 <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="hungerLabel" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -49,7 +55,10 @@
                         <Group layoutX="28.0" layoutY="132.0">
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
-                              <ProgressBar fx:id="energyProgressBar" layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <StackPane layoutY="17.0" prefWidth="200.0">
+                                 <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="energyLabel" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
