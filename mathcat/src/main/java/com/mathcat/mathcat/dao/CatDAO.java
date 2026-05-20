@@ -2,6 +2,7 @@ package com.mathcat.mathcat.dao;
 
 import com.mathcat.mathcat.database.DatabaseManager;
 import com.mathcat.mathcat.models.Cat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.sql.*;
@@ -113,8 +114,9 @@ public final class CatDAO {
                     cat.setLastSaved(LocalDateTime.parse(lastSaved));
                 cat.setDailyEnergyGained(rs.getDouble("daily_energy_gained"));
                 String resetDate = rs.getString("energy_cap_reset_date");
-                if (resetDate != null)
-                    cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                if (resetDate != null) cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                // Load the cat's inventory from the database
+                cat.setItems(ItemDAO.loadInventory(cat.getCatId()));
                 return cat;
             }
         } catch (SQLException e) {

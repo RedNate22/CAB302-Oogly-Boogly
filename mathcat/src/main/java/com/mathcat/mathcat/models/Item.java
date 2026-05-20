@@ -11,6 +11,8 @@ public final class Item {
     private String itemImage; // format, [path/to/image]
     private ItemEffectType effectType;
     private double effectAmount;
+    // Tracks how many of this item the cat owns — only relevant for inventory, not the catalog
+    private int quantity;
 
     /**
      * Creates a new cosmetic Item with the given ID, name, image path, and no stat effects.
@@ -25,6 +27,7 @@ public final class Item {
         this.itemImage = itemImage;
         this.effectType = ItemEffectType.COSMETIC;
         this.effectAmount = 0.00;
+
     }
 
     /**
@@ -154,6 +157,19 @@ public final class Item {
                 // no stat effect
                 break;
         }
+    }
+    /**
+     * @return how many of this item the cat currently owns
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the number of this item in the cat's inventory
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
 

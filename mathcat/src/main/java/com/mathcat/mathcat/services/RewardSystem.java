@@ -134,11 +134,11 @@ public class RewardSystem {
 
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
-            log.debug("No XP - insufficient energy (difficulty: {}, energy: {})", question.getDifficulty(), cat.getEnergy());
+            log.debug("No XP - insufficient energy (difficulty: {}, energy: {})", question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
             return;
         }
 
-        log.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", xpReturn, baseXpReturn(question, cat), xpBonus(cat, isAiUsed, question), isAiUsed);
+        log.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", String.format("%.2f", xpReturn), String.format("%.2f", baseXpReturn(question, cat)), String.format("%.2f", xpBonus(cat, isAiUsed, question)), isAiUsed);
         LevelSystem.applyXp(cat, xpReturn);
 
         if (question.getDifficulty() == Difficulty.EASY) {
@@ -150,26 +150,29 @@ public class RewardSystem {
         if (question.getDifficulty() == Difficulty.HARD) {
             cat.setEnergy(cat.getEnergy() - 20);
         }
-        log.debug("Energy after deduction: {}", cat.getEnergy());
+        log.debug("Energy after deduction: {}", String.format("%.2f", cat.getEnergy()));
 
         double percentage = randomNumberGenerator();
         Item newItem = fisherYatesShuffle(ItemDAO.getAll()).getFirst();
 
         if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
             cat.getItems().add(newItem);
-            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
+            ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), String.format("%.2f", percentage));
             return;
         }
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
             cat.getItems().add(newItem);
-            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
+            ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), String.format("%.2f", percentage));
             return;
         }
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
             cat.getItems().add(newItem);
-            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), percentage);
+            ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
+            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), String.format("%.2f", percentage));
             return;
         }
-        log.debug("No item dropped (roll: {})", percentage);
+        log.debug("No item dropped (roll: {})", String.format("%.2f", percentage));
     }
 }

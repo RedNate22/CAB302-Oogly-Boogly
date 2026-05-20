@@ -58,6 +58,7 @@ public class PlayController {
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
+            log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
             String selectedSpritePath = cat.getCatSprite();
             String selectedAccessorySpritePath = cat.getCatAccessory();
             petNameLabel.setText(cat.getCatName() + "'s Stats");
@@ -95,6 +96,7 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
+            log.debug("correct answer: {} (difficulty: {})", userAnswer, currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
 
@@ -109,6 +111,7 @@ public class PlayController {
                 chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
             }
         } else {
+            log.debug("incorrect answer: {}", userAnswer);
             feedbackLabel.setText("Incorrect, try again!");
         }
     }
@@ -128,13 +131,6 @@ public class PlayController {
      * Handles logout.
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
-        UserDAO.currentUser = null;
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
         NavigationUtil.logout(event);
     }
 
