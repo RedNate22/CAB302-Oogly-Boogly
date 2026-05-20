@@ -1,0 +1,4 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "css.lint.vendorPrefix": "ignore" // suppresses the warnings in styles.css
+}

@@ -1,13 +1,190 @@
-@font-face {
-    font-family: 'PressStart2P';
-    src: url('font/PressStart2P-Regular.ttf');
+/* Catppuccin Frappé
+   Base:     #303446
+   Surface0: #414559
+   Surface1: #51576d
+   Surface2: #626880
+   Text:     #c6d0f5
+   Lavender: #babbf1
+   Mauve:    #ca9ee6
+   Pink:     #f4b8e4
+   Peach:    #ef9f76
+   Green:    #a6d189
+   Teal:     #81c8be
+*/
+/* Base */
+
+.root {
+    -fx-font-family: 'w95fa';
+    -fx-font-size: 16px;
+    -fx-background-color: #303446;
+        -fx-focus-color: #ca9ee6;
+        -fx-faint-focus-color: #ca9ee622;
 }
+
+/* Labels */
 
 .label {
-    -fx-font-family: 'PressStart2P';
-    -fx-font-size: 20;
+    /* 'Press Start 2P', 'Arial' */
+    /* -fx-font-family: ; */
+        /* 8px, 10px, 12px */
+        /* -fx-font-size: ; */
+    -fx-text-fill: #c6d0f5;
+    }
+    
+.field-label {
+    -fx-fill: #c6d0f5;
 }
 
-.button .text {
-    -fx-font-family: 'PressStart2P';
+#main-title {
+    -fx-font-family: 'Press Start 2P';
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f5f5ce;
+    -fx-effect:
+        dropshadow(gaussian, black, 0, 0, 4, 4) dropshadow(gaussian, black, 0, 0, -4, -4) dropshadow(gaussian, black, 0, 0, 4, -4) dropshadow(gaussian, black, 0, 0, -4, 4);
+}
+
+/* Buttons */
+
+.button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #c6d0f5;
+        -fx-background-color: #414559;
+        -fx-background-radius: 2px;
+        -fx-border-radius: 4px;
+        -fx-border-color: #babbf1;
+        -fx-border-width: 2px;
+        /* 4px 8px, 6px 12px, 8px 16px */
+        /* -fx-padding: ; */
+    -fx-cursor: hand;
+    }
+    
+    .button:hover {
+    -fx-background-color: #51576d;
+    }
+    
+    .button:pressed {
+    -fx-background-color: #51576d;
+}
+
+.button:focused {
+    -fx-background-radius: 2px;
+        -fx-background-insets: 0, 0, 0;
+}
+
+/* Text fields */
+
+.text-field {
+    /* 'Press Start 2P', 'Arial' */
+    /* -fx-font-family: ; */
+        /* 8px, 10px, 12px */
+        /* -fx-font-size: ; */
+    -fx-text-fill: #c6d0f5;
+        -fx-background-color: #414559;
+        -fx-background-radius: 0;
+        -fx-border-radius: 0;
+        -fx-border-color: #626880;
+        -fx-border-width: 2px;
+        /* 4px 8px, 6px 8px */
+        /* -fx-padding: ; */
+}
+
+.text-field:focused {
+    -fx-border-color: #ca9ee6;
+        /* 0, 1px */
+        /* -fx-background-insets: ; */
+}
+
+/* Password fields */
+
+.password-field {
+    /* 'Press Start 2P', 'Arial' */
+    /* -fx-font-family: ; */
+        /* 8px, 10px, 12px */
+        /* -fx-font-size: ; */
+    -fx-text-fill: #c6d0f5;
+        -fx-background-color: #414559;
+        -fx-background-radius: 0;
+        -fx-border-radius: 0;
+        -fx-border-color: #626880;
+        -fx-border-width: 2px;
+        /* 4px 8px, 6px 8px */
+        /* -fx-padding: ; */
+}
+
+/* Progress bars */
+
+.progress-bar {
+    /* 0, 4px */
+    /* -fx-background-radius: ; */
+        /* 0, 4px */
+        /* -fx-border-radius: ; */
+}
+
+.progress-bar>.track {
+    -fx-background-color: #51576d;
+        /* 0, 4px */
+        /* -fx-background-radius: ; */
+        /* #000000, #2a2e28 */
+        /* -fx-border-color: ; */
+        /* 1px, 2px */
+        /* -fx-border-width: ; */
+}
+
+.progress-bar>.bar {
+    -fx-background-color: #ca9ee6;
+        /* 0, 4px */
+        /* -fx-background-radius: ; */
+        /* 0, 2px, 3px */
+        /* -fx-background-insets: ; */
+}
+
+#happinessProgressBar>.bar {
+    -fx-background-color: #a6d189;
+}
+
+#hungerProgressBar>.bar {
+    -fx-background-color: #f4b8e4;
+}
+
+#energyProgressBar>.bar {
+    -fx-background-color: #ef9f76;
+}
+/* Tooltips */
+
+.tooltip {
+    /* 'Press Start 2P', 'Arial' */
+    /* -fx-font-family: ; */
+        /* 7px, 8px, 10px */
+        /* -fx-font-size: ; */
+    -fx-text-fill: #c6d0f5;
+        -fx-background-color: #51576d;
+        /* 0, 4px */
+        /* -fx-background-radius: ; */
+        /* 0, 4px */
+        /* -fx-border-radius: ; */
+    -fx-border-color: #626880;
+        -fx-border-width: 2px;
+        /* 4px 8px, 6px 10px */
+        /* -fx-padding: ; */
+}
+
+/* Scroll bars */
+
+.scroll-bar {
+    -fx-background-color: #303446;
+        /* 0, 4px */
+        /* -fx-background-radius: ; */
+}
+
+.scroll-bar>.thumb {
+    -fx-background-color: #ca9ee6;
+        /* 0, 4px */
+        /* -fx-background-radius: ; */
+}
+
+.scroll-bar>.track {
+    -fx-background-color: #414559;
+        /* 0, 4px */
+        /* -fx-background-radius: ; */
 }

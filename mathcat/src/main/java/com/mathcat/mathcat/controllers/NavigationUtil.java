@@ -29,6 +29,9 @@ public class NavigationUtil {
 
     private static final Logger log = LoggerFactory.getLogger(NavigationUtil.class);
 
+    public static final String STYLESHEET = NavigationUtil.class
+            .getResource("/com/mathcat/mathcat/styling/styles.css").toExternalForm();
+
     private NavigationUtil() {}
 
     /**

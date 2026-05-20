@@ -19,9 +19,9 @@
     </padding>
     <Text> Username </Text>
     <TextField fx:id="usernameField"/>
-    <Text> Email </Text>
+    <Text styleClass="field-label"> Email </Text>
     <TextField fx:id="emailField"/>
-    <Text> Password </Text>
+    <Text styleClass="field-label"> Password </Text>
     <HBox>
         <StackPane HBox.hgrow="ALWAYS">
             <PasswordField fx:id="passwordField"/>

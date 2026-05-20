@@ -95,8 +95,8 @@ public class homeController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root,700, 500);
-        
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
 
@@ -134,7 +134,9 @@ public class homeController {
             Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             inventoryStage.initOwner(homeStage);
 
-            inventoryStage.setScene(new Scene(root));
+            Scene inventoryScene = new Scene(root);
+            inventoryScene.getStylesheets().add(NavigationUtil.STYLESHEET);
+            inventoryStage.setScene(inventoryScene);
 
             inventoryStage.setOnShown(windowEvent -> {
                 double homeX = homeStage.getX();

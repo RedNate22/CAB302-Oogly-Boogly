@@ -147,7 +147,7 @@ public class CreatePetController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
-
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
     }

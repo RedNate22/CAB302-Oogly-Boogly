@@ -61,12 +61,16 @@ public class CatScheduler {
      * @param cat the cat to update
      */
     public void onTick(Cat cat) {
-        log.debug("Tick fired - happiness: {}, fullness: {}, energy: {}", cat.getHappiness(), cat.getFullness(), cat.getEnergy());
+        log.debug("Tick fired - happiness: {}, fullness: {}, energy: {}",
+                String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
+                String.format("%.2f", cat.getEnergy()));
         CatService.decreaseHappiness(cat, CatService.HAPPINESS_DECAY_RATE);
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
-        log.debug("After tick - happiness: {}, fullness: {}, energy: {}", cat.getHappiness(), cat.getFullness(), cat.getEnergy());
+        log.debug("After tick - happiness: {}, fullness: {}, energy: {}",
+                String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
+                String.format("%.2f", cat.getEnergy()));
     }
 
     /**
