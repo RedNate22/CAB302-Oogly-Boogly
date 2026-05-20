@@ -89,7 +89,7 @@
                                     </ImageView>
                                     <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="120.0" text="Mega Cowboy Hat">
                                        <tooltip>
-                                          <Tooltip fx:id="megaCowboyToolip" text="You must be Level .. to unlock this accessory!" />
+                                          <Tooltip fx:id="megaCowboyTooltip" text="You must be Level .. to unlock this accessory!" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -217,6 +217,9 @@
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="tunaItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
@@ -245,6 +248,9 @@
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="milkItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
@@ -273,6 +279,9 @@
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="kibbleItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
                                     </Label>
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>

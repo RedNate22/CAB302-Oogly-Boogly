@@ -15,6 +15,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -41,15 +42,74 @@ public class InventoryModalController {
 
     private String selectedAccessorySpritePath = null;
 
-    /**
-     * @param event
-     */
+    @FXML
+    private Pane megaCowboyLocked;
+    @FXML
+    private Pane blueBowtieLocked;
+    @FXML
+    private Pane purpleBowtieLocked;
+    @FXML
+    private Pane greenBowtieLocked;
+
+    @FXML
+    private Pane tunaItemLocked;
+    @FXML
+    private Pane milkItemLocked;
+    @FXML
+    private Pane kibbleItemLocked;
+
+    @FXML
+    private Pane yarnItemLocked;
+    @FXML
+    private Pane laserItemLocked;
+    @FXML
+    private Pane catnipItemLocked;
+    @FXML
+    private Pane energyNapItemLocked;
+
+    @FXML
+    private Tooltip megaCowboyTooltip;
+    @FXML
+    private Tooltip blueBowtieTooltip;
+    @FXML
+    private Tooltip purpleBowtieTooltip;
+    @FXML
+    private Tooltip greenBowtieTooltip;
+
+    @FXML
+    private Tooltip tunaItemTooltip;
+    @FXML
+    private Tooltip milkItemTooltip;
+    @FXML
+    private Tooltip kibbleItemTooltip;
+
+    @FXML
+    private Tooltip yarnItemTooltip;
+    @FXML
+    private Tooltip laserItemTooltip;
+    @FXML
+    private Tooltip catnipItemTooltip;
+    @FXML
+    private Tooltip energyNapItemTooltip;
+
     @FXML
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             // load amount of items user has
         }
+
+        Tooltip.install(megaCowboyLocked, megaCowboyTooltip);
+        Tooltip.install(blueBowtieLocked, blueBowtieTooltip);
+        Tooltip.install(purpleBowtieLocked, purpleBowtieTooltip);
+        Tooltip.install(greenBowtieLocked, greenBowtieTooltip);
+        Tooltip.install(tunaItemLocked, tunaItemTooltip);
+        Tooltip.install(milkItemLocked, milkItemTooltip);
+        Tooltip.install(kibbleItemLocked, kibbleItemTooltip);
+        Tooltip.install(yarnItemLocked, yarnItemTooltip);
+        Tooltip.install(laserItemLocked, laserItemTooltip);
+        Tooltip.install(catnipItemLocked, catnipItemTooltip);
+        Tooltip.install(energyNapItemLocked, energyNapItemTooltip);
     }
 
     /**
