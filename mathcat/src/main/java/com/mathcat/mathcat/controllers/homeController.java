@@ -39,9 +39,11 @@ public class homeController {
     private ImageView viewCurrentAccessoryImage;
 
     @FXML
-    private ProgressBar happinessProgressBar = new ProgressBar(0);
-    private ProgressBar hungerProgressBar = new ProgressBar(0);
-    private ProgressBar energyProgressBar = new ProgressBar(0);
+    private ProgressBar happinessProgressBar;
+    @FXML
+    private ProgressBar hungerProgressBar;
+    @FXML
+    private ProgressBar energyProgressBar;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.

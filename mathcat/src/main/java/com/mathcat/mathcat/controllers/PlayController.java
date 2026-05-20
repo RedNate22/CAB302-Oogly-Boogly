@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatService;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
@@ -34,6 +36,13 @@ public class PlayController {
     private ImageView viewCurrentPetImage;
     @FXML
     private ImageView viewCurrentAccessoryImage;
+
+    @FXML
+    private ProgressBar happinessProgressBar;
+    @FXML
+    private ProgressBar hungerProgressBar;
+    @FXML
+    private ProgressBar energyProgressBar;
 
     @FXML
     private Label mathQuestionLabel;
@@ -60,6 +69,9 @@ public class PlayController {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
+            happinessProgressBar.setProgress(CatService.displayHappiness(cat) / 100);
+            hungerProgressBar.setProgress(CatService.displayHunger(cat) / 100);
+            energyProgressBar.setProgress(CatService.displayEnergy(cat) / 100);
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
