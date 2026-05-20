@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox prefHeight="575.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="300.0" text="Inventory">
+               <VBox.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Group>
+               <children>
+                  <Label fx:id="petStyleLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="42.0" prefHeight="17.0" prefWidth="95.0" text="Accessories" textAlignment="CENTER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+               </children>
+            </Group>
+            <GridPane alignment="TOP_CENTER" gridLinesVisible="true" prefHeight="193.0" prefWidth="246.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Group id="cowboyHat" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <children>
+                        <ImageView id="cowboyHat" fx:id="CowboyAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="10.0" layoutY="2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/baby-cowboy-hat.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="110.0" minX="42.0" minY="10.0" width="160.0" />
+                           </viewport>
+                        </ImageView>
+                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" text="Cowboy Hat" />
+                     </children>
+                  </Group>
+                  <Group layoutX="37.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <children>
+                        <ImageView id="megaCowboyHat" fx:id="MegaCowboyAccessorySelection" fitHeight="35.0" fitWidth="75.0" layoutX="27.0" layoutY="4.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/oversized-cowboy-hat.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="120.0" minY="10.0" width="220.0" />
+                           </viewport>
+                        </ImageView>
+                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="120.0" text="Mega Cowboy Hat" />
+                     </children>
+                  </Group>
+                  <Group layoutX="61.0" layoutY="13.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <children>
+                        <ImageView id="redBowtie" fx:id="RedBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/red-bowtie-hat.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                           </viewport>
+                        </ImageView>
+                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="72.0" text="Red Bowtie" />
+                     </children>
+                  </Group>
+                  <Group layoutX="1.0" layoutY="77.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                     <children>
+                        <ImageView id="blueBowtie" fx:id="BlueBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/blue-bowtie-hat.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                           </viewport>
+                        </ImageView>
+                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="72.0" text="Blue Bowtie" />
+                     </children>
+                  </Group>
+                  <Group layoutX="126.0" layoutY="77.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <children>
+                        <ImageView id="purpleBowtie" fx:id="PurpleBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/purple-bowtie-hat.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                           </viewport>
+                        </ImageView>
+                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="86.0" text="Purple Bowtie" />
+                     </children>
+                  </Group>
+                  <Group layoutX="-6.0" layoutY="142.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <children>
+                        <ImageView id="greenBowtie" fx:id="GreenBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/images/sprites/accessories/green-bowtie-hat.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                           </viewport>
+                        </ImageView>
+                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="86.0" text="Green Bowtie" />
+                     </children>
+                  </Group>
+               </children>
+            </GridPane>
+            <Group>
+               <children>
+                  <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="295.0" text="Food and Toys">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <GridPane alignment="TOP_CENTER" layoutY="17.0" prefHeight="90.0" prefWidth="296.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="55.6474609375" minHeight="10.0" prefHeight="42.58988952636719" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="68.08462524414062" minHeight="10.0" prefHeight="47.41011047363281" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Group>
+         </children>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" text="Equip">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Cancel">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</BorderPane>
