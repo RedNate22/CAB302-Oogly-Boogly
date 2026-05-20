@@ -45,6 +45,13 @@ public class PlayController {
     private ProgressBar energyProgressBar;
 
     @FXML
+    private Label happinessLabel;
+    @FXML
+    private Label hungerLabel;
+    @FXML
+    private Label energyLabel;
+
+    @FXML
     private Label mathQuestionLabel;
 
     @FXML
@@ -69,9 +76,15 @@ public class PlayController {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
-            happinessProgressBar.setProgress(CatService.displayHappiness(cat) / 100);
-            hungerProgressBar.setProgress(CatService.displayHunger(cat) / 100);
-            energyProgressBar.setProgress(CatService.displayEnergy(cat) / 100);
+            double happiness = CatService.displayHappiness(cat);
+            double hunger = CatService.displayHunger(cat);
+            double energy = CatService.displayEnergy(cat);
+            happinessProgressBar.setProgress(happiness / 100);
+            hungerProgressBar.setProgress(hunger / 100);
+            energyProgressBar.setProgress(energy / 100);
+            happinessLabel.setText(String.format("%.0f", happiness));
+            hungerLabel.setText(String.format("%.0f", hunger));
+            energyLabel.setText(String.format("%.0f", energy));
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
