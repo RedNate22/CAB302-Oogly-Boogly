@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
@@ -65,7 +64,7 @@
                         </Group>
                         <Group GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <children>
-                              <ImageView id="redBowtie" fx:id="RedBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                              <ImageView id="redBowtie" fx:id="RedBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickRedBowtieHat" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/images/sprites/accessories/red-bowtie-hat.png" />
                                  </image>
@@ -80,7 +79,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <ImageView id="megaCowboyHat" fx:id="MegaCowboyAccessorySelection" fitHeight="35.0" fitWidth="75.0" layoutX="27.0" layoutY="4.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="megaCowboyHat" fx:id="MegaCowboyAccessorySelection" fitHeight="35.0" fitWidth="75.0" layoutX="27.0" layoutY="4.0" onMouseClicked="#onClickMegaCowboyHat" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@assets/images/sprites/accessories/oversized-cowboy-hat.png" />
                                        </image>
@@ -107,7 +106,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <ImageView id="blueBowtie" fx:id="BlueBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="blueBowtie" fx:id="BlueBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickBlueBowtieHat" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@assets/images/sprites/accessories/blue-bowtie-hat.png" />
                                        </image>
@@ -134,7 +133,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <ImageView id="purpleBowtie" fx:id="PurpleBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="purpleBowtie" fx:id="PurpleBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickPurpleBowtieHat" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@assets/images/sprites/accessories/purple-bowtie-hat.png" />
                                        </image>
@@ -161,7 +160,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <ImageView id="greenBowtie" fx:id="GreenBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView id="greenBowtie" fx:id="GreenBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickGreenBowtieHat" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@assets/images/sprites/accessories/green-bowtie-hat.png" />
                                        </image>
@@ -186,8 +185,11 @@
                         </StackPane>
                      </children>
                   </GridPane>
-                  <Button fx:id="confirmClearAccessory" layoutX="97.0" layoutY="222.0" mnemonicParsing="false" onAction="#onClearAccessory" text="Clear Accessory" />
+                  <Button fx:id="confirmClearAccessory" layoutX="97.0" layoutY="222.0" mnemonicParsing="false" onAction="#onClickClearAccessory" text="Clear Accessory" />
                </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
             </Group>
             <Group>
                <children>
@@ -210,7 +212,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="tunaItem" fx:id="TunaItemSelection" iconColor="#003cff" iconLiteral="fas-fish" iconSize="30" layoutX="8.0" layoutY="-1.0" />
+                                    <FontIcon id="tunaItem" fx:id="TunaItemSelection" iconColor="#003cff" iconLiteral="fas-fish" iconSize="30" layoutX="8.0" layoutY="-1.0" onMouseClicked="#onClickTunaItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Tuna">
                                        <padding>
                                           <Insets top="2.0" />
@@ -241,7 +243,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="milkItem" fx:id="MilkItemSelection" iconColor="#808080" iconLiteral="fas-glass-whiskey" iconSize="30" layoutX="10.0" layoutY="-2.0" />
+                                    <FontIcon id="milkItem" fx:id="MilkItemSelection" iconColor="#808080" iconLiteral="fas-glass-whiskey" iconSize="30" layoutX="10.0" layoutY="-2.0" onMouseClicked="#onClickMilkItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Milk">
                                        <padding>
                                           <Insets top="2.0" />
@@ -272,7 +274,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="kibbleItem" fx:id="KibbleItemSelection" iconColor="#683c14" iconLiteral="fas-shopping-bag" iconSize="30" layoutX="11.0" layoutY="-4.0" />
+                                    <FontIcon id="kibbleItem" fx:id="KibbleItemSelection" iconColor="#683c14" iconLiteral="fas-shopping-bag" iconSize="30" layoutX="11.0" layoutY="-4.0" onMouseClicked="#onClickKibbleItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Kibble">
                                        <padding>
                                           <Insets top="2.0" />
@@ -303,7 +305,7 @@
                   </GridPane>
                </children>
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets bottom="15.0" top="15.0" />
                </VBox.margin>
             </Group>
             <Group layoutX="10.0" layoutY="282.0">
@@ -327,7 +329,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="yarnItem" fx:id="YarnItemSelection" iconColor="#e43535" iconLiteral="fas-volleyball-ball" iconSize="30" layoutX="11.0" layoutY="-4.0" />
+                                    <FontIcon id="yarnItem" fx:id="YarnItemSelection" iconColor="#e43535" iconLiteral="fas-volleyball-ball" iconSize="30" layoutX="11.0" layoutY="-4.0" onMouseClicked="#onClickYarnItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Yarn Ball">
                                        <padding>
                                           <Insets top="2.0" />
@@ -358,7 +360,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="laserItem" fx:id="LaserItemSelection" iconLiteral="fas-pen" iconSize="30" layoutX="24.0" layoutY="-4.0" />
+                                    <FontIcon id="laserItem" fx:id="LaserItemSelection" iconLiteral="fas-pen" iconSize="30" layoutX="24.0" layoutY="-4.0" onMouseClicked="#onClickLaserItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="2.0" prefWidth="77.0" text="Laser Pointer" textAlignment="CENTER" wrapText="true">
                                        <padding>
                                           <Insets top="2.0" />
@@ -389,7 +391,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="catnipItem" fx:id="CatnipItemSelection" iconColor="#0d6100" iconLiteral="fas-leaf" iconSize="30" layoutX="10.0" layoutY="-5.0" />
+                                    <FontIcon id="catnipItem" fx:id="CatnipItemSelection" iconColor="#0d6100" iconLiteral="fas-leaf" iconSize="30" layoutX="10.0" layoutY="-5.0" onMouseClicked="#onClickCatnipItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Catnip" textAlignment="CENTER" wrapText="true">
                                        <padding>
                                           <Insets top="2.0" />
@@ -430,7 +432,7 @@
                            <children>
                               <Group>
                                  <children>
-                                    <FontIcon id="energyNapItem" fx:id="EnergyNapItemSelection" iconColor="#9e7686" iconLiteral="fas-bed" iconSize="30" layoutX="20.0" layoutY="-6.0" />
+                                    <FontIcon id="energyNapItem" fx:id="EnergyNapItemSelection" iconColor="#9e7686" iconLiteral="fas-bed" iconSize="30" layoutX="20.0" layoutY="-6.0" onMouseClicked="#onClickEnergyNapItem" />
                                     <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="78.0" text="Energy Nap" textAlignment="CENTER" wrapText="true">
                                        <padding>
                                           <Insets top="2.0" />
@@ -467,22 +469,6 @@
          </children>
       </VBox>
    </center>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="275.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="confirmEquipInventory" mnemonicParsing="false" onAction="#onClickEquip" text="Equip">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="confirmCancelInventory" mnemonicParsing="false" onAction="#onClickCancel" text="Cancel">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-   </bottom>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
