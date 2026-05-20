@@ -3,8 +3,10 @@ package com.mathcat.mathcat.controllers;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 /** 
 *
@@ -23,13 +26,20 @@ import java.io.IOException;
 public class InventoryModalController {
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
 
+    // Callback function to allow Home and Inventory controllers to talk to each other
+    // when updating the sprite accessories
+    private Consumer<String> onItemSelectCallback;
+
     @FXML
     private Label petNameLabel;
 
     @FXML
     private ImageView imageView;
 
-    private InventoryModalController inventoryModalController;
+    @FXML
+    private ImageView viewCurrentAccessoryImage;
+
+    private String selectedAccessorySpritePath = null;
 
     /**
      * @param event
@@ -43,67 +53,123 @@ public class InventoryModalController {
     }
 
     /**
-     * @param event
-     * @return Stage
+     * Handles the logic of callback to Home screen
      */
-    private static Stage getRoot(ActionEvent event) {
-        Node root = (Node) event.getSource();
-        return (Stage) root.getScene().getWindow();
+    public void setOnItemSelect(Consumer<String> callback) {
+        this.onItemSelectCallback = callback;
     }
 
     /**
-     * @param event
-     * @return Stage
+     * Handles logic of clearing accessory image of current cat appearance
      */
-    // private static Stage getRoot(MouseEvent event) {
-    //     Node root = (Node) event.getSource();
-    //     return (Stage) root.getScene().getWindow();
-    // }
+    public void onClickClearAccessory() {
+        selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
 
-    /**
-     * @param event
-     * @throws IOException
-     */
-    @FXML
-    protected void changeCatColour(ActionEvent event) throws IOException {
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
 
+            
+        }
     }
 
     /**
-     * @param event
-     * @throws IOException
+     * Handles logic of selecting the basic cowboy hat accessory
      */
-    @FXML
-    protected void changeCatAccessory(ActionEvent event) throws IOException {
+    public void onClickCowboyHat() {
+        selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
 
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
+        }
     }
 
     /**
-     * @param event
-     * @throws IOException
+     * Handles logic of selecting the mega sized cowboy hat accessory
      */
-    @FXML
-    private void onConfirmSaveDetails(ActionEvent event) throws IOException {
-        // save details
+    public void onClickMegaCowboyHat() {
+        selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
 
-        // close modal
-        getRoot(event).close();
-        getRoot(event).close();
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
+        }
     }
-
-    // probably not going to use
-    // private void onConfirmCloseModal(ActionEvent event) throws IOException {
-    //     // create toast
-    //     // "any changes will not be saved"
-    //     // confirm > close
-    //     // cancel > keep modal open
-    // }
 
     /**
-     * @param inventoryModalController
+     * Handles logic of selecting the red bowtie hat accessory
      */
-    public void setMainController(InventoryModalController inventoryModalController) {
-        this.inventoryModalController = inventoryModalController;
+    public void onClickRedBowtieHat() {
+        selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
+
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
+        }
     }
 
+    /**
+     * Handles logic of selecting the blue bowtie hat accessory
+     */
+    public void onClickBlueBowtieHat() {
+        selectedAccessorySpritePath = SpriteConstants.BLUE_BOWTIE_HAT;
+
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
+        }
+    }
+
+    /**
+     * Handles logic of selecting the purple bowtie hat accessory
+     */
+    public void onClickPurpleBowtieHat() {
+        selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
+
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
+        }
+    }
+
+    /**
+     * Handles logic of selecting the green bowtie hat accessory
+     */
+    public void onClickGreenBowtieHat() {
+        selectedAccessorySpritePath = SpriteConstants.GREEN_BOWTIE_HAT;
+
+        if (onItemSelectCallback != null) {
+            onItemSelectCallback.accept(selectedAccessorySpritePath);
+        }
+    }
+
+    /**
+     * Handles logic of selecting the tuna item
+     */
+    public void onClickTunaItem() {}
+
+    /**
+     * Handles logic of selecting the milk item
+     */
+    public void onClickMilkItem() {}
+
+    /**
+     * Handles logic of selecting the kibble item
+     */
+    public void onClickKibbleItem() {}
+
+    /**
+     * Handles logic of selecting the yarn ball item
+     */
+    public void onClickYarnItem() {}
+
+    /**
+     * Handles logic of selecting the laser item
+     */
+    public void onClickLaserItem() {}
+
+    /**
+     * Handles logic of selecting the catnip item
+     */
+    public void onClickCatnipItem() {}
+
+    /**
+     * Handles logic of selecting the energy nap item
+     */
+    public void onClickEnergyNapItem() {}
 }
