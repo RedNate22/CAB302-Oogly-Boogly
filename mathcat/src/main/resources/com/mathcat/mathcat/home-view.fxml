@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.homeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.homeController">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -60,7 +60,7 @@
                   <Group layoutX="46.0" layoutY="400.0">
                      <children>
                         <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" mnemonicParsing="false" onAction="#onPressPlay" text="Play" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Inventory" />
+                        <Button fx:id="inventory" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressInventory" text="Inventory" />
                      </children>
                   </Group>
                </children>
