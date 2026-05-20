@@ -5,145 +5,463 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <VBox prefHeight="575.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="575.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="TOP_CENTER" prefHeight="17.0" prefWidth="300.0" text="Inventory">
                <VBox.margin>
-                  <Insets bottom="15.0" top="15.0" />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
             <Group>
                <children>
-                  <Label fx:id="petStyleLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="42.0" prefHeight="17.0" prefWidth="95.0" text="Accessories" textAlignment="CENTER">
+                  <Label fx:id="petStyleLabel" alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="297.0" text="Accessories">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
-                  </Label>
-               </children>
-            </Group>
-            <GridPane alignment="TOP_CENTER" gridLinesVisible="true" prefHeight="193.0" prefWidth="246.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Group id="cowboyHat" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <children>
-                        <ImageView id="cowboyHat" fx:id="CowboyAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="10.0" layoutY="2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/images/sprites/accessories/baby-cowboy-hat.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D height="110.0" minX="42.0" minY="10.0" width="160.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" text="Cowboy Hat" />
-                     </children>
-                  </Group>
-                  <Group layoutX="37.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                     <children>
-                        <ImageView id="megaCowboyHat" fx:id="MegaCowboyAccessorySelection" fitHeight="35.0" fitWidth="75.0" layoutX="27.0" layoutY="4.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/images/sprites/accessories/oversized-cowboy-hat.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D height="120.0" minY="10.0" width="220.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="120.0" text="Mega Cowboy Hat" />
-                     </children>
-                  </Group>
-                  <Group layoutX="61.0" layoutY="13.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <children>
-                        <ImageView id="redBowtie" fx:id="RedBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/images/sprites/accessories/red-bowtie-hat.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="72.0" text="Red Bowtie" />
-                     </children>
-                  </Group>
-                  <Group layoutX="1.0" layoutY="77.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                     <children>
-                        <ImageView id="blueBowtie" fx:id="BlueBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/images/sprites/accessories/blue-bowtie-hat.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="72.0" text="Blue Bowtie" />
-                     </children>
-                  </Group>
-                  <Group layoutX="126.0" layoutY="77.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <children>
-                        <ImageView id="purpleBowtie" fx:id="PurpleBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/images/sprites/accessories/purple-bowtie-hat.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="86.0" text="Purple Bowtie" />
-                     </children>
-                  </Group>
-                  <Group layoutX="-6.0" layoutY="142.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                     <children>
-                        <ImageView id="greenBowtie" fx:id="GreenBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@assets/images/sprites/accessories/green-bowtie-hat.png" />
-                           </image>
-                           <viewport>
-                              <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
-                           </viewport>
-                        </ImageView>
-                        <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="43.0" prefHeight="17.0" prefWidth="86.0" text="Green Bowtie" />
-                     </children>
-                  </Group>
-               </children>
-            </GridPane>
-            <Group>
-               <children>
-                  <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="295.0" text="Food and Toys">
                      <padding>
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <GridPane alignment="TOP_CENTER" layoutY="17.0" prefHeight="90.0" prefWidth="296.0">
+                  <GridPane alignment="TOP_CENTER" gridLinesVisible="true" hgap="5.0" layoutX="25.0" layoutY="23.0" prefHeight="193.0" prefWidth="246.0" vgap="5.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="126.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Group id="cowboyHat" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <children>
+                              <ImageView id="cowboyHat" fx:id="CowboyAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="10.0" layoutY="2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/images/sprites/accessories/baby-cowboy-hat.png" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D height="110.0" minX="42.0" minY="10.0" width="160.0" />
+                                 </viewport>
+                              </ImageView>
+                              <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" text="Cowboy Hat" />
+                           </children>
+                        </Group>
+                        <Group GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <children>
+                              <ImageView id="redBowtie" fx:id="RedBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/images/sprites/accessories/red-bowtie-hat.png" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                                 </viewport>
+                              </ImageView>
+                              <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" text="Red Bowtie" />
+                           </children>
+                        </Group>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <ImageView id="megaCowboyHat" fx:id="MegaCowboyAccessorySelection" fitHeight="35.0" fitWidth="75.0" layoutX="27.0" layoutY="4.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/images/sprites/accessories/oversized-cowboy-hat.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D height="120.0" minY="10.0" width="220.0" />
+                                       </viewport>
+                                    </ImageView>
+                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="120.0" text="Mega Cowboy Hat">
+                                       <tooltip>
+                                          <Tooltip fx:id="megaCowboyToolip" text="You must be Level .. to unlock this accessory!" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="megaCowboyLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="52.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="61.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <ImageView id="blueBowtie" fx:id="BlueBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="71.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/images/sprites/accessories/blue-bowtie-hat.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                                       </viewport>
+                                    </ImageView>
+                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" text="Blue Bowtie">
+                                       <tooltip>
+                                          <Tooltip fx:id="blueBowtieTooltip" text="You must be Level .. to unlock this accessory!" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="blueBowtieLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="52.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="61.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <ImageView id="purpleBowtie" fx:id="PurpleBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/images/sprites/accessories/purple-bowtie-hat.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                                       </viewport>
+                                    </ImageView>
+                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="86.0" text="Purple Bowtie">
+                                       <tooltip>
+                                          <Tooltip fx:id="purpleBowtieTooltip" text="You must be Level .. to unlock this accessory!" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="purpleBowtieLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="52.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="61.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <ImageView id="greenBowtie" fx:id="GreenBowtieAccessorySelection" fitHeight="50.0" fitWidth="50.0" layoutX="77.0" layoutY="-2.0" onMouseClicked="#onClickCowboyHat" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/images/sprites/accessories/green-bowtie-hat.png" />
+                                       </image>
+                                       <viewport>
+                                          <Rectangle2D height="90.0" minX="95.0" minY="35.0" width="100.0" />
+                                       </viewport>
+                                    </ImageView>
+                                    <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="86.0" text="Green Bowtie">
+                                       <tooltip>
+                                          <Tooltip fx:id="greenBowtieTooltip" text="You must be Level .. to unlock this accessory!" />
+                                       </tooltip>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="greenBowtieLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="52.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="61.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </GridPane>
+                  <Button fx:id="confirmClearAccessory" layoutX="97.0" layoutY="222.0" mnemonicParsing="false" onAction="#onClearAccessory" text="Clear Accessory" />
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="295.0" text="Food">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <GridPane alignment="TOP_CENTER" gridLinesVisible="true" hgap="5.0" layoutX="24.0" layoutY="24.0" prefWidth="246.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="55.6474609375" minHeight="10.0" prefHeight="42.58988952636719" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="68.08462524414062" minHeight="10.0" prefHeight="47.41011047363281" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                     </rowConstraints>
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="tunaItem" fx:id="TunaItemSelection" iconColor="#003cff" iconLiteral="fas-fish" iconSize="30" layoutX="8.0" layoutY="-1.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Tuna">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="tunaItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="tunaItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="milkItem" fx:id="MilkItemSelection" iconColor="#808080" iconLiteral="fas-glass-whiskey" iconSize="30" layoutX="10.0" layoutY="-2.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Milk">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="milkItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="milkItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="kibbleItem" fx:id="KibbleItemSelection" iconColor="#683c14" iconLiteral="fas-shopping-bag" iconSize="30" layoutX="11.0" layoutY="-4.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Kibble">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="kibbleItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="kibbleItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                     </children>
                   </GridPane>
                </children>
                <VBox.margin>
-                  <Insets top="30.0" />
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Group>
+            <Group layoutX="10.0" layoutY="282.0">
+               <children>
+                  <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="295.0" text="Toys">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <GridPane alignment="TOP_CENTER" gridLinesVisible="true" hgap="5.0" layoutX="23.0" layoutY="26.0" prefHeight="70.0" prefWidth="246.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="yarnItem" fx:id="YarnItemSelection" iconColor="#e43535" iconLiteral="fas-volleyball-ball" iconSize="30" layoutX="11.0" layoutY="-4.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Yarn Ball">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="yarnItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="yarnItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="laserItem" fx:id="LaserItemSelection" iconLiteral="fas-pen" iconSize="30" layoutX="24.0" layoutY="-4.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="2.0" prefWidth="77.0" text="Laser Pointer" textAlignment="CENTER" wrapText="true">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="laserItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="77.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="laserItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" layoutX="1.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="catnipItem" fx:id="CatnipItemSelection" iconColor="#0d6100" iconLiteral="fas-leaf" iconSize="30" layoutX="10.0" layoutY="-5.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="50.0" text="Catnip" textAlignment="CENTER" wrapText="true">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="catnipItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="catnipItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" layoutX="1.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </GridPane>
+                  <GridPane gridLinesVisible="true" layoutX="23.0" layoutY="103.0" prefHeight="70.0" prefWidth="77.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <StackPane prefHeight="70.0" prefWidth="77.0">
+                           <children>
+                              <Group>
+                                 <children>
+                                    <FontIcon id="energyNapItem" fx:id="EnergyNapItemSelection" iconColor="#9e7686" iconLiteral="fas-bed" iconSize="30" layoutX="20.0" layoutY="-6.0" />
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefWidth="78.0" text="Energy Nap" textAlignment="CENTER" wrapText="true">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <tooltip>
+                                          <Tooltip fx:id="energyNapItemTooltip" text="You do not have this item!" />
+                                       </tooltip>
+                                    </Label>
+                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="77.0" text="(x0)">
+                                       <padding>
+                                          <Insets top="2.0" />
+                                       </padding>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Group>
+                              <Pane fx:id="energyNapItemLocked" prefHeight="70.0" prefWidth="77.0">
+                                 <children>
+                                    <FontIcon iconLiteral="fas-lock" iconSize="22" layoutX="30.0" layoutY="27.0" selectionFill="BLACK" text="" wrappingWidth="14.417415618896484" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="70.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="77.0" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </GridPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
                </VBox.margin>
             </Group>
          </children>
@@ -152,12 +470,12 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="275.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Equip">
+            <Button fx:id="confirmEquipInventory" mnemonicParsing="false" onAction="#onClickEquip" text="Equip">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Cancel">
+            <Button fx:id="confirmCancelInventory" mnemonicParsing="false" onAction="#onClickCancel" text="Cancel">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
