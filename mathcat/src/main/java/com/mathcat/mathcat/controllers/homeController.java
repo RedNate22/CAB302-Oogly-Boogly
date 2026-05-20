@@ -35,6 +35,12 @@ public class homeController {
 
     @FXML
     private Label petNameLabel;
+    @FXML
+    private Label happinessLabel;
+    @FXML
+    private Label hungerLabel;
+    @FXML
+    private Label energyLabel;
 
     @FXML
     private ImageView viewCurrentPetImage;
@@ -42,9 +48,11 @@ public class homeController {
     private ImageView viewCurrentAccessoryImage;
 
     @FXML
-    private ProgressBar happinessProgressBar = new ProgressBar(0);
-    private ProgressBar hungerProgressBar = new ProgressBar(0);
-    private ProgressBar energyProgressBar = new ProgressBar(0);
+    private ProgressBar happinessProgressBar;
+    @FXML
+    private ProgressBar hungerProgressBar;
+    @FXML
+    private ProgressBar energyProgressBar;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
@@ -61,9 +69,15 @@ public class homeController {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
-            happinessProgressBar.setProgress(CatService.displayHappiness(cat) / 100);
-            hungerProgressBar.setProgress(CatService.displayHunger(cat) / 100);
-            energyProgressBar.setProgress(CatService.displayEnergy(cat) / 100);
+            double happiness = CatService.displayHappiness(cat);
+            double hunger = CatService.displayHunger(cat);
+            double energy = CatService.displayEnergy(cat);
+            happinessProgressBar.setProgress(happiness / 100);
+            hungerProgressBar.setProgress(hunger / 100);
+            energyProgressBar.setProgress(energy / 100);
+            happinessLabel.setText(String.format("%.0f", happiness));
+            hungerLabel.setText(String.format("%.0f", hunger));
+            energyLabel.setText(String.format("%.0f", energy));
         }
 
         // System.out.println(catHappiness);

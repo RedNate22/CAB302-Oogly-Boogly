@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatService;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
@@ -37,6 +39,20 @@ public class PlayController {
     private ImageView viewCurrentPetImage;
     @FXML
     private ImageView viewCurrentAccessoryImage;
+
+    @FXML
+    private ProgressBar happinessProgressBar;
+    @FXML
+    private ProgressBar hungerProgressBar;
+    @FXML
+    private ProgressBar energyProgressBar;
+
+    @FXML
+    private Label happinessLabel;
+    @FXML
+    private Label hungerLabel;
+    @FXML
+    private Label energyLabel;
 
     @FXML
     private Label mathQuestionLabel;
@@ -64,6 +80,15 @@ public class PlayController {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
+            double happiness = CatService.displayHappiness(cat);
+            double hunger = CatService.displayHunger(cat);
+            double energy = CatService.displayEnergy(cat);
+            happinessProgressBar.setProgress(happiness / 100);
+            hungerProgressBar.setProgress(hunger / 100);
+            energyProgressBar.setProgress(energy / 100);
+            happinessLabel.setText(String.format("%.0f", happiness));
+            hungerLabel.setText(String.format("%.0f", hunger));
+            energyLabel.setText(String.format("%.0f", energy));
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
