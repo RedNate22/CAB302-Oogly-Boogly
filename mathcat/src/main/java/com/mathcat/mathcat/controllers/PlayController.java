@@ -18,6 +18,7 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
@@ -74,24 +75,18 @@ public class PlayController {
 
     @FXML
     public void initialize() {
-        cat = CatDAO.load(UserDAO.currentUser.getId());
+        cat = CatScheduler.getInstance().getCat();
+        if (cat == null) {
+            cat = CatDAO.load(UserDAO.currentUser.getId());
+        }
         if (cat != null) {
             log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
-            String selectedSpritePath = cat.getCatSprite();
-            String selectedAccessorySpritePath = cat.getCatAccessory();
+            CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             petLevelLabel.setText("Level: " + cat.getLevel());
-            viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
-            viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
-            double happiness = CatService.displayHappiness(cat);
-            double hunger = CatService.displayHunger(cat);
-            double energy = CatService.displayEnergy(cat);
-            happinessProgressBar.setProgress(happiness / 100);
-            hungerProgressBar.setProgress(hunger / 100);
-            energyProgressBar.setProgress(energy / 100);
-            happinessLabel.setText(String.format("%.0f", happiness));
-            hungerLabel.setText(String.format("%.0f", hunger));
-            energyLabel.setText(String.format("%.0f", energy));
+            viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
+            refreshStats(cat);
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
@@ -100,6 +95,18 @@ public class PlayController {
                 chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
             }
         }
+    }
+
+    private void refreshStats(Cat cat) {
+        double happiness = CatService.displayHappiness(cat);
+        double hunger = CatService.displayHunger(cat);
+        double energy = CatService.displayEnergy(cat);
+        happinessProgressBar.setProgress(happiness / 100);
+        hungerProgressBar.setProgress(hunger / 100);
+        energyProgressBar.setProgress(energy / 100);
+        happinessLabel.setText(String.format("%.0f", happiness));
+        hungerLabel.setText(String.format("%.0f", hunger));
+        energyLabel.setText(String.format("%.0f", energy));
     }
 
     /**

@@ -66,24 +66,28 @@ public class homeController {
 
         if (cat != null) {
             CatService.applyOfflineDecay(cat);
-            CatScheduler.getInstance().start(cat); // begin live stats
+            CatScheduler.getInstance().start(cat);
+            CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
 
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             petLevelLabel.setText("Level: " + cat.getLevel());
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
-            double happiness = CatService.displayHappiness(cat);
-            double hunger = CatService.displayHunger(cat);
-            double energy = CatService.displayEnergy(cat);
-            happinessProgressBar.setProgress(happiness / 100);
-            hungerProgressBar.setProgress(hunger / 100);
-            energyProgressBar.setProgress(energy / 100);
-            happinessLabel.setText(String.format("%.0f", happiness));
-            hungerLabel.setText(String.format("%.0f", hunger));
-            energyLabel.setText(String.format("%.0f", energy));
+            refreshStats(cat);
         }
 
-        // System.out.println(catHappiness);
+    }
+
+    private void refreshStats(Cat cat) {
+        double happiness = CatService.displayHappiness(cat);
+        double hunger = CatService.displayHunger(cat);
+        double energy = CatService.displayEnergy(cat);
+        happinessProgressBar.setProgress(happiness / 100);
+        hungerProgressBar.setProgress(hunger / 100);
+        energyProgressBar.setProgress(energy / 100);
+        happinessLabel.setText(String.format("%.0f", happiness));
+        hungerLabel.setText(String.format("%.0f", hunger));
+        energyLabel.setText(String.format("%.0f", energy));
     }
 
     // public Double displayStats(double catHappiness) {
