@@ -44,7 +44,7 @@
                         </VBox>
                         <VBox spacing="4.0">
                            <children>
-                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Hunger" />
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Fullness" />
                               <StackPane prefWidth="200.0">
                                  <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
                                  <Label fx:id="hungerLabel" styleClass="stat-value" text="0" />

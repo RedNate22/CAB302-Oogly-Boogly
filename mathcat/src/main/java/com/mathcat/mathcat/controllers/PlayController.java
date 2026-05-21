@@ -101,9 +101,9 @@ public class PlayController {
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
-        happinessLabel.setText(String.format("%.0f", happiness));
-        hungerLabel.setText(String.format("%.0f", hunger));
-        energyLabel.setText(String.format("%.0f", energy));
+        happinessLabel.setText(String.format("%.2f", happiness));
+        hungerLabel.setText(String.format("%.2f", hunger));
+        energyLabel.setText(String.format("%.2f", energy));
     }
 
     /**
@@ -131,6 +131,7 @@ public class PlayController {
             log.debug("correct answer: {} (difficulty: {})", userAnswer, currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
+            refreshStats(cat);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());

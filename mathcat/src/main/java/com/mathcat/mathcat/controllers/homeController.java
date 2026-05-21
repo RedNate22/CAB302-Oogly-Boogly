@@ -82,9 +82,9 @@ public class homeController {
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
-        happinessLabel.setText(String.format("%.0f", happiness));
-        hungerLabel.setText(String.format("%.0f", hunger));
-        energyLabel.setText(String.format("%.0f", energy));
+        happinessLabel.setText(String.format("%.2f", happiness));
+        hungerLabel.setText(String.format("%.2f", hunger));
+        energyLabel.setText(String.format("%.2f", energy));
     }
 
     // public Double displayStats(double catHappiness) {
