@@ -28,10 +28,10 @@
                               <Insets bottom="25.0" />
                            </VBox.margin>
                         </Label>
-                        <Group>
+                        <VBox spacing="4.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
-                              <StackPane layoutY="17.0" prefWidth="200.0">
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Happiness" />
+                              <StackPane prefWidth="200.0">
                                  <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
                                  <Label fx:id="happinessLabel" styleClass="stat-value" text="0" />
                               </StackPane>
@@ -39,11 +39,11 @@
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </Group>
-                        <Group layoutX="28.0" layoutY="114.0">
+                        </VBox>
+                        <VBox spacing="4.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
-                              <StackPane layoutY="17.0" prefWidth="200.0">
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Hunger" />
+                              <StackPane prefWidth="200.0">
                                  <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
                                  <Label fx:id="hungerLabel" styleClass="stat-value" text="0" />
                               </StackPane>
@@ -51,11 +51,11 @@
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </Group>
-                        <Group layoutX="28.0" layoutY="132.0">
+                        </VBox>
+                        <VBox spacing="4.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
-                              <StackPane layoutY="17.0" prefWidth="200.0">
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Energy" />
+                              <StackPane prefWidth="200.0">
                                  <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
                                  <Label fx:id="energyLabel" styleClass="stat-value" text="0" />
                               </StackPane>
@@ -63,7 +63,7 @@
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </Group>
+                        </VBox>
                      </children>
                   </VBox>
                   <Group layoutX="46.0" layoutY="400.0">
