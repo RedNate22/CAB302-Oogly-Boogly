@@ -30,7 +30,7 @@
                         <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="282.0" text="Customise Your Cat" />
                         <Group>
                            <children>
-                              <Label fx:id="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Cat Name:" textAlignment="CENTER" />
+                              <Label fx:id="createPetNameLabel" styleClass="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Cat Name:" textAlignment="CENTER" />
                               <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />

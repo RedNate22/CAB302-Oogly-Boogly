@@ -16,7 +16,7 @@
 
 .root {
     -fx-font-family: 'w95fa';
-    -fx-font-size: 16px;
+    -fx-font-size: 18px;
     -fx-background-color: #303446;
     -fx-focus-color: #ca9ee6;
     -fx-faint-focus-color: #ca9ee622;
@@ -29,6 +29,7 @@
 }
 
 .field-label {
+    /* -fx-font-size: 18px; */
     -fx-fill: #c6d0f5;
 }
 
@@ -60,10 +61,12 @@
 .button:pressed {
     -fx-background-color: #51576d;
     -fx-border-width: 2px;
+    -fx-padding: 0.333333em 0.666667em 0.548em 0.666667em;
     -fx-translate-y: 3px;
 }
 
 .button:focused {
+    -fx-border-color: #a6d189;
     -fx-background-radius: 2px;
     -fx-background-insets: 0, 0, 0;
 }
@@ -83,16 +86,30 @@
     -fx-border-color: #ca9ee6;
 }
 
+#createPetNameLabel {
+    -fx-font-size: 20px;
+}
+
 #petNameLabel {
-    -fx-font-size: 24px;
+    -fx-font-size: 20px;
 }
 
 #mathEquationTitle {
-    -fx-font-size: 24px;
+    -fx-font-size: 26px;
 }
 
 #mathQuestionLabel {
-    -fx-font-size: 24px;
+    -fx-font-size: 20px;
+}
+
+/* Auth Screens */
+
+.authField {
+    /* -fx-font-size: 12px; */
+}
+
+.authButton {
+    /* -fx-font-size: 12px; */
 }
 
 /* Password fields */
@@ -107,8 +124,6 @@
 }
 
 /* Progress bars */
-
-.progress-bar {}
 
 .progress-bar>.track {
     -fx-background-color: #51576d;
@@ -193,4 +208,9 @@
 
 .scroll-bar>.track {
     -fx-background-color: #414559;
+}
+
+/* Inventory Modal */
+.itemLabel {
+    -fx-font-size: 14px;
 }
