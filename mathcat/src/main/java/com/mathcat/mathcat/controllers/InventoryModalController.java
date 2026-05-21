@@ -245,11 +245,21 @@ public class InventoryModalController {
     public void onClickEnergyNapItem() {}
 
     /**
-     * Handles logic of unlocking item or accessory if user
-     * has either at least one of the item 
-     * or leveled up for the accessory
+     * Handles logic of unlocking item if user
+     * has at least one of the item
      */
     public void unlockItem() {
-        
+        // if user has item (at least one)
+        // remove pane that blocks clickability
+        // update tooltip to show stats
+    }
+
+    /**
+     * Handles logic of unlocking accessory
+     * if user has reached specific level
+     */
+    public void unlockAccessory() {
+        // if user level = blah
+        // remove pane that blocks clickability
     }
 }
