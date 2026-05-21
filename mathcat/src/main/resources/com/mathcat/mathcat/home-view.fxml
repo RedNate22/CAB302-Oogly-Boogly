@@ -23,7 +23,8 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="244.0" prefWidth="236.0">
                      <children>
-                        <Label fx:id="petNameLabel" text="'s Stats">
+                        <Label fx:id="petNameLabel" text="'s Stats"></Label>
+                        <Label fx:id="petLevelLabel" text="Level: ">
                            <VBox.margin>
                               <Insets bottom="25.0" />
                            </VBox.margin>

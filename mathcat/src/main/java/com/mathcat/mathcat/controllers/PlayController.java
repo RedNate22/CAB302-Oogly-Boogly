@@ -34,6 +34,8 @@ public class PlayController {
 
     @FXML
     private Label petNameLabel;
+    @FXML
+    private Label petLevelLabel;
 
     @FXML
     private ImageView viewCurrentPetImage;
@@ -78,6 +80,7 @@ public class PlayController {
             String selectedSpritePath = cat.getCatSprite();
             String selectedAccessorySpritePath = cat.getCatAccessory();
             petNameLabel.setText(cat.getCatName() + "'s Stats");
+            petLevelLabel.setText("Level: " + cat.getLevel());
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
             double happiness = CatService.displayHappiness(cat);
