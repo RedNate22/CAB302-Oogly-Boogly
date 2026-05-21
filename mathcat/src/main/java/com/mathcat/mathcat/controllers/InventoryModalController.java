@@ -243,4 +243,13 @@ public class InventoryModalController {
      * Handles logic of selecting the energy nap item
      */
     public void onClickEnergyNapItem() {}
+
+    /**
+     * Handles logic of unlocking item or accessory if user
+     * has either at least one of the item 
+     * or leveled up for the accessory
+     */
+    public void unlockItem() {
+        
+    }
 }
