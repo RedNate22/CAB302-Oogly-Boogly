@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
 public class homeController {
     private static final Logger log = LoggerFactory.getLogger(homeController.class);
 
+    private Cat cat;
+
     @FXML
     private Label petNameLabel;
 
@@ -52,7 +54,7 @@ public class homeController {
     @FXML
     public void initialize() {
 
-        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        this.cat = CatDAO.load(UserDAO.currentUser.getId());
 
         if (cat != null) {
             CatService.applyOfflineDecay(cat);
@@ -144,9 +146,25 @@ public class homeController {
 
                 inventoryStage.setX(homeX + 10);
                 inventoryStage.setY(homeY + (homeHeight - inventoryHeight) / 2);
+
+                inventoryStage.toFront();
+                inventoryStage.requestFocus();
             });
 
             inventoryStage.showAndWait();
+
+            String finalChoice = invModalController.getCurrentSelectedPath();
+
+            if (finalChoice != null && cat != null) {
+                System.out.print("finalChoice");
+                
+                cat.setCatAccessory(finalChoice);
+                CatDAO.save(cat);
+
+            } else {
+                System.out.print("No item selected in modal");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

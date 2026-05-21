@@ -110,6 +110,8 @@ public class InventoryModalController {
         Tooltip.install(laserItemLocked, laserItemTooltip);
         Tooltip.install(catnipItemLocked, catnipItemTooltip);
         Tooltip.install(energyNapItemLocked, energyNapItemTooltip);
+
+
     }
 
     /**
@@ -117,6 +119,15 @@ public class InventoryModalController {
      */
     public void setOnItemSelect(Consumer<String> callback) {
         this.onItemSelectCallback = callback;
+    }
+
+    /**
+     * Handles the logic of getting the current selected accessory
+     * to then save to DB in Home controller
+     * @return the current selected accessory
+     */
+    public String getCurrentSelectedPath() {
+        return selectedAccessorySpritePath;
     }
 
     /**
