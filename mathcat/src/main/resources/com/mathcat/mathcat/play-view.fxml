@@ -35,7 +35,7 @@
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
                               <StackPane layoutY="17.0" prefWidth="200.0">
                                  <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
-                                 <Label fx:id="happinessLabel" text="0" />
+                                 <Label fx:id="happinessLabel" styleClass="stat-value" text="0" />
                               </StackPane>
                            </children>
                            <VBox.margin>
@@ -47,7 +47,7 @@
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
                               <StackPane layoutY="17.0" prefWidth="200.0">
                                  <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
-                                 <Label fx:id="hungerLabel" text="0" />
+                                 <Label fx:id="hungerLabel" styleClass="stat-value" text="0" />
                               </StackPane>
                            </children>
                            <VBox.margin>
@@ -59,7 +59,7 @@
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
                               <StackPane layoutY="17.0" prefWidth="200.0">
                                  <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
-                                 <Label fx:id="energyLabel" text="0" />
+                                 <Label fx:id="energyLabel" styleClass="stat-value" text="0" />
                               </StackPane>
                            </children>
                            <VBox.margin>

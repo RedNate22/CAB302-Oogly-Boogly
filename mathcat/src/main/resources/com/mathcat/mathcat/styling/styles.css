@@ -145,11 +145,9 @@
     -fx-background-color: #ef9f76;
 }
 
-#happinessLabel,
-#hungerLabel,
-#energyLabel {
+.stat-value {
     -fx-text-fill: #303446;
-    -fx-font-size: 12px;
+    -fx-font-size: 16px;
     -fx-alignment: CENTER;
 }
 
