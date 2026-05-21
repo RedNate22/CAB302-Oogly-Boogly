@@ -125,6 +125,10 @@
 
 /* Progress bars */
 
+.progress-bar {
+    -fx-pref-height: 30px;
+}
+
 .progress-bar>.track {
     -fx-background-color: #51576d;
 }
