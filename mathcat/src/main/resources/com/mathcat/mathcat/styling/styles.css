@@ -11,26 +11,23 @@
    Green:    #a6d189
    Teal:     #81c8be
 */
+
 /* Base */
 
 .root {
     -fx-font-family: 'w95fa';
     -fx-font-size: 16px;
     -fx-background-color: #303446;
-        -fx-focus-color: #ca9ee6;
-        -fx-faint-focus-color: #ca9ee622;
+    -fx-focus-color: #ca9ee6;
+    -fx-faint-focus-color: #ca9ee622;
 }
 
 /* Labels */
 
 .label {
-    /* 'Press Start 2P', 'Arial' */
-    /* -fx-font-family: ; */
-        /* 8px, 10px, 12px */
-        /* -fx-font-size: ; */
     -fx-text-fill: #c6d0f5;
-    }
-    
+}
+
 .field-label {
     -fx-fill: #c6d0f5;
 }
@@ -40,8 +37,7 @@
     -fx-font-size: 40px;
     -fx-font-weight: bold;
     -fx-text-fill: #f5f5ce;
-    -fx-effect:
-        dropshadow(gaussian, black, 0, 0, 4, 4) dropshadow(gaussian, black, 0, 0, -4, -4) dropshadow(gaussian, black, 0, 0, 4, -4) dropshadow(gaussian, black, 0, 0, -4, 4);
+    -fx-effect: dropshadow(gaussian, black, 0, 0, 4, 4) dropshadow(gaussian, black, 0, 0, -4, -4) dropshadow(gaussian, black, 0, 0, 4, -4) dropshadow(gaussian, black, 0, 0, -4, 4);
 }
 
 /* Buttons */
@@ -49,50 +45,42 @@
 .button {
     -fx-font-size: 14px;
     -fx-text-fill: #c6d0f5;
-        -fx-background-color: #414559;
-        -fx-background-radius: 2px;
-        -fx-border-radius: 4px;
-        -fx-border-color: #babbf1 #babbf1 #7a7eb8 #babbf1;
-            -fx-border-width: 2px 2px 5px 2px;
+    -fx-background-color: #414559;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 4px;
+    -fx-border-color: #babbf1 #babbf1 #7a7eb8 #babbf1;
+    -fx-border-width: 2px 2px 5px 2px;
     -fx-cursor: hand;
-    }
+}
 
-    .button:hover {
+.button:hover {
     -fx-background-color: #51576d;
-    }
+}
 
-    .button:pressed {
+.button:pressed {
     -fx-background-color: #51576d;
     -fx-border-width: 2px;
-        -fx-translate-y: 3px;
+    -fx-translate-y: 3px;
 }
 
 .button:focused {
     -fx-background-radius: 2px;
-        -fx-background-insets: 0, 0, 0;
+    -fx-background-insets: 0, 0, 0;
 }
 
 /* Text fields */
 
 .text-field {
-    /* 'Press Start 2P', 'Arial' */
-    /* -fx-font-family: ; */
-        /* 8px, 10px, 12px */
-        /* -fx-font-size: ; */
     -fx-text-fill: #c6d0f5;
-        -fx-background-color: #414559;
-        -fx-background-radius: 0;
-        -fx-border-radius: 0;
-        -fx-border-color: #626880;
-        -fx-border-width: 2px;
-        /* 4px 8px, 6px 8px */
-        /* -fx-padding: ; */
+    -fx-background-color: #414559;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
 }
 
 .text-field:focused {
     -fx-border-color: #ca9ee6;
-        /* 0, 1px */
-        /* -fx-background-insets: ; */
 }
 
 #petNameLabel {
@@ -106,48 +94,28 @@
 #mathQuestionLabel {
     -fx-font-size: 24px;
 }
+
 /* Password fields */
 
 .password-field {
-    /* 'Press Start 2P', 'Arial' */
-    /* -fx-font-family: ; */
-        /* 8px, 10px, 12px */
-        /* -fx-font-size: ; */
     -fx-text-fill: #c6d0f5;
-        -fx-background-color: #414559;
-        -fx-background-radius: 0;
-        -fx-border-radius: 0;
-        -fx-border-color: #626880;
-        -fx-border-width: 2px;
-        /* 4px 8px, 6px 8px */
-        /* -fx-padding: ; */
+    -fx-background-color: #414559;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
 }
 
 /* Progress bars */
 
-.progress-bar {
-    /* 0, 4px */
-    /* -fx-background-radius: ; */
-        /* 0, 4px */
-        /* -fx-border-radius: ; */
-}
+.progress-bar {}
 
 .progress-bar>.track {
     -fx-background-color: #51576d;
-        /* 0, 4px */
-        /* -fx-background-radius: ; */
-        /* #000000, #2a2e28 */
-        /* -fx-border-color: ; */
-        /* 1px, 2px */
-        /* -fx-border-width: ; */
 }
 
 .progress-bar>.bar {
     -fx-background-color: #ca9ee6;
-        /* 0, 4px */
-        /* -fx-background-radius: ; */
-        /* 0, 2px, 3px */
-        /* -fx-background-insets: ; */
 }
 
 #happinessProgressBar>.bar {
@@ -161,6 +129,7 @@
 #energyProgressBar>.bar {
     -fx-background-color: #ef9f76;
 }
+
 #happinessLabel,
 #hungerLabel,
 #energyLabel {
@@ -170,6 +139,7 @@
 }
 
 /* AI */
+
 #chat {
     -fx-background-color: #303446;
     -fx-background-radius: 8px;
@@ -201,41 +171,26 @@
     -fx-padding: 8px;
     -fx-background-radius: 10px;
 }
+
 /* Tooltips */
 
 .tooltip {
-    /* 'Press Start 2P', 'Arial' */
-    /* -fx-font-family: ; */
-        /* 7px, 8px, 10px */
-        /* -fx-font-size: ; */
     -fx-text-fill: #c6d0f5;
-        -fx-background-color: #51576d;
-        /* 0, 4px */
-        /* -fx-background-radius: ; */
-        /* 0, 4px */
-        /* -fx-border-radius: ; */
+    -fx-background-color: #51576d;
     -fx-border-color: #626880;
-        -fx-border-width: 2px;
-        /* 4px 8px, 6px 10px */
-        /* -fx-padding: ; */
+    -fx-border-width: 2px;
 }
 
 /* Scroll bars */
 
 .scroll-bar {
     -fx-background-color: #303446;
-        /* 0, 4px */
-        /* -fx-background-radius: ; */
 }
 
 .scroll-bar>.thumb {
     -fx-background-color: #ca9ee6;
-        /* 0, 4px */
-        /* -fx-background-radius: ; */
 }
 
 .scroll-bar>.track {
     -fx-background-color: #414559;
-        /* 0, 4px */
-        /* -fx-background-radius: ; */
 }
