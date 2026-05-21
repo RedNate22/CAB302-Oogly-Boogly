@@ -156,7 +156,7 @@ public class homeController {
             String finalChoice = invModalController.getCurrentSelectedPath();
 
             if (finalChoice != null && cat != null) {
-                System.out.print("finalChoice");
+                System.out.print(finalChoice);
                 
                 cat.setCatAccessory(finalChoice);
                 CatDAO.save(cat);
