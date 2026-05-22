@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import com.mathcat.mathcat.services.UserService;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
+import com.mathcat.mathcat.dao.CatDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,6 +101,12 @@ public class AuthController {
 
         log.info("user logged in: {}", matchedUser.getUsername());
         UserDAO.setCurrentUser(matchedUser);
+
+        boolean hasCat = CatDAO.load(matchedUser.getId()) != null;
+        String fxml = hasCat
+                ? "/com/mathcat/mathcat/home-view.fxml"
+                : "/com/mathcat/mathcat/createpet-view.fxml";
+        if (!hasCat) log.warn("user {} has no cat, redirecting to create pet screen", matchedUser.getUsername());
 
         Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
