@@ -113,7 +113,7 @@
                               <HBox alignment="BOTTOM_CENTER" prefHeight="28.0" prefWidth="230.0" spacing="30.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-                                    <Button mnemonicParsing="false" text="Skip" />
+                                    <Button mnemonicParsing="false" onAction="#onSkip" text="Skip" />
                                  </children>
                               </HBox>
                            </bottom>
