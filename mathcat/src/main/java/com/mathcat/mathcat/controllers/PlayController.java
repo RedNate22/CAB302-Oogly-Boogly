@@ -91,6 +91,9 @@ public class PlayController {
         }
     }
 
+    /**
+     * Handles updating the visual cue of the cat's stats.
+     */
     public void updateStatusBars() {
         double happiness = CatService.displayHappiness(cat);
         double hunger = CatService.displayHunger(cat);
