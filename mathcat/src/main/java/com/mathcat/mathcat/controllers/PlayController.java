@@ -80,15 +80,7 @@ public class PlayController {
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
             viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
-            double happiness = CatService.displayHappiness(cat);
-            double hunger = CatService.displayHunger(cat);
-            double energy = CatService.displayEnergy(cat);
-            happinessProgressBar.setProgress(happiness / 100);
-            hungerProgressBar.setProgress(hunger / 100);
-            energyProgressBar.setProgress(energy / 100);
-            happinessLabel.setText(String.format("%.0f", happiness));
-            hungerLabel.setText(String.format("%.0f", hunger));
-            energyLabel.setText(String.format("%.0f", energy));
+            updateStatusBars();
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
@@ -97,6 +89,18 @@ public class PlayController {
                 chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
             }
         }
+    }
+
+    public void updateStatusBars() {
+        double happiness = CatService.displayHappiness(cat);
+        double hunger = CatService.displayHunger(cat);
+        double energy = CatService.displayEnergy(cat);
+        happinessProgressBar.setProgress(happiness / 100);
+        hungerProgressBar.setProgress(hunger / 100);
+        energyProgressBar.setProgress(energy / 100);
+        happinessLabel.setText(String.format("%.0f", happiness));
+        hungerLabel.setText(String.format("%.0f", hunger));
+        energyLabel.setText(String.format("%.0f", energy));
     }
 
     /**
@@ -129,6 +133,8 @@ public class PlayController {
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();
             feedbackLabel.setText("");
+
+            updateStatusBars();
 
             if (chatController != null) {
                 chatController.resetForNewQuestion();
