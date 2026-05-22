@@ -74,6 +74,8 @@ public class PlayController {
 
     @FXML
     public void initialize() {
+        answerInput.setOnAction(event -> onSubmit(event));
+
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
