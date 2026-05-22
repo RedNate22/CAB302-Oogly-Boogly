@@ -128,7 +128,6 @@ public class PlayController {
             log.debug("correct answer: {} (difficulty: {})", userAnswer, currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
-            setFeedbackLabel("Correct!");
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
