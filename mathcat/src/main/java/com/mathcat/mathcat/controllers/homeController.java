@@ -84,6 +84,7 @@ public class homeController {
         } else {
             Platform.runLater(() -> {
                 try {
+                    if (petNameLabel.getScene() == null) return; // scene may not be attached yet during initialize()
                     Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
                     stage.getScene().setRoot(root);
