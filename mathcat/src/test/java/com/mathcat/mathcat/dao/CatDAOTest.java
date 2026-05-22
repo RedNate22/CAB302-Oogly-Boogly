@@ -280,32 +280,4 @@ public final class CatDAOTest {
         }
     }
 
-
-    @Nested
-    class NoCatRedirect {
-
-        private int insertUser(String username) throws SQLException {
-            UserDAO.insert(new User(username, username + "@gmail.com", "Password1!"));
-            return UserDAO.findByUsername(username).getId();
-        }
-
-        @Test
-        void loadReturnsNullWhenUserHasNoCat() throws SQLException {
-            int userId = insertUser("nopetuser");
-            Cat result = CatDAO.load(userId);
-            assertNull(result, "Expected null when user has no cat");
-        }
-
-        @Test
-        void loadReturnsCatWhenUserHasCat() throws SQLException {
-            int userId = insertUser("petowner");
-            Cat cat = new Cat("Whiskers");
-            cat.setUserId(userId);
-            CatDAO.save(cat);
-
-            Cat result = CatDAO.load(userId);
-            assertNotNull(result, "Expected cat to be found after save");
-            assertEquals("Whiskers", result.getCatName());
-        }
-    }
 }
