@@ -2,6 +2,7 @@ package com.mathcat.mathcat.controllers;
 
 import com.mathcat.mathcat.services.LevelSystem;
 import com.mathcat.mathcat.services.RewardSystem;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import com.mathcat.mathcat.services.CatService;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
+import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,8 +139,20 @@ public class PlayController {
             }
         } else {
             log.debug("incorrect answer: {}", userAnswer);
-            feedbackLabel.setText("Incorrect, try again!");
+            setFeedbackLabel("Incorrect, try again!");
         }
+    }
+
+    public void setFeedbackLabel(String feedback) {
+        feedbackLabel.setText(feedback);
+        feedbackLabel.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+
+        pause.setOnFinished((ActionEvent event) -> {
+            feedbackLabel.setVisible(false);
+        });
+        pause.play();
     }
 
     /**
