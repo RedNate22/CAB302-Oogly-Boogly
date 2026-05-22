@@ -92,10 +92,15 @@ public class PlayController {
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
-            if (chatController != null) {
-                chatController.setQuestion(currentQuestion.getText());
-                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-            }
+            setupNextQuestion();
+        }
+    }
+
+    private void setupNextQuestion() {
+        if (chatController != null) {
+            chatController.resetForNewQuestion();
+            chatController.setQuestion(currentQuestion.getText());
+            chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
         }
     }
 
@@ -130,11 +135,7 @@ public class PlayController {
             answerInput.clear();
             feedbackLabel.setText("");
 
-            if (chatController != null) {
-                chatController.resetForNewQuestion();
-                chatController.setQuestion(currentQuestion.getText());
-                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-            }
+            setupNextQuestion();
         } else {
             log.debug("incorrect answer: {}", userAnswer);
             feedbackLabel.setText("Incorrect, try again!");
@@ -155,15 +156,8 @@ public class PlayController {
         answerInput.clear();
         feedbackLabel.setText("");
 
-        if (chatController != null) {
-            chatController.resetForNewQuestion();
-            chatController.setQuestion(currentQuestion.getText());
-            chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-        }
+        setupNextQuestion();
     }
-
-
-
 
     /**
      * Handles return to home screen.
