@@ -48,6 +48,8 @@ public class ChatController {
      */
     @FXML
     public void initialize() {
+        userInput.setOnAction(event-> onSendClicked());
+
         aiService = new AIService();
         chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
 
