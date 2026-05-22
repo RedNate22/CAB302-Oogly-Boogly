@@ -92,10 +92,15 @@ public class PlayController {
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
-            if (chatController != null) {
-                chatController.setQuestion(currentQuestion.getText());
-                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-            }
+            setupNextQuestion();
+        }
+    }
+
+    private void setupNextQuestion() {
+        if (chatController != null) {
+            chatController.resetForNewQuestion();
+            chatController.setQuestion(currentQuestion.getText());
+            chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
         }
     }
 
@@ -130,15 +135,28 @@ public class PlayController {
             answerInput.clear();
             feedbackLabel.setText("");
 
-            if (chatController != null) {
-                chatController.resetForNewQuestion();
-                chatController.setQuestion(currentQuestion.getText());
-                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-            }
+            setupNextQuestion();
         } else {
             log.debug("incorrect answer: {}", userAnswer);
             feedbackLabel.setText("Incorrect, try again!");
         }
+    }
+
+    /**
+     * Handles the Skip button. Advances to the next question the same way a correct answer
+     * does, but does not call the reward system.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    public void onSkip(ActionEvent event) {
+        log.debug("question skipped: {}", currentQuestion.getText());
+        currentQuestion = questionService.nextQuestion(cat.getLevel());
+        mathQuestionLabel.setText(currentQuestion.getText());
+        answerInput.clear();
+        feedbackLabel.setText("");
+
+        setupNextQuestion();
     }
 
     /**
