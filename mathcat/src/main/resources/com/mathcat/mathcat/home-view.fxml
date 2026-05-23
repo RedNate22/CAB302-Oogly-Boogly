@@ -24,11 +24,6 @@
                   <VBox alignment="CENTER" prefHeight="244.0" prefWidth="236.0">
                      <children>
                         <Label fx:id="petNameLabel" text="'s Stats"></Label>
-                        <Label fx:id="petLevelLabel" text="Level: ">
-                           <VBox.margin>
-                              <Insets bottom="25.0" />
-                           </VBox.margin>
-                        </Label>
                         <Group>
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
