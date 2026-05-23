@@ -13,6 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -135,6 +139,30 @@ public class CreatePetController {
             error.setText("Pet name must be 1-10 letters only, no spaces or numbers.");
             return;
         }
+        ButtonType confirmButton = new ButtonType("Yes, confirm", ButtonBar.ButtonData.OK_DONE);
+        ButtonType goBackButton  = new ButtonType("No, go back",  ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert confirmation = new Alert(Alert.AlertType.NONE);
+        confirmation.setTitle("Confirm Your Pet");
+        confirmation.setHeaderText("Are you sure about your choices?");
+        confirmation.setContentText("Pet Name: " + name);
+        confirmation.getButtonTypes().setAll(confirmButton, goBackButton);
+        ImageView alertCat = new ImageView(SpriteService.load(selectedSpritePath));
+        alertCat.setFitWidth(80);
+        alertCat.setFitHeight(80);
+        alertCat.setPreserveRatio(true);
+
+        ImageView alertAccessory = new ImageView(SpriteService.load(selectedAccessorySpritePath));
+        alertAccessory.setFitWidth(80);
+        alertAccessory.setFitHeight(80);
+        alertAccessory.setPreserveRatio(true);
+
+        StackPane alertImage = new StackPane(alertCat, alertAccessory);
+        confirmation.setGraphic(alertImage);
+
+        ButtonType result = confirmation.showAndWait().orElse(goBackButton);
+
+        if (result != confirmButton) return;
 
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
