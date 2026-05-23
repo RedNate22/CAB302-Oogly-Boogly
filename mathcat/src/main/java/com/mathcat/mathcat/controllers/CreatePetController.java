@@ -127,8 +127,9 @@ public class CreatePetController {
     }
 
     /**
-     * Handles pet creation — validates name, saves to database and navigates to home screen.
-     * 
+     * Handles pet creation ,validates name, shows a confirmation dialog with the pet's
+     * name and appearance, then saves to database and navigates to home screen if confirmed.
+     *
      * @param event the button click event
      * @throws IOException if the home screen cannot be loaded
      */
