@@ -84,6 +84,10 @@
                         </ImageView>
                      </children>
                   </StackPane>
+                  <StackPane layoutY="435.0" layoutX="70">
+                     <ProgressBar fx:id="levelProgressBar" progress="0.0" />
+                     <Label fx:id="levelProgressLabel" text="0" />
+                  </StackPane>
                </children>
             </Pane>
             <Pane prefHeight="500.0" prefWidth="360.0">

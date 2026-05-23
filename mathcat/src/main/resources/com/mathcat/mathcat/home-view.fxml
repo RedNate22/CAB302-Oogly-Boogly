@@ -99,6 +99,10 @@
                               </ImageView>
                            </children>
                         </StackPane>
+                        <StackPane>
+                           <ProgressBar fx:id="levelProgressBar" progress="0.0" />
+                           <Label fx:id="levelProgressLabel" text="0" />
+                        </StackPane>
                      </children>
                   </VBox>
                </children>
