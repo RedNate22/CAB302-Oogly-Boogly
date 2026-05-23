@@ -35,8 +35,7 @@ public class homeController {
 
     @FXML
     private Label petNameLabel;
-    @FXML
-    private Label petLevelLabel;
+
     @FXML
     private Label happinessLabel;
     @FXML
@@ -70,7 +69,6 @@ public class homeController {
             CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
 
             petNameLabel.setText(cat.getCatName() + "'s Stats");
-            petLevelLabel.setText("Level: " + cat.getLevel());
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
             refreshStats(cat);

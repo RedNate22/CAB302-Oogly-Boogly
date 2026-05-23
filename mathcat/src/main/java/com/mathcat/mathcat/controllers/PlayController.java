@@ -35,8 +35,6 @@ public class PlayController {
 
     @FXML
     private Label petNameLabel;
-    @FXML
-    private Label petLevelLabel;
 
     @FXML
     private ImageView viewCurrentPetImage;
@@ -83,7 +81,6 @@ public class PlayController {
             log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
             CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
             petNameLabel.setText(cat.getCatName() + "'s Stats");
-            petLevelLabel.setText("Level: " + cat.getLevel());
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
             refreshStats(cat);

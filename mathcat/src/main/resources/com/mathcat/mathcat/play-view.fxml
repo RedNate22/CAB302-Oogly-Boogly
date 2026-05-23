@@ -25,11 +25,7 @@
                   <Button fx:id="goBack" mnemonicParsing="false" onAction="#onConfirmGoBack" text="Go Back" />
                   <VBox alignment="CENTER" layoutX="14.0" layoutY="49.0" prefHeight="176.0" prefWidth="236.0">
                      <children>
-                        <Label fx:id="petLevelLabel" text="Level: ">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
+                        <Label fx:id="petNameLabel" text="'s Stats"></Label>
                         <Group>
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
