@@ -47,6 +47,8 @@ public class PlayController {
     private ProgressBar hungerProgressBar;
     @FXML
     private ProgressBar energyProgressBar;
+    @FXML
+    private ProgressBar levelProgressBar;
 
     @FXML
     private Label happinessLabel;
@@ -54,6 +56,8 @@ public class PlayController {
     private Label hungerLabel;
     @FXML
     private Label energyLabel;
+    @FXML
+    private Label levelProgressLabel;
 
     @FXML
     private Label mathQuestionLabel;
@@ -98,12 +102,18 @@ public class PlayController {
         double happiness = CatService.displayHappiness(cat);
         double hunger = CatService.displayHunger(cat);
         double energy = CatService.displayEnergy(cat);
+        double level = CatService.displayLevel(cat);
+        double xp = CatService.displayXP(cat);
+        double nextLevelXP = LevelSystem.getXpToNextLevel(xp);
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
+        levelProgressBar.setProgress(xp/nextLevelXP);
+
         happinessLabel.setText(String.format("%.0f", happiness));
         hungerLabel.setText(String.format("%.0f", hunger));
         energyLabel.setText(String.format("%.0f", energy));
+        levelProgressLabel.setText(String.format("%.0f", level));
     }
 
     /**
