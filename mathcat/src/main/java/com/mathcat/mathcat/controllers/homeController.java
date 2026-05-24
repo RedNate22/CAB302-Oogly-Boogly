@@ -6,6 +6,7 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.LevelSystem;
 import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
@@ -42,6 +43,8 @@ public class homeController {
     private Label hungerLabel;
     @FXML
     private Label energyLabel;
+    @FXML
+    private Label levelProgressLabel;
 
     @FXML
     private ImageView viewCurrentPetImage;
@@ -54,6 +57,8 @@ public class homeController {
     private ProgressBar hungerProgressBar;
     @FXML
     private ProgressBar energyProgressBar;
+    @FXML
+    private ProgressBar levelProgressBar;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
@@ -80,12 +85,18 @@ public class homeController {
         double happiness = CatService.displayHappiness(cat);
         double hunger = CatService.displayHunger(cat);
         double energy = CatService.displayEnergy(cat);
+        double level = CatService.displayLevel(cat);
+        double xp = CatService.displayXP(cat);
+        double nextLevelXP = LevelSystem.getXpToNextLevel(level);
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
+        levelProgressBar.setProgress(xp/nextLevelXP);
+
         happinessLabel.setText(String.format("%.0f", happiness));
         hungerLabel.setText(String.format("%.0f", hunger));
         energyLabel.setText(String.format("%.0f", energy));
+        levelProgressLabel.setText(String.format("Level %.0f", level));
     }
 
     // public Double displayStats(double catHappiness) {
