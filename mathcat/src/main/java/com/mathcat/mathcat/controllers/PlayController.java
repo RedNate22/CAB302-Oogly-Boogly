@@ -2,6 +2,7 @@ package com.mathcat.mathcat.controllers;
 
 import com.mathcat.mathcat.services.LevelSystem;
 import com.mathcat.mathcat.services.RewardSystem;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ import com.mathcat.mathcat.services.CatService;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.models.IQuestion;
+import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +89,8 @@ public class PlayController {
         if (cat == null) {
             cat = CatDAO.load(UserDAO.currentUser.getId());
         }
+        answerInput.setOnAction(event -> onSubmit(event));
+
         if (cat != null) {
             log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
             CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
@@ -97,10 +101,15 @@ public class PlayController {
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
-            if (chatController != null) {
-                chatController.setQuestion(currentQuestion.getText());
-                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-            }
+            setupNextQuestion();
+        }
+    }
+
+    private void setupNextQuestion() {
+        if (chatController != null) {
+            chatController.resetForNewQuestion();
+            chatController.setQuestion(currentQuestion.getText());
+            chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
         }
     }
 
@@ -152,17 +161,42 @@ public class PlayController {
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();
-            feedbackLabel.setText("");
+            setFeedbackLabel("Correct!");
 
-            if (chatController != null) {
-                chatController.resetForNewQuestion();
-                chatController.setQuestion(currentQuestion.getText());
-                chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
-            }
+            setupNextQuestion();
         } else {
             log.debug("incorrect answer: {}", userAnswer);
-            feedbackLabel.setText("Incorrect, try again!");
+            setFeedbackLabel("Incorrect, try again!");
         }
+    }
+
+    public void setFeedbackLabel(String feedback) {
+        feedbackLabel.setText(feedback);
+        feedbackLabel.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+
+        pause.setOnFinished((ActionEvent event) -> {
+            feedbackLabel.setVisible(false);
+        });
+        pause.play();
+    }
+
+    /**
+     * Handles the Skip button. Advances to the next question the same way a correct answer
+     * does, but does not call the reward system.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    public void onSkip(ActionEvent event) {
+        log.debug("question skipped: {}", currentQuestion.getText());
+        currentQuestion = questionService.nextQuestion(cat.getLevel());
+        mathQuestionLabel.setText(currentQuestion.getText());
+        answerInput.clear();
+        feedbackLabel.setText("");
+
+        setupNextQuestion();
     }
 
     /**

@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javafx.application.Platform;
 
 /**
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
@@ -62,6 +63,8 @@ public class homeController {
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
+     * If the user has no cat
+     * (e.g. they closed the app before finishing pet creation), redirects to the create pet screen.
      */
     @FXML
     public void initialize() {
@@ -79,6 +82,18 @@ public class homeController {
             refreshStats(cat);
         }
 
+        else {
+            Platform.runLater(() -> {
+                try {
+                    if (petNameLabel.getScene() == null) return; // scene may not be attached yet during initialize()
+                    Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
+                    Stage stage = (Stage) petNameLabel.getScene().getWindow();
+                    stage.getScene().setRoot(root);
+                } catch (IOException e) {
+                    log.error("failed to redirect to create pet screen", e);
+                }
+            });
+        }
     }
 
     private void refreshStats(Cat cat) {
@@ -98,11 +113,6 @@ public class homeController {
         energyLabel.setText(String.format("%.0f", energy));
         levelProgressLabel.setText(String.format("Level %.0f", level));
     }
-
-    // public Double displayStats(double catHappiness) {
-    // catHappiness = CatService.displayHappiness(cat);
-    // return catHappiness;
-    // }
 
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
