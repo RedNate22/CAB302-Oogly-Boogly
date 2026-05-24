@@ -19,6 +19,7 @@ import java.io.IOException;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
 import com.mathcat.mathcat.services.QuestionService;
 import com.mathcat.mathcat.services.SpriteService;
@@ -48,6 +49,8 @@ public class PlayController {
     private ProgressBar hungerProgressBar;
     @FXML
     private ProgressBar energyProgressBar;
+    @FXML
+    private ProgressBar levelProgressBar;
 
     @FXML
     private Label happinessLabel;
@@ -55,6 +58,8 @@ public class PlayController {
     private Label hungerLabel;
     @FXML
     private Label energyLabel;
+    @FXML
+    private Label levelProgressLabel;
 
     @FXML
     private Label mathQuestionLabel;
@@ -74,25 +79,25 @@ public class PlayController {
 
     @FXML
     public void initialize() {
+        answerInput.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.matches("\\d*(\\.\\d*)?")) {
+                answerInput.setText(oldVal);
+            }
+        });
+
+        cat = CatScheduler.getInstance().getCat();
+        if (cat == null) {
+            cat = CatDAO.load(UserDAO.currentUser.getId());
+        }
         answerInput.setOnAction(event -> onSubmit(event));
 
-        cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
-            String selectedSpritePath = cat.getCatSprite();
-            String selectedAccessorySpritePath = cat.getCatAccessory();
+            CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
             petNameLabel.setText(cat.getCatName() + "'s Stats");
-            viewCurrentPetImage.setImage(SpriteService.load(selectedSpritePath));
-            viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
-            double happiness = CatService.displayHappiness(cat);
-            double hunger = CatService.displayHunger(cat);
-            double energy = CatService.displayEnergy(cat);
-            happinessProgressBar.setProgress(happiness / 100);
-            hungerProgressBar.setProgress(hunger / 100);
-            energyProgressBar.setProgress(energy / 100);
-            happinessLabel.setText(String.format("%.0f", happiness));
-            hungerLabel.setText(String.format("%.0f", hunger));
-            energyLabel.setText(String.format("%.0f", energy));
+            viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
+            refreshStats(cat);
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
 
@@ -106,6 +111,24 @@ public class PlayController {
             chatController.setQuestion(currentQuestion.getText());
             chatController.setAnswer(String.valueOf(currentQuestion.getAnswer()));
         }
+    }
+
+    private void refreshStats(Cat cat) {
+        double happiness = CatService.displayHappiness(cat);
+        double hunger = CatService.displayHunger(cat);
+        double energy = CatService.displayEnergy(cat);
+        double level = CatService.displayLevel(cat);
+        double xp = CatService.displayXP(cat);
+        double nextLevelXP = LevelSystem.getXpToNextLevel(level);
+        happinessProgressBar.setProgress(happiness / 100);
+        hungerProgressBar.setProgress(hunger / 100);
+        energyProgressBar.setProgress(energy / 100);
+        levelProgressBar.setProgress(xp/nextLevelXP);
+
+        happinessLabel.setText(String.format("%.0f", happiness));
+        hungerLabel.setText(String.format("%.0f", hunger));
+        energyLabel.setText(String.format("%.0f", energy));
+        levelProgressLabel.setText(String.format("Level %.0f", level));
     }
 
     /**
@@ -133,6 +156,7 @@ public class PlayController {
             log.debug("correct answer: {} (difficulty: {})", userAnswer, currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
+            refreshStats(cat);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());

@@ -292,4 +292,14 @@ public final class CatService {
         double catEnergy = cat.getEnergy();
         return catEnergy;
     }
+
+    public static double displayLevel(Cat cat) {
+        double catLevel = cat.getLevel();
+        return catLevel;
+    }
+
+    public static double displayXP(Cat cat) {
+        double catXP = cat.getXp();
+        return catXP;
+    }
 }

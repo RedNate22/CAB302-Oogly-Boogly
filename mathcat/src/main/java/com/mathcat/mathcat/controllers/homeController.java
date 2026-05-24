@@ -6,6 +6,7 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.LevelSystem;
 import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
@@ -36,12 +37,15 @@ public class homeController {
 
     @FXML
     private Label petNameLabel;
+
     @FXML
     private Label happinessLabel;
     @FXML
     private Label hungerLabel;
     @FXML
     private Label energyLabel;
+    @FXML
+    private Label levelProgressLabel;
 
     @FXML
     private ImageView viewCurrentPetImage;
@@ -54,6 +58,8 @@ public class homeController {
     private ProgressBar hungerProgressBar;
     @FXML
     private ProgressBar energyProgressBar;
+    @FXML
+    private ProgressBar levelProgressBar;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
@@ -67,21 +73,16 @@ public class homeController {
 
         if (cat != null) {
             CatService.applyOfflineDecay(cat);
-            CatScheduler.getInstance().start(cat); // begin live stats
+            CatScheduler.getInstance().start(cat);
+            CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
 
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
-            double happiness = CatService.displayHappiness(cat);
-            double hunger = CatService.displayHunger(cat);
-            double energy = CatService.displayEnergy(cat);
-            happinessProgressBar.setProgress(happiness / 100);
-            hungerProgressBar.setProgress(hunger / 100);
-            energyProgressBar.setProgress(energy / 100);
-            happinessLabel.setText(String.format("%.0f", happiness));
-            hungerLabel.setText(String.format("%.0f", hunger));
-            energyLabel.setText(String.format("%.0f", energy));
-        } else {
+            refreshStats(cat);
+        }
+
+        else {
             Platform.runLater(() -> {
                 try {
                     if (petNameLabel.getScene() == null) return; // scene may not be attached yet during initialize()
@@ -93,16 +94,25 @@ public class homeController {
                 }
             });
         }
-
     }
 
+    private void refreshStats(Cat cat) {
+        double happiness = CatService.displayHappiness(cat);
+        double hunger = CatService.displayHunger(cat);
+        double energy = CatService.displayEnergy(cat);
+        double level = CatService.displayLevel(cat);
+        double xp = CatService.displayXP(cat);
+        double nextLevelXP = LevelSystem.getXpToNextLevel(level);
+        happinessProgressBar.setProgress(happiness / 100);
+        hungerProgressBar.setProgress(hunger / 100);
+        energyProgressBar.setProgress(energy / 100);
+        levelProgressBar.setProgress(xp/nextLevelXP);
 
-        // System.out.println(catHappiness);
-
-    // public Double displayStats(double catHappiness) {
-    // catHappiness = CatService.displayHappiness(cat);
-    // return catHappiness;
-    // }
+        happinessLabel.setText(String.format("%.0f", happiness));
+        hungerLabel.setText(String.format("%.0f", hunger));
+        energyLabel.setText(String.format("%.0f", energy));
+        levelProgressLabel.setText(String.format("Level %.0f", level));
+    }
 
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.

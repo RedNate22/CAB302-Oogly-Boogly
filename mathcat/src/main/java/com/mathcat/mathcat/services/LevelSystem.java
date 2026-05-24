@@ -38,10 +38,11 @@ public final class LevelSystem {
      * @param level the current level
      * @return the XP threshold for the next level, or -1 if already at {@link #MAX_LEVEL}
      */
-    public static double getXpToNextLevel(int level) {
+    public static double getXpToNextLevel(double level) {
         if (level >= MAX_LEVEL)
             return -1;
-        return XP_THRESHOLDS[level + 1];
+        int levelInt = (int) level;
+        return XP_THRESHOLDS[levelInt + 1];
     }
 
     /**

@@ -130,11 +130,16 @@ public class RewardSystem {
      * @param isAiUsed the AI chatcontroller
      */
     public static void userReward(Cat cat, IQuestion question, Boolean isAiUsed) {
-        cat.setHappiness(cat.getHappiness() + 1);
+        if (cat.getHappiness() < 100) {
+            cat.setHappiness(cat.getHappiness() + 1);
+        }
 
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
-            log.debug("No XP - insufficient energy (difficulty: {}, energy: {})", question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
+            log.debug("No XP gained - insufficient energy (difficulty: {}, energy: {})",
+                    question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
+            log.debug("No item dropped - insufficient energy (difficulty: {}, energy: {})",
+                    question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
             return;
         }
 

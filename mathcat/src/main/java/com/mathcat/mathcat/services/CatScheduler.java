@@ -14,6 +14,8 @@ import javafx.util.Duration;
 public class CatScheduler {
     private static CatScheduler instance;
     private Timeline timeline;
+    private Cat cat;
+    private Runnable onTickCallback;
 
     private static final Logger log = LoggerFactory.getLogger(CatScheduler.class);
 
@@ -30,16 +32,34 @@ public class CatScheduler {
     }
 
     /**
+     * @return the cat currently being ticked, or null if the scheduler has not been started
+     */
+    public Cat getCat() {
+        return cat;
+    }
+
+    /**
+     * Registers a callback to run on the JavaFX Application Thread after each tick.
+     * Replaces any previously registered callback.
+     *
+     * @param callback the UI refresh logic to run after each tick
+     */
+    public void setOnTick(Runnable callback) {
+        this.onTickCallback = callback;
+    }
+
+    /**
      * Starts the decay timeline, firing every minute. Stops any existing timeline first so
      * calling {@link #start(Cat)} again (e.g. on re-entering the home screen) never stacks decay ticks.
      *
      * @param cat the cat to apply decay to
      */
     public void start(Cat cat) {
-        stop(); // ensure no existing timeline is still running before creating a new one
+        stop();
+        this.cat = cat;
 
         // Duration.minutes(1) sets the interval; change to Duration.seconds(x) for faster ticking during testing
-        timeline = new Timeline(new KeyFrame(Duration.minutes(1), e -> onTick(cat)));
+        timeline = new Timeline(new KeyFrame(Duration.minutes(1), e -> onTick()));
 
         // INDEFINITE means the timeline repeats forever until stop() is called
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -57,16 +77,21 @@ public class CatScheduler {
 
     /**
      * Called on each timeline tick to apply stat decay and energy regeneration via {@link CatService}.
-     * 
-     * @param cat the cat to update
      */
-    public void onTick(Cat cat) {
-        log.debug("Tick fired - happiness: {}, fullness: {}, energy: {}", cat.getHappiness(), cat.getFullness(), cat.getEnergy());
+    private void onTick() {
+        log.debug("Tick fired - happiness: {}, fullness: {}, energy: {}",
+                String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
+                String.format("%.2f", cat.getEnergy()));
         CatService.decreaseHappiness(cat, CatService.HAPPINESS_DECAY_RATE);
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
-        log.debug("After tick - happiness: {}, fullness: {}, energy: {}", cat.getHappiness(), cat.getFullness(), cat.getEnergy());
+        log.debug("After tick - happiness: {}, fullness: {}, energy: {}",
+                String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
+                String.format("%.2f", cat.getEnergy()));
+        if (onTickCallback != null) {
+            onTickCallback.run();
+        }
     }
 
     /**
