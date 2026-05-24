@@ -77,6 +77,12 @@ public class PlayController {
 
     @FXML
     public void initialize() {
+        answerInput.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.matches("\\d*(\\.\\d*)?")) {
+                answerInput.setText(oldVal);
+            }
+        });
+
         cat = CatScheduler.getInstance().getCat();
         if (cat == null) {
             cat = CatDAO.load(UserDAO.currentUser.getId());
