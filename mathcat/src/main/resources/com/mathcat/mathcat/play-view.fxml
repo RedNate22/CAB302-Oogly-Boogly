@@ -86,7 +86,7 @@
                   </StackPane>
                   <StackPane layoutY="435.0" layoutX="70">
                      <ProgressBar fx:id="levelProgressBar" progress="0.0" />
-                     <Label fx:id="levelProgressLabel" text="Level" />
+                     <Label fx:id="levelProgressLabel" styleClass="stat-value" text="Level" />
                   </StackPane>
                </children>
             </Pane>
