@@ -136,7 +136,10 @@ public class RewardSystem {
 
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
-            log.debug("No XP - insufficient energy (difficulty: {}, energy: {})", question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
+            log.debug("No XP gained - insufficient energy (difficulty: {}, energy: {})",
+                    question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
+            log.debug("No item dropped - insufficient energy (difficulty: {}, energy: {})",
+                    question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
             return;
         }
 
