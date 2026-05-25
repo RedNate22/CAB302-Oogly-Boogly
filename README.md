@@ -23,7 +23,7 @@ cd mathcat
 ```
 
 ```bash
-./mvnw package -DskipTests
+./mvnw package
 ```
 
 ### Generating Javadocs
