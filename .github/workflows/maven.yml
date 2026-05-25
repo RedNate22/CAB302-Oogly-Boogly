@@ -32,3 +32,4 @@ jobs:
                   GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
             - name: Generate Javadoc
               run: mvn javadoc:javadoc
+              working-directory: mathcat
