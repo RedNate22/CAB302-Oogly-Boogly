@@ -22,6 +22,9 @@ import org.slf4j.LoggerFactory;
  */
 public class QuestionService {
     private static final Logger log = LoggerFactory.getLogger(QuestionService.class);
+
+    /** Creates a new QuestionService with an empty question queue. */
+    public QuestionService() {}
     private final LinkedList<IQuestion> questionQueue = new LinkedList<>();
     private final Random random = new Random();
 
