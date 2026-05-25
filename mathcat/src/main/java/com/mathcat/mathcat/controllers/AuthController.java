@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
 public class AuthController {
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
+    /** Creates a new AuthController. */
+    public AuthController() {}
+
     @FXML private TextField usernameField;
     @FXML private TextField emailField;
 
@@ -35,9 +38,12 @@ public class AuthController {
 
     @FXML private Label error;
 
+    /**
+     * Binds the visible and masked password fields together so they stay in sync when toggling
+     * password visibility.
+     */
     @FXML
     public void initialize() {
-        // Keeps both password fields synced automatically when switching between visibility
         visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
     }
 

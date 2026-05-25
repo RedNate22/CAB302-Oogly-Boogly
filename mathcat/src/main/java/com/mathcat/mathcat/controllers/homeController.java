@@ -35,6 +35,9 @@ import javafx.application.Platform;
 public class homeController {
     private static final Logger log = LoggerFactory.getLogger(homeController.class);
 
+    /** Creates a new homeController. */
+    public homeController() {}
+
     @FXML
     private Label petNameLabel;
 

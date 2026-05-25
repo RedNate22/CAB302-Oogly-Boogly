@@ -22,6 +22,8 @@ public class CatScheduler {
     private CatScheduler() {}
 
     /**
+     * Returns the single shared CatScheduler instance, creating it if it does not yet exist.
+     *
      * @return the single shared CatScheduler instance
      */
     public static CatScheduler getInstance() {
@@ -32,6 +34,8 @@ public class CatScheduler {
     }
 
     /**
+     * Returns the cat currently being ticked, or null if the scheduler has not been started.
+     *
      * @return the cat currently being ticked, or null if the scheduler has not been started
      */
     public Cat getCat() {

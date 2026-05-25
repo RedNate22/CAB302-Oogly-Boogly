@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 public final class CatDAO {
     private static final Logger log = LoggerFactory.getLogger(CatDAO.class);
 
+    private CatDAO() {}
+
     /**
      * Saves a cat to the database. Inserts if new, updates if existing.
      * 

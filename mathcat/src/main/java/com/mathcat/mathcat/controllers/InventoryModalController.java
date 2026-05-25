@@ -17,10 +17,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-/** 
-*
-*/
+/**
+ * Controller for the inventory modal screen. Handles item selection and cat appearance changes.
+ */
 public class InventoryModalController {
+
+    /** Creates a new InventoryModalController. */
+    public InventoryModalController() {}
+
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
 
     @FXML
@@ -32,7 +36,7 @@ public class InventoryModalController {
     private InventoryModalController inventoryModalController;
 
     /**
-     * @param event
+     * Loads the current user's cat and its inventory on screen load.
      */
     @FXML
     public void initialize() {
@@ -43,26 +47,26 @@ public class InventoryModalController {
     }
 
     /**
-     * @param event
-     * @return Stage
+     * Returns the root stage resolved from the given action event.
+     *
+     * @param event the action event used to resolve the current stage
+     * @return the root Stage of the scene
      */
     private static Stage getRoot(ActionEvent event) {
         Node root = (Node) event.getSource();
         return (Stage) root.getScene().getWindow();
     }
 
-    /**
-     * @param event
-     * @return Stage
-     */
     // private static Stage getRoot(MouseEvent event) {
     //     Node root = (Node) event.getSource();
     //     return (Stage) root.getScene().getWindow();
     // }
 
     /**
-     * @param event
-     * @throws IOException
+     * Handles the change cat colour button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
      */
     @FXML
     protected void changeCatColour(ActionEvent event) throws IOException {
@@ -70,8 +74,10 @@ public class InventoryModalController {
     }
 
     /**
-     * @param event
-     * @throws IOException
+     * Handles the change cat accessory button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
      */
     @FXML
     protected void changeCatAccessory(ActionEvent event) throws IOException {
@@ -79,8 +85,10 @@ public class InventoryModalController {
     }
 
     /**
-     * @param event
-     * @throws IOException
+     * Handles the confirm and save button action. Saves changes and closes the modal.
+     *
+     * @param event the button click event
+     * @throws IOException if closing the modal fails
      */
     @FXML
     private void onConfirmSaveDetails(ActionEvent event) throws IOException {
@@ -91,16 +99,10 @@ public class InventoryModalController {
         getRoot(event).close();
     }
 
-    // probably not going to use
-    // private void onConfirmCloseModal(ActionEvent event) throws IOException {
-    //     // create toast
-    //     // "any changes will not be saved"
-    //     // confirm > close
-    //     // cancel > keep modal open
-    // }
-
     /**
-     * @param inventoryModalController
+     * Sets the reference to the parent inventory modal controller.
+     *
+     * @param inventoryModalController the parent controller instance
      */
     public void setMainController(InventoryModalController inventoryModalController) {
         this.inventoryModalController = inventoryModalController;

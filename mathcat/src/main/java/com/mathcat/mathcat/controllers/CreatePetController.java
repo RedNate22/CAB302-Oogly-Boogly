@@ -37,6 +37,9 @@ import com.mathcat.mathcat.services.SpriteService;
 public class CreatePetController {
     private static final Logger log = LoggerFactory.getLogger(CreatePetController.class);
 
+    /** Creates a new CreatePetController. */
+    public CreatePetController() {}
+
     @FXML
     private TextField userPetName;
     @FXML
@@ -107,6 +110,9 @@ public class CreatePetController {
 
     @FXML private Label confirmationMessage;
 
+    /**
+     * Shows the account creation confirmation message briefly on screen load.
+     */
     // Initially sets the confirmation message once
     public void initialize() {
         setConfirmationMessage();
