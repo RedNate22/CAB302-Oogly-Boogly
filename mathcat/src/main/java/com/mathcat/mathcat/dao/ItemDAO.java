@@ -19,7 +19,7 @@ public final class ItemDAO {
     private static final Logger LOG = LoggerFactory.getLogger(ItemDAO.class);
 
     // Ordered map so getAll() returns items in insertion order (useful for shop display)
-    private static final Map<String, Item> catalog = new LinkedHashMap<>();
+    private static final Map<String, Item> CATALOG = new LinkedHashMap<>();
 
     static {
         // Fullness items
@@ -43,7 +43,7 @@ public final class ItemDAO {
     private ItemDAO() {}
 
     private static void register(Item item) {
-        catalog.put(item.getItemId(), item);
+        CATALOG.put(item.getItemId(), item);
     }
 
     /**
@@ -53,7 +53,7 @@ public final class ItemDAO {
      * @return the matching Item, or null if not found
      */
     public static Item getById(String itemId) {
-        return catalog.get(itemId);
+        return CATALOG.get(itemId);
     }
 
     /**
@@ -62,7 +62,7 @@ public final class ItemDAO {
      * @return a copy of all items in the catalog, in insertion order
      */
     public static List<Item> getAll() {
-        return new ArrayList<>(catalog.values());
+        return new ArrayList<>(CATALOG.values());
     }
 
     /**
@@ -189,7 +189,7 @@ public final class ItemDAO {
                 String itemId = rs.getString("item_id");
                 int quantity = rs.getInt("quantity");
 
-                Item catalogItem = catalog.get(itemId);
+                Item catalogItem = CATALOG.get(itemId);
                 if (catalogItem == null) {
                     LOG.warn("unknown item in inventory: {}", itemId);
                     continue;

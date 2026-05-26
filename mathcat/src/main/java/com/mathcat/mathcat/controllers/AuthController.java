@@ -67,20 +67,20 @@ public class AuthController {
      */
     @FXML
     public void onLoginConfirm(ActionEvent event) throws IOException {
-        String username_email = usernameField.getText().trim();
+        String usernameEmail = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserService.fieldsEmpty(username_email, password)) {
+        if (UserService.fieldsEmpty(usernameEmail, password)) {
             error.setText("Please fill out all fields");
             return;
         }
 
         User matchedUser;
         try {
-            matchedUser = UserDAO.findByEmail(username_email);
+            matchedUser = UserDAO.findByEmail(usernameEmail);
             if (matchedUser == null) {
                 try {
-                    matchedUser = UserDAO.findByUsername(username_email);
+                    matchedUser = UserDAO.findByUsername(usernameEmail);
                 } catch (SQLException e) {
                     LOG.error("database error during login", e);
                     error.setText("Database error. Please try again.");
@@ -94,13 +94,13 @@ public class AuthController {
         }
 
         if (matchedUser == null) {
-            LOG.warn("login attempt for unknown user: {}", username_email);
+            LOG.warn("login attempt for unknown user: {}", usernameEmail);
             error.setText("This account does not exist.");
             return;
         }
 
         if (!matchedUser.getPassword().equals(password)) {
-            LOG.warn("incorrect password for user: {}", username_email);
+            LOG.warn("incorrect password for user: {}", usernameEmail);
             error.setText("Password is incorrect. Please try again");
             return;
         }
