@@ -33,7 +33,7 @@ public final class CatService {
     /** Maximum energy the cat can regenerate per day via the scheduler. */
     public static final double DAILY_ENERGY_CAP = 100.0;
 
-    private static final Logger log = LoggerFactory.getLogger(CatService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CatService.class);
 
     private CatService() {}
 
@@ -200,7 +200,8 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
-        log.debug("Energy regen +{} (fullness: {}) daily total: {}/{}", regen, cat.getFullness(), cat.getDailyEnergyGained(), DAILY_ENERGY_CAP);
+        LOG.debug("Energy regen +{} (fullness: {}) daily total: {}/{}", regen, cat.getFullness(),
+                cat.getDailyEnergyGained(), DAILY_ENERGY_CAP);
     }
 
     /**
@@ -214,7 +215,8 @@ public final class CatService {
             return;
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
-        log.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed, minutesElapsed * HAPPINESS_DECAY_RATE, minutesElapsed * FULLNESS_DECAY_RATE);
+        LOG.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed,
+                minutesElapsed * HAPPINESS_DECAY_RATE, minutesElapsed * FULLNESS_DECAY_RATE);
 
         // Estimate how long the cat was hungry during the offline window.
         // Fullness decays linearly, so we calculate when it crossed HUNGER_THRESHOLD and apply
@@ -260,8 +262,8 @@ public final class CatService {
      */
     public static void addItem(Cat cat, Item item) {
         cat.getItems().add(item);
-        log.debug("Item added: {} ({} +{})", item.getItemName(), item.getEffectType(),
-                item.getEffectAmount());
+        LOG.debug("Item added: {} ({} +{})", item.getItemName(), item.getEffectType(),
+                        item.getEffectAmount());
         CatDAO.save(cat);
     }
 
@@ -277,8 +279,8 @@ public final class CatService {
         if (!cat.getItems().remove(item))
             return false;
         item.applyItem(cat);
-        log.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(),
-                item.getEffectAmount());
+        LOG.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(),
+                        item.getEffectAmount());
         CatDAO.save(cat);
         return true;
     }

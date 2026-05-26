@@ -32,11 +32,11 @@ import javafx.application.Platform;
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
  * not handle persistence.
  */
-public class homeController {
-    private static final Logger log = LoggerFactory.getLogger(homeController.class);
+public class HomeController {
+    private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
     /** Creates a new homeController. */
-    public homeController() {}
+    public HomeController() {}
 
     @FXML
     private Label petNameLabel;
@@ -93,7 +93,7 @@ public class homeController {
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
                     stage.getScene().setRoot(root);
                 } catch (IOException e) {
-                    log.error("failed to redirect to create pet screen", e);
+                    LOG.error("failed to redirect to create pet screen", e);
                 }
             });
         }

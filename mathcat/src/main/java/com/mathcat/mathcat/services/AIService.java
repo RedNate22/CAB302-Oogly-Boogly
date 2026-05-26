@@ -19,7 +19,7 @@ import java.time.Instant;
  */
 public class AIService {
 
-    private static final Logger log = LoggerFactory.getLogger(AIService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AIService.class);
 
     private final String apiKey;
     private final HttpClient client;
@@ -101,7 +101,7 @@ public class AIService {
 
         if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
             long waitSecs = RATE_WINDOW_SECONDS - elapsed;
-            log.debug("Rate limit hit ({} calls in window). Wait {}s.", windowCallCount, waitSecs);
+            LOG.debug("Rate limit hit ({} calls in window). Wait {}s.", windowCallCount, waitSecs);
             return String.format(
                     "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
                     waitSecs, waitSecs == 1 ? "" : "s");
@@ -109,7 +109,7 @@ public class AIService {
 
         // Allow the call — consume one slot
         windowCallCount++;
-        log.debug("Call allowed - window: {}/{}", windowCallCount, MAX_CALLS_PER_WINDOW);
+        LOG.debug("Call allowed - window: {}/{}", windowCallCount, MAX_CALLS_PER_WINDOW);
         return null;
     }
 
@@ -296,7 +296,7 @@ public class AIService {
 
         String body = requestBody.toString();
 
-        log.debug("History size: {}", history.size());
+        LOG.debug("History size: {}", history.size());
 
         try {
             return callApiWithRetry(body);

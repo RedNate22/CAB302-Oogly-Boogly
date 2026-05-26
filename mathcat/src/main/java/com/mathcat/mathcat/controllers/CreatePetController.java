@@ -35,7 +35,7 @@ import com.mathcat.mathcat.services.SpriteService;
  * SQLite database.
  */
 public class CreatePetController {
-    private static final Logger log = LoggerFactory.getLogger(CreatePetController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CreatePetController.class);
 
     /** Creates a new CreatePetController. */
     public CreatePetController() {}
@@ -176,7 +176,7 @@ public class CreatePetController {
         cat.setCatSprite(selectedSpritePath);
         cat.setCatAccessory(selectedAccessorySpritePath);
         CatDAO.save(cat);
-        log.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
+        LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));

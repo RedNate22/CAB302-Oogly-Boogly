@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * Manages the SQLite database connection and initialises all tables.
  */
 public class DatabaseManager {
-    private static final Logger log = LoggerFactory.getLogger(DatabaseManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseManager.class);
 
     private DatabaseManager() {}
 
@@ -85,9 +85,9 @@ public class DatabaseManager {
             stmt.execute(createUsersTable);
             stmt.execute(createPetsTable);
             stmt.execute(createItemsTable);
-            log.debug("Initialised successfully");
+            LOG.debug("Initialised successfully");
         } catch (SQLException e) {
-            log.error("Initialisation error", e);
+            LOG.error("Initialisation error", e);
         }
     }
 }

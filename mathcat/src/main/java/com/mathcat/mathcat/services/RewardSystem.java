@@ -17,7 +17,7 @@ import java.util.Random;
  * This class contains rules for subsequent XP gain and returns it.
  */
 public class RewardSystem {
-    private static final Logger log = LoggerFactory.getLogger(RewardSystem.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RewardSystem.class);
 
     /** Creates a new RewardSystem. */
     public RewardSystem() {}
@@ -141,14 +141,16 @@ public class RewardSystem {
 
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
-            log.debug("No XP gained - insufficient energy (difficulty: {}, energy: {})",
-                    question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
-            log.debug("No item dropped - insufficient energy (difficulty: {}, energy: {})",
-                    question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
+            LOG.debug("No XP gained - insufficient energy (difficulty: {}, energy: {})",
+                            question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
+            LOG.debug("No item dropped - insufficient energy (difficulty: {}, energy: {})",
+                            question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
             return;
         }
 
-        log.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", String.format("%.2f", xpReturn), String.format("%.2f", baseXpReturn(question, cat)), String.format("%.2f", xpBonus(cat, isAiUsed, question)), isAiUsed);
+        LOG.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", String.format("%.2f", xpReturn),
+                String.format("%.2f", baseXpReturn(question, cat)),
+                String.format("%.2f", xpBonus(cat, isAiUsed, question)), isAiUsed);
         LevelSystem.applyXp(cat, xpReturn);
 
         if (question.getDifficulty() == Difficulty.EASY) {
@@ -160,7 +162,7 @@ public class RewardSystem {
         if (question.getDifficulty() == Difficulty.HARD) {
             cat.setEnergy(cat.getEnergy() - 20);
         }
-        log.debug("Energy after deduction: {}", String.format("%.2f", cat.getEnergy()));
+        LOG.debug("Energy after deduction: {}", String.format("%.2f", cat.getEnergy()));
 
         double percentage = randomNumberGenerator();
         Item newItem = fisherYatesShuffle(ItemDAO.getAll()).getFirst();
@@ -168,21 +170,24 @@ public class RewardSystem {
         if (question.getDifficulty() == Difficulty.EASY && percentage <= 15) {
             cat.getItems().add(newItem);
             ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
-            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), String.format("%.2f", percentage));
+            LOG.debug("Item dropped: {} (roll: {})", newItem.getItemName(),
+                    String.format("%.2f", percentage));
             return;
         }
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
             cat.getItems().add(newItem);
             ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
-            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), String.format("%.2f", percentage));
+            LOG.debug("Item dropped: {} (roll: {})", newItem.getItemName(),
+                    String.format("%.2f", percentage));
             return;
         }
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
             cat.getItems().add(newItem);
             ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
-            log.debug("Item dropped: {} (roll: {})", newItem.getItemName(), String.format("%.2f", percentage));
+            LOG.debug("Item dropped: {} (roll: {})", newItem.getItemName(),
+                    String.format("%.2f", percentage));
             return;
         }
-        log.debug("No item dropped (roll: {})", String.format("%.2f", percentage));
+        LOG.debug("No item dropped (roll: {})", String.format("%.2f", percentage));
     }
 }

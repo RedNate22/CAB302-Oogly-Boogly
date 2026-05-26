@@ -14,17 +14,27 @@ For a low-level overview of the gameplay loop and technical specifications, see 
 
 
 ## Building the project and JavaDocs
-The following commands must be done in the order provided.
-
-### Building the project
+The following commands must be done in the order provided, from within the `mathcat/` directory.
 
 ```bash
 cd mathcat
 ```
 
+### Building the project
+Checkstyle runs automatically as part of the build. If there are violations, the build will fail and the violations will be printed to the terminal with the file, line number, and rule that was broken.
+
 ```bash
 ./mvnw package
 ```
+
+### Running Checkstyle independently
+To check for violations without running the full build:
+
+```bash
+./mvnw checkstyle:check
+```
+
+Violations are printed to the terminal. A successful check ends with `BUILD SUCCESS`. You can also view the results of the latest build's Checkstyle run on GitHub under `Actions > Java CI with Maven > build`.
 
 ### Generating Javadocs
 
@@ -37,3 +47,7 @@ cd mathcat
 ```bash
 start target/docs/javadoc/index.html
 ```
+
+### Live Javadoc
+
+Our live JavaDoc (hosted on GH Pages) can be found [here](https://rednate22.github.io/CAB302-Oogly-Boogly/com.mathcat.mathcat/module-summary.html).
