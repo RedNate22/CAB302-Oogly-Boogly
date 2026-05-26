@@ -39,6 +39,9 @@ public class AIService {
     // The moment the current rate-limit window started
     private Instant windowStart = Instant.now();
 
+    /**
+     * Creates a new AIService, loading the API key from the .env file and configuring the HTTP client.
+     */
     public AIService() {
         String workingDir = System.getProperty("user.dir");
         String envDir = workingDir.endsWith("mathcat") ? workingDir : workingDir + "/mathcat";

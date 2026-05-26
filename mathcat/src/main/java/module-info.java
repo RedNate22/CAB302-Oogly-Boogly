@@ -1,3 +1,4 @@
+/** Module descriptor for the MathCat application. */
 module com.mathcat.mathcat {
     requires transitive javafx.graphics;
     requires javafx.controls;

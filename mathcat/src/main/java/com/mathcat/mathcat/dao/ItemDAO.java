@@ -57,6 +57,8 @@ public final class ItemDAO {
     }
 
     /**
+     * Returns a copy of all items in the catalog, in insertion order.
+     *
      * @return a copy of all items in the catalog, in insertion order
      */
     public static List<Item> getAll() {

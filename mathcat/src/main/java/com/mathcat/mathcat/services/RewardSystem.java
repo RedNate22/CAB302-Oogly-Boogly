@@ -19,11 +19,15 @@ import java.util.Random;
 public class RewardSystem {
     private static final Logger log = LoggerFactory.getLogger(RewardSystem.class);
 
+    /** Creates a new RewardSystem. */
+    public RewardSystem() {}
+
     /**
      * Returns the base XP a user will receive based on the difficulty of the question and whether they have enough energy
      * to receive a reward.
      *
      * @param question the current question
+     * @param cat the current user's cat
      * @return the XP user will receive based on difficulty
      */
     public static double baseXpReturn(IQuestion question, Cat cat) {
@@ -52,8 +56,9 @@ public class RewardSystem {
      * the question unassisted. On the contrary if not enough energy (no baseXP has been awarded), then there will be
      * no bonus XP
      *
-     * @param cat the current user
-     * @param isAiUsed determines whether Ai was used for the question
+     * @param cat the current user's cat
+     * @param isAiUsed determines whether AI was used for the question
+     * @param question the current question
      * @return the bonus XP user will receive based on criteria
      */
     public static double xpBonus(Cat cat, Boolean isAiUsed, IQuestion question) {

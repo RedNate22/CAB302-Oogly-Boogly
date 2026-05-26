@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 public class DatabaseManager {
     private static final Logger log = LoggerFactory.getLogger(DatabaseManager.class);
 
+    private DatabaseManager() {}
+
     private static final String DB_URL = "jdbc:sqlite:mathcat.db";
     private static Connection connection;
 

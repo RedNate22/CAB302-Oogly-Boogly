@@ -11,7 +11,7 @@ public final class Item {
     private String itemImage; // format, [path/to/image]
     private ItemEffectType effectType;
     private double effectAmount;
-    // Tracks how many of this item the cat owns — only relevant for inventory, not the catalog
+    // Tracks how many of this item the cat owns -- only relevant for inventory, not the catalog
     private int quantity;
 
     /**
@@ -54,6 +54,8 @@ public final class Item {
     }
 
     /**
+     * Returns the item's unique catalog identifier.
+     *
      * @return the item's unique catalog identifier
      */
     public String getItemId() {
@@ -61,6 +63,8 @@ public final class Item {
     }
 
     /**
+     * Sets the item's catalog identifier.
+     *
      * @param itemId the new catalog identifier
      */
     public void setItemId(String itemId) {
@@ -68,6 +72,8 @@ public final class Item {
     }
 
     /**
+     * Returns the item's display name.
+     *
      * @return the item's display name
      */
     public String getItemName() {
@@ -75,6 +81,8 @@ public final class Item {
     }
 
     /**
+     * Sets the item's display name.
+     *
      * @param itemName the new display name
      */
     public void setItemName(String itemName) {
@@ -82,6 +90,8 @@ public final class Item {
     }
 
     /**
+     * Returns the file path to the item's sprite image.
+     *
      * @return file path to the item's sprite image
      */
     public String getItemImage() {
@@ -89,6 +99,8 @@ public final class Item {
     }
 
     /**
+     * Sets the file path to the item's sprite image.
+     *
      * @param itemImage file path to the item's sprite image
      */
     public void setItemImage(String itemImage) {
@@ -96,6 +108,8 @@ public final class Item {
     }
 
     /**
+     * Returns the effect type, describing which stat this item affects.
+     *
      * @return the {@link ItemEffectType} describing which stat this item affects
      */
     public ItemEffectType getEffectType() {
@@ -117,6 +131,8 @@ public final class Item {
     }
 
     /**
+     * Returns the magnitude of the stat effect applied when this item is used.
+     *
      * @return the magnitude of the stat effect applied when this item is used
      */
     public double getEffectAmount() {
@@ -158,7 +174,10 @@ public final class Item {
                 break;
         }
     }
+
     /**
+     * Returns how many of this item the cat currently owns.
+     *
      * @return how many of this item the cat currently owns
      */
     public int getQuantity() {
@@ -166,10 +185,11 @@ public final class Item {
     }
 
     /**
+     * Sets how many of this item the cat currently owns.
+     *
      * @param quantity the number of this item in the cat's inventory
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }
-

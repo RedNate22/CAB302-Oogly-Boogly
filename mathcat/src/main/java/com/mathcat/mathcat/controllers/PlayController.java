@@ -35,6 +35,9 @@ import org.slf4j.LoggerFactory;
 public class PlayController {
     private static final Logger log = LoggerFactory.getLogger(PlayController.class);
 
+    /** Creates a new PlayController. */
+    public PlayController() {}
+
     @FXML
     private Label petNameLabel;
 
@@ -77,6 +80,9 @@ public class PlayController {
     private IQuestion currentQuestion;
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
 
+    /**
+     * Loads the current cat, sets up the answer input listener, and serves the first question.
+     */
     @FXML
     public void initialize() {
         answerInput.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -170,6 +176,11 @@ public class PlayController {
         }
     }
 
+    /**
+     * Displays a feedback message briefly, then hides it after 3 seconds.
+     *
+     * @param feedback the message to display
+     */
     public void setFeedbackLabel(String feedback) {
         feedbackLabel.setText(feedback);
         feedbackLabel.setVisible(true);
@@ -201,6 +212,9 @@ public class PlayController {
 
     /**
      * Handles return to home screen.
+     *
+     * @param event the button click event
+     * @throws IOException if the home screen FXML cannot be loaded
      */
     public void onConfirmGoBack(ActionEvent event) throws IOException {
         Parent root =
@@ -212,11 +226,20 @@ public class PlayController {
 
     /**
      * Handles logout.
+     *
+     * @param event the button click event
+     * @throws IOException if the initial screen FXML cannot be loaded
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
         NavigationUtil.logout(event);
     }
 
+    /**
+     * Reloads the play screen.
+     *
+     * @param event the button click event
+     * @throws IOException if the play screen FXML cannot be loaded
+     */
     public void onPressPlay(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));

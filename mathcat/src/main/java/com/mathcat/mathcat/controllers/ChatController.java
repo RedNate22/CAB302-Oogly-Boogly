@@ -17,6 +17,9 @@ import java.util.List;
  */
 public class ChatController {
 
+    /** Creates a new ChatController. */
+    public ChatController() {}
+
     /**
      * Maximum number of characters a user may type in a single message.
      * Prevents excessively long inputs from being sent to the AI API.

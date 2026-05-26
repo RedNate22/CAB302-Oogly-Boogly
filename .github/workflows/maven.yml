@@ -20,13 +20,45 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
+
             - name: Set up JDK 21
               uses: actions/setup-java@v4
               with:
                   java-version: "21"
                   distribution: "corretto"
                   cache: maven
+
             - name: Build with Maven
               run: mvn -B package --file mathcat/pom.xml
+
               env:
                   GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+    
+    publish-docs:
+        runs-on: ubuntu-latest
+        needs: build
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@v4
+              with:
+                java-version: "21"
+                distribution: "corretto"
+                cache: maven
+
+            - name: Build with Maven
+              run: mvn -B package -DskipTests --file mathcat/pom.xml
+
+              env:
+                  GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+
+            - name: Generate Javadoc
+              run: mvn javadoc:javadoc
+              working-directory: mathcat
+
+            - name: Publish Javadoc
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                folder: mathcat/target/docs/javadoc

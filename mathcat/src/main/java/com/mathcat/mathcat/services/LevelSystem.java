@@ -26,6 +26,7 @@ public final class LevelSystem {
             4100, // level 10
     };
 
+    /** The highest level a cat can reach, determined by the length of the XP threshold table. */
     public static final int MAX_LEVEL = XP_THRESHOLDS.length - 1;
 
     private static final Logger log = LoggerFactory.getLogger(LevelSystem.class);

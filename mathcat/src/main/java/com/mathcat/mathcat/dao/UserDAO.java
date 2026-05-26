@@ -15,6 +15,8 @@ import java.util.List;
 public final class UserDAO {
     private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
 
+    private UserDAO() {}
+
     /** The currently authenticated user. Null when no user is logged in. */
     public static User currentUser;
 
@@ -30,8 +32,9 @@ public final class UserDAO {
 
     /**
      * Inserts a new user into the database.
-     * 
+     *
      * @param user the user to save
+     * @throws SQLException if the insert fails (e.g. duplicate username or email)
      */
     public static void insert(User user) throws SQLException {
         String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
@@ -46,9 +49,10 @@ public final class UserDAO {
 
     /**
      * Finds a user by their username.
-     * 
+     *
      * @param username the username to search for
      * @return the User if found, null otherwise
+     * @throws SQLException if the query fails
      */
     public static User findByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -67,9 +71,10 @@ public final class UserDAO {
 
     /**
      * Finds a user by their email address.
-     * 
+     *
      * @param email the email to search for
      * @return the User if found, null otherwise
+     * @throws SQLException if the query fails
      */
     public static User findByEmail(String email) throws SQLException {
         String sql = "SELECT * FROM users WHERE email = ?";
@@ -88,8 +93,9 @@ public final class UserDAO {
 
     /**
      * Returns all users from the database.
-     * 
+     *
      * @return list of all users
+     * @throws SQLException if the query fails
      */
     public static List<User> findAll() throws SQLException {
         List<User> users = new ArrayList<>();
@@ -106,8 +112,9 @@ public final class UserDAO {
 
     /**
      * Deletes a user by their username.
-     * 
+     *
      * @param username the username of the user to delete
+     * @throws SQLException if the delete fails
      */
     public static void deleteByUsername(String username) throws SQLException {
         String sql = "DELETE FROM users WHERE username = ?";
