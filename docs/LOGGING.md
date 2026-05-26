@@ -7,7 +7,7 @@ This project uses SLF4J with Logback. Log output is controlled via `src/main/res
 Add this field at the top of the class, replacing `MyClass` with the actual class name:
 
 ```java
-private static final Logger log = LoggerFactory.getLogger(MyClass.class);
+private static final Logger LOG = LoggerFactory.getLogger(MyClass.class);
 ```
 
 Imports:
