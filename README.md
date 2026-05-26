@@ -47,3 +47,7 @@ Violations are printed to the terminal. A successful check ends with `BUILD SUCC
 ```bash
 start target/docs/javadoc/index.html
 ```
+
+### Live Javadoc
+
+Our live JavaDoc (hosted on GH Pages) can be found [here](https://rednate22.github.io/CAB302-Oogly-Boogly/com.mathcat.mathcat/module-summary.html).
