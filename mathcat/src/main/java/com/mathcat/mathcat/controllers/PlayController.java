@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * ChatController.
  */
 public class PlayController {
-    private static final Logger log = LoggerFactory.getLogger(PlayController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PlayController.class);
 
     /** Creates a new PlayController. */
     public PlayController() {}
@@ -98,7 +98,7 @@ public class PlayController {
         answerInput.setOnAction(event -> onSubmit(event));
 
         if (cat != null) {
-            log.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
+            LOG.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
             CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
@@ -159,7 +159,8 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
-            log.debug("correct answer: {} (difficulty: {})", userAnswer, currentQuestion.getDifficulty());
+            LOG.debug("correct answer: {} (difficulty: {})", userAnswer,
+                    currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
             refreshStats(cat);
@@ -171,7 +172,7 @@ public class PlayController {
 
             setupNextQuestion();
         } else {
-            log.debug("incorrect answer: {}", userAnswer);
+            LOG.debug("incorrect answer: {}", userAnswer);
             setFeedbackLabel("Incorrect, try again!");
         }
     }
@@ -201,7 +202,7 @@ public class PlayController {
      */
     @FXML
     public void onSkip(ActionEvent event) {
-        log.debug("question skipped: {}", currentQuestion.getText());
+        LOG.debug("question skipped: {}", currentQuestion.getText());
         currentQuestion = questionService.nextQuestion(cat.getLevel());
         mathQuestionLabel.setText(currentQuestion.getText());
         answerInput.clear();

@@ -16,7 +16,7 @@ import java.util.Map;
  * the catalog is populated once on class load.
  */
 public final class ItemDAO {
-    private static final Logger log = LoggerFactory.getLogger(ItemDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ItemDAO.class);
 
     // Ordered map so getAll() returns items in insertion order (useful for shop display)
     private static final Map<String, Item> catalog = new LinkedHashMap<>();
@@ -99,7 +99,7 @@ public final class ItemDAO {
                 }
             }
         } catch (SQLException e) {
-            log.error("error adding item", e);
+            LOG.error("error adding item", e);
         }
     }
 
@@ -148,12 +148,12 @@ public final class ItemDAO {
             return true;
 
         } catch (SQLException e) {
-            log.error("error using item", e);
+            LOG.error("error using item", e);
             if (conn != null) {
                 try {
                     conn.rollback();
                 } catch (SQLException re) {
-                    log.error("rollback failed", re);
+                    LOG.error("rollback failed", re);
                 }
             }
             return false;
@@ -162,7 +162,7 @@ public final class ItemDAO {
                 try {
                     conn.setAutoCommit(true);
                 } catch (SQLException e) {
-                    log.error("failed to restore auto-commit", e);
+                    LOG.error("failed to restore auto-commit", e);
                 }
             }
         }
@@ -191,7 +191,7 @@ public final class ItemDAO {
 
                 Item catalogItem = catalog.get(itemId);
                 if (catalogItem == null) {
-                    log.warn("unknown item in inventory: {}", itemId);
+                    LOG.warn("unknown item in inventory: {}", itemId);
                     continue;
                 }
 
@@ -206,7 +206,7 @@ public final class ItemDAO {
                 inventory.add(item);
             }
         } catch (SQLException e) {
-            log.error("error loading inventory", e);
+            LOG.error("error loading inventory", e);
         }
 
         return inventory;

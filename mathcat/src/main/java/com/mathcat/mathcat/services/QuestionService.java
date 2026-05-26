@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * one at a time until the pool is exhausted, at which point the process repeats.
  */
 public class QuestionService {
-    private static final Logger log = LoggerFactory.getLogger(QuestionService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionService.class);
 
     /** Creates a new QuestionService with an empty question queue. */
     public QuestionService() {}
@@ -38,11 +38,12 @@ public class QuestionService {
     public IQuestion nextQuestion(int level) {
         if (questionQueue.isEmpty()) {
             buildQueue(pickDifficulty(level));
-            log.debug("Queue refilled - cat level: {}, pool size: {}", level, questionQueue.size());
+            LOG.debug("Queue refilled - cat level: {}, pool size: {}", level, questionQueue.size());
         }
         IQuestion question = questionQueue.poll();
-        log.debug("Serving question - difficulty: {}, text: \"{}\", answer: {}, queue remaining: {}",
-                question.getDifficulty(), question.getText(), question.getAnswer(), questionQueue.size());
+        LOG.debug(
+                "Serving question - difficulty: {}, text: \"{}\", answer: {}, queue remaining: {}",
+                        question.getDifficulty(), question.getText(), question.getAnswer(), questionQueue.size());
         return question;
     }
 

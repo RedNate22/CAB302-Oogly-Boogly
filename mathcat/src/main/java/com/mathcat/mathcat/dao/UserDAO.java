@@ -13,7 +13,7 @@ import java.util.List;
  * logic. Business rules should be handled by UserService.
  */
 public final class UserDAO {
-    private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserDAO.class);
 
     private UserDAO() {}
 
@@ -27,7 +27,7 @@ public final class UserDAO {
      */
     public static void setCurrentUser(User user) {
         currentUser = user;
-        log.debug("current user set to: {}", user != null ? user.getUsername() : "null");
+        LOG.debug("current user set to: {}", user != null ? user.getUsername() : "null");
     }
 
     /**
@@ -43,7 +43,7 @@ public final class UserDAO {
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.executeUpdate();
-            log.debug("inserted user: {}", user.getUsername());
+            LOG.debug("inserted user: {}", user.getUsername());
         }
     }
 
@@ -121,7 +121,7 @@ public final class UserDAO {
         try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.executeUpdate();
-            log.debug("deleted user: {}", username);
+            LOG.debug("deleted user: {}", username);
         }
     }
 }

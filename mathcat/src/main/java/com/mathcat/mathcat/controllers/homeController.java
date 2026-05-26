@@ -33,7 +33,7 @@ import javafx.application.Platform;
  * not handle persistence.
  */
 public class homeController {
-    private static final Logger log = LoggerFactory.getLogger(homeController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(homeController.class);
 
     /** Creates a new homeController. */
     public homeController() {}
@@ -93,7 +93,7 @@ public class homeController {
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
                     stage.getScene().setRoot(root);
                 } catch (IOException e) {
-                    log.error("failed to redirect to create pet screen", e);
+                    LOG.error("failed to redirect to create pet screen", e);
                 }
             });
         }
