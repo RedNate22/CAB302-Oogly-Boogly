@@ -1,0 +1,7 @@
+module:com.mathcat.mathcat
+com.mathcat.mathcat
+com.mathcat.mathcat.controllers
+com.mathcat.mathcat.dao
+com.mathcat.mathcat.database
+com.mathcat.mathcat.models
+com.mathcat.mathcat.services
