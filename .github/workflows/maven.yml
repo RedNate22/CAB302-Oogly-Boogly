@@ -33,3 +33,7 @@ jobs:
             - name: Generate Javadoc
               run: mvn javadoc:javadoc
               working-directory: mathcat
+            - name: Publish Javadoc
+              uses: JamesIves/github-pages-deploy-action@v4
+              with:
+                folder: target/docs/javadoc
