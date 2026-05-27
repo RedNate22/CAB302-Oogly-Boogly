@@ -193,6 +193,7 @@ public class PlayController {
 
             if (attempts >= 3) {
                 LOG.debug("3 incorrect attempts reached, showing answer button.");
+                setFeedbackLabel("Incorrect! Use the \"Show Answer\" button for help.");
                 showAnswerButton.setVisible(true);
                 showAnswerButton.setManaged(true);
             } else {
