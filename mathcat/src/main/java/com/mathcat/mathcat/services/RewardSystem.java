@@ -134,7 +134,7 @@ public class RewardSystem {
      * @param question the current question
      * @param isAiUsed the AI chatcontroller
      */
-    public static void userReward(Cat cat, IQuestion question, Boolean isAiUsed) {
+    public static double userReward(Cat cat, IQuestion question, Boolean isAiUsed) {
         if (cat.getHappiness() < 100) {
             cat.setHappiness(cat.getHappiness() + 1);
         }
@@ -145,7 +145,7 @@ public class RewardSystem {
                             question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
             LOG.debug("No item dropped - insufficient energy (difficulty: {}, energy: {})",
                             question.getDifficulty(), String.format("%.2f", cat.getEnergy()));
-            return;
+            return xpReturn;
         }
 
         LOG.debug("XP: {} (base: {}, bonus: {}, aiUsed: {})", String.format("%.2f", xpReturn),
@@ -172,22 +172,23 @@ public class RewardSystem {
             ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
             LOG.debug("Item dropped: {} (roll: {})", newItem.getItemName(),
                     String.format("%.2f", percentage));
-            return;
+            return xpReturn;
         }
         if (question.getDifficulty() == Difficulty.MEDIUM && percentage <= 25) {
             cat.getItems().add(newItem);
             ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
             LOG.debug("Item dropped: {} (roll: {})", newItem.getItemName(),
                     String.format("%.2f", percentage));
-            return;
+            return xpReturn;
         }
         if (question.getDifficulty() == Difficulty.HARD && percentage <= 40) {
             cat.getItems().add(newItem);
             ItemDAO.addItem(cat.getCatId(), newItem.getItemId());
             LOG.debug("Item dropped: {} (roll: {})", newItem.getItemName(),
                     String.format("%.2f", percentage));
-            return;
+            return xpReturn;
         }
         LOG.debug("No item dropped (roll: {})", String.format("%.2f", percentage));
+        return xpReturn;
     }
 }

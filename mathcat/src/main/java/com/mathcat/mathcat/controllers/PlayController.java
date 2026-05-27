@@ -161,14 +161,18 @@ public class PlayController {
         if (userAnswer == currentQuestion.getAnswer()) {
             LOG.debug("correct answer: {} (difficulty: {})", userAnswer,
                     currentQuestion.getDifficulty());
-            RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
+            double xpRewarded =
+                    RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
             refreshStats(cat);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();
-            setFeedbackLabel("Correct!");
+            if (xpRewarded != 0)
+                setFeedbackLabel(String.format("Correct! XP Earned: %.2f", xpRewarded));
+            else
+                setFeedbackLabel("Correct! No XP Gained");
 
             setupNextQuestion();
         } else {
