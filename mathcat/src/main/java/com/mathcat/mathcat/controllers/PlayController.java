@@ -84,6 +84,8 @@ public class PlayController {
     @FXML
     private Label feedbackLabel;
 
+    private PauseTransition feedbackTimer;
+
     private final QuestionService questionService = new QuestionService();
     private IQuestion currentQuestion;
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
@@ -228,15 +230,18 @@ public class PlayController {
     }
 
     private void setFeedbackLabel(String feedback) {
+        if (feedbackTimer != null) {
+            feedbackTimer.stop(); // prevent early dismissal from stacked timers
+        }
         feedbackLabel.setText(feedback);
         feedbackLabel.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(6));
+        feedbackTimer = new PauseTransition(Duration.seconds(6));
 
-        pause.setOnFinished((ActionEvent event) -> {
+        feedbackTimer.setOnFinished((ActionEvent event) -> {
             feedbackLabel.setVisible(false);
         });
-        pause.play();
+        feedbackTimer.play();
     }
 
     /**
