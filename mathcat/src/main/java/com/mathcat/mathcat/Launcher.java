@@ -4,7 +4,6 @@ import javafx.application.Application;
 
 /** Entry point that works around JavaFX module restrictions on direct Application launch. */
 public class Launcher {
-
     private Launcher() {}
 
     /**
