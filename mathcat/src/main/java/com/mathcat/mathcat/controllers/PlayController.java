@@ -233,7 +233,7 @@ public class PlayController {
         feedbackLabel.setText(feedback);
         feedbackLabel.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        PauseTransition pause = new PauseTransition(Duration.seconds(6));
 
         pause.setOnFinished((ActionEvent event) -> {
             feedbackLabel.setVisible(false);
