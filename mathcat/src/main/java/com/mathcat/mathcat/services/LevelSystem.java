@@ -40,8 +40,9 @@ public final class LevelSystem {
      * @return the XP threshold for the next level, or -1 if already at {@link #MAX_LEVEL}
      */
     public static double getXpToNextLevel(double level) {
-        if (level >= MAX_LEVEL)
+        if (level >= MAX_LEVEL) {
             return -1;
+        }
         int levelInt = (int) level;
         return XP_THRESHOLDS[levelInt + 1];
     }
@@ -53,8 +54,9 @@ public final class LevelSystem {
      * @return true if the cat can level up
      */
     public static boolean canLevelUp(Cat cat) {
-        if (cat.getLevel() >= MAX_LEVEL)
+        if (cat.getLevel() >= MAX_LEVEL) {
             return false;
+        }
         return cat.getXp() >= XP_THRESHOLDS[cat.getLevel() + 1];
     }
 
@@ -65,8 +67,9 @@ public final class LevelSystem {
      * @param cat the cat to level up.
      */
     public static void levelUp(Cat cat) {
-        if (cat.getLevel() >= MAX_LEVEL)
+        if (cat.getLevel() >= MAX_LEVEL) {
             return;
+        }
 
         int oldLevel = cat.getLevel();
         double excessXp = cat.getXp() - XP_THRESHOLDS[cat.getLevel() + 1];

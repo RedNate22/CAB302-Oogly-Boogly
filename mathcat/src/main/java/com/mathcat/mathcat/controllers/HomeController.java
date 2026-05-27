@@ -83,12 +83,12 @@ public class HomeController {
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
             refreshStats(cat);
-        }
-
-        else {
+        } else {
             Platform.runLater(() -> {
                 try {
-                    if (petNameLabel.getScene() == null) return; // scene may not be attached yet during initialize()
+                    if (petNameLabel.getScene() == null) {
+                        return; // scene may not be attached yet during initialize()
+                    }
                     Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
                     stage.getScene().setRoot(root);
