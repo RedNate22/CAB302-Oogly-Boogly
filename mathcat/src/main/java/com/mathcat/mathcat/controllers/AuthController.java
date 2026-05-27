@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles UI events for the login and account creation screens.
  */
-public class AuthController {
+public final class AuthController {
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
     /** Creates a new AuthController. */

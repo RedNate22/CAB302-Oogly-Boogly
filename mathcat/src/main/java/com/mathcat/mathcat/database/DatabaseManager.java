@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manages the SQLite database connection and initialises all tables.
  */
-public class DatabaseManager {
+public final class DatabaseManager {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseManager.class);
 
     private DatabaseManager() {}

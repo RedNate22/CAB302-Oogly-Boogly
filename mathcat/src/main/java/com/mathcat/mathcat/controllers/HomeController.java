@@ -32,7 +32,7 @@ import javafx.application.Platform;
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
  * not handle persistence.
  */
-public class HomeController {
+public final class HomeController {
     private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
     /** Creates a new homeController. */

@@ -4,7 +4,7 @@ package com.mathcat.mathcat.models;
  * Represents a math question generated from a set of operands, {@link QuestionType}, and a
  * {@link Difficulty}. Computes the answer and builds the question text at construction time.
  */
-public class Question implements IQuestion {
+public final class Question implements IQuestion {
     private final String questionText;
     private final QuestionType questionType;
     private final Difficulty difficulty;

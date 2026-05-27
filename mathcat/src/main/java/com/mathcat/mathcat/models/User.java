@@ -3,7 +3,7 @@ package com.mathcat.mathcat.models;
 /**
  * Represents a registered user account.
  */
-public class User {
+public final class User {
     private String username;
     private String email;
     private String password;

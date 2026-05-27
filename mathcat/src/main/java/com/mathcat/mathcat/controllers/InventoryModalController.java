@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * Controller for the inventory modal screen. Handles item selection and cat appearance changes.
  */
-public class InventoryModalController {
+public final class InventoryModalController {
 
     /** Creates a new InventoryModalController. */
     public InventoryModalController() {}

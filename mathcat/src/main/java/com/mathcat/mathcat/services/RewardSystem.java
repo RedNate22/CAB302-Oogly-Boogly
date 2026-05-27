@@ -16,7 +16,7 @@ import java.util.Random;
  * Manages the XP gain a user will receive upon successfully completing a question.
  * This class contains rules for subsequent XP gain and returns it.
  */
-public class RewardSystem {
+public final class RewardSystem {
     private static final Logger LOG = LoggerFactory.getLogger(RewardSystem.class);
 
     /** Creates a new RewardSystem. */

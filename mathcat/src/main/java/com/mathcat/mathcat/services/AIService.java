@@ -17,7 +17,7 @@ import java.time.Instant;
  * teaching method to guide students through math problems without giving away the answer directly.
  * Maintains conversation history to provide context-aware hints.
  */
-public class AIService {
+public final class AIService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AIService.class);
 

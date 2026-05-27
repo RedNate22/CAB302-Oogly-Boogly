@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
  * ChatController.
  */
-public class PlayController {
+public final class PlayController {
     private static final Logger LOG = LoggerFactory.getLogger(PlayController.class);
 
     /** Creates a new PlayController. */

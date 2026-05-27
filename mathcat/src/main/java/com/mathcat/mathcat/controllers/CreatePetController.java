@@ -34,7 +34,7 @@ import com.mathcat.mathcat.services.SpriteService;
  * Controller for the Create Pet screen. Handles pet creation and saves to both in-memory CatDAO and
  * SQLite database.
  */
-public class CreatePetController {
+public final class CreatePetController {
     private static final Logger LOG = LoggerFactory.getLogger(CreatePetController.class);
 
     /** Creates a new CreatePetController. */

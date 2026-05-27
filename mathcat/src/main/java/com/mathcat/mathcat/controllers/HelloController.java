@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /** Controller for the initial screen, handling navigation to login and account creation. */
-public class HelloController {
+public final class HelloController {
 
     /** Creates a new HelloController. */
     public HelloController() {}
