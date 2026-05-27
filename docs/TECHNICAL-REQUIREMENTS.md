@@ -261,6 +261,8 @@ Created by [Leonora](https://github.com/smolbebby)
     - Maintain consistent indentation and spacing.
     - Organise code logically for readability and maintainability.
         - Separate logical blocks with empty lines
+    - Use K&R brace style: opening brace on the same line as the statement, `else`/`catch`/`finally` on the same line as the closing brace.
+    - Always use braces on control structures (`if`, `else`, `for`, `while`, `do`), even for single-line bodies.
 
 ### 5.2 Documentation requirements
 
