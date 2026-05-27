@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * selected based on the cat's level, shuffled, and loaded into the queue. Questions are then served
  * one at a time until the pool is exhausted, at which point the process repeats.
  */
-public class QuestionService {
+public final class QuestionService {
     private static final Logger LOG = LoggerFactory.getLogger(QuestionService.class);
 
     /** Creates a new QuestionService with an empty question queue. */
