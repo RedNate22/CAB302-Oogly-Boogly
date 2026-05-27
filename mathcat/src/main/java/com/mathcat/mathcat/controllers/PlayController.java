@@ -28,6 +28,7 @@ import com.mathcat.mathcat.models.IQuestion;
 import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javafx.application.Platform;
 
 /**
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
@@ -116,6 +117,7 @@ public class PlayController {
             mathQuestionLabel.setText(currentQuestion.getText());
 
             setupNextQuestion();
+            Platform.runLater(() -> answerInput.requestFocus());
         }
     }
 
@@ -225,12 +227,7 @@ public class PlayController {
         showAnswerButton.setManaged(false);
     }
 
-    /**
-     * Displays a feedback message briefly, then hides it after 3 seconds.
-     *
-     * @param feedback the message to display
-     */
-    public void setFeedbackLabel(String feedback) {
+    private void setFeedbackLabel(String feedback) {
         feedbackLabel.setText(feedback);
         feedbackLabel.setVisible(true);
 
