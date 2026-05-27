@@ -36,11 +36,10 @@ To check for violations without running the full build:
 
 Violations are printed to the terminal. A successful check ends with `BUILD SUCCESS`. You can also view the results of the latest build's Checkstyle run on GitHub under `Actions > Java CI with Maven > build`.
 
-If a change is made (to fix a checkstyle error), re-package before running `checkstyle:check` again.
+Note: `checkstyle:check` runs against the compiled classes in `target/`, so if you have made changes since the last build, re-package first or just run `package` directly - it includes Checkstyle automatically.
 
 ```bash
 ./mvnw package
-./mvnw checkstyle:check
 ```
 
 ### Generating Javadocs
