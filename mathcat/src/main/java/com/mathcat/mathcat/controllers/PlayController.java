@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
@@ -74,11 +75,18 @@ public class PlayController {
     private TextField answerInput;
 
     @FXML
+    private Button submitButton;
+
+    @FXML
+    private Button showAnswerButton;
+
+    @FXML
     private Label feedbackLabel;
 
     private final QuestionService questionService = new QuestionService();
     private IQuestion currentQuestion;
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
+    private int attempts;
 
     /**
      * Loads the current cat, sets up the answer input listener, and serves the first question.
@@ -147,8 +155,9 @@ public class PlayController {
      */
     public void onSubmit(ActionEvent event) {
         String input = answerInput.getText().trim();
-        if (input.isEmpty())
+        if (input.isEmpty()) {
             return;
+        }
 
         int userAnswer;
         try {
@@ -159,6 +168,7 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
+            resetQuestionState();
             LOG.debug("correct answer: {} (difficulty: {})", userAnswer,
                     currentQuestion.getDifficulty());
             double xpRewarded =
@@ -169,16 +179,49 @@ public class PlayController {
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();
-            if (xpRewarded != 0)
-                setFeedbackLabel(String.format("Correct! XP Earned: %.2f", xpRewarded));
-            else
-                setFeedbackLabel("Correct! No XP Gained");
 
+            if (xpRewarded != 0) {
+                setFeedbackLabel(String.format("Correct! XP Earned: %.2f", xpRewarded));
+            } else {
+                setFeedbackLabel("Correct! No XP Gained");
+            }
             setupNextQuestion();
         } else {
-            LOG.debug("incorrect answer: {}", userAnswer);
-            setFeedbackLabel("Incorrect, try again!");
+            LOG.debug("Incorrect answer: {}, Correct Answer: {}", userAnswer,
+                    currentQuestion.getAnswer());
+            attempts++;
+
+            if (attempts >= 3) {
+                LOG.debug("3 incorrect attempts reached, showing answer button.");
+                showAnswerButton.setVisible(true);
+                showAnswerButton.setManaged(true);
+            } else {
+                setFeedbackLabel("Incorrect, try again!");
+            }
         }
+    }
+
+    private void resetQuestionState() {
+        attempts = 0;
+        answerInput.setDisable(false);
+        submitButton.setDisable(false);
+        showAnswerButton.setVisible(false);
+        showAnswerButton.setManaged(false);
+    }
+
+    /**
+     * Reveals the correct answer, then disables the input and submit button so the user can only skip.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    public void onShowAnswer(ActionEvent event) {
+        LOG.debug("Answer revealed: {}", currentQuestion.getAnswer());
+        setFeedbackLabel("The answer is: " + currentQuestion.getAnswer());
+        answerInput.setDisable(true);
+        submitButton.setDisable(true);
+        showAnswerButton.setVisible(false);
+        showAnswerButton.setManaged(false);
     }
 
     /**
@@ -206,6 +249,7 @@ public class PlayController {
      */
     @FXML
     public void onSkip(ActionEvent event) {
+        resetQuestionState();
         LOG.debug("question skipped: {}", currentQuestion.getText());
         currentQuestion = questionService.nextQuestion(cat.getLevel());
         mathQuestionLabel.setText(currentQuestion.getText());
