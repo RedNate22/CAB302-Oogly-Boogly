@@ -6,9 +6,71 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.mathcat.mathcat.controllers.ProfileController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mathcat.mathcat.controllers.ProfileController" prefHeight="400.0" prefWidth="600.0">
+    <StackPane prefHeight="150.0" prefWidth="200.0">
+        <children>
+            <ImageView id="viewCurrentPetImage" fx:id="viewCurrentPetImage" fitHeight="250.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true">
+                <viewport>
+                    <Rectangle2D />
+                </viewport>
+                <image>
+                    <Image url="@assets/images/sprites/cats/orange-normal.png" />
+                </image>
+            </ImageView>
+            <ImageView id="viewCurrentAccessoryImage" fx:id="viewCurrentAccessoryImage" fitHeight="250.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
+                <viewport>
+                    <Rectangle2D />
+                </viewport>
+                <image>
+                    <Image url="@assets/images/sprites/accessories/no-accessory-selected.png" />
+                </image>
+            </ImageView>
+        </children>
+    </StackPane>
+    <Label fx:id="usernameLabel" text="" />
+    <Label fx:id="emailLabel" text="" />
+    <Label fx:id="passwordLabel" text="" />
+    <children>
+        <Label fx:id="petNameLabel" text="'s Stats"></Label>
+        <Group>
+            <children>
+                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
+                <StackPane layoutY="17.0" prefWidth="200.0">
+                    <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
+                    <Label fx:id="happinessLabel" text="0" />
+                </StackPane>
+            </children>
+        </Group>
+        <Group layoutX="28.0" layoutY="114.0">
+            <children>
+                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
+                <StackPane layoutY="17.0" prefWidth="200.0">
+                    <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
+                    <Label fx:id="hungerLabel" text="0" />
+                </StackPane>
+            </children>
+        </Group>
+        <Group layoutX="28.0" layoutY="132.0">
+            <children>
+                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
+                <StackPane layoutY="17.0" prefWidth="200.0">
+                    <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
+                    <Label fx:id="energyLabel" text="0" />
+                </StackPane>
+            </children>
+        </Group>
+        <Group layoutX="28.0" layoutY="132.0">
+            <children>
+                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
+                <StackPane>
+                    <ProgressBar fx:id="levelProgressBar" progress="0.0" />
+                    <Label fx:id="levelProgressLabel" styleClass="stat-value" text="Level" />
+                </StackPane>
+            </children>
+        </Group>
+    </children>
+</VBox>
