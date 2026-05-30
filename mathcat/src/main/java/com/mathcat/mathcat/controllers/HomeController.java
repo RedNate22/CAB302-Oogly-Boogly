@@ -172,9 +172,9 @@ public class HomeController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root,700, 500);
-
-        stage.setTitle("Profile");
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
         stage.setScene(scene);
 
     }
