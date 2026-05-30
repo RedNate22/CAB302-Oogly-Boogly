@@ -1,76 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.image.Image?>
-<?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mathcat.mathcat.controllers.ProfileController" prefHeight="400.0" prefWidth="600.0">
-    <StackPane prefHeight="150.0" prefWidth="200.0">
-        <children>
-            <ImageView id="viewCurrentPetImage" fx:id="viewCurrentPetImage" fitHeight="250.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true">
-                <viewport>
-                    <Rectangle2D />
-                </viewport>
-                <image>
-                    <Image url="@assets/images/sprites/cats/orange-normal.png" />
-                </image>
-            </ImageView>
-            <ImageView id="viewCurrentAccessoryImage" fx:id="viewCurrentAccessoryImage" fitHeight="250.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true">
-                <viewport>
-                    <Rectangle2D />
-                </viewport>
-                <image>
-                    <Image url="@assets/images/sprites/accessories/no-accessory-selected.png" />
-                </image>
-            </ImageView>
-        </children>
-    </StackPane>
-    <Label fx:id="usernameLabel" text="" />
-    <Label fx:id="emailLabel" text="" />
-    <Label fx:id="passwordLabel" text="" />
-    <children>
-        <Label fx:id="petNameLabel" text="'s Stats"></Label>
-        <Group>
-            <children>
-                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
-                <StackPane layoutY="17.0" prefWidth="200.0">
-                    <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
-                    <Label fx:id="happinessLabel" text="0" />
-                </StackPane>
-            </children>
-        </Group>
-        <Group layoutX="28.0" layoutY="114.0">
-            <children>
-                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
-                <StackPane layoutY="17.0" prefWidth="200.0">
-                    <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
-                    <Label fx:id="hungerLabel" text="0" />
-                </StackPane>
-            </children>
-        </Group>
-        <Group layoutX="28.0" layoutY="132.0">
-            <children>
-                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
-                <StackPane layoutY="17.0" prefWidth="200.0">
-                    <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
-                    <Label fx:id="energyLabel" text="0" />
-                </StackPane>
-            </children>
-        </Group>
-        <Group layoutX="28.0" layoutY="132.0">
-            <children>
-                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Progress" />
-                <StackPane layoutY="17.0" prefWidth="200.0">
-                    <ProgressBar fx:id="levelProgressBar" prefWidth="200.0" progress="0.0" />
-                    <Label fx:id="levelProgressLabel" text="0" />
-                </StackPane>
-            </children>
-        </Group>
-    </children>
-</VBox>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mathcat.mathcat.controllers.ProfileController" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f7fb;">
+    <top>
+        <VBox alignment="CENTER" spacing="5.0">
+            <padding>
+                <Insets top="10" bottom="5" />
+            </padding>
+
+            <Label text="Profile"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+
+            <StackPane prefHeight="115.0" prefWidth="180.0">
+                <ImageView fx:id="viewCurrentPetImage"
+                           fitHeight="140.0"
+                           fitWidth="160.0"
+                           pickOnBounds="true"
+                           preserveRatio="true">
+                    <viewport>
+                        <Rectangle2D />
+                    </viewport>
+                    <image>
+                        <Image url="@assets/images/sprites/cats/orange-normal.png" />
+                    </image>
+                </ImageView>
+
+                <ImageView fx:id="viewCurrentAccessoryImage"
+                           fitHeight="140.0"
+                           fitWidth="160.0"
+                           pickOnBounds="true"
+                           preserveRatio="true">
+                    <viewport>
+                        <Rectangle2D />
+                    </viewport>
+                    <image>
+                        <Image url="@assets/images/sprites/accessories/no-accessory-selected.png" />
+                    </image>
+                </ImageView>
+            </StackPane>
+
+            <Label text="Level 3"
+                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+
+            <StackPane prefWidth="300.0">
+                <ProgressBar fx:id="levelProgressBar"
+                             prefWidth="300.0"
+                             progress="0.0" />
+                <Label fx:id="levelProgressLabel"
+                       text="0"
+                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+            </StackPane>
+        </VBox>
+    </top>
+
+    <center>
+        <HBox alignment="CENTER" spacing="15.0">
+            <padding>
+                <Insets top="5" right="20" bottom="5" left="20" />
+            </padding>
+
+            <VBox spacing="8.0"
+                  prefWidth="260.0"
+                  prefHeight="160.0"
+                  style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dddddd; -fx-border-radius: 12; -fx-padding: 12;">
+
+                <Label fx:id="petNameLabel"
+                       text="Maisy's Stats"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+
+                <VBox spacing="3.0">
+                    <Label text="Happiness" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
+                    <StackPane prefWidth="220.0">
+                        <ProgressBar fx:id="happinessProgressBar" prefWidth="220.0" progress="0.0" />
+                        <Label fx:id="happinessLabel" text="0" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    </StackPane>
+                </VBox>
+
+                <VBox spacing="3.0">
+                    <Label text="Hunger" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
+                    <StackPane prefWidth="220.0">
+                        <ProgressBar fx:id="hungerProgressBar" prefWidth="220.0" progress="0.0" />
+                        <Label fx:id="hungerLabel" text="0" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    </StackPane>
+                </VBox>
+
+                <VBox spacing="3.0">
+                    <Label text="Energy" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
+                    <StackPane prefWidth="220.0">
+                        <ProgressBar fx:id="energyProgressBar" prefWidth="220.0" progress="0.0" />
+                        <Label fx:id="energyLabel" text="0" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    </StackPane>
+                </VBox>
+            </VBox>
+
+            <VBox spacing="8.0"
+                  prefWidth="260.0"
+                  prefHeight="160.0"
+                  style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dddddd; -fx-border-radius: 12; -fx-padding: 12;">
+
+                <Label text="Account Information"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+
+                <GridPane hgap="8.0" vgap="8.0">
+                    <columnConstraints>
+                        <ColumnConstraints prefWidth="70.0" />
+                        <ColumnConstraints prefWidth="105.0" />
+                        <ColumnConstraints prefWidth="65.0" />
+                    </columnConstraints>
+
+                    <Label text="Username" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                           style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    <Label fx:id="usernameLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           style="-fx-font-size: 11px;" />
+                    <Button text="Change" GridPane.rowIndex="0" GridPane.columnIndex="2"
+                            prefWidth="60.0" prefHeight="24.0" />
+
+                    <Label text="Email" GridPane.rowIndex="1" GridPane.columnIndex="0"
+                           style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    <Label fx:id="emailLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                           style="-fx-font-size: 11px;" />
+                    <Button text="Change" GridPane.rowIndex="1" GridPane.columnIndex="2"
+                            prefWidth="60.0" prefHeight="24.0" />
+
+                    <Label text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0"
+                           style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                    <Label fx:id="passwordLabel" text="********" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                           style="-fx-font-size: 11px;" />
+                    <Button text="Change" GridPane.rowIndex="2" GridPane.columnIndex="2"
+                            prefWidth="60.0" prefHeight="24.0" />
+                </GridPane>
+            </VBox>
+        </HBox>
+    </center>
+
+    <bottom>
+        <VBox alignment="CENTER">
+            <padding>
+                <Insets top="5" right="20" bottom="10" left="20" />
+            </padding>
+
+            <Button text="Logout"
+                    prefWidth="540.0"
+                    prefHeight="32.0"
+                    style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #d9534f;" />
+        </VBox>
+    </bottom>
+
+</BorderPane>
