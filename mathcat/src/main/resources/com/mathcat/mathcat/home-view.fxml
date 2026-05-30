@@ -66,7 +66,7 @@
                      <children>
                         <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" mnemonicParsing="false" onAction="#onPressPlay" text="Play" />
                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Inventory" />
-                        <Button fx:id="profile" alignment="CENTER" contentDisplay="CENTER" layoutX="163.0" mnemonicParsing="false" onAction="#onPressPlay" text="Profile" />
+                        <Button fx:id="profile" alignment="CENTER" contentDisplay="CENTER" layoutX="163.0" mnemonicParsing="false" onAction="#onPressProfile" text="Profile" />
                      </children>
                   </Group>
                </children>

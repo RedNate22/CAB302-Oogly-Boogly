@@ -166,6 +166,18 @@ public class HomeController {
     //     modalStage.setTitle("Inventory Modal");
     //     modalStage.show();
     // }
+
+    public void onPressProfile(ActionEvent event) throws IOException {
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root,700, 500);
+
+        stage.setTitle("Profile");
+        stage.setScene(scene);
+
+    }
 }
 
 
