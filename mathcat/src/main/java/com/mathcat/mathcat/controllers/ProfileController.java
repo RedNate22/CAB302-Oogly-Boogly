@@ -74,7 +74,7 @@ public class ProfileController {
         happinessLabel.setText(String.format("%.0f", happiness));
         hungerLabel.setText(String.format("%.0f", hunger));
         energyLabel.setText(String.format("%.0f", energy));
-        levelProgressLabel.setText(String.format("Level %.0f", level));
+        levelProgressLabel.setText(String.format("%.0f", level));
 
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);

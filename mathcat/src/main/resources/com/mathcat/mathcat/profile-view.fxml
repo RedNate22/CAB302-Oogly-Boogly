@@ -65,10 +65,10 @@
         </Group>
         <Group layoutX="28.0" layoutY="132.0">
             <children>
-                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
-                <StackPane>
-                    <ProgressBar fx:id="levelProgressBar" progress="0.0" />
-                    <Label fx:id="levelProgressLabel" styleClass="stat-value" text="Level" />
+                <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Progress" />
+                <StackPane layoutY="17.0" prefWidth="200.0">
+                    <ProgressBar fx:id="levelProgressBar" prefWidth="200.0" progress="0.0" />
+                    <Label fx:id="levelProgressLabel" text="0" />
                 </StackPane>
             </children>
         </Group>
