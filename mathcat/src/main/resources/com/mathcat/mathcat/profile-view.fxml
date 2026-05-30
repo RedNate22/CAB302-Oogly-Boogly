@@ -45,16 +45,13 @@
                 </ImageView>
             </StackPane>
 
-            <Label text="Level 3"
+            <Label fx:id="levelProgressLabel" text=""
                    style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
 
             <StackPane prefWidth="300.0">
                 <ProgressBar fx:id="levelProgressBar"
                              prefWidth="300.0"
                              progress="0.0" />
-                <Label fx:id="levelProgressLabel"
-                       text="0"
-                       style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
             </StackPane>
         </VBox>
     </top>

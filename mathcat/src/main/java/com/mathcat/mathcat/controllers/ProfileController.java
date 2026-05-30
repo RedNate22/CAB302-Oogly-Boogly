@@ -67,14 +67,14 @@ public class ProfileController {
         double xp = CatService.displayXP(cat);
         double nextLevelXP = LevelSystem.getXpToNextLevel(level);
 
-        usernameLabel.setText("Username: " + username);
-        emailLabel.setText("Email: " + email);
-        passwordLabel.setText("Password: " + password);
+        usernameLabel.setText(username);
+        emailLabel.setText(email);
+        passwordLabel.setText(password);
         petNameLabel.setText(catName + "'s Stats");
         happinessLabel.setText(String.format("%.0f", happiness));
         hungerLabel.setText(String.format("%.0f", hunger));
         energyLabel.setText(String.format("%.0f", energy));
-        levelProgressLabel.setText(String.format("%.0f", level));
+        levelProgressLabel.setText(String.format("Level %.0f", level));
 
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
