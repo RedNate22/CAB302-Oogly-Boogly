@@ -7,20 +7,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.mathcat.mathcat.controllers.ProfileController" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f7f7fb;">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.mathcat.mathcat.controllers.ProfileController"
+            prefHeight="400.0"
+            prefWidth="600.0"
+            style="-fx-background-color: #303446;">
+
     <top>
-        <VBox alignment="CENTER" spacing="5.0">
+        <VBox alignment="CENTER" spacing="4.0">
             <padding>
-                <Insets top="10" bottom="5" />
+                <Insets top="8" bottom="4" />
             </padding>
 
             <Label text="Profile"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+                   style="-fx-font-size: 24px;" />
 
-            <StackPane prefHeight="115.0" prefWidth="180.0">
+            <StackPane prefHeight="105.0" prefWidth="170.0">
                 <ImageView fx:id="viewCurrentPetImage"
-                           fitHeight="140.0"
-                           fitWidth="160.0"
+                           fitHeight="130.0"
+                           fitWidth="150.0"
                            pickOnBounds="true"
                            preserveRatio="true">
                     <viewport>
@@ -32,8 +38,8 @@
                 </ImageView>
 
                 <ImageView fx:id="viewCurrentAccessoryImage"
-                           fitHeight="140.0"
-                           fitWidth="160.0"
+                           fitHeight="130.0"
+                           fitWidth="150.0"
                            pickOnBounds="true"
                            preserveRatio="true">
                     <viewport>
@@ -45,92 +51,133 @@
                 </ImageView>
             </StackPane>
 
-            <Label fx:id="levelProgressLabel" text=""
-                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+            <Label fx:id="levelProgressLabel"
+                   text=""
+                   style="-fx-font-size: 18px;" />
 
-            <StackPane prefWidth="300.0">
-                <ProgressBar fx:id="levelProgressBar"
-                             prefWidth="300.0"
-                             progress="0.0" />
-            </StackPane>
+            <ProgressBar fx:id="levelProgressBar"
+                         prefWidth="330.0"
+                         progress="0.0" />
         </VBox>
     </top>
 
     <center>
-        <HBox alignment="CENTER" spacing="15.0">
+        <HBox alignment="CENTER" spacing="12.0">
             <padding>
-                <Insets top="5" right="20" bottom="5" left="20" />
+                <Insets top="4" right="10" bottom="4" left="10" />
             </padding>
 
-            <VBox spacing="8.0"
-                  prefWidth="260.0"
+            <VBox spacing="7.0"
+                  prefWidth="280.0"
                   prefHeight="160.0"
-                  style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dddddd; -fx-border-radius: 12; -fx-padding: 12;">
+                  style="-fx-background-color: #414559; -fx-background-radius: 12; -fx-border-color: #626880; -fx-border-radius: 12; -fx-padding: 10;">
 
                 <Label fx:id="petNameLabel"
                        text="Maisy's Stats"
-                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+                       style="-fx-font-size: 18px;" />
 
-                <VBox spacing="3.0">
-                    <Label text="Happiness" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
-                    <StackPane prefWidth="220.0">
-                        <ProgressBar fx:id="happinessProgressBar" prefWidth="220.0" progress="0.0" />
-                        <Label fx:id="happinessLabel" text="0" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                <VBox spacing="2.0">
+                    <Label text="Happiness" style="-fx-font-size: 13px;" />
+                    <StackPane prefWidth="250.0">
+                        <ProgressBar fx:id="happinessProgressBar"
+                                     prefWidth="250.0"
+                                     progress="0.0" />
+                        <Label fx:id="happinessLabel"
+                               styleClass="stat-value"
+                               text="0" />
                     </StackPane>
                 </VBox>
 
-                <VBox spacing="3.0">
-                    <Label text="Hunger" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
-                    <StackPane prefWidth="220.0">
-                        <ProgressBar fx:id="hungerProgressBar" prefWidth="220.0" progress="0.0" />
-                        <Label fx:id="hungerLabel" text="0" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                <VBox spacing="2.0">
+                    <Label text="Hunger" style="-fx-font-size: 13px;" />
+                    <StackPane prefWidth="250.0">
+                        <ProgressBar fx:id="hungerProgressBar"
+                                     prefWidth="250.0"
+                                     progress="0.0" />
+                        <Label fx:id="hungerLabel"
+                               styleClass="stat-value"
+                               text="0" />
                     </StackPane>
                 </VBox>
 
-                <VBox spacing="3.0">
-                    <Label text="Energy" style="-fx-font-size: 12px; -fx-font-weight: bold;" />
-                    <StackPane prefWidth="220.0">
-                        <ProgressBar fx:id="energyProgressBar" prefWidth="220.0" progress="0.0" />
-                        <Label fx:id="energyLabel" text="0" style="-fx-font-size: 11px; -fx-font-weight: bold;" />
+                <VBox spacing="2.0">
+                    <Label text="Energy" style="-fx-font-size: 13px;" />
+                    <StackPane prefWidth="250.0">
+                        <ProgressBar fx:id="energyProgressBar"
+                                     prefWidth="250.0"
+                                     progress="0.0" />
+                        <Label fx:id="energyLabel"
+                               styleClass="stat-value"
+                               text="0" />
                     </StackPane>
                 </VBox>
             </VBox>
 
-            <VBox spacing="8.0"
-                  prefWidth="260.0"
+            <VBox spacing="9.0"
+                  prefWidth="280.0"
                   prefHeight="160.0"
-                  style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dddddd; -fx-border-radius: 12; -fx-padding: 12;">
+                  style="-fx-background-color: #414559; -fx-background-radius: 12; -fx-border-color: #626880; -fx-border-radius: 12; -fx-padding: 10;">
 
                 <Label text="Account Information"
-                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #20202a;" />
+                       style="-fx-font-size: 18px;" />
 
                 <GridPane hgap="8.0" vgap="8.0">
                     <columnConstraints>
-                        <ColumnConstraints prefWidth="70.0" />
-                        <ColumnConstraints prefWidth="105.0" />
-                        <ColumnConstraints prefWidth="65.0" />
+                        <ColumnConstraints prefWidth="72.0" />
+                        <ColumnConstraints prefWidth="112.0" />
+                        <ColumnConstraints prefWidth="72.0" />
                     </columnConstraints>
 
-                    <Label text="Username" GridPane.rowIndex="0" GridPane.columnIndex="0"
-                           style="-fx-font-size: 11px; -fx-font-weight: bold;" />
-                    <Label fx:id="usernameLabel" text="" GridPane.rowIndex="0" GridPane.columnIndex="1"
-                           style="-fx-font-size: 11px;" />
-                    <Button text="Change" GridPane.rowIndex="0" GridPane.columnIndex="2"
-                            prefWidth="60.0" prefHeight="24.0" />
+                    <Label text="Username"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-size: 12px;" />
 
-                    <Label text="Email" GridPane.rowIndex="1" GridPane.columnIndex="0"
-                           style="-fx-font-size: 11px; -fx-font-weight: bold;" />
-                    <Label fx:id="emailLabel" text="" GridPane.rowIndex="1" GridPane.columnIndex="1"
-                           style="-fx-font-size: 11px;" />
-                    <Button text="Change" GridPane.rowIndex="1" GridPane.columnIndex="2"
-                            prefWidth="60.0" prefHeight="24.0" />
+                    <Label fx:id="usernameLabel"
+                           text=""
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"
+                           style="-fx-font-size: 12px;" />
 
-                    <Label text="Password" GridPane.rowIndex="2" GridPane.columnIndex="0"
-                           style="-fx-font-size: 11px; -fx-font-weight: bold;" />
-                    <Label fx:id="passwordLabel" text="********" GridPane.rowIndex="2" GridPane.columnIndex="1"
-                           style="-fx-font-size: 11px;" />
-                    <Button text="Change" GridPane.rowIndex="2" GridPane.columnIndex="2"
-                            prefWidth="60.0" prefHeight="24.0" />
+                    <Button text="Change"
+                            GridPane.rowIndex="0"
+                            GridPane.columnIndex="2"
+                            prefWidth="72.0"
+                            prefHeight="25.0" />
+
+                    <Label text="Email"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-size: 12px;" />
+
+                    <Label fx:id="emailLabel"
+                           text=""
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"
+                           style="-fx-font-size: 12px;" />
+
+                    <Button text="Change"
+                            GridPane.rowIndex="1"
+                            GridPane.columnIndex="2"
+                            prefWidth="72.0"
+                            prefHeight="25.0" />
+
+                    <Label text="Password"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="0"
+                           style="-fx-font-size: 12px;" />
+
+                    <Label fx:id="passwordLabel"
+                           text="********"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="1"
+                           style="-fx-font-size: 12px;" />
+
+                    <Button text="Change"
+                            GridPane.rowIndex="2"
+                            GridPane.columnIndex="2"
+                            prefWidth="72.0"
+                            prefHeight="25.0" />
                 </GridPane>
             </VBox>
         </HBox>
@@ -139,13 +186,12 @@
     <bottom>
         <VBox alignment="CENTER">
             <padding>
-                <Insets top="5" right="20" bottom="10" left="20" />
+                <Insets top="4" right="10" bottom="8" left="10" />
             </padding>
 
             <Button text="Logout"
-                    prefWidth="540.0"
-                    prefHeight="32.0"
-                    style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #d9534f;" />
+                    prefWidth="580.0"
+                    prefHeight="32.0"/>
         </VBox>
     </bottom>
 
