@@ -65,7 +65,7 @@
                   <Group layoutX="46.0" layoutY="400.0">
                      <children>
                         <Button fx:id="play" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" mnemonicParsing="false" onAction="#onPressPlay" text="Play" />
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Inventory" />
+                        <Button fx:id="inventory" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPressInventory" text="Inventory" />
                      </children>
                   </Group>
                </children>
