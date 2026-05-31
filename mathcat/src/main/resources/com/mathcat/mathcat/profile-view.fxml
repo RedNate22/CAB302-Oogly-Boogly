@@ -167,8 +167,8 @@
                            GridPane.columnIndex="0"
                            style="-fx-font-size: 12px;" />
 
-                    <Label fx:id="passwordLabel"
-                           text="********"
+                    <PasswordField fx:id="passwordLabel"
+                           text="•••"
                            GridPane.rowIndex="2"
                            GridPane.columnIndex="1"
                            style="-fx-font-size: 12px;" />
