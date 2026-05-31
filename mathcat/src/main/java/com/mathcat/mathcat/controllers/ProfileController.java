@@ -49,9 +49,24 @@ public class ProfileController {
     private ProgressBar levelProgressBar;
 
     @FXML
+    private ImageView viewCurrentPetImage;
+    @FXML
+    private ImageView viewCurrentAccessoryImage;
+
+    @FXML
     public void initialize() {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
-        refreshStats(cat);
+
+        if (cat != null) {
+            CatService.applyOfflineDecay(cat);
+            CatScheduler.getInstance().start(cat);
+            CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
+
+            petNameLabel.setText(cat.getCatName() + "'s Stats");
+            viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
+            refreshStats(cat);
+        }
     }
 
     private void refreshStats(Cat cat) {
@@ -80,5 +95,15 @@ public class ProfileController {
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
         levelProgressBar.setProgress(xp/nextLevelXP);
+    }
+
+    /**
+     * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
+     *
+     * @param event gets the window/stage for the home screen
+     * @throws IOException if listed screen does not exist
+     */
+    public void onLogoutConfirm(ActionEvent event) throws IOException {
+        NavigationUtil.logout(event);
     }
 }
