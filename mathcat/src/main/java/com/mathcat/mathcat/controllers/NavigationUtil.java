@@ -27,7 +27,7 @@ public class NavigationUtil {
     // FXMLLoader via reflection, making inheritance fragile. @FXML injection, initialize(), and
     // constructor constraints all interact poorly with superclasses.
 
-    private static final Logger log = LoggerFactory.getLogger(NavigationUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NavigationUtil.class);
 
     public static final String STYLESHEET = NavigationUtil.class
             .getResource("/com/mathcat/mathcat/styling/styles.css").toExternalForm();
@@ -43,7 +43,7 @@ public class NavigationUtil {
      */
     public static void logout(ActionEvent event) throws IOException {
         CatScheduler.getInstance().stop();
-        log.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
         UserDAO.currentUser = null;
 
         Parent root = FXMLLoader

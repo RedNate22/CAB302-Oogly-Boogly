@@ -279,4 +279,5 @@ public final class CatDAOTest {
             assertNull(CatDAO.load(userId2));
         }
     }
+
 }

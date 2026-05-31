@@ -188,7 +188,7 @@
                               </ImageView>
                            </children>
                         </StackPane>
-                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
+                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" defaultButton="true" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>

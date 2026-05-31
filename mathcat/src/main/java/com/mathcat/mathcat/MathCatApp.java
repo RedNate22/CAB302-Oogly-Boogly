@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 
 /** JavaFX application entry point. Initialises the database and loads the initial screen. */
 public class MathCatApp extends Application {
+
+    /** Creates a new MathCatApp. */
+    public MathCatApp() {}
     @Override
     public void start(Stage stage) throws IOException {
         // Initialise the SQLite database and create tables if they don't exist

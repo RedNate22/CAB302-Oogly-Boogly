@@ -17,11 +17,13 @@ public class CatScheduler {
     private Cat cat;
     private Runnable onTickCallback;
 
-    private static final Logger log = LoggerFactory.getLogger(CatScheduler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CatScheduler.class);
 
     private CatScheduler() {}
 
     /**
+     * Returns the single shared CatScheduler instance, creating it if it does not yet exist.
+     *
      * @return the single shared CatScheduler instance
      */
     public static CatScheduler getInstance() {
@@ -32,6 +34,8 @@ public class CatScheduler {
     }
 
     /**
+     * Returns the cat currently being ticked, or null if the scheduler has not been started.
+     *
      * @return the cat currently being ticked, or null if the scheduler has not been started
      */
     public Cat getCat() {
@@ -79,15 +83,15 @@ public class CatScheduler {
      * Called on each timeline tick to apply stat decay and energy regeneration via {@link CatService}.
      */
     private void onTick() {
-        log.debug("Tick fired - happiness: {}, fullness: {}, energy: {}",
-                String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
+        LOG.debug("Tick fired - happiness: {}, fullness: {}, energy: {}",
+                        String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
                 String.format("%.2f", cat.getEnergy()));
         CatService.decreaseHappiness(cat, CatService.HAPPINESS_DECAY_RATE);
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
-        log.debug("After tick - happiness: {}, fullness: {}, energy: {}",
-                String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
+        LOG.debug("After tick - happiness: {}, fullness: {}, energy: {}",
+                        String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
                 String.format("%.2f", cat.getEnergy()));
         if (onTickCallback != null) {
             onTickCallback.run();

@@ -21,10 +21,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-/** 
-*
-*/
+/**
+ * Controller for the inventory modal screen. Handles item selection and cat appearance changes.
+ */
 public class InventoryModalController {
+
+    /** Creates a new InventoryModalController. */
+    public InventoryModalController() {}
+
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
 
     // Callback function to allow Home and Inventory controllers to talk to each other
@@ -92,6 +96,9 @@ public class InventoryModalController {
     @FXML
     private Tooltip energyNapItemTooltip;
 
+    /**
+     * Loads the current user's cat and its inventory on screen load.
+     */
     @FXML
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
@@ -114,6 +121,10 @@ public class InventoryModalController {
 
     /**
      * Handles the logic of callback to Home screen
+     * Returns the root stage resolved from the given action event.
+     *
+     * @param event the action event used to resolve the current stage
+     * @return the root Stage of the scene
      */
     public void setOnItemSelect(Consumer<String> callback) {
         this.onItemSelectCallback = callback;
@@ -127,13 +138,14 @@ public class InventoryModalController {
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
-
-            
         }
     }
 
     /**
-     * Handles logic of selecting the basic cowboy hat accessory
+     * Handles the change cat colour button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
      */
     public void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
@@ -145,6 +157,10 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the mega sized cowboy hat accessory
+     * Handles the change cat accessory button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
      */
     public void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
@@ -156,6 +172,10 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the red bowtie hat accessory
+     * Handles the confirm and save button action. Saves changes and closes the modal.
+     *
+     * @param event the button click event
+     * @throws IOException if closing the modal fails
      */
     public void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
@@ -178,6 +198,10 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the purple bowtie hat accessory
+    /**
+     * Sets the reference to the parent inventory modal controller.
+     *
+     * @param inventoryModalController the parent controller instance
      */
     public void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
