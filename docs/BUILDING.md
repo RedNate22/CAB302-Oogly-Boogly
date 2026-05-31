@@ -8,6 +8,22 @@ The following commands must be done in the order provided, from within the `math
 cd mathcat
 ```
 
+### Checkstyle
+
+Checkstyle is a static analysis tool that automatically enforces coding style and naming conventions at build time. You can find all the settings under [mathcat/checkstyle.xml](../mathcat/checkstyle.xml), and you can find all our code conventions under [5.1 Code Standards](TECHNICAL-REQUIREMENTS.md#51-code-standards).
+
+Checkstyle Documentation: [checkstyle.sourceforge.io](https://checkstyle.sourceforge.io/)
+
+| Element | Convention | Example |
+|---|---|---|
+| Classes | PascalCase | `HomeController` |
+| Interfaces | PascalCase with `I` prefix | `IQuestion` |
+| Methods | camelCase | `feedPet()` |
+| Local variables | camelCase | `petAge` |
+| Parameters | camelCase | `mathProblem` |
+| Fields | camelCase | `petHealth` |
+| Constants | UPPER_SNAKE_CASE | `MAX_HUNGER` |
+
 Checkstyle runs automatically as part of the build. If there are violations, the build will fail and the violations will be printed to the terminal with the file, line number, and rule that was broken (note: build occurs on pushes but wont print to the terminal unless you explicitly run the below build command).
 
 ```bash
@@ -43,18 +59,6 @@ Audit done.
 ..
 [INFO] BUILD SUCCESS
 ```
-
-The enforced rules are defined in `mathcat/checkstyle.xml` and reflect the naming conventions in our coding standards:
-
-| Element | Convention | Example |
-|---|---|---|
-| Classes | PascalCase | `HomeController` |
-| Interfaces | PascalCase with `I` prefix | `IQuestion` |
-| Methods | camelCase | `feedPet()` |
-| Local variables | camelCase | `petAge` |
-| Parameters | camelCase | `mathProblem` |
-| Fields | camelCase | `petHealth` |
-| Constants | UPPER_SNAKE_CASE | `MAX_HUNGER` |
 
 ### Generating Javadocs
 
