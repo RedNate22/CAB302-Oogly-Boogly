@@ -97,14 +97,4 @@ public class CatScheduler {
             onTickCallback.run();
         }
     }
-
-    /**
-     * Restarts the decay timeline. Equivalent to calling {@link #stop()} then {@link #start(Cat)}.
-     *
-     * @param cat the cat to apply decay to
-     */
-    public void restart(Cat cat) {
-        stop();
-        start(cat);
-    }
 }
