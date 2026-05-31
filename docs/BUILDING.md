@@ -60,6 +60,14 @@ Audit done.
 [INFO] BUILD SUCCESS
 ```
 
+### Clearing the build cache
+
+If errors persist after fixing violations, or the build behaves unexpectedly, clean the cached output and rebuild:
+
+```bash
+./mvnw clean package
+```
+
 ### Generating Javadocs
 
 ```bash
