@@ -31,7 +31,7 @@
                         <Group>
                            <children>
                               <Label fx:id="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Cat Name:" textAlignment="CENTER" />
-                              <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name">
+                              <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name" >
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></TextField>
@@ -188,7 +188,7 @@
                               </ImageView>
                            </children>
                         </StackPane>
-                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
+                        <Button fx:id="createPet" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" defaultButton="true" onAction="#onConfirmPetDetails" prefHeight="25.0" prefWidth="152.0" text="Create Pet" textAlignment="CENTER" VBox.vgrow="SOMETIMES">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></Button>

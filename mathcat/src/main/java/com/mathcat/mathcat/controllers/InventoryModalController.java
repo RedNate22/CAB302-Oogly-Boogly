@@ -21,10 +21,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.function.Consumer;
 
-/** 
-*
-*/
+/**
+ * Controller for the inventory modal screen. Handles item selection and cat appearance changes.
+ */
 public class InventoryModalController {
+
+    /** Creates a new InventoryModalController. */
+    public InventoryModalController() {}
+
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
 
     // Callback function to allow Home and Inventory controllers to talk to each other
@@ -92,6 +96,9 @@ public class InventoryModalController {
     @FXML
     private Tooltip energyNapItemTooltip;
 
+    /**
+     * Loads the current user's cat and its inventory on screen load.
+     */
     @FXML
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
@@ -110,12 +117,41 @@ public class InventoryModalController {
         Tooltip.install(laserItemLocked, laserItemTooltip);
         Tooltip.install(catnipItemLocked, catnipItemTooltip);
         Tooltip.install(energyNapItemLocked, energyNapItemTooltip);
+    }
 
+    /**
+     * Returns the root stage resolved from the given action event.
+     *
+     * @param event the action event used to resolve the current stage
+     * @return the root Stage of the scene
+     */
+    private static Stage getRoot(ActionEvent event) {
+        Node root = (Node) event.getSource();
+        return (Stage) root.getScene().getWindow();
+    }
+
+    // private static Stage getRoot(MouseEvent event) {
+    //     Node root = (Node) event.getSource();
+    //     return (Stage) root.getScene().getWindow();
+    // }
+
+    /**
+     * Handles the change cat colour button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
+     */
+    @FXML
+    protected void changeCatColour(ActionEvent event) throws IOException {
 
     }
 
     /**
      * Handles the logic of callback to Home screen
+     * Handles the change cat accessory button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
      */
     public void setOnItemSelect(Consumer<String> callback) {
         this.onItemSelectCallback = callback;
@@ -125,6 +161,10 @@ public class InventoryModalController {
      * Handles the logic of getting the current selected accessory
      * to then save to DB in Home controller
      * @return the current selected accessory
+     * Handles the confirm and save button action. Saves changes and closes the modal.
+     *
+     * @param event the button click event
+     * @throws IOException if closing the modal fails
      */
     public String getCurrentSelectedPath() {
         return selectedAccessorySpritePath;
@@ -132,6 +172,9 @@ public class InventoryModalController {
 
     /**
      * Handles logic of clearing accessory image of current cat appearance
+     * Sets the reference to the parent inventory modal controller.
+     *
+     * @param inventoryModalController the parent controller instance
      */
     public void onClickClearAccessory() {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;

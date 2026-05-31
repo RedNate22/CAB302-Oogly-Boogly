@@ -26,9 +26,10 @@ public final class LevelSystem {
             4100, // level 10
     };
 
+    /** The highest level a cat can reach, determined by the length of the XP threshold table. */
     public static final int MAX_LEVEL = XP_THRESHOLDS.length - 1;
 
-    private static final Logger log = LoggerFactory.getLogger(LevelSystem.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LevelSystem.class);
 
     private LevelSystem() {}
 
@@ -38,10 +39,12 @@ public final class LevelSystem {
      * @param level the current level
      * @return the XP threshold for the next level, or -1 if already at {@link #MAX_LEVEL}
      */
-    public static double getXpToNextLevel(int level) {
-        if (level >= MAX_LEVEL)
+    public static double getXpToNextLevel(double level) {
+        if (level >= MAX_LEVEL) {
             return -1;
-        return XP_THRESHOLDS[level + 1];
+        }
+        int levelInt = (int) level;
+        return XP_THRESHOLDS[levelInt + 1];
     }
 
     /**
@@ -51,8 +54,9 @@ public final class LevelSystem {
      * @return true if the cat can level up
      */
     public static boolean canLevelUp(Cat cat) {
-        if (cat.getLevel() >= MAX_LEVEL)
+        if (cat.getLevel() >= MAX_LEVEL) {
             return false;
+        }
         return cat.getXp() >= XP_THRESHOLDS[cat.getLevel() + 1];
     }
 
@@ -63,15 +67,17 @@ public final class LevelSystem {
      * @param cat the cat to level up.
      */
     public static void levelUp(Cat cat) {
-        if (cat.getLevel() >= MAX_LEVEL)
+        if (cat.getLevel() >= MAX_LEVEL) {
             return;
+        }
 
         int oldLevel = cat.getLevel();
         double excessXp = cat.getXp() - XP_THRESHOLDS[cat.getLevel() + 1];
         cat.setLevel(cat.getLevel() + 1);
         cat.setXp(Math.max(0, excessXp));
         CatDAO.save(cat);
-        log.debug("Level up! {} -> {}, excess XP carried: {}", oldLevel, cat.getLevel(), String.format("%.2f", cat.getXp()));
+        LOG.debug("Level up! {} -> {}, excess XP carried: {}", oldLevel, cat.getLevel(),
+                String.format("%.2f", cat.getXp()));
     }
 
     /**
@@ -82,7 +88,8 @@ public final class LevelSystem {
      */
     public static void applyXp(Cat cat, double amount) {
         cat.setXp(cat.getXp() + amount);
-        log.debug("+{} XP applied. Total: {} (level {})", String.format("%.2f", amount), String.format("%.2f", cat.getXp()), cat.getLevel());
+        LOG.debug("+{} XP applied. Total: {} (level {})", String.format("%.2f", amount),
+                String.format("%.2f", cat.getXp()), cat.getLevel());
         while (canLevelUp(cat)) {
             levelUp(cat);
         }

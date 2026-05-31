@@ -13,7 +13,9 @@ import java.util.List;
  * logic. Business rules should be handled by UserService.
  */
 public final class UserDAO {
-    private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserDAO.class);
+
+    private UserDAO() {}
 
     /** The currently authenticated user. Null when no user is logged in. */
     public static User currentUser;
@@ -25,13 +27,14 @@ public final class UserDAO {
      */
     public static void setCurrentUser(User user) {
         currentUser = user;
-        log.debug("current user set to: {}", user != null ? user.getUsername() : "null");
+        LOG.debug("current user set to: {}", user != null ? user.getUsername() : "null");
     }
 
     /**
      * Inserts a new user into the database.
-     * 
+     *
      * @param user the user to save
+     * @throws SQLException if the insert fails (e.g. duplicate username or email)
      */
     public static void insert(User user) throws SQLException {
         String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
@@ -40,15 +43,16 @@ public final class UserDAO {
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.executeUpdate();
-            log.debug("inserted user: {}", user.getUsername());
+            LOG.debug("inserted user: {}", user.getUsername());
         }
     }
 
     /**
      * Finds a user by their username.
-     * 
+     *
      * @param username the username to search for
      * @return the User if found, null otherwise
+     * @throws SQLException if the query fails
      */
     public static User findByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
@@ -67,9 +71,10 @@ public final class UserDAO {
 
     /**
      * Finds a user by their email address.
-     * 
+     *
      * @param email the email to search for
      * @return the User if found, null otherwise
+     * @throws SQLException if the query fails
      */
     public static User findByEmail(String email) throws SQLException {
         String sql = "SELECT * FROM users WHERE email = ?";
@@ -88,8 +93,9 @@ public final class UserDAO {
 
     /**
      * Returns all users from the database.
-     * 
+     *
      * @return list of all users
+     * @throws SQLException if the query fails
      */
     public static List<User> findAll() throws SQLException {
         List<User> users = new ArrayList<>();
@@ -106,15 +112,16 @@ public final class UserDAO {
 
     /**
      * Deletes a user by their username.
-     * 
+     *
      * @param username the username of the user to delete
+     * @throws SQLException if the delete fails
      */
     public static void deleteByUsername(String username) throws SQLException {
         String sql = "DELETE FROM users WHERE username = ?";
         try (PreparedStatement stmt = DatabaseManager.getConnection().prepareStatement(sql)) {
             stmt.setString(1, username);
             stmt.executeUpdate();
-            log.debug("deleted user: {}", username);
+            LOG.debug("deleted user: {}", username);
         }
     }
 }

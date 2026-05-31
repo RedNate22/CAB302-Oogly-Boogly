@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import com.mathcat.mathcat.services.UserService;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
+import com.mathcat.mathcat.dao.CatDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +25,10 @@ import org.slf4j.LoggerFactory;
  * Handles UI events for the login and account creation screens.
  */
 public class AuthController {
-    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
+
+    /** Creates a new AuthController. */
+    public AuthController() {}
 
     @FXML private TextField usernameField;
     @FXML private TextField emailField;
@@ -34,9 +38,12 @@ public class AuthController {
 
     @FXML private Label error;
 
+    /**
+     * Binds the visible and masked password fields together so they stay in sync when toggling
+     * password visibility.
+     */
     @FXML
     public void initialize() {
-        // Keeps both password fields synced automatically when switching between visibility
         visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
     }
 
@@ -60,48 +67,56 @@ public class AuthController {
      */
     @FXML
     public void onLoginConfirm(ActionEvent event) throws IOException {
-        String username_email = usernameField.getText().trim();
+        String usernameEmail = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserService.fieldsEmpty(username_email, password)) {
+        if (UserService.fieldsEmpty(usernameEmail, password)) {
             error.setText("Please fill out all fields");
             return;
         }
 
         User matchedUser;
         try {
-            matchedUser = UserDAO.findByEmail(username_email);
+            matchedUser = UserDAO.findByEmail(usernameEmail);
             if (matchedUser == null) {
                 try {
-                    matchedUser = UserDAO.findByUsername(username_email);
+                    matchedUser = UserDAO.findByUsername(usernameEmail);
                 } catch (SQLException e) {
-                    log.error("database error during login", e);
+                    LOG.error("database error during login", e);
                     error.setText("Database error. Please try again.");
                     return;
                 }
             }
         } catch (SQLException e) {
-            log.error("database error during login", e);
+            LOG.error("database error during login", e);
             error.setText("Database error. Please try again.");
             return;
         }
 
         if (matchedUser == null) {
-            log.warn("login attempt for unknown user: {}", username_email);
+            LOG.warn("login attempt for unknown user: {}", usernameEmail);
             error.setText("This account does not exist.");
             return;
         }
 
         if (!matchedUser.getPassword().equals(password)) {
-            log.warn("incorrect password for user: {}", username_email);
+            LOG.warn("incorrect password for user: {}", usernameEmail);
             error.setText("Password is incorrect. Please try again");
             return;
         }
 
-        log.info("user logged in: {}", matchedUser.getUsername());
+        LOG.info("user logged in: {}", matchedUser.getUsername());
         UserDAO.setCurrentUser(matchedUser);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        boolean hasCat = CatDAO.load(matchedUser.getId()) != null;
+        if (!hasCat) {
+            LOG.warn("user {} has no cat, redirecting to create pet screen", matchedUser.getUsername());
+        }
+        String fxml = hasCat
+                ? "/com/mathcat/mathcat/home-view.fxml"
+                : "/com/mathcat/mathcat/createpet-view.fxml";
+
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
         stage.setTitle("MathCat");
@@ -147,7 +162,7 @@ public class AuthController {
             if (!exists) {
                 UserDAO.insert(new User(username, email, password));
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
-                log.info("account created: {}", username);
+                LOG.info("account created: {}", username);
 
                 Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -156,11 +171,11 @@ public class AuthController {
                 stage.setScene(scene);
                 stage.show();
             } else {
-                log.warn("account creation failed - already exists: {}", username);
+                LOG.warn("account creation failed - already exists: {}", username);
                 error.setText("Username or email already exists");
             }
         } catch (SQLException e) {
-            log.error("database error during account creation", e);
+            LOG.error("database error during account creation", e);
             error.setText("Database error. Please try again.");
         }
     }

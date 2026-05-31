@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <property name="severity" value="error"/>
+
+    <module name="TreeWalker">
+
+        <!-- Classes: PascalCase -->
+        <module name="TypeName">
+            <property name="tokens" value="CLASS_DEF"/>
+            <property name="format" value="^[A-Z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Interfaces: PascalCase with I prefix -->
+        <module name="TypeName">
+            <property name="tokens" value="INTERFACE_DEF"/>
+            <property name="format" value="^I[A-Z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Methods: camelCase -->
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Variables: camelCase -->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Parameters: camelCase -->
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Fields: camelCase -->
+        <module name="MemberName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+
+        <!-- Constants: UPPERCASE or UPPERCASE_WITH_UNDERSCORES -->
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+        </module>
+
+        <!-- K&R brace style -->
+        <!-- Requires braces on all control structures (if, else, for, while, do) -->
+        <module name="NeedBraces" />
+        <!-- Requires opening brace on the same line as the statement, not on its own line -->
+        <module name="LeftCurly" />
+        <!-- Requires else/catch/finally on the same line as the closing brace -->
+        <module name="RightCurly" />
+
+        <!-- Flags non-final classes that have only private constructors, as they should be final -->
+        <module name="FinalClass" />
+    </module>
+</module>

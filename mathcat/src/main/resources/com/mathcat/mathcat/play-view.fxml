@@ -25,15 +25,14 @@
                   <Button fx:id="goBack" mnemonicParsing="false" onAction="#onConfirmGoBack" text="Go Back" />
                   <VBox alignment="CENTER" layoutX="14.0" layoutY="49.0" prefHeight="176.0" prefWidth="236.0">
                      <children>
-                        <Label fx:id="petNameLabel" text="'s Stats">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </Label>
+                        <Label fx:id="petNameLabel" text="'s Stats"></Label>
                         <Group>
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
-                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <StackPane layoutY="17.0" prefWidth="200.0">
+                                 <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="happinessLabel" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -42,7 +41,10 @@
                         <Group layoutX="28.0" layoutY="114.0">
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
-                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <StackPane layoutY="17.0" prefWidth="200.0">
+                                 <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="hungerLabel" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -51,7 +53,10 @@
                         <Group layoutX="28.0" layoutY="132.0">
                            <children>
                               <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
-                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <StackPane layoutY="17.0" prefWidth="200.0">
+                                 <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="energyLabel" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -79,6 +84,10 @@
                         </ImageView>
                      </children>
                   </StackPane>
+                  <StackPane layoutY="435.0" layoutX="70">
+                     <ProgressBar fx:id="levelProgressBar" progress="0.0" />
+                     <Label fx:id="levelProgressLabel" styleClass="stat-value" text="Level" />
+                  </StackPane>
                </children>
             </Pane>
             <Pane prefHeight="500.0" prefWidth="360.0">
@@ -104,7 +113,7 @@
                               <HBox alignment="BOTTOM_CENTER" prefHeight="28.0" prefWidth="230.0" spacing="30.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-                                    <Button mnemonicParsing="false" text="Skip" />
+                                    <Button mnemonicParsing="false" onAction="#onSkip" text="Skip" />
                                  </children>
                               </HBox>
                            </bottom>
@@ -121,7 +130,7 @@
                                           <Insets top="5.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <Label fx:id="feedbackLabel" alignment="CENTER" prefWidth="280.0" style="-fx-font-size: 11;" text="" />
+                                    <Label fx:id="feedbackLabel" alignment="CENTER" prefWidth="280.0" style="-fx-font-size: 11;" text="" visible="false"/>
                                  </children>
                                  <BorderPane.margin>
                                     <Insets bottom="10.0" top="10.0" />

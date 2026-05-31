@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
  * Data Access Object for Cat database operations. Handles only raw SQL queries — no business logic.
  */
 public final class CatDAO {
-    private static final Logger log = LoggerFactory.getLogger(CatDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CatDAO.class);
+
+    private CatDAO() {}
 
     /**
      * Saves a cat to the database. Inserts if new, updates if existing.
@@ -83,7 +85,7 @@ public final class CatDAO {
                 }
             }
         } catch (SQLException e) {
-            log.error("Error saving cat", e);
+            LOG.error("Error saving cat", e);
         }
     }
 
@@ -110,17 +112,20 @@ public final class CatDAO {
                 cat.setLevel(rs.getInt("level"));
                 cat.setXp(rs.getDouble("xp"));
                 String lastSaved = rs.getString("last_saved");
-                if (lastSaved != null)
+                if (lastSaved != null) {
                     cat.setLastSaved(LocalDateTime.parse(lastSaved));
+                }
                 cat.setDailyEnergyGained(rs.getDouble("daily_energy_gained"));
                 String resetDate = rs.getString("energy_cap_reset_date");
-                if (resetDate != null) cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                if (resetDate != null) {
+                    cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                }
                 // Load the cat's inventory from the database
                 cat.setItems(ItemDAO.loadInventory(cat.getCatId()));
                 return cat;
             }
         } catch (SQLException e) {
-            log.error("Error loading cat", e);
+            LOG.error("Error loading cat", e);
         }
         return null;
     }
@@ -136,7 +141,7 @@ public final class CatDAO {
             stmt.setInt(1, catId);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            log.error("Error deleting cat", e);
+            LOG.error("Error deleting cat", e);
         }
     }
 
@@ -148,7 +153,7 @@ public final class CatDAO {
         try (Statement stmt = DatabaseManager.getConnection().createStatement()) {
             stmt.execute(sql);
         } catch (SQLException e) {
-            log.error("Error clearing cats", e);
+            LOG.error("Error clearing cats", e);
         }
     }
 }

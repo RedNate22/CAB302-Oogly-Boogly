@@ -13,6 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -31,7 +35,10 @@ import com.mathcat.mathcat.services.SpriteService;
  * SQLite database.
  */
 public class CreatePetController {
-    private static final Logger log = LoggerFactory.getLogger(CreatePetController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CreatePetController.class);
+
+    /** Creates a new CreatePetController. */
+    public CreatePetController() {}
 
     @FXML
     private TextField userPetName;
@@ -103,6 +110,9 @@ public class CreatePetController {
 
     @FXML private Label confirmationMessage;
 
+    /**
+     * Shows the account creation confirmation message briefly on screen load.
+     */
     // Initially sets the confirmation message once
     public void initialize() {
         setConfirmationMessage();
@@ -123,8 +133,9 @@ public class CreatePetController {
     }
 
     /**
-     * Handles pet creation — validates name, saves to database and navigates to home screen.
-     * 
+     * Handles pet creation ,validates name, shows a confirmation dialog with the pet's
+     * name and appearance, then saves to database and navigates to home screen if confirmed.
+     *
      * @param event the button click event
      * @throws IOException if the home screen cannot be loaded
      */
@@ -135,13 +146,39 @@ public class CreatePetController {
             error.setText("Pet name must be 1-10 letters only, no spaces or numbers.");
             return;
         }
+        ButtonType confirmButton = new ButtonType("Yes, confirm", ButtonBar.ButtonData.OK_DONE);
+        ButtonType goBackButton  = new ButtonType("No, go back",  ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        Alert confirmation = new Alert(Alert.AlertType.NONE);
+        confirmation.setTitle("Confirm Your Pet");
+        confirmation.setHeaderText("Are you sure about your choices?");
+        confirmation.setContentText("Pet Name: " + name);
+        confirmation.getButtonTypes().setAll(confirmButton, goBackButton);
+        ImageView alertCat = new ImageView(SpriteService.load(selectedSpritePath));
+        alertCat.setFitWidth(80);
+        alertCat.setFitHeight(80);
+        alertCat.setPreserveRatio(true);
+
+        ImageView alertAccessory = new ImageView(SpriteService.load(selectedAccessorySpritePath));
+        alertAccessory.setFitWidth(80);
+        alertAccessory.setFitHeight(80);
+        alertAccessory.setPreserveRatio(true);
+
+        StackPane alertImage = new StackPane(alertCat, alertAccessory);
+        confirmation.setGraphic(alertImage);
+
+        ButtonType result = confirmation.showAndWait().orElse(goBackButton);
+
+        if (result != confirmButton) {
+            return;
+        }
 
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());
         cat.setCatSprite(selectedSpritePath);
         cat.setCatAccessory(selectedAccessorySpritePath);
         CatDAO.save(cat);
-        log.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
+        LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
