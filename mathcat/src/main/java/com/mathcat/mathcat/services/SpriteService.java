@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 /**
  * Utility for loading sprite images from classpath resources.
  */
-public class SpriteService {
+public final class SpriteService {
     private SpriteService() {}
 
     /**

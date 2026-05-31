@@ -147,8 +147,9 @@ public class PlayController {
      */
     public void onSubmit(ActionEvent event) {
         String input = answerInput.getText().trim();
-        if (input.isEmpty())
+        if (input.isEmpty()) {
             return;
+        }
 
         int userAnswer;
         try {

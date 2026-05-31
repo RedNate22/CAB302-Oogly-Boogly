@@ -45,5 +45,15 @@
             <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
         </module>
 
+        <!-- K&R brace style -->
+        <!-- Requires braces on all control structures (if, else, for, while, do) -->
+        <module name="NeedBraces" />
+        <!-- Requires opening brace on the same line as the statement, not on its own line -->
+        <module name="LeftCurly" />
+        <!-- Requires else/catch/finally on the same line as the closing brace -->
+        <module name="RightCurly" />
+
+        <!-- Flags non-final classes that have only private constructors, as they should be final -->
+        <module name="FinalClass" />
     </module>
 </module>

@@ -109,10 +109,14 @@ public class ChatController {
     @FXML
     private void onSendClicked() {
         String rawMessage = userInput.getText();
-        if (rawMessage == null || rawMessage.isBlank()) return;
+        if (rawMessage == null || rawMessage.isBlank()) {
+            return;
+        }
 
         String message = AIService.sanitiseInput(rawMessage, 500);
-        if (message.isBlank()) return;
+        if (message.isBlank()) {
+            return;
+        }
         aiUsed = true;
 
         // Show user message

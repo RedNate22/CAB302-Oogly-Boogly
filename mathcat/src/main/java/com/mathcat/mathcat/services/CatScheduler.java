@@ -11,7 +11,7 @@ import javafx.util.Duration;
  * Drives the periodic stat decay loop for the cat using a JavaFX Timeline.
  * Singleton — use {@link #getInstance()} to ensure only one timeline runs at a time.
  */
-public class CatScheduler {
+public final class CatScheduler {
     private static CatScheduler instance;
     private Timeline timeline;
     private Cat cat;
