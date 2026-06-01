@@ -212,6 +212,20 @@
     -fx-background-color: #414559;
 }
 
+/* Alert dialogs */
+
+.dialog-pane {
+    -fx-background-color: #303446;
+}
+
+.dialog-pane > .header-panel {
+    -fx-background-color: #414559;
+}
+
+.dialog-pane > .header-panel > .label {
+    -fx-text-fill: #c6d0f5;
+}
+
 /* Inventory Modal */
 .itemLabel {
     -fx-font-size: 14px;

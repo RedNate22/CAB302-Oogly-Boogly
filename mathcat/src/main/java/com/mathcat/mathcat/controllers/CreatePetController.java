@@ -133,8 +133,8 @@ public class CreatePetController {
     }
 
     /**
-     * Handles pet creation ,validates name, shows a confirmation dialog with the pet's
-     * name and appearance, then saves to database and navigates to home screen if confirmed.
+     * Handles pet creation, validates name, shows a confirmation dialog with the pet's name and
+     * appearance, then saves to database and navigates to home screen if confirmed.
      *
      * @param event the button click event
      * @throws IOException if the home screen cannot be loaded
@@ -167,6 +167,7 @@ public class CreatePetController {
         StackPane alertImage = new StackPane(alertCat, alertAccessory);
         confirmation.setGraphic(alertImage);
 
+        confirmation.getDialogPane().getStylesheets().add(NavigationUtil.STYLESHEET);
         ButtonType result = confirmation.showAndWait().orElse(goBackButton);
 
         if (result != confirmButton) {
