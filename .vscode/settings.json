@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "mathcat/src/main/java",
+        "mathcat/src/test/java"
+    ]
+}
