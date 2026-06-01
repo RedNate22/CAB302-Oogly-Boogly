@@ -169,7 +169,9 @@ public class CreatePetController {
 
         ButtonType result = confirmation.showAndWait().orElse(goBackButton);
 
-        if (result != confirmButton) return;
+        if (result != confirmButton) {
+            return;
+        }
 
         Cat cat = new Cat(name);
         cat.setUserId(UserDAO.currentUser.getId());

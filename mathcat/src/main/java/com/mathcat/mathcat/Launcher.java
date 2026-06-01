@@ -3,7 +3,7 @@ package com.mathcat.mathcat;
 import javafx.application.Application;
 
 /** Entry point that works around JavaFX module restrictions on direct Application launch. */
-public class Launcher {
+public final class Launcher {
 
     private Launcher() {}
 

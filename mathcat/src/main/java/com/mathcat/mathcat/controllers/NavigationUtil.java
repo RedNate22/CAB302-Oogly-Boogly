@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * {@link com.mathcat.mathcat.services.CatScheduler} and clearing the user session before returning
  * to the initial screen.
  */
-public class NavigationUtil {
+public final class NavigationUtil {
     // Static utility rather than a base controller class: JavaFX controllers are instantiated by
     // FXMLLoader via reflection, making inheritance fragile. @FXML injection, initialize(), and
     // constructor constraints all interact poorly with superclasses.

@@ -109,14 +109,14 @@ public class AuthController {
         UserDAO.setCurrentUser(matchedUser);
 
         boolean hasCat = CatDAO.load(matchedUser.getId()) != null;
+        if (!hasCat) {
+            LOG.warn("user {} has no cat, redirecting to create pet screen", matchedUser.getUsername());
+        }
         String fxml = hasCat
                 ? "/com/mathcat/mathcat/home-view.fxml"
                 : "/com/mathcat/mathcat/createpet-view.fxml";
-        if (!hasCat)
-            LOG.warn("user {} has no cat, redirecting to create pet screen",
-                    matchedUser.getUsername());
 
-        Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
         scene.getStylesheets().add(NavigationUtil.STYLESHEET);

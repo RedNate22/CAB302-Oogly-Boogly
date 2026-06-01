@@ -38,6 +38,8 @@ public class HomeController {
     /** Creates a new homeController. */
     public HomeController() {}
 
+    private Cat cat;
+
     @FXML
     private Label petNameLabel;
 
@@ -72,7 +74,7 @@ public class HomeController {
     @FXML
     public void initialize() {
 
-        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        this.cat = CatDAO.load(UserDAO.currentUser.getId());
 
         if (cat != null) {
             CatService.applyOfflineDecay(cat);
@@ -83,12 +85,12 @@ public class HomeController {
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
             refreshStats(cat);
-        }
-
-        else {
+        } else {
             Platform.runLater(() -> {
                 try {
-                    if (petNameLabel.getScene() == null) return; // scene may not be attached yet during initialize()
+                    if (petNameLabel.getScene() == null) {
+                        return; // scene may not be attached yet during initialize()
+                    }
                     Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
                     stage.getScene().setRoot(root);
@@ -189,9 +191,25 @@ public class HomeController {
 
                 inventoryStage.setX(homeX + 10);
                 inventoryStage.setY(homeY + (homeHeight - inventoryHeight) / 2);
+
+                inventoryStage.toFront();
+                inventoryStage.requestFocus();
             });
 
             inventoryStage.showAndWait();
+
+            String finalChoice = invModalController.getCurrentSelectedPath();
+
+            if (finalChoice != null && cat != null) {
+                System.out.print(finalChoice);
+                
+                cat.setCatAccessory(finalChoice);
+                CatDAO.save(cat);
+
+            } else {
+                System.out.print("No item selected in modal");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
