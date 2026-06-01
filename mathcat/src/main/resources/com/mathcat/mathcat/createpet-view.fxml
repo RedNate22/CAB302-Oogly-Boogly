@@ -161,9 +161,9 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="481.0" prefWidth="290.0">
                      <children>
-                        <Label fx:id="confirmationMessage" alignment="TOP_RIGHT" text="Account was Created Successfully" visible="false">
+                        <Label fx:id="confirmationMessage" alignment="TOP_CENTER" text="Account was Created Successfully" wrapText="true" visible="false">
                            <VBox.margin>
-                              <Insets bottom="60.0" left="80.0" />
+                              <Insets bottom="60.0" />
                            </VBox.margin>
                         </Label>
                         <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">
