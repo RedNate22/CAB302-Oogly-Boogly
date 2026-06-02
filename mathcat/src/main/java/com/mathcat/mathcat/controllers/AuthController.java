@@ -163,6 +163,7 @@ public class AuthController {
                     || UserDAO.findByEmail(email) != null;
             if (!exists) {
                 UserDAO.insert(
+                        // default BCrypt cost factor 10 is fine (100ms per hash on modern hardware)
                         new User(username, email, BCrypt.hashpw(password, BCrypt.gensalt())));
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
                 LOG.info("account created: {}", username);
