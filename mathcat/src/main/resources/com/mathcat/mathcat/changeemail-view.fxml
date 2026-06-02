@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Text?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mathcat.mathcat.controllers.ChangeCredentialsController"
-      prefHeight="400.0" prefWidth="600.0">
-    <Text> Please enter your New email </Text>
-    <TextField fx:id="emailField"/>
+      prefHeight="250.0"
+      prefWidth="500.0"
+      alignment="CENTER"
+      spacing="20">
 
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox spacing="12" maxWidth="400">
+
+        <Label text="Please enter your New Email"/>
+
+        <VBox spacing="5">
+            <TextField fx:id="emailField"/>
+        </VBox>
+
+        <Label fx:id="error"/>
+
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Confirm Email Change"
+                    defaultButton="true"
+                    onAction="#onEmailChange"/>
+        </HBox>
+
+    </VBox>
 
 </VBox>
