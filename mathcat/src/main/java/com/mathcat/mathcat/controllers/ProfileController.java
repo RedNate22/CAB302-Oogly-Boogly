@@ -144,7 +144,7 @@ public class ProfileController {
     @FXML
     public void onChangeEmail(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/mathcat/mathcat/changeusername-view.fxml")
+                getClass().getResource("/com/mathcat/mathcat/changeemail-view.fxml")
         );
 
         Parent root = loader.load();
@@ -175,7 +175,7 @@ public class ProfileController {
     @FXML
     public void onChangePassword(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/mathcat/mathcat/changeusername-view.fxml")
+                getClass().getResource("/com/mathcat/mathcat/changepassword-view.fxml")
         );
 
         Parent root = loader.load();

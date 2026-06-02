@@ -161,7 +161,8 @@
                             GridPane.rowIndex="1"
                             GridPane.columnIndex="2"
                             prefWidth="72.0"
-                            prefHeight="25.0" />
+                            prefHeight="25.0"
+                            onAction="#onChangeEmail"/>
 
                     <Label text="Password"
                            GridPane.rowIndex="2"
@@ -178,7 +179,8 @@
                             GridPane.rowIndex="2"
                             GridPane.columnIndex="2"
                             prefWidth="72.0"
-                            prefHeight="25.0" />
+                            prefHeight="25.0"
+                            onAction="#onChangePassword"/>
                 </GridPane>
             </VBox>
         </HBox>
