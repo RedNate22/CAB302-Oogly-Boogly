@@ -218,21 +218,24 @@ public class PlayController {
      * @param event the button click event
      * @throws IOException if the home screen FXML cannot be loaded
      */
-    public void onConfirmGoBack(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onConfirmGoBack(ActionEvent event) {
+        try {
+            Parent root =
+                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("MathCat");
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            LOG.error("failed to load home screen", e);
+        }
     }
 
     /**
      * Handles logout.
      *
      * @param event the button click event
-     * @throws IOException if the initial screen FXML cannot be loaded
      */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) {
         NavigationUtil.logout(event);
     }
 
@@ -240,13 +243,16 @@ public class PlayController {
      * Reloads the play screen.
      *
      * @param event the button click event
-     * @throws IOException if the play screen FXML cannot be loaded
      */
-    public void onPressPlay(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onPressPlay(ActionEvent event) {
+        try {
+            Parent root =
+                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("MathCat");
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            LOG.error("failed to reload play screen", e);
+        }
     }
 }

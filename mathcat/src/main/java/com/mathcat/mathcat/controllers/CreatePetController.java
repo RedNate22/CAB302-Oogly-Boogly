@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
@@ -136,9 +135,8 @@ public class CreatePetController {
      * name and appearance, then saves to database and navigates to home screen if confirmed.
      *
      * @param event the button click event
-     * @throws IOException if the home screen cannot be loaded
      */
-    public void onConfirmPetDetails(ActionEvent event) throws IOException {
+    public void onConfirmPetDetails(ActionEvent event) {
         String name = userPetName.getText().trim();
 
         if (!CatService.isValidCatName(name)) {
@@ -179,22 +177,23 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 500);
-
-        stage.setTitle("MathCat");
-        stage.setScene(scene);
+        try {
+            Parent root =
+                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("MathCat");
+            stage.setScene(new Scene(root, 700, 500));
+        } catch (IOException e) {
+            LOG.error("failed to load home screen after pet creation", e);
+        }
     }
 
     /**
      * Handles logout — clears current user and returns to initial screen.
-     * 
+     *
      * @param event the button click event
-     * @throws IOException if the initial screen cannot be loaded
      */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) {
         NavigationUtil.logout(event);
     }
 }
