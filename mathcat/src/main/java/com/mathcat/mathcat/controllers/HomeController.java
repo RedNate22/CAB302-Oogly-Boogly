@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javafx.application.Platform;
-import java.sql.SQLException;
+
 
 /**
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
@@ -200,7 +200,6 @@ public class HomeController {
             String finalChoice = invModalController.getCurrentSelectedPath();
 
             if (finalChoice != null && cat != null) {
-                LOG.info("accessory updated for cat: {}", cat.getCatName());;
 
                 cat.setCatAccessory(finalChoice);
                 try {
