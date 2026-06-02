@@ -54,6 +54,10 @@ public class ProfileController {
     @FXML
     private ImageView viewCurrentAccessoryImage;
 
+    /**
+     * Retrieves all the information on the user and their cat that they should be aware of, and
+     * consistently retrieves this information to identify updates
+     */
     @FXML
     public void initialize() {
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());

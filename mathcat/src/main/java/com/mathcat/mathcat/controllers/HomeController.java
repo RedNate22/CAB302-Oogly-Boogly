@@ -167,6 +167,12 @@ public class HomeController {
     //     modalStage.show();
     // }
 
+    /**
+     * Handles the logic for accessing the profile screen
+     *
+     * @param event gets the window/stage for the profile screen
+     * @throws IOException if listed screen does not exist
+     */
     public void onPressProfile(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));

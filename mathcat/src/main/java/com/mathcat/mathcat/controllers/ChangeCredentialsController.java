@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ChangeCredentialsController {
@@ -77,6 +78,13 @@ public class ChangeCredentialsController {
         newPasswordField2.setManaged(showing);
     }
 
+    /**
+     * Handles the logic for a user changing their username. Identifies if the given field isn't empty,
+     * identifies if the username entered is valid and doesn't already exist. If it matches all criteria listed,
+     * it allows the user to change their username.
+     *
+     * @param event the user attempts to change their username
+     */
     @FXML
     public void onUsernameChange(ActionEvent event) {
         String username = usernameField.getText().trim();
@@ -103,6 +111,13 @@ public class ChangeCredentialsController {
         }
     }
 
+    /**
+     * Handles the logic for a user changing their email. Identifies if the given field isn't empty,
+     * identifies if the email entered is valid and doesn't already exist. If it matches all criteria listed,
+     * it allows the user to change their email.
+     *
+     * @param event the user attempts to change their email
+     */
     @FXML
     public void onEmailChange(ActionEvent event) {
         // Check email doesn't already exist and is valid
@@ -130,6 +145,15 @@ public class ChangeCredentialsController {
         }
     }
 
+    /**
+     * Handles the logic for a user changing their password. Requires the user to enter their current password
+     * once, and their new desired password twice. Identifies if the given fields aren't empty,
+     * identifies if the current and new password entered is valid, as well as if the new password entries match and
+     * that they DON'T match the current password. If it matches all criteria listed, it allows the user to
+     * change their password.
+     *
+     * @param event the user attempts to change their password
+     */
     @FXML
     public void onPasswordChange(ActionEvent event) {
         // Check password is valid, old password matches details and new password typed both types the same
@@ -164,6 +188,5 @@ public class ChangeCredentialsController {
         }
 
         UserDAO.currentUser.setPassword(newPassword1);
-
     }
 }
