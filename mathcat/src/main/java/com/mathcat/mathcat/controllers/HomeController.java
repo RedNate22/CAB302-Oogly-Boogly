@@ -27,6 +27,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javafx.application.Platform;
+import java.sql.SQLException;
 
 /**
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
@@ -199,17 +200,22 @@ public class HomeController {
             String finalChoice = invModalController.getCurrentSelectedPath();
 
             if (finalChoice != null && cat != null) {
-                System.out.print(finalChoice);
-                
+                LOG.info("accessory updated for cat: {}", cat.getCatName());;
+
                 cat.setCatAccessory(finalChoice);
-                CatDAO.save(cat);
+                try {
+                    CatDAO.save(cat);
+                    LOG.info("accessory updated for cat: {}", cat.getCatName());
+                } catch (Exception e) {
+                    LOG.error("database error while saving accessory for cat: {}", cat.getCatName(), e);
+                }
 
             } else {
-                System.out.print("No item selected in modal");
+                LOG.debug("no item selected in inventory modal");
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOG.error("failed to load inventory modal", e);
         }
     }
 }
