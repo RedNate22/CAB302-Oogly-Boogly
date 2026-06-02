@@ -19,7 +19,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
