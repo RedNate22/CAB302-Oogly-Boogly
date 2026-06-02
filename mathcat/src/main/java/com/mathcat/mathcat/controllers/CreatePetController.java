@@ -177,9 +177,14 @@ public class CreatePetController {
         cat.setUserId(UserDAO.currentUser.getId());
         cat.setCatSprite(selectedSpritePath);
         cat.setCatAccessory(selectedAccessorySpritePath);
-        CatDAO.save(cat);
-        LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
-
+        try {
+            CatDAO.save(cat);
+            LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
+        } catch (Exception e) {
+            LOG.error("database error while saving pet: {}", name, e);
+            error.setText("Database error. Could not save pet. Please try again.");
+            return;
+        }
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
