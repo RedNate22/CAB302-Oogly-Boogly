@@ -6,20 +6,5 @@
 	"java.project.sourcePaths": [
 		"mathcat/src/main/java",
 		"mathcat/src/test/java"
-	],
-
-	// Disables the Red Hat XML extension's validation for FXML files.
-	// Without this, the XML validator produces "Missing controller" warnings
-	// because it can't resolve controller paths in the mathcat/ submodule.
-	"xml.fileAssociations": [
-		{
-			"pattern": "**/*.fxml",
-			"systemId": ""
-		}
-	],
-
-	// Disables the Java extension's own FXML controller validation for the
-	// same reason as above - it resolves paths from the workspace root rather
-	// than the Maven submodule, producing false "Missing controller" warnings.
-	"java.jdt.ls.vmargs": "-Declipse.fxml.validate=false"
+	]
 }
