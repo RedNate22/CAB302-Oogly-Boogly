@@ -104,6 +104,12 @@ public class ProfileController {
         levelProgressBar.setProgress(xp/nextLevelXP);
     }
 
+    /**
+     * Handles logic for presenting user with a screen allowing for them to change their username
+     *
+     * @param event gets the window/stage for the Change Username screen
+     * @throws IOException if listed screen does not exist
+     */
     @FXML
     public void onChangeUsername(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(
@@ -127,6 +133,68 @@ public class ProfileController {
 
         changeUsernameStage.setScene(scene);
         changeUsernameStage.showAndWait();
+    }
+
+    /**
+     * Handles logic for presenting user with a screen allowing for them to change their email
+     *
+     * @param event gets the window/stage for the Change Email screen
+     * @throws IOException if listed screen does not exist
+     */
+    @FXML
+    public void onChangeEmail(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/mathcat/mathcat/changeusername-view.fxml")
+        );
+
+        Parent root = loader.load();
+
+        Stage changeEmailStage = new Stage();
+        changeEmailStage.setTitle("Change Email");
+
+        // Makes it a popup modal
+        changeEmailStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Makes the popup belong to the current window
+        Stage profileStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        changeEmailStage.initOwner(profileStage);
+
+        Scene scene = new Scene(root, 500, 400);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+
+        changeEmailStage.setScene(scene);
+        changeEmailStage.showAndWait();
+    }
+
+    /**
+     * Handles logic for presenting user with a screen allowing for them to change their password
+     *
+     * @param event gets the window/stage for the Change Password screen
+     * @throws IOException if listed screen does not exist
+     */
+    @FXML
+    public void onChangePassword(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/mathcat/mathcat/changeusername-view.fxml")
+        );
+
+        Parent root = loader.load();
+
+        Stage changePasswordStage = new Stage();
+        changePasswordStage.setTitle("Change Password");
+
+        // Makes it a popup modal
+        changePasswordStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Makes the popup belong to the current window
+        Stage profileStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        changePasswordStage.initOwner(profileStage);
+
+        Scene scene = new Scene(root, 500, 400);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+
+        changePasswordStage.setScene(scene);
+        changePasswordStage.showAndWait();
     }
 
     /**
