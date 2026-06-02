@@ -8,11 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -100,6 +102,31 @@ public class ProfileController {
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
         levelProgressBar.setProgress(xp/nextLevelXP);
+    }
+
+    @FXML
+    public void onChangeUsername(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/mathcat/mathcat/changeusername-view.fxml")
+        );
+
+        Parent root = loader.load();
+
+        Stage changeUsernameStage = new Stage();
+        changeUsernameStage.setTitle("Change Username");
+
+        // Makes it a popup modal
+        changeUsernameStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Makes the popup belong to the current window
+        Stage profileStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        changeUsernameStage.initOwner(profileStage);
+
+        Scene scene = new Scene(root, 500, 400);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+
+        changeUsernameStage.setScene(scene);
+        changeUsernameStage.showAndWait();
     }
 
     /**

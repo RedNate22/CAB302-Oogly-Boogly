@@ -37,9 +37,11 @@ public class ChangeCredentialsController {
 
     @FXML
     public void initialize() {
-        currentPasswordField.textProperty().bindBidirectional(currentPasswordTextField.textProperty());
-        newPasswordField1.textProperty().bindBidirectional(newPasswordTextField1.textProperty());
-        newPasswordField2.textProperty().bindBidirectional(newPasswordTextField2.textProperty());
+        if (currentPasswordField != null && newPasswordField1 != null && newPasswordField2 != null) {
+            currentPasswordField.textProperty().bindBidirectional(currentPasswordTextField.textProperty());
+            newPasswordField1.textProperty().bindBidirectional(newPasswordTextField1.textProperty());
+            newPasswordField2.textProperty().bindBidirectional(newPasswordTextField2.textProperty());
+        }
     }
 
     @FXML
