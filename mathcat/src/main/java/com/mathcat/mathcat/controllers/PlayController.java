@@ -163,7 +163,13 @@ public class PlayController {
             LOG.debug("correct answer: {} (difficulty: {})", userAnswer,
                     currentQuestion.getDifficulty());
             RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
-            CatDAO.save(cat);
+            try {
+                CatDAO.save(cat);
+            } catch (Exception e) {
+                LOG.error("database error while saving cat progress for: {}", cat.getCatName(), e);
+                feedbackLabel.setText("Database error. Progress may not have saved.");
+                return;
+            }
             refreshStats(cat);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
