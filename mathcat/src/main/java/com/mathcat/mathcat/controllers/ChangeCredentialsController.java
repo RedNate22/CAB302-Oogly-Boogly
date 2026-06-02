@@ -158,8 +158,6 @@ public class ChangeCredentialsController {
      */
     @FXML
     public void onPasswordChange(ActionEvent event) {
-        // Check password is valid, old password matches details and new password typed both types the same
-        // Check email doesn't already exist and is valid
         String currentPassword = currentPasswordField.getText().trim();
         String newPassword1 = newPasswordField1.getText().trim();
         String newPassword2 = newPasswordField2.getText().trim();
