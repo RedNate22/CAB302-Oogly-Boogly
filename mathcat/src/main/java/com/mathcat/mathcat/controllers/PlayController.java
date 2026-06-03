@@ -203,6 +203,9 @@ public class PlayController {
      */
     @FXML
     public void onSkip(ActionEvent event) {
+        if (cat == null || currentQuestion == null) {
+            return;
+        }
         LOG.debug("question skipped: {}", currentQuestion.getText());
         currentQuestion = questionService.nextQuestion(cat.getLevel());
         mathQuestionLabel.setText(currentQuestion.getText());
