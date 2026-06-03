@@ -193,17 +193,15 @@ public class HomeController {
             String finalChoice = invModalController.getCurrentSelectedPath();
 
             if (finalChoice != null && cat != null) {
-                System.out.print(finalChoice);
-                
                 cat.setCatAccessory(finalChoice);
                 CatDAO.save(cat);
-
+                LOG.info("accessory updated for cat: {}", cat.getCatName());
             } else {
-                System.out.print("No item selected in modal");
+                LOG.debug("no item selected in inventory modal");
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOG.error("failed to load inventory modal", e);
         }
     }
 }
