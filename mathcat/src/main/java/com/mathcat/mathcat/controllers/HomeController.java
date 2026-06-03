@@ -74,6 +74,10 @@ public class HomeController {
     @FXML
     public void initialize() {
 
+        if (UserDAO.currentUser == null) {
+            LOG.warn("home screen reached with no logged-in user");
+            return;
+        }
         this.cat = CatDAO.load(UserDAO.currentUser.getId());
 
         if (cat != null) {
