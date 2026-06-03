@@ -41,7 +41,9 @@ public final class NavigationUtil {
      */
     public static void logout(ActionEvent event) {
         CatScheduler.getInstance().stop();
-        LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        if (UserDAO.currentUser != null) {
+            LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        }
         UserDAO.currentUser = null;
 
         try {
