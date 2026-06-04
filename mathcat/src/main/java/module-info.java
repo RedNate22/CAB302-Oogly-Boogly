@@ -14,6 +14,7 @@ module com.mathcat.mathcat {
     requires transitive java.sql;
     requires annotations;
     requires org.slf4j;
+    requires javafx.base;
     requires jbcrypt;
 
     opens com.mathcat.mathcat to javafx.fxml;
