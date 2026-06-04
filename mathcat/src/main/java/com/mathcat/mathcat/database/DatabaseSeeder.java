@@ -83,10 +83,12 @@ public final class DatabaseSeeder {
     private static void seedItems(int catId) {
         Random rng = new Random();
         for (Item item : ItemDAO.getAll()) {
-            if (item.getEffectType() == ItemEffectType.COSMETIC)
+            if (item.getEffectType() == ItemEffectType.COSMETIC) {
                 continue;
-            if (!rng.nextBoolean())
+            }
+            if (!rng.nextBoolean()) {
                 continue;
+            }
             int quantity = rng.nextInt(3) + 1;
             for (int i = 0; i < quantity; i++) {
                 ItemDAO.addItem(catId, item.getItemId());
