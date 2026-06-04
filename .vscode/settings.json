@@ -1,10 +1,8 @@
 {
-	// My OCD...
-
-	// Tells the Java language server where source files live, since the Maven
-	// project is in the mathcat/ subdirectory rather than the workspace root.
-	"java.project.sourcePaths": [
-		"mathcat/src/main/java",
-		"mathcat/src/test/java"
-	]
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "css.lint.vendorPrefix": "ignore", // suppresses the warnings in styles.css
+    "java.project.sourcePaths": [
+        "mathcat/src/main/java",
+        "mathcat/src/test/java"
+    ]
 }

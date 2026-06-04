@@ -17,12 +17,12 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-    <Text> Username </Text>
-    <TextField fx:id="usernameField"/>
-    <Text> Email </Text>
-    <TextField fx:id="emailField"/>
-    <Text> Password </Text>
-    <HBox>
+    <Text styleClass="field-label"> Username </Text>
+    <TextField fx:id="usernameField" styleClass="authField" maxWidth="400"/>
+    <Text styleClass="field-label"> Email </Text>
+    <TextField fx:id="emailField" styleClass="authField" maxWidth="400"/>
+    <Text styleClass="field-label"> Password </Text>
+    <HBox maxWidth="400">
         <StackPane HBox.hgrow="ALWAYS">
             <PasswordField fx:id="passwordField"/>
             <TextField fx:id="visiblePasswordField" visible="false" managed="false"/>

@@ -203,8 +203,10 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
-        LOG.debug("Energy regen +{} (fullness: {}) daily total: {}/{}", regen, cat.getFullness(),
-                cat.getDailyEnergyGained(), DAILY_ENERGY_CAP);
+        LOG.debug("Energy regen +{} (fullness: {}) daily total: {}/{}",
+                String.format("%.2f", regen), String.format("%.2f", cat.getFullness()),
+                String.format("%.2f", cat.getDailyEnergyGained()),
+                String.format("%.2f", DAILY_ENERGY_CAP));
     }
 
     /**

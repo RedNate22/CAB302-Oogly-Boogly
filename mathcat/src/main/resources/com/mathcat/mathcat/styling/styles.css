@@ -1,13 +1,232 @@
-@font-face {
-    font-family: 'PressStart2P';
-    src: url('font/PressStart2P-Regular.ttf');
+/* Catppuccin Frappé
+   Base:     #303446
+   Surface0: #414559
+   Surface1: #51576d
+   Surface2: #626880
+   Text:     #c6d0f5
+   Lavender: #babbf1
+   Mauve:    #ca9ee6
+   Pink:     #f4b8e4
+   Peach:    #ef9f76
+   Green:    #a6d189
+   Teal:     #81c8be
+*/
+
+/* Base */
+
+.root {
+    -fx-font-family: 'w95fa';
+    -fx-font-size: 18px;
+    -fx-background-color: #303446;
+    -fx-focus-color: #ca9ee6;
+    -fx-faint-focus-color: #ca9ee622;
 }
+
+/* Labels */
 
 .label {
-    -fx-font-family: 'PressStart2P';
-    -fx-font-size: 20;
+    -fx-text-fill: #c6d0f5;
 }
 
-.button .text {
-    -fx-font-family: 'PressStart2P';
+.field-label {
+    /* -fx-font-size: 18px; */
+    -fx-fill: #c6d0f5;
+}
+
+#main-title {
+    -fx-font-family: 'Press Start 2P';
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f5f5ce;
+    -fx-effect: dropshadow(gaussian, black, 0, 0, 4, 4) dropshadow(gaussian, black, 0, 0, -4, -4) dropshadow(gaussian, black, 0, 0, 4, -4) dropshadow(gaussian, black, 0, 0, -4, 4);
+}
+
+/* Buttons */
+
+.button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #c6d0f5;
+    -fx-background-color: #414559;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 4px;
+    -fx-border-color: #babbf1 #babbf1 #7a7eb8 #babbf1;
+    -fx-border-width: 2px 2px 5px 2px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #51576d;
+}
+
+.button:pressed {
+    -fx-background-color: #51576d;
+    -fx-border-width: 2px;
+    -fx-padding: 0.333333em 0.666667em 0.548em 0.666667em;
+    -fx-translate-y: 3px;
+}
+
+.button:focused {
+    -fx-border-color: #a6d189;
+    -fx-background-radius: 2px;
+    -fx-background-insets: 0, 0, 0;
+}
+
+/* Text fields */
+
+.text-field {
+    -fx-text-fill: #c6d0f5;
+    -fx-background-color: #414559;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
+}
+
+.text-field:focused {
+    -fx-border-color: #ca9ee6;
+}
+
+#createPetNameLabel {
+    -fx-font-size: 20px;
+}
+
+#petNameLabel {
+    -fx-font-size: 20px;
+}
+
+#mathEquationTitle {
+    -fx-font-size: 26px;
+}
+
+#mathQuestionLabel {
+    -fx-font-size: 20px;
+}
+
+/* Auth Screens */
+
+.authField {
+    /* -fx-font-size: 12px; */
+}
+
+.authButton {
+    /* -fx-font-size: 12px; */
+}
+
+/* Password fields */
+
+.password-field {
+    -fx-text-fill: #c6d0f5;
+    -fx-background-color: #414559;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
+}
+
+/* Progress bars */
+
+.progress-bar {
+    -fx-pref-height: 30px;
+}
+
+.progress-bar>.track {
+    -fx-background-color: #51576d;
+}
+
+.progress-bar>.bar {
+    -fx-background-color: #ca9ee6;
+}
+
+#happinessProgressBar>.bar {
+    -fx-background-color: #a6d189;
+}
+
+#hungerProgressBar>.bar {
+    -fx-background-color: #f4b8e4;
+}
+
+#energyProgressBar>.bar {
+    -fx-background-color: #ef9f76;
+}
+
+.stat-value {
+    -fx-text-fill: #303446;
+    -fx-font-size: 16px;
+    -fx-alignment: CENTER;
+}
+
+/* AI */
+
+#chat {
+    -fx-background-color: #303446;
+    -fx-background-radius: 8px;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
+
+#scrollPane {
+    -fx-background-color: #303446;
+    -fx-background-radius: 4px;
+}
+
+#scrollPane>.viewport {
+    -fx-background-color: #303446;
+    -fx-background-radius: 4px;
+}
+
+.chat-bubble-user {
+    -fx-background-color: #ca9ee6;
+    -fx-text-fill: #303446;
+    -fx-padding: 8px;
+    -fx-background-radius: 10px;
+}
+
+.chat-bubble-ai {
+    -fx-background-color: #414559;
+    -fx-text-fill: #c6d0f5;
+    -fx-padding: 8px;
+    -fx-background-radius: 10px;
+}
+
+/* Tooltips */
+
+.tooltip {
+    -fx-text-fill: #c6d0f5;
+    -fx-background-color: #51576d;
+    -fx-border-color: #626880;
+    -fx-border-width: 2px;
+}
+
+/* Scroll bars */
+
+.scroll-bar {
+    -fx-background-color: #303446;
+}
+
+.scroll-bar>.thumb {
+    -fx-background-color: #ca9ee6;
+}
+
+.scroll-bar>.track {
+    -fx-background-color: #414559;
+}
+
+/* Alert dialogs */
+
+.dialog-pane {
+    -fx-background-color: #303446;
+}
+
+.dialog-pane > .header-panel {
+    -fx-background-color: #414559;
+}
+
+.dialog-pane > .header-panel > .label {
+    -fx-text-fill: #c6d0f5;
+}
+
+/* Inventory Modal */
+.itemLabel {
+    -fx-font-size: 14px;
 }

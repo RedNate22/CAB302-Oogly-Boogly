@@ -30,8 +30,8 @@
                         <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="282.0" text="Customise Your Cat" />
                         <Group>
                            <children>
-                              <Label fx:id="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Cat Name:" textAlignment="CENTER" />
-                              <TextField id="userPetName" fx:id="userPetName" layoutY="17.0" prefHeight="26.0" prefWidth="284.0" promptText="Name" >
+                              <Label fx:id="createPetNameLabel" styleClass="petNameLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="95.0" text="Cat Name:" textAlignment="CENTER" />
+                              <TextField id="userPetName" fx:id="userPetName" layoutY="28.0" prefHeight="26.0" prefWidth="284.0" promptText="Name">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></TextField>
@@ -161,9 +161,9 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="481.0" prefWidth="290.0">
                      <children>
-                        <Label fx:id="confirmationMessage" alignment="TOP_RIGHT" text="Account was Created Successfully" visible="false">
+                        <Label fx:id="confirmationMessage" alignment="TOP_CENTER" text="Account was Created Successfully" wrapText="true" visible="false">
                            <VBox.margin>
-                              <Insets bottom="60.0" left="80.0" />
+                              <Insets bottom="60.0" />
                            </VBox.margin>
                         </Label>
                         <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="79.0" layoutY="200.0" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER" VBox.vgrow="NEVER">

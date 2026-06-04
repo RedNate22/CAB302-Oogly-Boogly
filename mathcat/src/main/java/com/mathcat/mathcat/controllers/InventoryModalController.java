@@ -130,11 +130,6 @@ public class InventoryModalController {
         return (Stage) root.getScene().getWindow();
     }
 
-    // private static Stage getRoot(MouseEvent event) {
-    //     Node root = (Node) event.getSource();
-    //     return (Stage) root.getScene().getWindow();
-    // }
-
     /**
      * Handles the change cat colour button action.
      *
@@ -199,6 +194,10 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the mega sized cowboy hat accessory
+     * Handles the change cat accessory button action.
+     *
+     * @param event the button click event
+     * @throws IOException if the next screen cannot be loaded
      */
     public void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
@@ -210,6 +209,10 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the red bowtie hat accessory
+     * Handles the confirm and save button action. Saves changes and closes the modal.
+     *
+     * @param event the button click event
+     * @throws IOException if closing the modal fails
      */
     public void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
@@ -232,6 +235,10 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the purple bowtie hat accessory
+    /**
+     * Sets the reference to the parent inventory modal controller.
+     *
+     * @param inventoryModalController the parent controller instance
      */
     public void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
