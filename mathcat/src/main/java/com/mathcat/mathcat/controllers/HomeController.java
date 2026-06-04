@@ -137,21 +137,8 @@ public class HomeController {
      *
      * @param event gets the window/stage for the main screen
      */
-<<<<<<< HEAD
     public void onPressPlay(ActionEvent event) {
         NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
-=======
-    public void onPressPlay(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        Scene scene = new Scene(root, 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
-        stage.setTitle("MathCat");
-        stage.setScene(scene);
-
->>>>>>> dev
     }
 
     /**

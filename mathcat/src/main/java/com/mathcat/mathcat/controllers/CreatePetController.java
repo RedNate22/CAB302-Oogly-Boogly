@@ -171,17 +171,7 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
-<<<<<<< HEAD
         NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
-=======
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
-        stage.setTitle("MathCat");
-        stage.setScene(scene);
->>>>>>> dev
     }
 
     /**
