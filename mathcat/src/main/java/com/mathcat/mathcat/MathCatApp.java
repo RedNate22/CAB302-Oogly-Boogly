@@ -10,6 +10,7 @@ import com.mathcat.mathcat.controllers.NavigationUtil;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.database.DatabaseManager;
+import com.mathcat.mathcat.database.DatabaseSeeder;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.services.CatScheduler;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class MathCatApp extends Application {
     public void start(Stage stage) throws IOException {
         // Initialise the SQLite database and create tables if they don't exist
         DatabaseManager.initialiseDatabase();
+        DatabaseSeeder.seed();
 
         Font.loadFont(getClass().getResourceAsStream(
                 "/com/mathcat/mathcat/assets/font/w95fa.otf"), 12);
