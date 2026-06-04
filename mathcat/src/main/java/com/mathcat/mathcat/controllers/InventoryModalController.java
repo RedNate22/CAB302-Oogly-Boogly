@@ -10,6 +10,7 @@ import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.LevelSystem;
 import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
@@ -290,8 +291,27 @@ public class InventoryModalController {
      */
     public void onClickTunaItem() {
         // applyItem
-        // setEffect
         // setQuantity (if hit 0 re-lock)
+
+        // update label first
+
+        for (Item item : catItem) {
+            if (item.getItemId() == "FOOD_TUNA") {
+                item.applyItem(cat);
+                
+                if (item.getQuantity() == 1) {
+                    item.setQuantity(0);
+                    tunaItemAmount.setText("( " + item.getQuantity() + " )");
+                    LOG.debug("ayo this worked", item.getQuantity());
+                } else if (item.getQuantity() > 1) {
+                    item.setQuantity(item.getQuantity() - 1);
+                    tunaItemAmount.setText("( " + item.getQuantity() + " )");
+                    LOG.debug("bro, what is this code: {}", item.getQuantity());
+                }
+
+                CatDAO.save(cat);
+            }
+        }
     }
 
     /**
@@ -388,7 +408,6 @@ public class InventoryModalController {
         if (catLevel >= 3) {
             blueBowtieTooltip.setText("");
             blueBowtieTooltip.hide();
-            LOG.debug("hello gamerzz");
             blueBowtieLocked.setVisible(false);
         }
         if (catLevel >= 5) {

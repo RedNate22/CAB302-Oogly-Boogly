@@ -111,7 +111,7 @@
                                     </ImageView>
                                     <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" styleClass="itemLabel" text="Blue Bowtie">
                                        <tooltip>
-                                          <Tooltip fx:id="blueBowtieTooltip" text="You must be Level 3 to unlock this accessory!" />
+                                          <Tooltip fx:id="blueBowtieTooltip" styleClass="tooltipLabel" text="You must be Level 3 to unlock this accessory!" />
                                        </tooltip>
                                     </Label>
                                  </children>
