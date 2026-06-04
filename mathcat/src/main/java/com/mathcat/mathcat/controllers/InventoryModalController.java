@@ -1,5 +1,8 @@
 package com.mathcat.mathcat.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
@@ -20,21 +23,27 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Controller for the inventory modal screen. Handles item selection and cat appearance changes.
+ * Controller for the inventory modal screen. Handles item selection and cat
+ * appearance changes.
  */
 public class InventoryModalController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(InventoryModalController.class);
+
     /** Creates a new InventoryModalController. */
-    public InventoryModalController() {}
+    public InventoryModalController() {
+    }
 
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
     private double catLevel;
     private ArrayList<Item> catItem;
 
-    // Callback function to allow Home and Inventory controllers to talk to each other
+    // Callback function to allow Home and Inventory controllers to talk to each
+    // other
     // when updating the sprite accessories
     private Consumer<String> onItemSelectCallback;
 
@@ -98,6 +107,22 @@ public class InventoryModalController {
     private Tooltip catnipItemTooltip;
     @FXML
     private Tooltip energyNapItemTooltip;
+
+    @FXML
+    private Label tunaItemAmount;
+    @FXML
+    private Label milkItemAmount;
+    @FXML
+    private Label kibbleItemAmount;
+
+    @FXML
+    private Label yarnItemAmount;
+    @FXML
+    private Label laserItemAmount;
+    @FXML
+    private Label catnipItemAmount;
+    @FXML
+    private Label energyNapItemAmount;
 
     /**
      * Loads the current user's cat and its inventory on screen load.
@@ -175,6 +200,7 @@ public class InventoryModalController {
     /**
      * Handles the logic of getting the current selected accessory
      * to then save to DB in Home controller
+     * 
      * @return the current selected accessory
      */
     public String getCurrentSelectedPath() {
@@ -190,7 +216,6 @@ public class InventoryModalController {
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
 
-            
         }
     }
 
@@ -263,37 +288,47 @@ public class InventoryModalController {
     /**
      * Handles logic of selecting the tuna item
      */
-    public void onClickTunaItem() {}
+    public void onClickTunaItem() {
+        // applyItem
+        // setEffect
+        // setQuantity (if hit 0 re-lock)
+    }
 
     /**
      * Handles logic of selecting the milk item
      */
-    public void onClickMilkItem() {}
+    public void onClickMilkItem() {
+    }
 
     /**
      * Handles logic of selecting the kibble item
      */
-    public void onClickKibbleItem() {}
+    public void onClickKibbleItem() {
+    }
 
     /**
      * Handles logic of selecting the yarn ball item
      */
-    public void onClickYarnItem() {}
+    public void onClickYarnItem() {
+    }
 
     /**
      * Handles logic of selecting the laser item
      */
-    public void onClickLaserItem() {}
+    public void onClickLaserItem() {
+    }
 
     /**
      * Handles logic of selecting the catnip item
      */
-    public void onClickCatnipItem() {}
+    public void onClickCatnipItem() {
+    }
 
     /**
      * Handles logic of selecting the energy nap item
      */
-    public void onClickEnergyNapItem() {}
+    public void onClickEnergyNapItem() {
+    }
 
     /**
      * Handles logic of unlocking item if user
@@ -301,48 +336,47 @@ public class InventoryModalController {
      */
     public void unlockItem() {
         for (Item item : catItem) {
-            // Food Items
-            if (item.getItemId().equals("FOOD_TUNA")) {
-                tunaItemTooltip.setText("Gives 30 Fullness Points");
-                tunaItemLocked.setVisible(false);
-                break;
-            }
-            if (item.getItemId().equals("FOOD_MILK")) {
-                milkItemTooltip.setText("Gives 15 Fullness Points");
-                milkItemLocked.setVisible(false);
-                break;
-            }
-            if (item.getItemId().equals("FOOD_KIBBLE")) {
-                kibbleItemTooltip.setText("Gives 10 Fullness Points");
-                kibbleItemLocked.setVisible(false);
-                break;
-            }
-
-            // Toy Items
-            if (item.getItemId().equals("TOY_BALL")) {
-                yarnItemTooltip.setText("Gives 25 Happiness Points");
-                yarnItemLocked.setVisible(false);
-                break;
-            }
-            if (item.getItemId().equals("TOY_LASER")) {
-                laserItemTooltip.setText("Gives 15 Happiness Points");
-                laserItemLocked.setVisible(false);
-                break;
-            }
-            if (item.getItemId().equals("TOY_CATNIP")) {
-                catnipItemTooltip.setText("Gives 35 Happiness Points");
-                catnipItemLocked.setVisible(false);
-                break;
-            }
-
-            // Energy Item
-            if (item.getItemId().equals("ENERGY_NAP")) {
-                energyNapItemTooltip.setText("Gives 40 Energy Points");
-                energyNapItemLocked.setVisible(false);
-                break;
+            switch (item.getItemId()) {
+                case "FOOD_TUNA":
+                    tunaItemTooltip.setText("Gives 30 Fullness Points");
+                    tunaItemLocked.setVisible(false);
+                    tunaItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "FOOD_MILK":
+                    milkItemTooltip.setText("Gives 15 Fullness Points");
+                    milkItemLocked.setVisible(false);
+                    milkItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "FOOD_KIBBLE":
+                    kibbleItemTooltip.setText("Gives 10 Fullness Points");
+                    kibbleItemLocked.setVisible(false);
+                    kibbleItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "TOY_BALL":
+                    yarnItemTooltip.setText("Gives 25 Happiness Points");
+                    yarnItemLocked.setVisible(false);
+                    yarnItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "TOY_LASER":
+                    laserItemTooltip.setText("Gives 15 Happiness Points");
+                    laserItemLocked.setVisible(false);
+                    laserItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "TOY_CATNIP":
+                    catnipItemTooltip.setText("Gives 35 Happiness Points");
+                    catnipItemLocked.setVisible(false);
+                    catnipItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "ENERGY_NAP":
+                    energyNapItemTooltip.setText("Gives 40 Energy Points");
+                    energyNapItemLocked.setVisible(false);
+                    energyNapItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                default:
+                    break;
             }
         }
-        // update tooltip to show stats
+
     }
 
     /**
@@ -350,9 +384,10 @@ public class InventoryModalController {
      * if user has reached specific level
      */
     public void unlockAccessory() {
-    
+
         if (catLevel >= 3) {
             Tooltip.uninstall(blueBowtieLocked, blueBowtieTooltip);
+            LOG.debug("hello gamerzz");
             blueBowtieLocked.setVisible(false);
         }
         if (catLevel >= 5) {

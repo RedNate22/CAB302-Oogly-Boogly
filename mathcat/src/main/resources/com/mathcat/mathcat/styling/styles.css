@@ -230,3 +230,7 @@
 .itemLabel {
     -fx-font-size: 14px;
 }
+
+.tooltipLabel {
+    -fx-font-size: 16px;
+}
