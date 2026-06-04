@@ -311,8 +311,16 @@ public class InventoryModalController {
             blueBowtieLocked.setVisible(false);
         }
         if (catLevel >= 5) {
+            Tooltip.uninstall(purpleBowtieLocked, purpleBowtieTooltip);
+            purpleBowtieLocked.setVisible(false);
+        }
+        if (catLevel >= 8) {
             Tooltip.uninstall(greenBowtieLocked, greenBowtieTooltip);
             greenBowtieLocked.setVisible(false);
+        }
+        if (catLevel >= 10) {
+            Tooltip.uninstall(megaCowboyLocked, megaCowboyTooltip);
+            megaCowboyLocked.setVisible(false);
         }
     }
 }
