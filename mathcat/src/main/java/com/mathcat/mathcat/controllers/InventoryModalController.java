@@ -14,10 +14,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import java.io.IOException;
 import java.util.function.Consumer;
 
@@ -106,6 +105,18 @@ public class InventoryModalController {
             // load amount of items user has
         }
 
+        megaCowboyTooltip.setShowDelay(Duration.millis(30));
+        blueBowtieTooltip.setShowDelay(Duration.millis(30));
+        purpleBowtieTooltip.setShowDelay(Duration.millis(30));
+        greenBowtieTooltip.setShowDelay(Duration.millis(30));
+        tunaItemTooltip.setShowDelay(Duration.millis(30));
+        milkItemTooltip.setShowDelay(Duration.millis(30));
+        kibbleItemTooltip.setShowDelay(Duration.millis(30));
+        yarnItemTooltip.setShowDelay(Duration.millis(30));
+        laserItemTooltip.setShowDelay(Duration.millis(30));
+        catnipItemTooltip.setShowDelay(Duration.millis(30));
+        energyNapItemTooltip.setShowDelay(Duration.millis(30));
+
         Tooltip.install(megaCowboyLocked, megaCowboyTooltip);
         Tooltip.install(blueBowtieLocked, blueBowtieTooltip);
         Tooltip.install(purpleBowtieLocked, purpleBowtieTooltip);
@@ -156,10 +167,6 @@ public class InventoryModalController {
      * Handles the logic of getting the current selected accessory
      * to then save to DB in Home controller
      * @return the current selected accessory
-     * Handles the confirm and save button action. Saves changes and closes the modal.
-     *
-     * @param event the button click event
-     * @throws IOException if closing the modal fails
      */
     public String getCurrentSelectedPath() {
         return selectedAccessorySpritePath;
@@ -167,9 +174,6 @@ public class InventoryModalController {
 
     /**
      * Handles logic of clearing accessory image of current cat appearance
-     * Sets the reference to the parent inventory modal controller.
-     *
-     * @param inventoryModalController the parent controller instance
      */
     public void onClickClearAccessory() {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
@@ -194,10 +198,6 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the mega sized cowboy hat accessory
-     * Handles the change cat accessory button action.
-     *
-     * @param event the button click event
-     * @throws IOException if the next screen cannot be loaded
      */
     public void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
@@ -209,10 +209,6 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the red bowtie hat accessory
-     * Handles the confirm and save button action. Saves changes and closes the modal.
-     *
-     * @param event the button click event
-     * @throws IOException if closing the modal fails
      */
     public void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
@@ -235,10 +231,6 @@ public class InventoryModalController {
 
     /**
      * Handles logic of selecting the purple bowtie hat accessory
-    /**
-     * Sets the reference to the parent inventory modal controller.
-     *
-     * @param inventoryModalController the parent controller instance
      */
     public void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
