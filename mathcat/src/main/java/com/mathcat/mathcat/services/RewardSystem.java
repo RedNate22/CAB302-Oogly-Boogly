@@ -135,9 +135,7 @@ public class RewardSystem {
      * @param isAiUsed the AI chatcontroller
      */
     public static double userReward(Cat cat, IQuestion question, Boolean isAiUsed) {
-        if (cat.getHappiness() < 100) {
-            cat.setHappiness(cat.getHappiness() + 1);
-        }
+        cat.setHappiness(CatService.clampStat(cat.getHappiness() + 1));
 
         double xpReturn = playerXpReturn(cat, question, isAiUsed);
         if (xpReturn == 0) {
