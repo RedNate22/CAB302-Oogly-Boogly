@@ -12,12 +12,6 @@ import com.mathcat.mathcat.services.SpriteService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-// import javafx.scene.Node;
-// import javafx.scene.Parent;
-// import javafx.scene.control.Label;
-// import javafx.scene.control.ProgressBar;
-// import javafx.scene.image.Image;
-// import javafx.scene.image.ImageView;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -191,6 +185,8 @@ public class HomeController {
             });
 
             inventoryStage.showAndWait();
+            cat = CatDAO.load(UserDAO.currentUser.getId());
+            refreshStats(cat);
 
             String finalChoice = invModalController.getCurrentSelectedPath();
 
@@ -198,12 +194,17 @@ public class HomeController {
                 cat.setCatAccessory(finalChoice);
                 CatDAO.save(cat);
                 LOG.info("accessory updated for cat: {}", cat.getCatName());
+
             } else {
                 LOG.debug("no item selected in inventory modal");
             }
 
         } catch (IOException e) {
             LOG.error("failed to load inventory modal", e);
+            CatDAO.save(cat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

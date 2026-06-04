@@ -15,6 +15,8 @@ import com.mathcat.mathcat.dao.CatDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * Handles UI events for the login and account creation screens.
  */
@@ -92,8 +94,8 @@ public class AuthController {
             return;
         }
 
-        if (!matchedUser.getPassword().equals(password)) {
-            LOG.warn("incorrect password for user: {}", usernameEmail);
+        if (!BCrypt.checkpw(password, matchedUser.getPassword())) {
+            LOG.warn("Incorrect password for user: {}", usernameEmail);
             error.setText("Password is incorrect. Please try again");
             return;
         }
@@ -147,7 +149,9 @@ public class AuthController {
             boolean exists = UserDAO.findByUsername(username) != null
                     || UserDAO.findByEmail(email) != null;
             if (!exists) {
-                UserDAO.insert(new User(username, email, password));
+                UserDAO.insert(
+                        // default BCrypt cost factor 10 is fine (100ms per hash on modern hardware)
+                        new User(username, email, BCrypt.hashpw(password, BCrypt.gensalt())));
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
                 LOG.info("account created: {}", username);
 

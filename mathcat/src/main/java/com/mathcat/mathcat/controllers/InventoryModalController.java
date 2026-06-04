@@ -1,37 +1,45 @@
 package com.mathcat.mathcat.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mathcat.mathcat.dao.CatDAO;
+import com.mathcat.mathcat.dao.ItemDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.SpriteConstants;
-import com.mathcat.mathcat.services.CatScheduler;
-import com.mathcat.mathcat.services.CatService;
-import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
- * Controller for the inventory modal screen. Handles item selection and cat appearance changes.
+ * Controller for the inventory modal screen. Handles item selection and cat
+ * appearance changes.
  */
 public class InventoryModalController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(InventoryModalController.class);
+
     /** Creates a new InventoryModalController. */
-    public InventoryModalController() {}
+    public InventoryModalController() {
+    }
 
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
+    private double catLevel;
+    private ArrayList<Item> catItem;
 
-    // Callback function to allow Home and Inventory controllers to talk to each other
+    // Callback function to allow Home and Inventory controllers to talk to each
+    // other
     // when updating the sprite accessories
     private Consumer<String> onItemSelectCallback;
 
@@ -96,6 +104,22 @@ public class InventoryModalController {
     @FXML
     private Tooltip energyNapItemTooltip;
 
+    @FXML
+    private Label tunaItemAmount;
+    @FXML
+    private Label milkItemAmount;
+    @FXML
+    private Label kibbleItemAmount;
+
+    @FXML
+    private Label yarnItemAmount;
+    @FXML
+    private Label laserItemAmount;
+    @FXML
+    private Label catnipItemAmount;
+    @FXML
+    private Label energyNapItemAmount;
+
     /**
      * Loads the current user's cat and its inventory on screen load.
      */
@@ -103,8 +127,22 @@ public class InventoryModalController {
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
-            // load amount of items user has
+            catLevel = cat.getLevel();
+            catItem = cat.getItems();
         }
+
+        // Make the tooltips show fast
+        megaCowboyTooltip.setShowDelay(Duration.millis(30));
+        blueBowtieTooltip.setShowDelay(Duration.millis(30));
+        purpleBowtieTooltip.setShowDelay(Duration.millis(30));
+        greenBowtieTooltip.setShowDelay(Duration.millis(30));
+        tunaItemTooltip.setShowDelay(Duration.millis(30));
+        milkItemTooltip.setShowDelay(Duration.millis(30));
+        kibbleItemTooltip.setShowDelay(Duration.millis(30));
+        yarnItemTooltip.setShowDelay(Duration.millis(30));
+        laserItemTooltip.setShowDelay(Duration.millis(30));
+        catnipItemTooltip.setShowDelay(Duration.millis(30));
+        energyNapItemTooltip.setShowDelay(Duration.millis(30));
 
         Tooltip.install(megaCowboyLocked, megaCowboyTooltip);
         Tooltip.install(blueBowtieLocked, blueBowtieTooltip);
@@ -117,6 +155,9 @@ public class InventoryModalController {
         Tooltip.install(laserItemLocked, laserItemTooltip);
         Tooltip.install(catnipItemLocked, catnipItemTooltip);
         Tooltip.install(energyNapItemLocked, energyNapItemTooltip);
+
+        unlockAccessory();
+        unlockItem();
     }
 
     /**
@@ -130,16 +171,16 @@ public class InventoryModalController {
         return (Stage) root.getScene().getWindow();
     }
 
-    /**
-     * Handles the change cat colour button action.
-     *
-     * @param event the button click event
-     * @throws IOException if the next screen cannot be loaded
-     */
-    @FXML
-    protected void changeCatColour(ActionEvent event) throws IOException {
+    // /**
+    //  * Handles the change cat colour button action.
+    //  *
+    //  * @param event the button click event
+    //  * @throws IOException if the next screen cannot be loaded
+    //  */
+    // @FXML
+    // protected void changeCatColour(ActionEvent event) throws IOException {
 
-    }
+    // }
 
     /**
      * Handles the logic of callback to Home screen
@@ -155,36 +196,23 @@ public class InventoryModalController {
     /**
      * Handles the logic of getting the current selected accessory
      * to then save to DB in Home controller
+     * 
      * @return the current selected accessory
-     * Handles the confirm and save button action. Saves changes and closes the modal.
-     *
-     * @param event the button click event
-     * @throws IOException if closing the modal fails
      */
     public String getCurrentSelectedPath() {
         return selectedAccessorySpritePath;
     }
 
-    /**
-     * Handles logic of clearing accessory image of current cat appearance
-     * Sets the reference to the parent inventory modal controller.
-     *
-     * @param inventoryModalController the parent controller instance
-     */
-    public void onClickClearAccessory() {
+    private void onClickClearAccessory() {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
 
-            
         }
     }
 
-    /**
-     * Handles logic of selecting the basic cowboy hat accessory
-     */
-    public void onClickCowboyHat() {
+    private void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
 
         if (onItemSelectCallback != null) {
@@ -192,14 +220,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the mega sized cowboy hat accessory
-     * Handles the change cat accessory button action.
-     *
-     * @param event the button click event
-     * @throws IOException if the next screen cannot be loaded
-     */
-    public void onClickMegaCowboyHat() {
+    private void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
 
         if (onItemSelectCallback != null) {
@@ -207,14 +228,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the red bowtie hat accessory
-     * Handles the confirm and save button action. Saves changes and closes the modal.
-     *
-     * @param event the button click event
-     * @throws IOException if closing the modal fails
-     */
-    public void onClickRedBowtieHat() {
+    private void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -222,10 +236,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the blue bowtie hat accessory
-     */
-    public void onClickBlueBowtieHat() {
+    private void onClickBlueBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.BLUE_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -233,14 +244,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the purple bowtie hat accessory
-    /**
-     * Sets the reference to the parent inventory modal controller.
-     *
-     * @param inventoryModalController the parent controller instance
-     */
-    public void onClickPurpleBowtieHat() {
+    private void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -248,10 +252,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the green bowtie hat accessory
-     */
-    public void onClickGreenBowtieHat() {
+    private void onClickGreenBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.GREEN_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -259,49 +260,186 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the tuna item
-     */
-    public void onClickTunaItem() {}
+    private void onClickTunaItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("FOOD_TUNA")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    tunaItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        tunaItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
-    /**
-     * Handles logic of selecting the milk item
-     */
-    public void onClickMilkItem() {}
+    private void onClickMilkItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("FOOD_MILK")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    milkItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        milkItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
-    /**
-     * Handles logic of selecting the kibble item
-     */
-    public void onClickKibbleItem() {}
+    private void onClickKibbleItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("FOOD_KIBBLE")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    kibbleItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        kibbleItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
-    /**
-     * Handles logic of selecting the yarn ball item
-     */
-    public void onClickYarnItem() {}
+    private void onClickYarnItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("TOY_BALL")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    yarnItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        yarnItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
-    /**
-     * Handles logic of selecting the laser item
-     */
-    public void onClickLaserItem() {}
+    private void onClickLaserItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("TOY_LASER")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    laserItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        laserItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
-    /**
-     * Handles logic of selecting the catnip item
-     */
-    public void onClickCatnipItem() {}
+    private void onClickCatnipItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("TOY_CATNIP")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    catnipItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        catnipItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
-    /**
-     * Handles logic of selecting the energy nap item
-     */
-    public void onClickEnergyNapItem() {}
+    private void onClickEnergyNapItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("ENERGY_NAP")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    energyNapItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        energyNapItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
+    }
 
     /**
      * Handles logic of unlocking item if user
      * has at least one of the item
      */
     public void unlockItem() {
-        // if user has item (at least one)
-        // remove pane that blocks clickability
-        // update tooltip to show stats
+        for (Item item : catItem) {
+            switch (item.getItemId()) {
+                case "FOOD_TUNA":
+                    tunaItemTooltip.setText("Gives 30 Fullness Points");
+                    tunaItemLocked.setVisible(false);
+                    tunaItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "FOOD_MILK":
+                    milkItemTooltip.setText("Gives 15 Fullness Points");
+                    milkItemLocked.setVisible(false);
+                    milkItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "FOOD_KIBBLE":
+                    kibbleItemTooltip.setText("Gives 10 Fullness Points");
+                    kibbleItemLocked.setVisible(false);
+                    kibbleItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "TOY_BALL":
+                    yarnItemTooltip.setText("Gives 25 Happiness Points");
+                    yarnItemLocked.setVisible(false);
+                    yarnItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "TOY_LASER":
+                    laserItemTooltip.setText("Gives 15 Happiness Points");
+                    laserItemLocked.setVisible(false);
+                    laserItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "TOY_CATNIP":
+                    catnipItemTooltip.setText("Gives 35 Happiness Points");
+                    catnipItemLocked.setVisible(false);
+                    catnipItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                case "ENERGY_NAP":
+                    energyNapItemTooltip.setText("Gives 40 Energy Points");
+                    energyNapItemLocked.setVisible(false);
+                    energyNapItemAmount.setText("( " + item.getQuantity() + " )");
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 
     /**
@@ -309,7 +447,29 @@ public class InventoryModalController {
      * if user has reached specific level
      */
     public void unlockAccessory() {
-        // if user level = blah
-        // remove pane that blocks clickability
+
+        if (catLevel >= 3) {
+            blueBowtieTooltip.setText("");
+            blueBowtieTooltip.hide();
+            blueBowtieLocked.setVisible(false);
+        }
+        if (catLevel >= 5) {
+            purpleBowtieTooltip.setText("");
+            purpleBowtieTooltip.hide();
+            Tooltip.uninstall(purpleBowtieLocked, purpleBowtieTooltip);
+            purpleBowtieLocked.setVisible(false);
+        }
+        if (catLevel >= 8) {
+            greenBowtieTooltip.setText("");
+            greenBowtieTooltip.hide();
+            Tooltip.uninstall(greenBowtieLocked, greenBowtieTooltip);
+            greenBowtieLocked.setVisible(false);
+        }
+        if (catLevel >= 10) {
+            megaCowboyTooltip.setText("");
+            megaCowboyTooltip.hide();
+            Tooltip.uninstall(megaCowboyLocked, megaCowboyTooltip);
+            megaCowboyLocked.setVisible(false);
+        }
     }
 }

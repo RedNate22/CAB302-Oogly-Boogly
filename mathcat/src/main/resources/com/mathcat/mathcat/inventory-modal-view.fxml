@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.InventoryModalController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathcat.mathcat.controllers.InventoryModalController">
    <center>
       <VBox prefHeight="575.0" prefWidth="300.0" BorderPane.alignment="TOP_CENTER">
          <children>
@@ -84,7 +84,7 @@
                                     </ImageView>
                                     <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="-1.0" layoutY="40.0" prefHeight="17.0" prefWidth="120.0" styleClass="itemLabel" text="Mega Cowboy Hat">
                                        <tooltip>
-                                          <Tooltip fx:id="megaCowboyTooltip" text="You must be Level .. to unlock this accessory!" />
+                                          <Tooltip fx:id="megaCowboyTooltip" styleClass="tooltipLabel" text="You must be Level 10 to unlock this accessory!" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -111,7 +111,7 @@
                                     </ImageView>
                                     <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="72.0" styleClass="itemLabel" text="Blue Bowtie">
                                        <tooltip>
-                                          <Tooltip fx:id="blueBowtieTooltip" text="You must be Level .. to unlock this accessory!" />
+                                          <Tooltip fx:id="blueBowtieTooltip" styleClass="tooltipLabel" text="You must be Level 3 to unlock this accessory!" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -138,7 +138,7 @@
                                     </ImageView>
                                     <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="86.0" styleClass="itemLabel" text="Purple Bowtie">
                                        <tooltip>
-                                          <Tooltip fx:id="purpleBowtieTooltip" text="You must be Level .. to unlock this accessory!" />
+                                          <Tooltip fx:id="purpleBowtieTooltip" text="You must be Level 5 to unlock this accessory!" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -165,7 +165,7 @@
                                     </ImageView>
                                     <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="59.0" layoutY="40.0" prefHeight="17.0" prefWidth="86.0" styleClass="itemLabel" text="Green Bowtie">
                                        <tooltip>
-                                          <Tooltip fx:id="greenBowtieTooltip" text="You must be Level .. to unlock this accessory!" />
+                                          <Tooltip fx:id="greenBowtieTooltip" text="You must be Level 8 to unlock this accessory!" />
                                        </tooltip>
                                     </Label>
                                  </children>
@@ -213,10 +213,10 @@
                                           <Insets top="2.0" />
                                        </padding>
                                        <tooltip>
-                                          <Tooltip fx:id="tunaItemTooltip" text="You do not have this item!" />
+                                          <Tooltip fx:id="tunaItemTooltip" styleClass="tooltipLabel" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                    <Label fx:id="tunaItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
@@ -247,7 +247,7 @@
                                           <Tooltip fx:id="milkItemTooltip" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                    <Label fx:id="milkItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
@@ -278,7 +278,7 @@
                                           <Tooltip fx:id="kibbleItemTooltip" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                    <Label fx:id="kibbleItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
@@ -334,7 +334,7 @@
                                           <Tooltip fx:id="yarnItemTooltip" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                    <Label fx:id="yarnItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
@@ -365,7 +365,7 @@
                                           <Tooltip fx:id="laserItemTooltip" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="77.0" text="(x0)">
+                                    <Label fx:id="laserItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="77.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
@@ -396,7 +396,7 @@
                                           <Tooltip fx:id="catnipItemTooltip" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
+                                    <Label fx:id="catnipItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="50.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
@@ -427,7 +427,7 @@
                                           <Tooltip fx:id="energyNapItemTooltip" text="You do not have this item!" />
                                        </tooltip>
                                     </Label>
-                                    <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="77.0" text="(x0)">
+                                    <Label fx:id="energyNapItemAmount" alignment="TOP_CENTER" contentDisplay="CENTER" layoutY="15.0" prefWidth="77.0" text="(x0)">
                                        <padding>
                                           <Insets top="2.0" />
                                        </padding>
