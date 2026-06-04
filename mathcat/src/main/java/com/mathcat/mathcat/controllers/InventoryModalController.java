@@ -9,14 +9,9 @@ import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.SpriteConstants;
-import com.mathcat.mathcat.services.CatScheduler;
-import com.mathcat.mathcat.services.CatService;
-import com.mathcat.mathcat.services.LevelSystem;
-import com.mathcat.mathcat.services.SpriteService;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -25,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
