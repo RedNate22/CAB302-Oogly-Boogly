@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mathcat.mathcat.dao.CatDAO;
+import com.mathcat.mathcat.dao.ItemDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
@@ -290,26 +291,20 @@ public class InventoryModalController {
      * Handles logic of selecting the tuna item
      */
     public void onClickTunaItem() {
-        // applyItem
-        // setQuantity (if hit 0 re-lock)
-
-        // update label first
-
         for (Item item : catItem) {
-            if (item.getItemId() == "FOOD_TUNA") {
-                item.applyItem(cat);
-                
-                if (item.getQuantity() == 1) {
-                    item.setQuantity(0);
-                    tunaItemAmount.setText("( " + item.getQuantity() + " )");
-                    LOG.debug("ayo this worked", item.getQuantity());
-                } else if (item.getQuantity() > 1) {
-                    item.setQuantity(item.getQuantity() - 1);
-                    tunaItemAmount.setText("( " + item.getQuantity() + " )");
-                    LOG.debug("bro, what is this code: {}", item.getQuantity());
+            if (item.getItemId().equals("FOOD_TUNA")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    tunaItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        tunaItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
                 }
-
-                CatDAO.save(cat);
+                break;
             }
         }
     }
@@ -318,36 +313,129 @@ public class InventoryModalController {
      * Handles logic of selecting the milk item
      */
     public void onClickMilkItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("FOOD_MILK")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    milkItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        milkItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
     }
 
-    /**
-     * Handles logic of selecting the kibble item
-     */
-    public void onClickKibbleItem() {
+    private void onClickKibbleItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("FOOD_KIBBLE")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    kibbleItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        kibbleItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
     }
 
     /**
      * Handles logic of selecting the yarn ball item
      */
     public void onClickYarnItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("TOY_BALL")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    yarnItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        yarnItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
     }
 
     /**
      * Handles logic of selecting the laser item
      */
     public void onClickLaserItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("TOY_LASER")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    laserItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        laserItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
     }
 
     /**
      * Handles logic of selecting the catnip item
      */
     public void onClickCatnipItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("TOY_CATNIP")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    catnipItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        catnipItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
     }
 
     /**
      * Handles logic of selecting the energy nap item
      */
     public void onClickEnergyNapItem() {
+        for (Item item : catItem) {
+            if (item.getItemId().equals("ENERGY_NAP")) {
+                boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
+                if (used) {
+                    item.applyItem(cat);
+                    int newQty = item.getQuantity() - 1;
+                    item.setQuantity(newQty);
+                    energyNapItemAmount.setText("( " + newQty + " )");
+                    if (newQty <= 0) {
+                        energyNapItemLocked.setVisible(true);
+                    }
+                    CatDAO.save(cat);
+                }
+                break;
+            }
+        }
     }
 
     /**
