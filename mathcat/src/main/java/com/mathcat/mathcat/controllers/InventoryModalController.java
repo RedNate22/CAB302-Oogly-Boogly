@@ -386,19 +386,26 @@ public class InventoryModalController {
     public void unlockAccessory() {
 
         if (catLevel >= 3) {
-            Tooltip.uninstall(blueBowtieLocked, blueBowtieTooltip);
+            blueBowtieTooltip.setText("");
+            blueBowtieTooltip.hide();
             LOG.debug("hello gamerzz");
             blueBowtieLocked.setVisible(false);
         }
         if (catLevel >= 5) {
+            purpleBowtieTooltip.setText("");
+            purpleBowtieTooltip.hide();
             Tooltip.uninstall(purpleBowtieLocked, purpleBowtieTooltip);
             purpleBowtieLocked.setVisible(false);
         }
         if (catLevel >= 8) {
+            greenBowtieTooltip.setText("");
+            greenBowtieTooltip.hide();
             Tooltip.uninstall(greenBowtieLocked, greenBowtieTooltip);
             greenBowtieLocked.setVisible(false);
         }
         if (catLevel >= 10) {
+            megaCowboyTooltip.setText("");
+            megaCowboyTooltip.hide();
             Tooltip.uninstall(megaCowboyLocked, megaCowboyTooltip);
             megaCowboyLocked.setVisible(false);
         }
