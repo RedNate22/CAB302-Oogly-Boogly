@@ -177,16 +177,16 @@ public class InventoryModalController {
         return (Stage) root.getScene().getWindow();
     }
 
-    /**
-     * Handles the change cat colour button action.
-     *
-     * @param event the button click event
-     * @throws IOException if the next screen cannot be loaded
-     */
-    @FXML
-    protected void changeCatColour(ActionEvent event) throws IOException {
+    // /**
+    //  * Handles the change cat colour button action.
+    //  *
+    //  * @param event the button click event
+    //  * @throws IOException if the next screen cannot be loaded
+    //  */
+    // @FXML
+    // protected void changeCatColour(ActionEvent event) throws IOException {
 
-    }
+    // }
 
     /**
      * Handles the logic of callback to Home screen
@@ -209,10 +209,7 @@ public class InventoryModalController {
         return selectedAccessorySpritePath;
     }
 
-    /**
-     * Handles logic of clearing accessory image of current cat appearance
-     */
-    public void onClickClearAccessory() {
+    private void onClickClearAccessory() {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
 
         if (onItemSelectCallback != null) {
@@ -221,10 +218,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the basic cowboy hat accessory
-     */
-    public void onClickCowboyHat() {
+    private void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
 
         if (onItemSelectCallback != null) {
@@ -232,10 +226,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the mega sized cowboy hat accessory
-     */
-    public void onClickMegaCowboyHat() {
+    private void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
 
         if (onItemSelectCallback != null) {
@@ -243,10 +234,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the red bowtie hat accessory
-     */
-    public void onClickRedBowtieHat() {
+    private void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -254,10 +242,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the blue bowtie hat accessory
-     */
-    public void onClickBlueBowtieHat() {
+    private void onClickBlueBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.BLUE_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -265,10 +250,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the purple bowtie hat accessory
-     */
-    public void onClickPurpleBowtieHat() {
+    private void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -276,10 +258,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the green bowtie hat accessory
-     */
-    public void onClickGreenBowtieHat() {
+    private void onClickGreenBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.GREEN_BOWTIE_HAT;
 
         if (onItemSelectCallback != null) {
@@ -287,10 +266,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the tuna item
-     */
-    public void onClickTunaItem() {
+    private void onClickTunaItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_TUNA")) {
                 boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
@@ -309,10 +285,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the milk item
-     */
-    public void onClickMilkItem() {
+    private void onClickMilkItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_MILK")) {
                 boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
@@ -350,10 +323,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the yarn ball item
-     */
-    public void onClickYarnItem() {
+    private void onClickYarnItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_BALL")) {
                 boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
@@ -372,10 +342,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the laser item
-     */
-    public void onClickLaserItem() {
+    private void onClickLaserItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_LASER")) {
                 boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
@@ -394,10 +361,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the catnip item
-     */
-    public void onClickCatnipItem() {
+    private void onClickCatnipItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_CATNIP")) {
                 boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
@@ -416,10 +380,7 @@ public class InventoryModalController {
         }
     }
 
-    /**
-     * Handles logic of selecting the energy nap item
-     */
-    public void onClickEnergyNapItem() {
+    private void onClickEnergyNapItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("ENERGY_NAP")) {
                 boolean used = ItemDAO.useItem(cat.getCatId(), item.getItemId());
