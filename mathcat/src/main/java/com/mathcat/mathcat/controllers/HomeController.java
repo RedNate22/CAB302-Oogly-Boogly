@@ -197,6 +197,8 @@ public class HomeController {
             });
 
             inventoryStage.showAndWait();
+            cat = CatDAO.load(UserDAO.currentUser.getId());
+            refreshStats(cat);
 
             String finalChoice = invModalController.getCurrentSelectedPath();
 
@@ -204,11 +206,12 @@ public class HomeController {
                 System.out.print(finalChoice);
                 
                 cat.setCatAccessory(finalChoice);
-                CatDAO.save(cat);
 
             } else {
                 System.out.print("No item selected in modal");
             }
+
+            CatDAO.save(cat);
 
         } catch (Exception e) {
             e.printStackTrace();
