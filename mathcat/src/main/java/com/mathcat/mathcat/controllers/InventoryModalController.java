@@ -29,6 +29,7 @@ public class InventoryModalController {
     public InventoryModalController() {}
 
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
+    private double catLevel;
 
     // Callback function to allow Home and Inventory controllers to talk to each other
     // when updating the sprite accessories
@@ -102,9 +103,10 @@ public class InventoryModalController {
     public void initialize() {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
-            // load amount of items user has
+            catLevel = cat.getLevel();
         }
 
+        // Make the tooltips show fast
         megaCowboyTooltip.setShowDelay(Duration.millis(30));
         blueBowtieTooltip.setShowDelay(Duration.millis(30));
         purpleBowtieTooltip.setShowDelay(Duration.millis(30));
@@ -128,6 +130,8 @@ public class InventoryModalController {
         Tooltip.install(laserItemLocked, laserItemTooltip);
         Tooltip.install(catnipItemLocked, catnipItemTooltip);
         Tooltip.install(energyNapItemLocked, energyNapItemTooltip);
+
+        unlockAccessory();
     }
 
     /**
@@ -301,7 +305,14 @@ public class InventoryModalController {
      * if user has reached specific level
      */
     public void unlockAccessory() {
-        // if user level = blah
-        // remove pane that blocks clickability
+    
+        if (catLevel >= 3) {
+            Tooltip.uninstall(blueBowtieLocked, blueBowtieTooltip);
+            blueBowtieLocked.setVisible(false);
+        }
+        if (catLevel >= 5) {
+            Tooltip.uninstall(greenBowtieLocked, greenBowtieTooltip);
+            greenBowtieLocked.setVisible(false);
+        }
     }
 }
