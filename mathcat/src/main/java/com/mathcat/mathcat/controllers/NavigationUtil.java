@@ -70,8 +70,10 @@ public final class NavigationUtil {
         try {
             Parent root = FXMLLoader.load(NavigationUtil.class.getResource(fxml));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 700, 500);
+            scene.getStylesheets().add(STYLESHEET);
             stage.setTitle("MathCat");
-            stage.setScene(new Scene(root, 700, 500));
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             LOG.error("failed to load screen: {}", fxml, e);
