@@ -124,8 +124,8 @@ public class CreatePetController {
     }
 
     /**
-     * Handles pet creation ,validates name, shows a confirmation dialog with the pet's
-     * name and appearance, then saves to database and navigates to home screen if confirmed.
+     * Handles pet creation, validates name, shows a confirmation dialog with the pet's name and
+     * appearance, then saves to database and navigates to home screen if confirmed.
      *
      * @param event the button click event
      */
@@ -157,6 +157,7 @@ public class CreatePetController {
         StackPane alertImage = new StackPane(alertCat, alertAccessory);
         confirmation.setGraphic(alertImage);
 
+        confirmation.getDialogPane().getStylesheets().add(NavigationUtil.STYLESHEET);
         ButtonType result = confirmation.showAndWait().orElse(goBackButton);
 
         if (result != confirmButton) {
@@ -170,7 +171,17 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
+<<<<<<< HEAD
         NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
+=======
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
+>>>>>>> dev
     }
 
     /**

@@ -15,8 +15,21 @@ public class HelloController {
      * @param event the button click event
      */
     @FXML
+<<<<<<< HEAD
     public void onLoginClick(ActionEvent event) {
         NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/login-view.fxml");
+=======
+    public void onLoginClick(ActionEvent event) throws IOException {
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/login-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
+        stage.show();
+>>>>>>> dev
     }
 
     /**
@@ -25,7 +38,20 @@ public class HelloController {
      * @param event the button click event
      */
     @FXML
+<<<<<<< HEAD
     public void onCreateClick(ActionEvent event) {
         NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/createaccount-view.fxml");
+=======
+    public void onCreateClick(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader
+                .load(getClass().getResource("/com/mathcat/mathcat/createaccount-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
+        stage.show();
+>>>>>>> dev
     }
 }

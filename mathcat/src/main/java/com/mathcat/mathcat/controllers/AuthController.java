@@ -109,7 +109,17 @@ public class AuthController {
                 ? "/com/mathcat/mathcat/home-view.fxml"
                 : "/com/mathcat/mathcat/createpet-view.fxml";
 
+<<<<<<< HEAD
         NavigationUtil.navigateTo(event, fxml);
+=======
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
+        stage.show();
+>>>>>>> dev
     }
 
     /**
@@ -151,7 +161,17 @@ public class AuthController {
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
                 LOG.info("account created: {}", username);
 
+<<<<<<< HEAD
                 NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/createpet-view.fxml");
+=======
+                Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 700, 500);
+                scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+                stage.setTitle("MathCat");
+                stage.setScene(scene);
+                stage.show();
+>>>>>>> dev
             } else {
                 LOG.warn("account creation failed - already exists: {}", username);
                 error.setText("Username or email already exists");
