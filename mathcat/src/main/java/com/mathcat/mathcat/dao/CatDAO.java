@@ -112,11 +112,14 @@ public final class CatDAO {
                 cat.setLevel(rs.getInt("level"));
                 cat.setXp(rs.getDouble("xp"));
                 String lastSaved = rs.getString("last_saved");
-                if (lastSaved != null)
+                if (lastSaved != null) {
                     cat.setLastSaved(LocalDateTime.parse(lastSaved));
+                }
                 cat.setDailyEnergyGained(rs.getDouble("daily_energy_gained"));
                 String resetDate = rs.getString("energy_cap_reset_date");
-                if (resetDate != null) cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                if (resetDate != null) {
+                    cat.setEnergyCapResetDate(LocalDate.parse(resetDate));
+                }
                 // Load the cat's inventory from the database
                 cat.setItems(ItemDAO.loadInventory(cat.getCatId()));
                 return cat;

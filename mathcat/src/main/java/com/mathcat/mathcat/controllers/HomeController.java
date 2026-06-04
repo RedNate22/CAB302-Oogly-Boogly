@@ -38,6 +38,8 @@ public class HomeController {
     /** Creates a new homeController. */
     public HomeController() {}
 
+    private Cat cat;
+
     @FXML
     private Label petNameLabel;
 
@@ -72,7 +74,7 @@ public class HomeController {
     @FXML
     public void initialize() {
 
-        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        this.cat = CatDAO.load(UserDAO.currentUser.getId());
 
         if (cat != null) {
             CatService.applyOfflineDecay(cat);
@@ -83,12 +85,12 @@ public class HomeController {
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
             refreshStats(cat);
-        }
-
-        else {
+        } else {
             Platform.runLater(() -> {
                 try {
-                    if (petNameLabel.getScene() == null) return; // scene may not be attached yet during initialize()
+                    if (petNameLabel.getScene() == null) {
+                        return; // scene may not be attached yet during initialize()
+                    }
                     Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
                     stage.getScene().setRoot(root);
@@ -138,34 +140,80 @@ public class HomeController {
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root,700, 500);
-        
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
 
     }
 
-    // public void openInventoryModal(ActionEvent event) throws IOException {
-    //     Stage homeStage = getRoot(event);
+    /**
+     * Handles inventory modal screen logic for MathCat in the home screen. 
+     * Opens and sets modal as current screen, so user has to close modal before
+     * further interacting with the home screen.
+     * 
+     * @param event gets the window/stage for the inventory modal screen
+     * @throws IOException if the listed screen does not exist.
+     */
+    @FXML
+    public void onPressInventory(ActionEvent event) {
+        try {
+            FXMLLoader loader =
+                new FXMLLoader(getClass().getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
+            
+            Parent root = 
+                loader.load();
 
-    //     FXMLLoader loader = new FXMLLoader();
-    //     loader.setLocation(homeController.class.getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
-    //     loader.load();
-    //     InventoryModalController addDataController = loader.getController();
-    //     addDataController.setMainController(this);
+            InventoryModalController invModalController = loader.getController();
 
-    //     Parent root = loader.getRoot();
-    //     Stage modalStage = new Stage();
+            invModalController.setOnItemSelect(imagePath -> {
+                Image newAccessory = new Image(getClass().getResourceAsStream(imagePath));
+                viewCurrentAccessoryImage.setImage(newAccessory);
+            });
 
-    //     modalStage.initOwner(homeStage);
-    //     modalStage.initModality(Modality.APPLICATION_MODAL);
-    //     modalStage.setResizable(false);
+            Stage inventoryStage = new Stage();
+            inventoryStage.setTitle("Inventory");
 
-    //     Scene scene = new Scene(root);
-    //     modalStage.setScene(scene);
-    //     modalStage.setTitle("Inventory Modal");
-    //     modalStage.show();
-    // }
+            inventoryStage.initModality(Modality.APPLICATION_MODAL);
+
+            Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            inventoryStage.initOwner(homeStage);
+
+            Scene inventoryScene = new Scene(root);
+            inventoryScene.getStylesheets().add(NavigationUtil.STYLESHEET);
+            inventoryStage.setScene(inventoryScene);
+
+            inventoryStage.setOnShown(windowEvent -> {
+                double homeX = homeStage.getX();
+                double homeY = homeStage.getY();
+                double homeHeight = homeStage.getHeight();
+                double inventoryHeight = inventoryStage.getHeight();
+
+                inventoryStage.setX(homeX + 10);
+                inventoryStage.setY(homeY + (homeHeight - inventoryHeight) / 2);
+
+                inventoryStage.toFront();
+                inventoryStage.requestFocus();
+            });
+
+            inventoryStage.showAndWait();
+
+            String finalChoice = invModalController.getCurrentSelectedPath();
+
+            if (finalChoice != null && cat != null) {
+                System.out.print(finalChoice);
+                
+                cat.setCatAccessory(finalChoice);
+                CatDAO.save(cat);
+
+            } else {
+                System.out.print("No item selected in modal");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

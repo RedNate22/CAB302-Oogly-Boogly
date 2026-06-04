@@ -101,8 +101,9 @@ public final class CatService {
     private static void decreaseHappiness(Cat cat, double value, boolean persist) {
         cat.setHappiness(clampStat(cat.getHappiness() - value));
         cat.setLastSaved(LocalDateTime.now());
-        if (persist)
+        if (persist) {
             CatDAO.save(cat);
+        }
     }
 
     /**
@@ -137,8 +138,9 @@ public final class CatService {
     private static void decreaseFullness(Cat cat, double value, boolean persist) {
         cat.setFullness(clampStat(cat.getFullness() - value));
         cat.setLastSaved(LocalDateTime.now());
-        if (persist)
+        if (persist) {
             CatDAO.save(cat);
+        }
     }
 
     /**
@@ -189,8 +191,9 @@ public final class CatService {
             cat.setEnergyCapResetDate(today);
         }
 
-        if (cat.getDailyEnergyGained() >= DAILY_ENERGY_CAP)
+        if (cat.getDailyEnergyGained() >= DAILY_ENERGY_CAP) {
             return;
+        }
 
         double proportion = cat.getFullness() / MAX_STAT;
         double regen = proportion * ENERGY_REGEN_RATE;
@@ -200,8 +203,10 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
-        LOG.debug("Energy regen +{} (fullness: {}) daily total: {}/{}", regen, cat.getFullness(),
-                cat.getDailyEnergyGained(), DAILY_ENERGY_CAP);
+        LOG.debug("Energy regen +{} (fullness: {}) daily total: {}/{}",
+                String.format("%.2f", regen), String.format("%.2f", cat.getFullness()),
+                String.format("%.2f", cat.getDailyEnergyGained()),
+                String.format("%.2f", DAILY_ENERGY_CAP));
     }
 
     /**
@@ -211,8 +216,9 @@ public final class CatService {
      * @param cat the cat to apply decay to
      */
     public static void applyOfflineDecay(Cat cat) {
-        if (cat.getLastSaved() == null)
+        if (cat.getLastSaved() == null) {
             return;
+        }
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
         LOG.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed,
@@ -276,8 +282,9 @@ public final class CatService {
      * @return true if the item was found and used, false if it was not in the inventory
      */
     public static boolean useItem(Cat cat, Item item) {
-        if (!cat.getItems().remove(item))
+        if (!cat.getItems().remove(item)) {
             return false;
+        }
         item.applyItem(cat);
         LOG.debug("Item used: {} ({} +{})", item.getItemName(), item.getEffectType(),
                         item.getEffectAmount());
