@@ -196,7 +196,7 @@ public class HomeController {
                 LOG.info("accessory updated for cat: {}", cat.getCatName());
 
             } else {
-                LOG.debug("no item selected in inventory modal");
+                LOG.debug("no accessory selected in inventory modal");
             }
 
         } catch (IOException e) {
