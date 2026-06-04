@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
@@ -27,6 +28,7 @@ import com.mathcat.mathcat.models.IQuestion;
 import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javafx.application.Platform;
 
 /**
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
@@ -74,11 +76,20 @@ public class PlayController {
     private TextField answerInput;
 
     @FXML
+    private Button submitButton;
+
+    @FXML
+    private Button showAnswerButton;
+
+    @FXML
     private Label feedbackLabel;
+
+    private PauseTransition feedbackTimer;
 
     private final QuestionService questionService = new QuestionService();
     private IQuestion currentQuestion;
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
+    private int attempts;
 
     /**
      * Loads the current cat, sets up the answer input listener, and serves the first question.
@@ -108,6 +119,7 @@ public class PlayController {
             mathQuestionLabel.setText(currentQuestion.getText());
 
             setupNextQuestion();
+            Platform.runLater(() -> answerInput.requestFocus());
         }
     }
 
@@ -160,39 +172,76 @@ public class PlayController {
         }
 
         if (userAnswer == currentQuestion.getAnswer()) {
+            resetQuestionState();
             LOG.debug("correct answer: {} (difficulty: {})", userAnswer,
                     currentQuestion.getDifficulty());
-            RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
+            double xpRewarded =
+                    RewardSystem.userReward(cat, currentQuestion, chatController.isAiUsed());
             CatDAO.save(cat);
             refreshStats(cat);
 
             currentQuestion = questionService.nextQuestion(cat.getLevel());
             mathQuestionLabel.setText(currentQuestion.getText());
             answerInput.clear();
-            setFeedbackLabel("Correct!");
 
+            if (xpRewarded != 0) {
+                setFeedbackLabel(String.format("Correct! XP Earned: %.2f", xpRewarded));
+            } else {
+                setFeedbackLabel("Correct! No XP Gained");
+            }
             setupNextQuestion();
         } else {
-            LOG.debug("incorrect answer: {}", userAnswer);
-            setFeedbackLabel("Incorrect, try again!");
+            LOG.debug("Incorrect answer: {}, Correct Answer: {}", userAnswer,
+                    currentQuestion.getAnswer());
+            attempts++;
+
+            if (attempts >= 3) {
+                LOG.debug("3 incorrect attempts reached, showing answer button.");
+                setFeedbackLabel("Incorrect! Use the \"Show Answer\" button for help.");
+                showAnswerButton.setVisible(true);
+                showAnswerButton.setManaged(true);
+            } else {
+                setFeedbackLabel("Incorrect, try again!");
+            }
         }
     }
 
+    private void resetQuestionState() {
+        attempts = 0;
+        answerInput.setDisable(false);
+        submitButton.setDisable(false);
+        showAnswerButton.setVisible(false);
+        showAnswerButton.setManaged(false);
+    }
+
     /**
-     * Displays a feedback message briefly, then hides it after 3 seconds.
+     * Reveals the correct answer, then disables the input and submit button so the user can only skip.
      *
-     * @param feedback the message to display
+     * @param event the button click event
      */
-    public void setFeedbackLabel(String feedback) {
+    @FXML
+    public void onShowAnswer(ActionEvent event) {
+        LOG.debug("Answer revealed: {}", currentQuestion.getAnswer());
+        setFeedbackLabel("The answer is: " + currentQuestion.getAnswer());
+        answerInput.setDisable(true);
+        submitButton.setDisable(true);
+        showAnswerButton.setVisible(false);
+        showAnswerButton.setManaged(false);
+    }
+
+    private void setFeedbackLabel(String feedback) {
+        if (feedbackTimer != null) {
+            feedbackTimer.stop(); // prevent early dismissal from stacked timers
+        }
         feedbackLabel.setText(feedback);
         feedbackLabel.setVisible(true);
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        feedbackTimer = new PauseTransition(Duration.seconds(4));
 
-        pause.setOnFinished((ActionEvent event) -> {
+        feedbackTimer.setOnFinished((ActionEvent event) -> {
             feedbackLabel.setVisible(false);
         });
-        pause.play();
+        feedbackTimer.play();
     }
 
     /**
@@ -203,6 +252,7 @@ public class PlayController {
      */
     @FXML
     public void onSkip(ActionEvent event) {
+        resetQuestionState();
         LOG.debug("question skipped: {}", currentQuestion.getText());
         currentQuestion = questionService.nextQuestion(cat.getLevel());
         mathQuestionLabel.setText(currentQuestion.getText());
