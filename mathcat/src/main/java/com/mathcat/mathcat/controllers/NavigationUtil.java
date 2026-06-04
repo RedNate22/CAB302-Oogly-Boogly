@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import org.slf4j.Logger;
@@ -41,15 +42,41 @@ public final class NavigationUtil {
      * @param event the button click event used to resolve the current stage
      * @throws IOException if the initial screen FXML cannot be loaded
      */
-    public static void logout(ActionEvent event) throws IOException {
+    public static void logout(ActionEvent event) {
         CatScheduler.getInstance().stop();
-        LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        if (UserDAO.currentUser != null) {
+            LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
+        }
         UserDAO.currentUser = null;
 
-        Parent root = FXMLLoader
-                .load(NavigationUtil.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+        try {
+            Parent root = FXMLLoader.load(
+                    NavigationUtil.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("MathCat");
+            stage.getScene().setRoot(root);
+        } catch (IOException e) {
+            LOG.error("failed to load initial screen during logout", e);
+        }
+    }
+
+    /**
+     * Navigates to the given FXML screen, replacing the current scene.
+     *
+     * @param event the button click event used to resolve the current stage
+     * @param fxml the classpath-absolute path to the FXML resource
+     */
+    public static void navigateTo(ActionEvent event, String fxml) {
+        try {
+            Parent root = FXMLLoader.load(NavigationUtil.class.getResource(fxml));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 700, 500);
+            scene.getStylesheets().add(STYLESHEET);
+            stage.setTitle("MathCat");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            LOG.error("failed to load screen: {}", fxml, e);
+        }
     }
 }

@@ -94,7 +94,11 @@ public final class CatScheduler {
                         String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
                 String.format("%.2f", cat.getEnergy()));
         if (onTickCallback != null) {
-            onTickCallback.run();
+            try {
+                onTickCallback.run();
+            } catch (RuntimeException e) {
+                LOG.error("uncaught exception in tick callback", e);
+            }
         }
     }
 }

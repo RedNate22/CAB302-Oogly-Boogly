@@ -5,17 +5,11 @@ import com.mathcat.mathcat.services.RewardSystem;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -252,6 +246,9 @@ public class PlayController {
      */
     @FXML
     public void onSkip(ActionEvent event) {
+        if (cat == null || currentQuestion == null) {
+            return;
+        }
         resetQuestionState();
         LOG.debug("question skipped: {}", currentQuestion.getText());
         currentQuestion = questionService.nextQuestion(cat.getLevel());
@@ -266,23 +263,17 @@ public class PlayController {
      * Handles return to home screen.
      *
      * @param event the button click event
-     * @throws IOException if the home screen FXML cannot be loaded
      */
-    public void onConfirmGoBack(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onConfirmGoBack(ActionEvent event) {
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**
      * Handles logout.
      *
      * @param event the button click event
-     * @throws IOException if the initial screen FXML cannot be loaded
      */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) {
         NavigationUtil.logout(event);
     }
 
@@ -290,13 +281,8 @@ public class PlayController {
      * Reloads the play screen.
      *
      * @param event the button click event
-     * @throws IOException if the play screen FXML cannot be loaded
      */
-    public void onPressPlay(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onPressPlay(ActionEvent event) {
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
     }
 }
