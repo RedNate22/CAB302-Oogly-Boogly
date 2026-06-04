@@ -16,15 +16,15 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
-    <Text> Email or Username </Text>
-    <TextField fx:id="usernameField"/>
-    <Text> Password </Text>
-    <HBox>
+    <Text styleClass="field-label"> Email or Username </Text>
+    <TextField fx:id="usernameField" styleClass="authField" maxWidth="400"/>
+    <Text styleClass="field-label"> Password </Text>
+    <HBox maxWidth="400">
         <StackPane HBox.hgrow="ALWAYS">
-            <PasswordField fx:id="passwordField"/>
+            <PasswordField fx:id="passwordField" styleClass="authField"/>
             <TextField fx:id="visiblePasswordField" visible="false" managed="false"/>
         </StackPane>
-        <Button text="👁" onAction="#togglePassword"/>
+        <Button text="👁" styleClass="authButton" onAction="#togglePassword"/>
     </HBox>
     <Label fx:id="error"/>
     <Button text="Login" defaultButton="true" onAction="#onLoginConfirm"/>
