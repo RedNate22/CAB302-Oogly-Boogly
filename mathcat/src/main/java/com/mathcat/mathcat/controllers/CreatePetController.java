@@ -2,22 +2,15 @@ package com.mathcat.mathcat.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
-
-import java.io.IOException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -177,15 +170,7 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
-        try {
-            Parent root =
-                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("MathCat");
-            stage.setScene(new Scene(root, 700, 500));
-        } catch (IOException e) {
-            LOG.error("failed to load home screen after pet creation", e);
-        }
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**

@@ -5,16 +5,10 @@ import com.mathcat.mathcat.services.RewardSystem;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -219,18 +213,9 @@ public class PlayController {
      * Handles return to home screen.
      *
      * @param event the button click event
-     * @throws IOException if the home screen FXML cannot be loaded
      */
     public void onConfirmGoBack(ActionEvent event) {
-        try {
-            Parent root =
-                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("MathCat");
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            LOG.error("failed to load home screen", e);
-        }
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**
@@ -248,14 +233,6 @@ public class PlayController {
      * @param event the button click event
      */
     public void onPressPlay(ActionEvent event) {
-        try {
-            Parent root =
-                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setTitle("MathCat");
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            LOG.error("failed to reload play screen", e);
-        }
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
     }
 }
