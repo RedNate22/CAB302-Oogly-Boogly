@@ -3,6 +3,7 @@ package com.mathcat.mathcat.controllers;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.services.CatScheduler;
 import com.mathcat.mathcat.services.CatService;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -30,6 +32,7 @@ public class InventoryModalController {
 
     private Cat cat; // needs to be scoped here to be accessible by onSubmit()
     private double catLevel;
+    private ArrayList<Item> catItem;
 
     // Callback function to allow Home and Inventory controllers to talk to each other
     // when updating the sprite accessories
@@ -104,6 +107,7 @@ public class InventoryModalController {
         cat = CatDAO.load(UserDAO.currentUser.getId());
         if (cat != null) {
             catLevel = cat.getLevel();
+            catItem = cat.getItems();
         }
 
         // Make the tooltips show fast
@@ -132,6 +136,7 @@ public class InventoryModalController {
         Tooltip.install(energyNapItemLocked, energyNapItemTooltip);
 
         unlockAccessory();
+        unlockItem();
     }
 
     /**
@@ -295,8 +300,48 @@ public class InventoryModalController {
      * has at least one of the item
      */
     public void unlockItem() {
-        // if user has item (at least one)
-        // remove pane that blocks clickability
+        for (Item item : catItem) {
+            // Food Items
+            if (item.getItemId().equals("FOOD_TUNA")) {
+                tunaItemTooltip.setText("Gives 30 Fullness Points");
+                tunaItemLocked.setVisible(false);
+                break;
+            }
+            if (item.getItemId().equals("FOOD_MILK")) {
+                milkItemTooltip.setText("Gives 15 Fullness Points");
+                milkItemLocked.setVisible(false);
+                break;
+            }
+            if (item.getItemId().equals("FOOD_KIBBLE")) {
+                kibbleItemTooltip.setText("Gives 10 Fullness Points");
+                kibbleItemLocked.setVisible(false);
+                break;
+            }
+
+            // Toy Items
+            if (item.getItemId().equals("TOY_BALL")) {
+                yarnItemTooltip.setText("Gives 25 Happiness Points");
+                yarnItemLocked.setVisible(false);
+                break;
+            }
+            if (item.getItemId().equals("TOY_LASER")) {
+                laserItemTooltip.setText("Gives 15 Happiness Points");
+                laserItemLocked.setVisible(false);
+                break;
+            }
+            if (item.getItemId().equals("TOY_CATNIP")) {
+                catnipItemTooltip.setText("Gives 35 Happiness Points");
+                catnipItemLocked.setVisible(false);
+                break;
+            }
+
+            // Energy Item
+            if (item.getItemId().equals("ENERGY_NAP")) {
+                energyNapItemTooltip.setText("Gives 40 Energy Points");
+                energyNapItemLocked.setVisible(false);
+                break;
+            }
+        }
         // update tooltip to show stats
     }
 
