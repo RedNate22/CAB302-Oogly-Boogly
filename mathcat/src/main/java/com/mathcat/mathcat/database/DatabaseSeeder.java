@@ -4,16 +4,19 @@ import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.ItemDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.models.Item;
+import com.mathcat.mathcat.models.ItemEffectType;
 import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.models.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
+import java.util.Random;
 
 /**
  * Seeds the database with a fixed set of test users and their cats on application startup.
- * Each user is only inserted once — subsequent runs skip any username that already exists.
+ * Each user is only inserted once; subsequent runs skip any username that already exists.
  */
 public final class DatabaseSeeder {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseSeeder.class);
@@ -70,9 +73,24 @@ public final class DatabaseSeeder {
             cat.setXp(xp);
             CatDAO.save(cat);
 
+            seedItems(cat.getCatId());
             LOG.debug("Seeded user: {} (level {})", username, level);
         } catch (SQLException e) {
             LOG.error("Error seeding user: {}", username, e);
+        }
+    }
+
+    private static void seedItems(int catId) {
+        Random rng = new Random();
+        for (Item item : ItemDAO.getAll()) {
+            if (item.getEffectType() == ItemEffectType.COSMETIC)
+                continue;
+            if (!rng.nextBoolean())
+                continue;
+            int quantity = rng.nextInt(3) + 1;
+            for (int i = 0; i < quantity; i++) {
+                ItemDAO.addItem(catId, item.getItemId());
+            }
         }
     }
 }
