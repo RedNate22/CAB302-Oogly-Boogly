@@ -203,6 +203,7 @@ public class InventoryModalController {
         return selectedAccessorySpritePath;
     }
 
+    @FXML
     private void onClickClearAccessory() {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
 
@@ -212,6 +213,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
 
@@ -220,6 +222,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
 
@@ -228,6 +231,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
 
@@ -236,6 +240,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickBlueBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.BLUE_BOWTIE_HAT;
 
@@ -244,6 +249,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
 
@@ -252,6 +258,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickGreenBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.GREEN_BOWTIE_HAT;
 
@@ -260,6 +267,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickTunaItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_TUNA")) {
@@ -279,6 +287,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickMilkItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_MILK")) {
@@ -298,6 +307,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickKibbleItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_KIBBLE")) {
@@ -317,6 +327,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickYarnItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_BALL")) {
@@ -336,6 +347,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickLaserItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_LASER")) {
@@ -355,6 +367,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickCatnipItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_CATNIP")) {
@@ -374,6 +387,7 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickEnergyNapItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("ENERGY_NAP")) {
