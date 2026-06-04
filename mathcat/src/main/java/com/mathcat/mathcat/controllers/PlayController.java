@@ -135,7 +135,7 @@ public class PlayController {
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
-        levelProgressBar.setProgress(xp/nextLevelXP);
+        levelProgressBar.setProgress(nextLevelXP < 0 ? 1.0 : xp / nextLevelXP);
 
         happinessLabel.setText(String.format("%.0f", happiness));
         hungerLabel.setText(String.format("%.0f", hunger));
