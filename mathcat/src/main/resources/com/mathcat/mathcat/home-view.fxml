@@ -92,6 +92,14 @@
                                     <Image url="@assets/images/sprites/accessories/no-accessory-selected.png" />
                                  </image>
                               </ImageView>
+                              <ImageView id="displayReaction" fx:id="viewCurrentReactionImage" fitHeight="250.0" fitWidth="286.0" layoutX="12.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                                 <image>
+                                    <Image url="@assets/images/sprites/accessories/no-accessory-selected.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </StackPane>
                      </children>
