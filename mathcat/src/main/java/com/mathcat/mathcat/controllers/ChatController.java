@@ -17,6 +17,9 @@ import java.util.List;
  */
 public class ChatController {
 
+    /** Creates a new ChatController. */
+    public ChatController() {}
+
     /**
      * Maximum number of characters a user may type in a single message.
      * Prevents excessively long inputs from being sent to the AI API.
@@ -48,6 +51,8 @@ public class ChatController {
      */
     @FXML
     public void initialize() {
+        userInput.setOnAction(event-> onSendClicked());
+
         aiService = new AIService();
         chatBox.heightProperty().addListener((obs, old, newVal) -> scrollPane.setVvalue(1.0));
 
@@ -104,14 +109,18 @@ public class ChatController {
     @FXML
     private void onSendClicked() {
         String rawMessage = userInput.getText();
-        if (rawMessage == null || rawMessage.isBlank()) return;
+        if (rawMessage == null || rawMessage.isBlank()) {
+            return;
+        }
 
         String message = AIService.sanitiseInput(rawMessage, 500);
-        if (message.isBlank()) return;
+        if (message.isBlank()) {
+            return;
+        }
         aiUsed = true;
 
         // Show user message
-        addMessage(message, "#DCF8C6", Pos.CENTER_RIGHT);
+        addMessage(message, "chat-bubble-user", Pos.CENTER_RIGHT);
         userInput.clear();
         sendButton.setDisable(true);
 
@@ -141,7 +150,7 @@ public class ChatController {
             javafx.application.Platform.runLater(() -> {
                 // Add AI response to history
                 conversationHistory.add(new String[] {"assistant", hint});
-                addMessage(hint, "#F1F0F0", Pos.CENTER_LEFT);
+                addMessage(hint, "chat-bubble-ai", Pos.CENTER_LEFT);
                 sendButton.setDisable(false);
             });
         });
@@ -157,12 +166,11 @@ public class ChatController {
      * @param alignment the position of the bubble (LEFT for AI hints, RIGHT for user messages,
      *        CENTER for warnings)
      */
-    private void addMessage(String message, String color, Pos alignment) {
+    private void addMessage(String message, String styleClass, Pos alignment) {
         Label label = new Label(message);
         label.setWrapText(true);
         label.setMaxWidth(300);
-        label.setStyle(
-                "-fx-background-color: " + color + "; -fx-padding: 8; -fx-background-radius: 10;");
+        label.getStyleClass().add(styleClass);
 
         HBox container = new HBox(label);
         container.setAlignment(alignment);

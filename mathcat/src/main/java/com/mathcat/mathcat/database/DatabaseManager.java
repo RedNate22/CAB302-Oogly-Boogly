@@ -1,11 +1,16 @@
 package com.mathcat.mathcat.database;
 
 import java.sql.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the SQLite database connection and initialises all tables.
  */
-public class DatabaseManager {
+public final class DatabaseManager {
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseManager.class);
+
+    private DatabaseManager() {}
 
     private static final String DB_URL = "jdbc:sqlite:mathcat.db";
     private static Connection connection;
@@ -80,9 +85,9 @@ public class DatabaseManager {
             stmt.execute(createUsersTable);
             stmt.execute(createPetsTable);
             stmt.execute(createItemsTable);
-            System.out.println("Database initialised successfully!");
+            LOG.debug("Initialised successfully");
         } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+            LOG.error("Initialisation error", e);
         }
     }
 }

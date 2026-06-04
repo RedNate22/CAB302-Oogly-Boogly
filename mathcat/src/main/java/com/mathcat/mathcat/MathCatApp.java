@@ -3,8 +3,10 @@ package com.mathcat.mathcat;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import com.mathcat.mathcat.controllers.NavigationUtil;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.database.DatabaseManager;
@@ -15,18 +17,26 @@ import java.time.LocalDateTime;
 
 /** JavaFX application entry point. Initialises the database and loads the initial screen. */
 public class MathCatApp extends Application {
+
+    /** Creates a new MathCatApp. */
+    public MathCatApp() {}
     @Override
     public void start(Stage stage) throws IOException {
         // Initialise the SQLite database and create tables if they don't exist
         DatabaseManager.initialiseDatabase();
 
         Font.loadFont(getClass().getResourceAsStream(
+                "/com/mathcat/mathcat/assets/font/w95fa.otf"), 12);
+        Font.loadFont(getClass().getResourceAsStream(
                 "/com/mathcat/mathcat/assets/font/PressStart2P-Regular.ttf"), 12);
 
         FXMLLoader fxmlLoader = new FXMLLoader(
                 MathCatApp.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
         stage.setTitle("MathCat");
+        stage.getIcons().add(new Image(MathCatApp.class
+                .getResourceAsStream("/com/mathcat/mathcat/assets/images/icons/mathcat-icon.png")));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

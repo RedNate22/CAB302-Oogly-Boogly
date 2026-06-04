@@ -13,6 +13,9 @@ import java.io.IOException;
 /** Controller for the initial screen, handling navigation to login and account creation. */
 public class HelloController {
 
+    /** Creates a new HelloController. */
+    public HelloController() {}
+
     /**
      * Navigates to the login screen.
      *
@@ -26,6 +29,7 @@ public class HelloController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();
@@ -43,7 +47,8 @@ public class HelloController {
                 .load(getClass().getResource("/com/mathcat/mathcat/createaccount-view.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Scene scene = new Scene(root,700, 500);
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
         stage.show();

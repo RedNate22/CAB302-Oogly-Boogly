@@ -1,0 +1,8 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "css.lint.vendorPrefix": "ignore", // suppresses the warnings in styles.css
+    "java.project.sourcePaths": [
+        "mathcat/src/main/java",
+        "mathcat/src/test/java"
+    ]
+}

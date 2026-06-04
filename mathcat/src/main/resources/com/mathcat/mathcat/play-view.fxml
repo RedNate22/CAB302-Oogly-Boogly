@@ -23,40 +23,49 @@
             <Pane prefHeight="500.0" prefWidth="340.0">
                <children>
                   <Button fx:id="goBack" mnemonicParsing="false" onAction="#onConfirmGoBack" text="Go Back" />
-                  <VBox alignment="CENTER" layoutX="14.0" layoutY="49.0" prefHeight="176.0" prefWidth="236.0">
+                  <VBox alignment="CENTER" layoutX="14.0" layoutY="49.0" prefHeight="244.0" prefWidth="236.0">
                      <children>
-                        <Label fx:id="petNameLabel" text="'s Stats">
+                        <Label id="petNameLabel" fx:id="petNameLabel" text="'s Stats">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Group>
+                        <VBox spacing="4.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Happiness" />
-                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Happiness" />
+                              <StackPane prefWidth="200.0">
+                                 <ProgressBar fx:id="happinessProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="happinessLabel" styleClass="stat-value" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </Group>
-                        <Group layoutX="28.0" layoutY="114.0">
+                        </VBox>
+                        <VBox spacing="4.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Hunger" />
-                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Fullness" />
+                              <StackPane prefWidth="200.0">
+                                 <ProgressBar fx:id="hungerProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="hungerLabel" styleClass="stat-value" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </Group>
-                        <Group layoutX="28.0" layoutY="132.0">
+                        </VBox>
+                        <VBox spacing="4.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="200.0" text="Energy" />
-                              <ProgressBar layoutY="17.0" prefWidth="200.0" progress="0.0" />
+                              <Label contentDisplay="CENTER" prefWidth="200.0" text="Energy" />
+                              <StackPane prefWidth="200.0">
+                                 <ProgressBar fx:id="energyProgressBar" prefWidth="200.0" progress="0.0" />
+                                 <Label fx:id="energyLabel" styleClass="stat-value" text="0" />
+                              </StackPane>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </Group>
+                        </VBox>
                      </children>
                   </VBox>
                   <StackPane layoutX="32.0" layoutY="258.0" prefHeight="150.0" prefWidth="200.0">
@@ -87,6 +96,10 @@
                         </ImageView>
                      </children>
                   </StackPane>
+                  <StackPane layoutY="435.0" layoutX="70">
+                     <ProgressBar fx:id="levelProgressBar" progress="0.0" />
+                     <Label fx:id="levelProgressLabel" styleClass="stat-value" text="Level" />
+                  </StackPane>
                </children>
             </Pane>
             <Pane prefHeight="500.0" prefWidth="360.0">
@@ -100,7 +113,7 @@
                         </Button>
                         <BorderPane prefHeight="160.0" prefWidth="300.0">
                            <top>
-                              <Label text="Math Equation" BorderPane.alignment="CENTER" />
+                              <Label id="mathEquationTitle" text="Math Equation" BorderPane.alignment="CENTER" />
                            </top>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -111,25 +124,27 @@
                            <bottom>
                               <HBox alignment="BOTTOM_CENTER" prefHeight="28.0" prefWidth="230.0" spacing="30.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-                                    <Button mnemonicParsing="false" text="Skip" />
+                                    <Button fx:id="submitButton" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
+                                    <Button mnemonicParsing="false" onAction="#onSkip" text="Skip" />
                                  </children>
                               </HBox>
                            </bottom>
                            <center>
                               <VBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="280.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Label fx:id="mathQuestionLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="280.0" text="[math question here]">
+                                    <Label id="mathQuestionLabel" fx:id="mathQuestionLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="280.0" text="[math question here]">
                                        <VBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <TextField fx:id="answerInput">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
                                        <VBox.margin>
                                           <Insets top="5.0" />
                                        </VBox.margin>
-                                    </TextField>
-                                    <Label fx:id="feedbackLabel" alignment="CENTER" prefWidth="280.0" style="-fx-font-size: 11;" text="" />
+                                       <TextField fx:id="answerInput" HBox.hgrow="ALWAYS" />
+                                       <Button fx:id="showAnswerButton" mnemonicParsing="false" onAction="#onShowAnswer" text="Show Answer" visible="false" managed="false" />
+                                    </HBox>
+                                    <Label fx:id="feedbackLabel" alignment="CENTER" prefWidth="280.0" style="-fx-font-size: 11;" text="" visible="false"/>
                                  </children>
                                  <BorderPane.margin>
                                     <Insets bottom="10.0" top="10.0" />

@@ -1,6 +1,8 @@
 package com.mathcat.mathcat.services;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.URI;
 import java.net.http.*;
 import java.net.http.HttpRequest.BodyPublishers;
@@ -16,6 +18,8 @@ import java.time.Instant;
  * Maintains conversation history to provide context-aware hints.
  */
 public class AIService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AIService.class);
 
     private final String apiKey;
     private final HttpClient client;
@@ -35,6 +39,9 @@ public class AIService {
     // The moment the current rate-limit window started
     private Instant windowStart = Instant.now();
 
+    /**
+     * Creates a new AIService, loading the API key from the .env file and configuring the HTTP client.
+     */
     public AIService() {
         String workingDir = System.getProperty("user.dir");
         String envDir = workingDir.endsWith("mathcat") ? workingDir : workingDir + "/mathcat";
@@ -54,7 +61,9 @@ public class AIService {
      * @return sanitised string, or empty string if input is null
      */
     public static String sanitiseInput(String input, int maxLen) {
-        if (input == null) return "";
+        if (input == null) {
+            return "";
+        }
 
         // Remove HTML/XML tags
         String stripped = input.replaceAll("<[^>]*>", "");
@@ -94,8 +103,7 @@ public class AIService {
 
         if (windowCallCount >= MAX_CALLS_PER_WINDOW) {
             long waitSecs = RATE_WINDOW_SECONDS - elapsed;
-            System.out.printf("[AIService] RATE LIMIT hit (%d calls in window). Wait %ds.%n",
-                    windowCallCount, waitSecs);
+            LOG.debug("Rate limit hit ({} calls in window). Wait {}s.", windowCallCount, waitSecs);
             return String.format(
                     "You're asking for hints very quickly! Please wait about %d second%s before asking again.",
                     waitSecs, waitSecs == 1 ? "" : "s");
@@ -103,8 +111,7 @@ public class AIService {
 
         // Allow the call — consume one slot
         windowCallCount++;
-        System.out.printf("[AIService] Call allowed - window: %d/%d%n",
-                windowCallCount, MAX_CALLS_PER_WINDOW);
+        LOG.debug("Call allowed - window: {}/{}", windowCallCount, MAX_CALLS_PER_WINDOW);
         return null;
     }
 
@@ -192,7 +199,9 @@ public class AIService {
 
         // Block the request if the user is sending too many hints too quickly
         String rateLimitMessage = checkRateLimit();
-        if (rateLimitMessage != null) return rateLimitMessage;
+        if (rateLimitMessage != null) {
+            return rateLimitMessage;
+        }
 
         String systemPrompt =
                 // Identity & Personality
@@ -291,8 +300,7 @@ public class AIService {
 
         String body = requestBody.toString();
 
-        // System.out.println("History size: " + history.size());
-        // System.out.println("Body: " + body);
+        LOG.debug("History size: {}", history.size());
 
         try {
             return callApiWithRetry(body);

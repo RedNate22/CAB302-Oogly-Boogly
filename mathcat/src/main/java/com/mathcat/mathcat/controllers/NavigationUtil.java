@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Shared navigation utilities for MathCat controllers.
@@ -20,10 +22,15 @@ import javafx.stage.Stage;
  * {@link com.mathcat.mathcat.services.CatScheduler} and clearing the user session before returning
  * to the initial screen.
  */
-public class NavigationUtil {
+public final class NavigationUtil {
     // Static utility rather than a base controller class: JavaFX controllers are instantiated by
     // FXMLLoader via reflection, making inheritance fragile. @FXML injection, initialize(), and
     // constructor constraints all interact poorly with superclasses.
+
+    private static final Logger LOG = LoggerFactory.getLogger(NavigationUtil.class);
+
+    public static final String STYLESHEET = NavigationUtil.class
+            .getResource("/com/mathcat/mathcat/styling/styles.css").toExternalForm();
 
     private NavigationUtil() {}
 
@@ -36,6 +43,7 @@ public class NavigationUtil {
      */
     public static void logout(ActionEvent event) throws IOException {
         CatScheduler.getInstance().stop();
+        LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
         UserDAO.currentUser = null;
 
         Parent root = FXMLLoader
