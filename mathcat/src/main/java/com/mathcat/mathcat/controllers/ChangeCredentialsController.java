@@ -90,6 +90,7 @@ public class ChangeCredentialsController {
 
         if (username.isEmpty()) {
             error.setText("Please enter a username");
+            return;
         }
 
         if (!UserService.validUsername(username)) {

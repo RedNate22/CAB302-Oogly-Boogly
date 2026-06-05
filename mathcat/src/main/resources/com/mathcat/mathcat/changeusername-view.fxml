@@ -24,7 +24,10 @@
             <TextField fx:id="usernameField"/>
         </VBox>
 
-        <Label fx:id="error"/>
+        <Label fx:id="error"
+               wrapText="true"
+               maxWidth="400"
+               textAlignment="CENTER"/>
 
         <HBox alignment="CENTER_RIGHT">
             <Button text="Confirm Username Change"
