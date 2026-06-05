@@ -176,16 +176,6 @@ public class HomeController {
                 statNotificationPane.setText(statName + " is Critical! Use an Item to Regenerate!");
                 statNotificationPane.show();
 
-                PauseTransition colorDelay = new PauseTransition(Duration.seconds(0.5));
-                colorDelay.setOnFinished(e3 -> {
-                    statNotificationPane.getChildrenUnmodifiable().forEach(node -> {
-                        if (node.getStyleClass().contains("notification-bar")) {
-                            ((javafx.scene.layout.Region) node).setStyle("-fx-background-color: #e78284;");
-                            LOG.info("colour applied");
-                        }
-                    });
-                });
-
                 PauseTransition pause = new PauseTransition(Duration.seconds(4));
                 pause.setOnFinished(e2 -> statNotificationPane.hide());
                 pause.play();
