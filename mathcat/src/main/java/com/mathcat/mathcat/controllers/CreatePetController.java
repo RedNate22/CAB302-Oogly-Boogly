@@ -15,6 +15,7 @@ import org.controlsfx.control.NotificationPane;
 import javafx.scene.layout.BorderPane;
 import org.controlsfx.control.NotificationPane;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -134,7 +135,7 @@ public class CreatePetController {
         confirmationPane.setText("Account was Created Successfully!");
         confirmationPane.show();
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(10));
+        PauseTransition pause = new PauseTransition(Duration.seconds(4));
         pause.setOnFinished((ActionEvent event) -> confirmationPane.hide());
         pause.play();
     }
