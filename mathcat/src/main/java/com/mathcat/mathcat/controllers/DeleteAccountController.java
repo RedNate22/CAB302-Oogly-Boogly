@@ -45,6 +45,12 @@ public class DeleteAccountController {
         }
     }
 
+    /**
+     * Handles the logic for returning to the previous screen (Profile screen)
+     *
+     * @param event gets the window/stage for the profile screen
+     * @throws IOException if listed screen does not exist
+     */
     public void onReturn(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));

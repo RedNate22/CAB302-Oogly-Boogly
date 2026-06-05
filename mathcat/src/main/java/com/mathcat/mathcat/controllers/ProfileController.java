@@ -225,6 +225,12 @@ public class ProfileController {
             stage.setScene(scene);
     }
 
+    /**
+     * Handles the logic for returning to the previous screen (Home screen)
+     *
+     * @param event gets the window/stage for the home screen
+     * @throws IOException if listed screen does not exist
+     */
     public void onReturn(ActionEvent event) throws IOException {
         Parent root =
                 FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
