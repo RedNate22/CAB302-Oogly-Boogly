@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.SQLException;
 
@@ -165,7 +166,7 @@ public class ChangeCredentialsController {
             return;
         }
 
-        if (!currentPassword.equals(UserDAO.currentUser.getPassword())) {
+        if (!BCrypt.checkpw(currentPassword, UserDAO.currentUser.getPassword())) {
             error.setText("Current password is Incorrect");
             return;
         }
@@ -185,8 +186,8 @@ public class ChangeCredentialsController {
             return;
         }
 
-        UserDAO.updatePassword(UserDAO.currentUser.getPassword(), newPassword1);
-        UserDAO.currentUser.setPassword(newPassword1);
+        UserDAO.updatePassword(UserDAO.currentUser.getPassword(), BCrypt.hashpw(newPassword1, BCrypt.gensalt()));
+        UserDAO.currentUser.setPassword(BCrypt.hashpw(newPassword1, BCrypt.gensalt()));
         error.setText("Password change was Successful!");
     }
 }
