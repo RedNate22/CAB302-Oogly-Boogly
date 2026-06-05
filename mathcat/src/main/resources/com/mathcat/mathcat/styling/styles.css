@@ -234,3 +234,13 @@
 .tooltipLabel {
     -fx-font-size: 16px;
 }
+
+
+.notification-bar > .pane {
+    -fx-background-color: #e78284;
+    -fx-padding: 10px;
+}
+
+.notification-bar > .pane .label {
+    -fx-text-fill: #303446;
+}

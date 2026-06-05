@@ -99,7 +99,6 @@ public class HomeController {
             statNotificationPane = new NotificationPane(rootPane);
             statNotificationPane.setShowFromTop(true);
             statNotificationPane.getStylesheets().add(NavigationUtil.STYLESHEET);
-            statNotificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
             Platform.runLater(() -> rootPane.getScene().setRoot(statNotificationPane));
 
         } else {
@@ -177,6 +176,16 @@ public class HomeController {
                 statNotificationPane.setText(statName + " is Critical! Use an Item to Regenerate!");
                 statNotificationPane.show();
 
+                PauseTransition colorDelay = new PauseTransition(Duration.seconds(0.5));
+                colorDelay.setOnFinished(e3 -> {
+                    statNotificationPane.getChildrenUnmodifiable().forEach(node -> {
+                        if (node.getStyleClass().contains("notification-bar")) {
+                            ((javafx.scene.layout.Region) node).setStyle("-fx-background-color: #e78284;");
+                            LOG.info("colour applied");
+                        }
+                    });
+                });
+
                 PauseTransition pause = new PauseTransition(Duration.seconds(4));
                 pause.setOnFinished(e2 -> statNotificationPane.hide());
                 pause.play();
@@ -184,8 +193,6 @@ public class HomeController {
         });
         delay.play();
     }
-
-
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
      *
