@@ -134,7 +134,7 @@
                                           <Insets top="5.0" />
                                        </VBox.margin>
                                        <TextField fx:id="answerInput" HBox.hgrow="ALWAYS" />
-                                       <Button fx:id="showAnswerButton" mnemonicParsing="false" onAction="#onShowAnswer" text="Show Answer" visible="false" managed="false" />
+                                       <Button fx:id="showAnswerButton" styleClass="show-answer-btn" mnemonicParsing="false" onAction="#onShowAnswer" text="Show Answer" visible="false" managed="false" />
                                     </HBox>
                                     <Label fx:id="feedbackLabel" alignment="CENTER" prefWidth="280.0" style="-fx-font-size: 11;" text="" visible="false"/>
                                  </children>

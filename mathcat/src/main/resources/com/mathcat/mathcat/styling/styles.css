@@ -259,3 +259,7 @@
     -fx-text-fill: #414559;
     -fx-background-color: #81c8be;
 }
+
+.show-answer-btn {
+    -fx-min-width: 100px;
+}
