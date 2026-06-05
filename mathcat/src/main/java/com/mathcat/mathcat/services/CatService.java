@@ -221,8 +221,9 @@ public final class CatService {
         }
 
         long minutesElapsed = Duration.between(cat.getLastSaved(), LocalDateTime.now()).toMinutes();
-        LOG.debug("Offline decay - {} min elapsed, happiness -{}, fullness -{}", minutesElapsed,
-                minutesElapsed * HAPPINESS_DECAY_RATE, minutesElapsed * FULLNESS_DECAY_RATE);
+        LOG.debug("Offline decay - {} mins elapsed, happiness -{}, fullness -{}", minutesElapsed,
+                String.format("%.2f", minutesElapsed * HAPPINESS_DECAY_RATE),
+                String.format("%.2f", minutesElapsed * FULLNESS_DECAY_RATE));
 
         // Estimate how long the cat was hungry during the offline window.
         // Fullness decays linearly, so we calculate when it crossed HUNGER_THRESHOLD and apply
