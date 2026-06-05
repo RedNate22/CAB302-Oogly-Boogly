@@ -139,9 +139,12 @@ public class HomeController {
         checkCriticalStat("Fullness",    hunger,    hungerCriticalShown,    shown -> hungerCriticalShown    = shown);
         checkCriticalStat("Energy",    energy,    energyCriticalShown,    shown -> energyCriticalShown    = shown);
 
-        if (happiness > CRITICAL_THRESHOLD) { happinessCriticalShown = false; }
-        if (hunger    > CRITICAL_THRESHOLD) { hungerCriticalShown    = false; }
-        if (energy    > CRITICAL_THRESHOLD) { energyCriticalShown    = false; }
+        if (happiness > CRITICAL_THRESHOLD) {
+            happinessCriticalShown = false; }
+        if (hunger    > CRITICAL_THRESHOLD) {
+            hungerCriticalShown    = false; }
+        if (energy    > CRITICAL_THRESHOLD) {
+            energyCriticalShown    = false; }
     }
 
 
