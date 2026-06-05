@@ -103,8 +103,9 @@ public class ChangeCredentialsController {
         try {
             boolean exists = UserDAO.findByUsername(username) != null;
             if (!exists) {
+                UserDAO.updateUsername(UserDAO.currentUser.getUsername(), username);
                 UserDAO.currentUser.setUsername(username);
-
+                error.setText("Username change was Successful!");
             } else {
                 error.setText("Username already exists");
             }
@@ -137,8 +138,9 @@ public class ChangeCredentialsController {
         try {
             boolean exists = UserDAO.findByEmail(email) != null;
             if (!exists) {
+                UserDAO.updateEmail(UserDAO.currentUser.getEmail(), email);
                 UserDAO.currentUser.setEmail(email);
-
+                error.setText("Email change was Successful!");
             } else {
                 error.setText("Email already exists");
             }
@@ -157,7 +159,7 @@ public class ChangeCredentialsController {
      * @param event the user attempts to change their password
      */
     @FXML
-    public void onPasswordChange(ActionEvent event) {
+    public void onPasswordChange(ActionEvent event) throws SQLException{
         String currentPassword = currentPasswordField.getText().trim();
         String newPassword1 = newPasswordField1.getText().trim();
         String newPassword2 = newPasswordField2.getText().trim();
@@ -187,6 +189,8 @@ public class ChangeCredentialsController {
             return;
         }
 
+        UserDAO.updatePassword(UserDAO.currentUser.getPassword(), newPassword1);
         UserDAO.currentUser.setPassword(newPassword1);
+        error.setText("Password change was Successful!");
     }
 }
