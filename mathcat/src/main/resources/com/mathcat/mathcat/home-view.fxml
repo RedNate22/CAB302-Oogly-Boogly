@@ -78,7 +78,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="479.0" prefWidth="290.0">
                      <children>
-                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="65.0" text="Log Out" textAlignment="CENTER">
+                        <Button fx:id="logOut" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onLogoutConfirm" prefHeight="25.0" prefWidth="80.0" text="Log Out" textAlignment="CENTER">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
