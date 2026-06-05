@@ -133,7 +133,7 @@ public class CreatePetController {
         confirmationPane.setText("Account was Created Successfully!");
         confirmationPane.show();
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(15));
+        PauseTransition pause = new PauseTransition(Duration.seconds(10));
         pause.setOnFinished((ActionEvent event) -> confirmationPane.hide());
         pause.play();
     }
