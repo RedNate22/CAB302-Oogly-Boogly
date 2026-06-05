@@ -147,7 +147,7 @@ public class HomeController {
 
     /**
      * Shows a critical stat notification if the given stat value is at or
-     * below {@link #CRITICAL_THRESHOLD} and has not already been shown for
+     * below 15 and has not already been shown for
      * this dip. Auto-dismisses after 4 seconds.
      *
      * @param statName     human-readable stat name shown in the message
