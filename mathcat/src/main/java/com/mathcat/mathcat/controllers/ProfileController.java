@@ -18,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -206,4 +207,22 @@ public class ProfileController {
     public void onLogoutConfirm(ActionEvent event) throws IOException {
         NavigationUtil.logout(event);
     }
+
+    /**
+     * Handles the logic for accessing the profile screen
+     *
+     * @param event gets the window/stage for the profile screen
+     * @throws IOException if listed screen does not exist
+     */
+    public void onDeleteAccount(ActionEvent event) throws IOException {
+            Parent root =
+                    FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/deleteaccount-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Scene scene = new Scene(root, 700, 500);
+            scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+            stage.setTitle("Delete Account");
+            stage.setScene(scene);
+
+        }
 }

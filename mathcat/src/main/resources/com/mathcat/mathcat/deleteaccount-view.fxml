@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.mathcat.mathcat.controllers.DeleteAccountController"
+      prefHeight="250.0"
+      prefWidth="500.0"
+      alignment="CENTER"
+      spacing="18"
+      style="-fx-background-color: #303446;">
+
+    <padding>
+        <Insets top="25" right="35" bottom="25" left="35"/>
+    </padding>
+
+    <Label text="Delete Account"
+           style="-fx-font-size: 24px;"/>
+
+    <Label text="Are you sure you would like to delete your account? This action is permanent and cannot be reversed."
+           wrapText="true"
+           textAlignment="CENTER"
+           alignment="CENTER"
+           maxWidth="420"
+           style="-fx-font-size: 16px;"/>
+
+    <Label fx:id="error"
+           wrapText="true"
+           textAlignment="CENTER"
+           style="-fx-text-fill: #e78284;"/>
+    <HBox alignment="CENTER">
+        <Button text="Delete Account"
+                prefWidth="190"
+                styleClass="danger-button"
+                onAction="#onDeleteAccountConfirm"/>
+    </HBox>
+
+</VBox>
