@@ -75,6 +75,8 @@ public class PlayController {
     @FXML
     private Button showAnswerButton;
 
+    @FXML Button skipButton;
+
     @FXML
     private Label feedbackLabel;
 
@@ -221,6 +223,8 @@ public class PlayController {
         submitButton.setDisable(true);
         showAnswerButton.setVisible(false);
         showAnswerButton.setManaged(false);
+
+        skipButton.requestFocus();
     }
 
     private void setFeedbackLabel(String feedback) {
@@ -257,6 +261,8 @@ public class PlayController {
         feedbackLabel.setText("");
 
         setupNextQuestion();
+
+        submitButton.requestFocus();
     }
 
     /**
