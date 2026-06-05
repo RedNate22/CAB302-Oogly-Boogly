@@ -98,6 +98,8 @@ public class HomeController {
 
             statNotificationPane = new NotificationPane(rootPane);
             statNotificationPane.setShowFromTop(true);
+            statNotificationPane.getStylesheets().add(NavigationUtil.STYLESHEET);
+            statNotificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
             Platform.runLater(() -> rootPane.getScene().setRoot(statNotificationPane));
 
         } else {
@@ -159,6 +161,7 @@ public class HomeController {
             setShown.accept(true);
             Platform.runLater(() -> {
                 statNotificationPane.setText(statName + " is Critical! Use an Item to Regenerate!");
+
 
                 PauseTransition delay = new PauseTransition(Duration.seconds(0.3));
                 delay.setOnFinished(e -> {
