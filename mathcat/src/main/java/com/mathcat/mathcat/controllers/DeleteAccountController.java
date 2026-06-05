@@ -3,6 +3,9 @@ package com.mathcat.mathcat.controllers;
 import com.mathcat.mathcat.dao.UserDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
 import javafx.animation.PauseTransition;
@@ -40,5 +43,16 @@ public class DeleteAccountController {
         } catch (Exception e) {
             error.setText("Could not delete account. Please try again.");
         }
+    }
+
+    public void onReturn(ActionEvent event) throws IOException {
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
     }
 }
