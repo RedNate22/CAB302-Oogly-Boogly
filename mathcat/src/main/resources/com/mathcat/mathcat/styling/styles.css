@@ -244,3 +244,13 @@
 .notification-bar > .pane .label {
     -fx-text-fill: #303446;
 }
+
+.notification-bar > .pane > .close-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #414559;
+}
+
+.notification-bar > .pane > .close-button:hover {
+    -fx-text-fill: #414559;
+    -fx-background-color: #81c8be;
+}
