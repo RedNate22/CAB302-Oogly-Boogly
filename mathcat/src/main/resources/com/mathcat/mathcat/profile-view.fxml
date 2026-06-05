@@ -193,15 +193,22 @@
             </padding>
 
             <HBox spacing="10" alignment="CENTER">
+
+                <Button text="Return"
+                        prefWidth="186.0"
+                        prefHeight="32.0"
+                        onAction="#onReturn"/>
+
                 <Button text="Logout"
-                        prefWidth="285.0"
+                        prefWidth="186.0"
                         prefHeight="32.0"
                         onAction="#onLogoutConfirm"/>
 
                 <Button text="Delete Account"
-                        prefWidth="285.0"
+                        prefWidth="188.0"
                         prefHeight="32.0"
                         onAction="#onDeleteAccount"/>
+
             </HBox>
         </VBox>
     </bottom>
