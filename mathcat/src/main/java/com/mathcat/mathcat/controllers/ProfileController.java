@@ -131,6 +131,8 @@ public class ProfileController {
 
         changeUsernameStage.setScene(scene);
         changeUsernameStage.showAndWait();
+        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        refreshStats(cat);
     }
 
     /**
@@ -162,6 +164,8 @@ public class ProfileController {
 
         changeEmailStage.setScene(scene);
         changeEmailStage.showAndWait();
+        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        refreshStats(cat);
     }
 
     /**
@@ -193,6 +197,8 @@ public class ProfileController {
 
         changePasswordStage.setScene(scene);
         changePasswordStage.showAndWait();
+        Cat cat = CatDAO.load(UserDAO.currentUser.getId());
+        refreshStats(cat);
     }
 
     /**

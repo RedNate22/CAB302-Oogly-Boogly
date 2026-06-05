@@ -141,56 +141,56 @@ public final class UserDAO {
     /**
      * Updates a user's email.
      *
-     * @param username the username of the user
+     * @param email the email of the user
      * @param newEmail the new email
      * @throws SQLException if the update fails
      */
-    public static void updateEmail(String username, String newEmail)
+    public static void updateEmail(String email, String newEmail)
             throws SQLException {
 
-        String sql = "UPDATE users SET email = ? WHERE username = ?";
+        String sql = "UPDATE users SET email = ? WHERE email = ?";
 
         try (PreparedStatement stmt =
                      DatabaseManager.getConnection().prepareStatement(sql)) {
 
             stmt.setString(1, newEmail);
-            stmt.setString(2, username);
+            stmt.setString(2, email);
 
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected == 0) {
-                throw new SQLException("No user found with username: " + username);
+                throw new SQLException("No user found with email: " + email);
             }
 
-            LOG.debug("updated email for user: {}", username);
+            LOG.debug("updated email for user: {}", email);
         }
     }
 
     /**
      * Updates a user's password.
      *
-     * @param username the username of the user
+     * @param password the password of the user
      * @param newPassword the new password
      * @throws SQLException if the update fails
      */
-    public static void updatePassword(String username, String newPassword)
+    public static void updatePassword(String password, String newPassword)
             throws SQLException {
 
-        String sql = "UPDATE users SET password = ? WHERE username = ?";
+        String sql = "UPDATE users SET password = ? WHERE password = ?";
 
         try (PreparedStatement stmt =
                      DatabaseManager.getConnection().prepareStatement(sql)) {
 
             stmt.setString(1, newPassword);
-            stmt.setString(2, username);
+            stmt.setString(2, password);
 
             int rowsAffected = stmt.executeUpdate();
 
             if (rowsAffected == 0) {
-                throw new SQLException("No user found with username: " + username);
+                throw new SQLException("No user found with password: " + password);
             }
 
-            LOG.debug("updated password for user: {}", username);
+            LOG.debug("updated password for user: {}", password);
         }
     }
 
