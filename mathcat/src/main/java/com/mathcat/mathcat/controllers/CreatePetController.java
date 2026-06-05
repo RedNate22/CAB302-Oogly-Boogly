@@ -117,6 +117,7 @@ public class CreatePetController {
     public void initialize() {
         confirmationPane = new NotificationPane(rootPane);
         confirmationPane.setShowFromTop(true);
+        confirmationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK); // built-in dark style
         Platform.runLater(() -> {
             rootPane.getScene().setRoot(confirmationPane);
             PauseTransition wait = new PauseTransition(Duration.seconds(0.3));
