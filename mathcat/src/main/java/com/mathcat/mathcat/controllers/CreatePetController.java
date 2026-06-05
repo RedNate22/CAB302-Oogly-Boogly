@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
+import org.controlsfx.control.NotificationPane;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -99,7 +100,7 @@ public class CreatePetController {
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
 
-    @FXML private Label confirmationMessage;
+    @FXML private NotificationPane confirmationPane;
 
     /**
      * Shows the account creation confirmation message briefly on screen load.
@@ -110,16 +111,16 @@ public class CreatePetController {
     }
 
     /**
-     * Handles timed confirmation message — Indicates to user that account creation was successful.
+     * Handles timed confirmation notification — indicates to the user that
+     * account creation was successful. The notification auto-dismisses after
+     * 4 seconds, matching the duration of other timed feedback in the app.
      */
     public void setConfirmationMessage() {
-        confirmationMessage.setVisible(true);
+        confirmationPane.setText("Account was Created Successfully!");
+        confirmationPane.show();
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-
-        pause.setOnFinished((ActionEvent event) -> {
-            confirmationMessage.setVisible(false);
-        });
+        PauseTransition pause = new PauseTransition(Duration.seconds(4));
+        pause.setOnFinished((ActionEvent event) -> confirmationPane.hide());
         pause.play();
     }
 
