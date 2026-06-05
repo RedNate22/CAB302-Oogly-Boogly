@@ -20,6 +20,9 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javafx.application.Platform;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import org.controlsfx.control.NotificationPane;
 
 /**
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
@@ -32,6 +35,14 @@ public class HomeController {
     public HomeController() {}
 
     private Cat cat;
+
+    /** Stat value at or below which a critical notification is shown. */
+    private static final double CRITICAL_THRESHOLD = 15.0;
+
+    private NotificationPane statNotificationPane;
+    private boolean happinessCriticalShown = false;
+    private boolean hungerCriticalShown    = false;
+    private boolean energyCriticalShown    = false;
 
     @FXML
     private Label petNameLabel;
@@ -58,6 +69,8 @@ public class HomeController {
     private ProgressBar energyProgressBar;
     @FXML
     private ProgressBar levelProgressBar;
+    @FXML
+    private Parent rootPane;
 
     /**
      * Loads the current user's cat name into the stats label on screen load.
@@ -82,11 +95,17 @@ public class HomeController {
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
             refreshStats(cat);
+
+            statNotificationPane = new NotificationPane(rootPane);
+            statNotificationPane.setShowFromTop(true);
+            statNotificationPane.getStylesheets().add(NavigationUtil.STYLESHEET);
+            Platform.runLater(() -> rootPane.getScene().setRoot(statNotificationPane));
+
         } else {
             Platform.runLater(() -> {
                 try {
                     if (petNameLabel.getScene() == null) {
-                        return; // scene may not be attached yet during initialize()
+                        return;
                     }
                     Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
                     Stage stage = (Stage) petNameLabel.getScene().getWindow();
@@ -114,8 +133,56 @@ public class HomeController {
         hungerLabel.setText(String.format("%.0f", hunger));
         energyLabel.setText(String.format("%.0f", energy));
         levelProgressLabel.setText(String.format("Level %.0f", level));
+
+        int delay = 0;
+        if (happiness <= CRITICAL_THRESHOLD && !happinessCriticalShown) {
+            happinessCriticalShown = true;
+            scheduleCriticalNotification("Happiness", delay);
+            delay += 5;
+        }
+        if (hunger <= CRITICAL_THRESHOLD && !hungerCriticalShown) {
+            hungerCriticalShown = true;
+            scheduleCriticalNotification("Fullness", delay);
+            delay += 5;
+        }
+        if (energy <= CRITICAL_THRESHOLD && !energyCriticalShown) {
+            energyCriticalShown = true;
+            scheduleCriticalNotification("Energy", delay);
+        }
+
+        if (happiness > CRITICAL_THRESHOLD) {
+            happinessCriticalShown = false;
+        }
+        if (hunger > CRITICAL_THRESHOLD) {
+            hungerCriticalShown = false;
+        }
+        if (energy > CRITICAL_THRESHOLD) {
+            energyCriticalShown = false;
+        }
     }
 
+
+    /**
+     * Schedules a critical stat notification to show after a given delay,
+     * so multiple critical stats are shown sequentially rather than overwriting each other.
+     *
+     * @param statName    human-readable stat name shown in the message
+     * @param delaySeconds seconds to wait before showing this notification
+     */
+    private void scheduleCriticalNotification(String statName, int delaySeconds) {
+        PauseTransition delay = new PauseTransition(Duration.seconds(delaySeconds + 0.3));
+        delay.setOnFinished(e -> {
+            Platform.runLater(() -> {
+                statNotificationPane.setText(statName + " is Critical! Use an Item to Regenerate!");
+                statNotificationPane.show();
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                pause.setOnFinished(e2 -> statNotificationPane.hide());
+                pause.play();
+            });
+        });
+        delay.play();
+    }
     /**
      * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
      *
