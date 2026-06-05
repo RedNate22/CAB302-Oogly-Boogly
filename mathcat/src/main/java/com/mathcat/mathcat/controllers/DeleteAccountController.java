@@ -33,11 +33,7 @@ public class DeleteAccountController {
 
             PauseTransition delay = new PauseTransition(Duration.seconds(3));
             delay.setOnFinished(e -> {
-                try {
-                    NavigationUtil.logout(event);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                NavigationUtil.logout(event);
             });
             delay.play();
 
