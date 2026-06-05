@@ -12,6 +12,9 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 import org.controlsfx.control.NotificationPane;
+import javafx.scene.layout.BorderPane;
+import org.controlsfx.control.NotificationPane;
+import javafx.application.Platform;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -100,26 +103,37 @@ public class CreatePetController {
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
 
-    @FXML private NotificationPane confirmationPane;
+    /** Root pane used to anchor the programmatic NotificationPane. */
+    @FXML private BorderPane rootPane;
+
+    /** Notification pane displayed briefly after successful account creation. */
+    private NotificationPane confirmationPane;
 
     /**
-     * Shows the account creation confirmation message briefly on screen load.
+     * Runs on screen load. Builds the NotificationPane programmatically around
+     * the root layout and defers showing it until the scene is fully rendered.
      */
-    // Initially sets the confirmation message once
+    @FXML
     public void initialize() {
-        setConfirmationMessage();
+        confirmationPane = new NotificationPane(rootPane);
+        confirmationPane.setShowFromTop(true);
+        Platform.runLater(() -> {
+            rootPane.getScene().setRoot(confirmationPane);
+            PauseTransition wait = new PauseTransition(Duration.seconds(0.3));
+            wait.setOnFinished(e -> setConfirmationMessage());
+            wait.play();
+        });
     }
 
     /**
-     * Handles timed confirmation notification — indicates to the user that
-     * account creation was successful. The notification auto-dismisses after
-     * 4 seconds, matching the duration of other timed feedback in the app.
+     * Displays a timed success notification indicating account creation was
+     * successful. Auto-dismisses after 4 seconds.
      */
     public void setConfirmationMessage() {
         confirmationPane.setText("Account was Created Successfully!");
         confirmationPane.show();
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(4));
+        PauseTransition pause = new PauseTransition(Duration.seconds(15));
         pause.setOnFinished((ActionEvent event) -> confirmationPane.hide());
         pause.play();
     }
