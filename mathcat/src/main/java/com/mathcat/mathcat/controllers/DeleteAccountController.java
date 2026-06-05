@@ -17,6 +17,13 @@ public class DeleteAccountController {
     @FXML
     private Label error;
 
+    /**
+     * Handles the logic for deleting the current user's account and informing them this action
+     * has been completed. Following this, the user is navigated to the initial screen.
+     *
+     * @param event deletes the user's account upon confirmation (pressing the button)
+     * @throws IOException if listed screen does not exist
+     */
     @FXML
     public void onDeleteAccountConfirm(ActionEvent event) throws IOException {
         try {

@@ -209,9 +209,9 @@ public class ProfileController {
     }
 
     /**
-     * Handles the logic for accessing the profile screen
+     * Handles the logic for accessing the delete account screen
      *
-     * @param event gets the window/stage for the profile screen
+     * @param event gets the window/stage for the delete account screen
      * @throws IOException if listed screen does not exist
      */
     public void onDeleteAccount(ActionEvent event) throws IOException {
@@ -224,5 +224,5 @@ public class ProfileController {
             stage.setTitle("Delete Account");
             stage.setScene(scene);
 
-        }
+    }
 }
