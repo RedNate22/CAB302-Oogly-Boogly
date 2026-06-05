@@ -16,6 +16,7 @@ module com.mathcat.mathcat {
     requires org.slf4j;
     requires javafx.base;
     requires jbcrypt;
+    requires org.controlsfx.controls;
 
     opens com.mathcat.mathcat to javafx.fxml;
     opens com.mathcat.mathcat.controllers to javafx.fxml;
