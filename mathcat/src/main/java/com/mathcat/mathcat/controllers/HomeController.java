@@ -202,10 +202,10 @@ public class HomeController {
     }
 
     /**
-     * Handles inventory modal screen logic for MathCat in the home screen. 
+     * Handles inventory modal screen logic for MathCat in the home screen.
      * Opens and sets modal as current screen, so user has to close modal before
      * further interacting with the home screen.
-     * 
+     *
      * @param event gets the window/stage for the inventory modal screen
      * @throws IOException if the listed screen does not exist.
      */
@@ -214,8 +214,8 @@ public class HomeController {
         try {
             FXMLLoader loader =
                 new FXMLLoader(getClass().getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
-            
-            Parent root = 
+
+            Parent root =
                 loader.load();
 
             InventoryModalController invModalController = loader.getController();
@@ -273,6 +273,24 @@ public class HomeController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Handles the logic for accessing the profile screen
+     *
+     * @param event gets the window/stage for the profile screen
+     * @throws IOException if listed screen does not exist
+     */
+    public void onPressProfile(ActionEvent event) throws IOException {
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
+
     }
 }
 
