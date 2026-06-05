@@ -61,7 +61,9 @@ public class AIService {
      * @return sanitised string, or empty string if input is null
      */
     public static String sanitiseInput(String input, int maxLen) {
-        if (input == null) return "";
+        if (input == null) {
+            return "";
+        }
 
         // Remove HTML/XML tags
         String stripped = input.replaceAll("<[^>]*>", "");
@@ -197,7 +199,9 @@ public class AIService {
 
         // Block the request if the user is sending too many hints too quickly
         String rateLimitMessage = checkRateLimit();
-        if (rateLimitMessage != null) return rateLimitMessage;
+        if (rateLimitMessage != null) {
+            return rateLimitMessage;
+        }
 
         String systemPrompt =
                 // Identity & Personality

@@ -3,7 +3,7 @@ package com.mathcat.mathcat.models;
 /**
  * Defines resource path constants for all cat sprite images, accessories, and reaction overlays.
  */
-public class SpriteConstants {
+public final class SpriteConstants {
     private SpriteConstants() {}
 
     /** Resource path for the orange cat sprite. */

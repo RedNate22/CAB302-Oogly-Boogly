@@ -223,6 +223,6 @@ public class ProfileController {
             scene.getStylesheets().add(NavigationUtil.STYLESHEET);
             stage.setTitle("Delete Account");
             stage.setScene(scene);
-
     }
+
 }
