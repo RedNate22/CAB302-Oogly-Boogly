@@ -173,7 +173,8 @@
                            text="•••"
                            GridPane.rowIndex="2"
                            GridPane.columnIndex="1"
-                           style="-fx-font-size: 12px;" />
+                           style="-fx-font-size: 12px;"
+                                   editable="false"/>
 
                     <Button text="Change"
                             GridPane.rowIndex="2"

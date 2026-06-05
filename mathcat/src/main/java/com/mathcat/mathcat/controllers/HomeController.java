@@ -252,6 +252,7 @@ public class HomeController {
 
             inventoryStage.showAndWait();
             cat = CatDAO.load(UserDAO.currentUser.getId());
+            CatScheduler.getInstance().setCat(cat);
             refreshStats(cat);
 
             String finalChoice = invModalController.getCurrentSelectedPath();

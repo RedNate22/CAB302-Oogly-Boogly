@@ -116,8 +116,8 @@
                            <bottom>
                               <HBox alignment="BOTTOM_CENTER" prefHeight="28.0" prefWidth="230.0" spacing="30.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="submitButton" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-                                    <Button mnemonicParsing="false" onAction="#onSkip" text="Skip" />
+                                    <Button fx:id="submitButton" defaultButton="true" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
+                                    <Button fx:id="skipButton" defaultButton="false" mnemonicParsing="false" onAction="#onSkip" text="Skip" />
                                  </children>
                               </HBox>
                            </bottom>
