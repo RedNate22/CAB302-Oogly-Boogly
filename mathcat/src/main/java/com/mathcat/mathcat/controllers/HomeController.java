@@ -135,51 +135,54 @@ public class HomeController {
         energyLabel.setText(String.format("%.0f", energy));
         levelProgressLabel.setText(String.format("Level %.0f", level));
 
-        checkCriticalStat("Happiness", happiness, happinessCriticalShown, shown -> happinessCriticalShown = shown);
-        checkCriticalStat("Fullness",    hunger,    hungerCriticalShown,    shown -> hungerCriticalShown    = shown);
-        checkCriticalStat("Energy",    energy,    energyCriticalShown,    shown -> energyCriticalShown    = shown);
+        int delay = 0;
+        if (happiness <= CRITICAL_THRESHOLD && !happinessCriticalShown) {
+            happinessCriticalShown = true;
+            scheduleCriticalNotification("Happiness", delay);
+            delay += 5;
+        }
+        if (hunger <= CRITICAL_THRESHOLD && !hungerCriticalShown) {
+            hungerCriticalShown = true;
+            scheduleCriticalNotification("Fullness", delay);
+            delay += 5;
+        }
+        if (energy <= CRITICAL_THRESHOLD && !energyCriticalShown) {
+            energyCriticalShown = true;
+            scheduleCriticalNotification("Energy", delay);
+        }
 
         if (happiness > CRITICAL_THRESHOLD) {
             happinessCriticalShown = false;
         }
-        if (hunger    > CRITICAL_THRESHOLD) {
-            hungerCriticalShown    = false;
+        if (hunger > CRITICAL_THRESHOLD) {
+            hungerCriticalShown = false;
         }
-        if (energy    > CRITICAL_THRESHOLD) {
-            energyCriticalShown    = false;
+        if (energy > CRITICAL_THRESHOLD) {
+            energyCriticalShown = false;
         }
     }
 
 
     /**
-     * Shows a critical stat notification if the given stat value is at or
-     * below 15 and has not already been shown for
-     * this dip. Auto-dismisses after 4 seconds.
+     * Schedules a critical stat notification to show after a given delay,
+     * so multiple critical stats are shown sequentially rather than overwriting each other.
      *
-     * @param statName     human-readable stat name shown in the message
-     * @param value        current stat value
-     * @param alreadyShown whether the notification was already shown for this dip
-     * @param setShown     callback to update the alreadyShown flag
+     * @param statName    human-readable stat name shown in the message
+     * @param delaySeconds seconds to wait before showing this notification
      */
-    private void checkCriticalStat(String statName, double value, boolean alreadyShown,
-                                   java.util.function.Consumer<Boolean> setShown) {
-        if (value <= CRITICAL_THRESHOLD && !alreadyShown) {
-            setShown.accept(true);
+    private void scheduleCriticalNotification(String statName, int delaySeconds) {
+        PauseTransition delay = new PauseTransition(Duration.seconds(delaySeconds + 0.3));
+        delay.setOnFinished(e -> {
             Platform.runLater(() -> {
                 statNotificationPane.setText(statName + " is Critical! Use an Item to Regenerate!");
+                statNotificationPane.show();
 
-
-                PauseTransition delay = new PauseTransition(Duration.seconds(0.3));
-                delay.setOnFinished(e -> {
-                    statNotificationPane.show();
-
-                    PauseTransition pause = new PauseTransition(Duration.seconds(4));
-                    pause.setOnFinished(e2 -> statNotificationPane.hide());
-                    pause.play();
-                });
-                delay.play();
+                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                pause.setOnFinished(e2 -> statNotificationPane.hide());
+                pause.play();
             });
-        }
+        });
+        delay.play();
     }
 
 
