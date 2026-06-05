@@ -303,6 +303,8 @@ public final class CatService {
         CatDAO.save(cat);
     }
 
+
+
     /**
      * Returns the cat's current happiness as a display value.
      *

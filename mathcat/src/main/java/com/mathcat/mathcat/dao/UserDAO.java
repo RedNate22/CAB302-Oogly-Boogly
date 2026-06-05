@@ -111,6 +111,90 @@ public final class UserDAO {
     }
 
     /**
+     * Updates a user's username.
+     *
+     * @param currentUsername the user's current username
+     * @param newUsername the new username
+     * @throws SQLException if the update fails
+     */
+    public static void updateUsername(String currentUsername, String newUsername)
+            throws SQLException {
+
+        String sql = "UPDATE users SET username = ? WHERE username = ?";
+
+        try (PreparedStatement stmt =
+                     DatabaseManager.getConnection().prepareStatement(sql)) {
+
+            stmt.setString(1, newUsername);
+            stmt.setString(2, currentUsername);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("No user found with username: " + currentUsername);
+            }
+
+            LOG.debug("updated username from {} to {}", currentUsername, newUsername);
+        }
+    }
+
+    /**
+     * Updates a user's email.
+     *
+     * @param email the email of the user
+     * @param newEmail the new email
+     * @throws SQLException if the update fails
+     */
+    public static void updateEmail(String email, String newEmail)
+            throws SQLException {
+
+        String sql = "UPDATE users SET email = ? WHERE email = ?";
+
+        try (PreparedStatement stmt =
+                     DatabaseManager.getConnection().prepareStatement(sql)) {
+
+            stmt.setString(1, newEmail);
+            stmt.setString(2, email);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("No user found with email: " + email);
+            }
+
+            LOG.debug("updated email for user: {}", email);
+        }
+    }
+
+    /**
+     * Updates a user's password.
+     *
+     * @param password the password of the user
+     * @param newPassword the new password
+     * @throws SQLException if the update fails
+     */
+    public static void updatePassword(String password, String newPassword)
+            throws SQLException {
+
+        String sql = "UPDATE users SET password = ? WHERE password = ?";
+
+        try (PreparedStatement stmt =
+                     DatabaseManager.getConnection().prepareStatement(sql)) {
+
+            stmt.setString(1, newPassword);
+            stmt.setString(2, password);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("No user found with password: " + password);
+            }
+
+            LOG.debug("updated password for user: {}", password);
+        }
+    }
+
+    /**
      * Deletes a user by their username.
      *
      * @param username the username of the user to delete

@@ -22,8 +22,6 @@
     -fx-faint-focus-color: #ca9ee622;
 }
 
-/* Labels */
-
 .label {
     -fx-text-fill: #c6d0f5;
 }
@@ -235,6 +233,13 @@
     -fx-font-size: 16px;
 }
 
+/* Profile page password field */
+#passwordLabel {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
 
 .notification-bar > .pane {
     -fx-background-color: #e78284;
