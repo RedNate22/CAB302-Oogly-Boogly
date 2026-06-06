@@ -107,6 +107,7 @@ public class PlayController {
         if (cat != null) {
             LOG.debug("loaded cat: {} (level {})", cat.getCatName(), cat.getLevel());
             CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
+            CatService.updateSpriteBasedOnEnergy(cat);
             petNameLabel.setText(cat.getCatName() + "'s Stats");
             viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
             viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
@@ -143,6 +144,8 @@ public class PlayController {
         hungerLabel.setText(String.format("%.0f", hunger));
         energyLabel.setText(String.format("%.0f", energy));
         levelProgressLabel.setText(String.format("Level %.0f", level));
+
+        viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
     }
 
     /**
