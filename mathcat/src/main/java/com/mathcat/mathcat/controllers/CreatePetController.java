@@ -2,24 +2,20 @@ package com.mathcat.mathcat.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
-
-import java.io.IOException;
-import java.sql.SQLException;
+import org.controlsfx.control.NotificationPane;
+import javafx.scene.layout.BorderPane;
+import org.controlsfx.control.NotificationPane;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -108,27 +104,39 @@ public class CreatePetController {
         viewCurrentAccessoryImage.setImage(SpriteService.load(selectedAccessorySpritePath));
     }
 
-    @FXML private Label confirmationMessage;
+    /** Root pane used to anchor the programmatic NotificationPane. */
+    @FXML private BorderPane rootPane;
+
+    /** Notification pane displayed briefly after successful account creation. */
+    private NotificationPane confirmationPane;
 
     /**
-     * Shows the account creation confirmation message briefly on screen load.
+     * Runs on screen load. Builds the NotificationPane programmatically around
+     * the root layout and defers showing it until the scene is fully rendered.
      */
-    // Initially sets the confirmation message once
+    @FXML
     public void initialize() {
-        setConfirmationMessage();
+        confirmationPane = new NotificationPane(rootPane);
+        confirmationPane.setShowFromTop(true);
+        confirmationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK); // built-in dark style
+        Platform.runLater(() -> {
+            rootPane.getScene().setRoot(confirmationPane);
+            PauseTransition wait = new PauseTransition(Duration.seconds(0.3));
+            wait.setOnFinished(e -> setConfirmationMessage());
+            wait.play();
+        });
     }
 
     /**
-     * Handles timed confirmation message — Indicates to user that account creation was successful.
+     * Displays a timed success notification indicating account creation was
+     * successful. Auto-dismisses after 4 seconds.
      */
     public void setConfirmationMessage() {
-        confirmationMessage.setVisible(true);
+        confirmationPane.setText("Account was Created Successfully!");
+        confirmationPane.show();
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(3));
-
-        pause.setOnFinished((ActionEvent event) -> {
-            confirmationMessage.setVisible(false);
-        });
+        PauseTransition pause = new PauseTransition(Duration.seconds(4));
+        pause.setOnFinished((ActionEvent event) -> confirmationPane.hide());
         pause.play();
     }
 
@@ -137,9 +145,8 @@ public class CreatePetController {
      * appearance, then saves to database and navigates to home screen if confirmed.
      *
      * @param event the button click event
-     * @throws IOException if the home screen cannot be loaded
      */
-    public void onConfirmPetDetails(ActionEvent event) throws IOException {
+    public void onConfirmPetDetails(ActionEvent event) {
         String name = userPetName.getText().trim();
 
         if (!CatService.isValidCatName(name)) {
@@ -181,22 +188,15 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
-        stage.setTitle("MathCat");
-        stage.setScene(scene);
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**
      * Handles logout — clears current user and returns to initial screen.
-     * 
+     *
      * @param event the button click event
-     * @throws IOException if the initial screen cannot be loaded
      */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) {
         NavigationUtil.logout(event);
     }
 }

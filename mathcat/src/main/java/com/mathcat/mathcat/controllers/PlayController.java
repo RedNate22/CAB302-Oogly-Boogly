@@ -5,17 +5,11 @@ import com.mathcat.mathcat.services.RewardSystem;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -81,6 +75,8 @@ public class PlayController {
     @FXML
     private Button showAnswerButton;
 
+    @FXML Button skipButton;
+
     @FXML
     private Label feedbackLabel;
 
@@ -141,7 +137,7 @@ public class PlayController {
         happinessProgressBar.setProgress(happiness / 100);
         hungerProgressBar.setProgress(hunger / 100);
         energyProgressBar.setProgress(energy / 100);
-        levelProgressBar.setProgress(xp/nextLevelXP);
+        levelProgressBar.setProgress(nextLevelXP < 0 ? 1.0 : xp / nextLevelXP);
 
         happinessLabel.setText(String.format("%.0f", happiness));
         hungerLabel.setText(String.format("%.0f", hunger));
@@ -227,6 +223,8 @@ public class PlayController {
         submitButton.setDisable(true);
         showAnswerButton.setVisible(false);
         showAnswerButton.setManaged(false);
+
+        skipButton.requestFocus();
     }
 
     private void setFeedbackLabel(String feedback) {
@@ -252,6 +250,9 @@ public class PlayController {
      */
     @FXML
     public void onSkip(ActionEvent event) {
+        if (cat == null || currentQuestion == null) {
+            return;
+        }
         resetQuestionState();
         LOG.debug("question skipped: {}", currentQuestion.getText());
         currentQuestion = questionService.nextQuestion(cat.getLevel());
@@ -260,29 +261,25 @@ public class PlayController {
         feedbackLabel.setText("");
 
         setupNextQuestion();
+
+        submitButton.requestFocus();
     }
 
     /**
      * Handles return to home screen.
      *
      * @param event the button click event
-     * @throws IOException if the home screen FXML cannot be loaded
      */
-    public void onConfirmGoBack(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onConfirmGoBack(ActionEvent event) {
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**
      * Handles logout.
      *
      * @param event the button click event
-     * @throws IOException if the initial screen FXML cannot be loaded
      */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
+    public void onLogoutConfirm(ActionEvent event) {
         NavigationUtil.logout(event);
     }
 
@@ -290,13 +287,8 @@ public class PlayController {
      * Reloads the play screen.
      *
      * @param event the button click event
-     * @throws IOException if the play screen FXML cannot be loaded
      */
-    public void onPressPlay(ActionEvent event) throws IOException {
-        Parent root =
-                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/play-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onPressPlay(ActionEvent event) {
+        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
     }
 }

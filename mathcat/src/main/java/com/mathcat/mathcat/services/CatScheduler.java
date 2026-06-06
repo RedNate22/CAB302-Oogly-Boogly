@@ -53,6 +53,15 @@ public final class CatScheduler {
     }
 
     /**
+     * Updates the cat reference without restarting the timeline.
+     *
+     * @param cat the new cat to apply decay to
+     */
+    public void setCat(Cat cat) {
+        this.cat = cat;
+    }
+
+    /**
      * Starts the decay timeline, firing every minute. Stops any existing timeline first so
      * calling {@link #start(Cat)} again (e.g. on re-entering the home screen) never stacks decay ticks.
      *
@@ -94,7 +103,11 @@ public final class CatScheduler {
                         String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
                 String.format("%.2f", cat.getEnergy()));
         if (onTickCallback != null) {
-            onTickCallback.run();
+            try {
+                onTickCallback.run();
+            } catch (RuntimeException e) {
+                LOG.error("uncaught exception in tick callback", e);
+            }
         }
     }
 }

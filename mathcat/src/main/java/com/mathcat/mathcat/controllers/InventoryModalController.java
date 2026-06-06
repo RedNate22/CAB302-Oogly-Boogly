@@ -10,13 +10,10 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.SpriteConstants;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,6 +126,10 @@ public class InventoryModalController {
         if (cat != null) {
             catLevel = cat.getLevel();
             catItem = cat.getItems();
+            LOG.debug("inventory: {} item(s)", catItem.size());
+        } else {
+            LOG.warn("inventory modal opened with no cat for user: {}",
+                    UserDAO.currentUser.getUsername());
         }
 
         // Make the tooltips show fast
@@ -161,28 +162,6 @@ public class InventoryModalController {
     }
 
     /**
-     * Returns the root stage resolved from the given action event.
-     *
-     * @param event the action event used to resolve the current stage
-     * @return the root Stage of the scene
-     */
-    private static Stage getRoot(ActionEvent event) {
-        Node root = (Node) event.getSource();
-        return (Stage) root.getScene().getWindow();
-    }
-
-    // /**
-    //  * Handles the change cat colour button action.
-    //  *
-    //  * @param event the button click event
-    //  * @throws IOException if the next screen cannot be loaded
-    //  */
-    // @FXML
-    // protected void changeCatColour(ActionEvent event) throws IOException {
-
-    // }
-
-    /**
      * Handles the logic of callback to Home screen
      * Handles the change cat accessory button action.
      *
@@ -203,8 +182,10 @@ public class InventoryModalController {
         return selectedAccessorySpritePath;
     }
 
+    @FXML
     private void onClickClearAccessory() {
         selectedAccessorySpritePath = SpriteConstants.NO_ACCESSORY_SELECTED;
+        LOG.debug("accessory cleared");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
@@ -212,54 +193,67 @@ public class InventoryModalController {
         }
     }
 
+    @FXML
     private void onClickCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.COWBOY_HAT;
+        LOG.debug("accessory selected: cowboy hat");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
         }
     }
 
+    @FXML
     private void onClickMegaCowboyHat() {
         selectedAccessorySpritePath = SpriteConstants.MEGA_COWBOY_HAT;
+        LOG.debug("accessory selected: mega cowboy hat");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
         }
     }
 
+    @FXML
     private void onClickRedBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.RED_BOWTIE_HAT;
+        LOG.debug("accessory selected: red bowtie hat");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
         }
     }
 
+    @FXML
     private void onClickBlueBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.BLUE_BOWTIE_HAT;
+        LOG.debug("accessory selected: blue bowtie hat");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
         }
     }
 
+    @FXML
     private void onClickPurpleBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.PURPLE_BOWTIE_HAT;
+        LOG.debug("accessory selected: purple bowtie hat");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
         }
     }
 
+    @FXML
     private void onClickGreenBowtieHat() {
         selectedAccessorySpritePath = SpriteConstants.GREEN_BOWTIE_HAT;
+        LOG.debug("accessory selected: green bowtie hat");
 
         if (onItemSelectCallback != null) {
             onItemSelectCallback.accept(selectedAccessorySpritePath);
         }
     }
 
+    @FXML
     private void onClickTunaItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_TUNA")) {
@@ -273,12 +267,14 @@ public class InventoryModalController {
                         tunaItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
         }
     }
 
+    @FXML
     private void onClickMilkItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_MILK")) {
@@ -292,12 +288,14 @@ public class InventoryModalController {
                         milkItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
         }
     }
 
+    @FXML
     private void onClickKibbleItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("FOOD_KIBBLE")) {
@@ -311,12 +309,14 @@ public class InventoryModalController {
                         kibbleItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
         }
     }
 
+    @FXML
     private void onClickYarnItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_BALL")) {
@@ -330,12 +330,14 @@ public class InventoryModalController {
                         yarnItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
         }
     }
 
+    @FXML
     private void onClickLaserItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_LASER")) {
@@ -349,12 +351,14 @@ public class InventoryModalController {
                         laserItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
         }
     }
 
+    @FXML
     private void onClickCatnipItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("TOY_CATNIP")) {
@@ -368,12 +372,14 @@ public class InventoryModalController {
                         catnipItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
         }
     }
 
+    @FXML
     private void onClickEnergyNapItem() {
         for (Item item : catItem) {
             if (item.getItemId().equals("ENERGY_NAP")) {
@@ -387,6 +393,7 @@ public class InventoryModalController {
                         energyNapItemLocked.setVisible(true);
                     }
                     CatDAO.save(cat);
+                    LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
                 }
                 break;
             }
@@ -447,7 +454,7 @@ public class InventoryModalController {
      * if user has reached specific level
      */
     public void unlockAccessory() {
-
+        LOG.debug("unlocking accessories for level {}", (int) catLevel);
         if (catLevel >= 3) {
             blueBowtieTooltip.setText("");
             blueBowtieTooltip.hide();

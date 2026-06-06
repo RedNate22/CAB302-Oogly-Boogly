@@ -22,8 +22,6 @@
     -fx-faint-focus-color: #ca9ee622;
 }
 
-/* Labels */
-
 .label {
     -fx-text-fill: #c6d0f5;
 }
@@ -233,4 +231,35 @@
 
 .tooltipLabel {
     -fx-font-size: 16px;
+}
+
+/* Profile page password field */
+#passwordLabel {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.notification-bar > .pane {
+    -fx-background-color: #e78284;
+    -fx-padding: 10px;
+}
+
+.notification-bar > .pane .label {
+    -fx-text-fill: #303446;
+}
+
+.notification-bar > .pane > .close-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #414559;
+}
+
+.notification-bar > .pane > .close-button:hover {
+    -fx-text-fill: #414559;
+    -fx-background-color: #81c8be;
+}
+
+.show-answer-btn {
+    -fx-min-width: 100px;
 }
