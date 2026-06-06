@@ -229,7 +229,7 @@ public final class CatService {
         LOG.debug("Sprite check - Current: {}, Energy: {}, New: {}", currentSprite, cat.getEnergy(), updatedSprite);
 
 
-        if (!updatedSprite.equals(currentSprite)) {
+        if (updatedSprite != null && !updatedSprite.equals(currentSprite)) {
             LOG.debug("Sprite changed: {} -> {}", currentSprite, updatedSprite);
             cat.setCatSprite(updatedSprite);
             cat.setLastSaved((LocalDateTime.now()));
