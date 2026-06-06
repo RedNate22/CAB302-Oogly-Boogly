@@ -246,6 +246,10 @@ public final class CatService {
     public static String determineSpriteForEnergy(String currentSprite, double energy) {
         boolean isSleepy = energy <= SLEEPY_ENERGY_THRESHOLD;
 
+        if (currentSprite == null) {
+            return currentSprite;
+        }
+
         // Map normal sprites to their sleepy counterparts and vice versa
         if (isSleepy) {
             if (currentSprite.equals(SpriteConstants.ORANGE_CAT)) {
