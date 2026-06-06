@@ -226,11 +226,14 @@ public final class CatService {
         String currentSprite = cat.getCatSprite();
         String updatedSprite = determineSpriteForEnergy(currentSprite, cat.getEnergy());
 
+        LOG.debug("Sprite check - Current: {}, Energy: {}, New: {}", currentSprite, cat.getEnergy(), updatedSprite);
+
+
         if (!updatedSprite.equals(currentSprite)) {
+            LOG.debug("Sprite changed: {} -> {}", currentSprite, updatedSprite);
             cat.setCatSprite(updatedSprite);
             cat.setLastSaved((LocalDateTime.now()));
             CatDAO.save(cat);
-            LOG.debug("Sprite updated to: {}", updatedSprite);
         }
     }
 

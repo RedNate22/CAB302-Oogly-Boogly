@@ -146,6 +146,7 @@ public class PlayController {
         levelProgressLabel.setText(String.format("Level %.0f", level));
 
         viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+        LOG.debug("Refreshing sprite: {}", cat.getCatSprite());
     }
 
     /**
