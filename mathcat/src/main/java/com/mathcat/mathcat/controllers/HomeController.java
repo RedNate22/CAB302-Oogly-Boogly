@@ -225,6 +225,11 @@ public class HomeController {
                 viewCurrentAccessoryImage.setImage(newAccessory);
             });
 
+            invModalController.setOnReact(imagePath -> {
+                Image newReact = new Image(getClass().getResourceAsStream(imagePath));
+                viewReactionImage.setImage(newReact);
+            })
+
             Stage inventoryStage = new Stage();
             inventoryStage.setTitle("Inventory");
 

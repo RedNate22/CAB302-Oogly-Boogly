@@ -12,6 +12,13 @@ public final class SpriteConstants {
     public static final String SIAMESE_CAT = "/com/mathcat/mathcat/assets/images/sprites/cats/siamese-normal.png";
     /** Resource path for the tuxedo cat sprite. */
     public static final String TUXEDO_CAT = "/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-normal.png";
+    
+    /** Resource path for the sleeping orange cat sprite. */
+    public static final String SLEEPY_ORANGE_CAT = "/com/mathcat/mathcat/assets/images/sprites/cats/orange-sleepy.png";
+    /** Resource path for the sleeping siamese cat sprite. */
+    public static final String SLEEPY_SIAMESE_CAT = "/com/mathcat/mathcat/assets/images/sprites/cats/siamese-sleepy.png";
+    /** Resource path for the sleeping tuxedo cat sprite. */
+    public static final String SLEEPY_TUXEDO_CAT = "/com/mathcat/mathcat/assets/images/sprites/cats/tuxedo-sleepy.png";
 
     /** Resource path for the oversized cowboy hat accessory. */
     public static final String MEGA_COWBOY_HAT = "/com/mathcat/mathcat/assets/images/sprites/accessories/oversized-cowboy-hat.png";

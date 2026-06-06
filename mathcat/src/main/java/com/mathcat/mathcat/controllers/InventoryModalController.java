@@ -10,6 +10,7 @@ import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
 import com.mathcat.mathcat.models.SpriteConstants;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.*;
@@ -40,6 +41,8 @@ public class InventoryModalController {
     // when updating the sprite accessories
     private Consumer<String> onItemSelectCallback;
 
+    private Consumer<String> onReactCallback;
+
     @FXML
     private Label petNameLabel;
 
@@ -47,9 +50,21 @@ public class InventoryModalController {
     private ImageView imageView;
 
     @FXML
+    private ImageView viewCurrentPetImage;
+
+    private String applySleepingCatSprite = null;
+
+    @FXML
     private ImageView viewCurrentAccessoryImage;
 
     private String selectedAccessorySpritePath = null;
+
+    @FXML
+    private ImageView viewCurrentReactionImage;
+
+    private String appliedReactionStringPath = null;
+
+    private PauseTransition reactTimer;
 
     @FXML
     private Pane megaCowboyLocked;
@@ -172,6 +187,10 @@ public class InventoryModalController {
         this.onItemSelectCallback = callback;
     }
 
+    public void setOnReact(Consumer<String> callback) {
+        this.onReactCallback = callback;
+    }
+
     /**
      * Handles the logic of getting the current selected accessory
      * to then save to DB in Home controller
@@ -268,6 +287,7 @@ public class InventoryModalController {
                     }
                     CatDAO.save(cat);
                     LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
+
                 }
                 break;
             }
@@ -394,10 +414,26 @@ public class InventoryModalController {
                     }
                     CatDAO.save(cat);
                     LOG.debug("used {}, quantity remaining: {}", item.getItemName(), newQty);
+                    applySleepyReaction();
                 }
                 break;
             }
         }
+    }
+
+    private void applyHeartReaction() {
+        appliedReactionStringPath = SpriteConstants.HEART_REACTION;
+        LOG.debug("reaction applied");
+    }
+
+    private void applySleepyReaction() {
+        appliedReactionStringPath = SpriteConstants.SLEEPY_REACTION;
+        LOG.debug("sleepy reaction applied");
+
+        if (onReactCallback != null) {
+            onReactCallback.accept(appliedReactionStringPath);
+        }
+
     }
 
     /**
