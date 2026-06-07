@@ -207,7 +207,7 @@ public final class CatService {
 
     /**
      * Updates the cat's sprite based on energy level and cat type.
-     * Sets to sleepy variant if energy <= SLEEPY_ENERGY_THRESHOLD,
+     * Sets to sleepy variant if energy &lt;= SLEEPY_ENERGY_THRESHOLD,
      * otherwise normal variant.
      * Persists the change to the database.
      * @param cat the cat to update

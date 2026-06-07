@@ -193,7 +193,6 @@ public class HomeController extends BaseController {
      * further interacting with the home screen.
      *
      * @param event gets the window/stage for the inventory modal screen
-     * @throws IOException if the listed screen does not exist.
      */
     @FXML
     public void onPressInventory(ActionEvent event) {
