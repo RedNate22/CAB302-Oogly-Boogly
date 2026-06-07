@@ -186,23 +186,6 @@ public class HomeController extends BaseController {
         });
         delay.play();
     }
-    /**
-     * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
-     *
-     * @param event gets the window/stage for the home screen
-     */
-    public void onLogoutConfirm(ActionEvent event) {
-        logout(event);
-    }
-
-    /**
-     * Handles play screen logic for MathCat in the home screen.
-     *
-     * @param event gets the window/stage for the main screen
-     */
-    public void onPressPlay(ActionEvent event) {
-        navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
-    }
 
     /**
      * Handles inventory modal screen logic for MathCat in the home screen.

@@ -191,13 +191,5 @@ public class CreatePetController extends BaseController {
         navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
-    /**
-     * Handles logout — clears current user and returns to initial screen.
-     *
-     * @param event the button click event
-     */
-    public void onLogoutConfirm(ActionEvent event) {
-        logout(event);
-    }
 }
 

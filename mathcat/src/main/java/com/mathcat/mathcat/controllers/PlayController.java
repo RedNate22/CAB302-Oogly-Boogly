@@ -278,21 +278,4 @@ public class PlayController extends BaseController {
         navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
-    /**
-     * Handles logout.
-     *
-     * @param event the button click event
-     */
-    public void onLogoutConfirm(ActionEvent event) {
-        logout(event);
-    }
-
-    /**
-     * Reloads the play screen.
-     *
-     * @param event the button click event
-     */
-    public void onPressPlay(ActionEvent event) {
-        navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
-    }
 }

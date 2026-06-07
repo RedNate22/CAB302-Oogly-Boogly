@@ -6,6 +6,7 @@ import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.services.CatScheduler;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -46,6 +47,26 @@ public abstract class BaseController {
         } catch (IOException e) {
             LOG.error("failed to load initial screen during logout", e);
         }
+    }
+
+    /**
+     * Handles logout for any screen that has a logout button.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    public void onLogoutConfirm(ActionEvent event) {
+        logout(event);
+    }
+
+    /**
+     * Navigates to the play screen.
+     *
+     * @param event the button click event
+     */
+    @FXML
+    public void onPressPlay(ActionEvent event) {
+        navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
     }
 
     /**

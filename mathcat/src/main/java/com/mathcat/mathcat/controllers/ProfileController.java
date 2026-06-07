@@ -1,6 +1,5 @@
 package com.mathcat.mathcat.controllers;
 
-import com.mathcat.mathcat.models.User;
 import com.mathcat.mathcat.services.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -199,16 +198,6 @@ public class ProfileController extends BaseController {
         changePasswordStage.showAndWait();
         Cat cat = CatDAO.load(UserDAO.currentUser.getId());
         refreshStats(cat);
-    }
-
-    /**
-     * Handles logout logic for MathCat in the Home screen, returns user to initial screen.
-     *
-     * @param event gets the window/stage for the home screen
-     * @throws IOException if listed screen does not exist
-     */
-    public void onLogoutConfirm(ActionEvent event) throws IOException {
-        logout(event);
     }
 
     /**
