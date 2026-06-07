@@ -13,9 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 import org.controlsfx.control.NotificationPane;
 import javafx.scene.layout.BorderPane;
-import org.controlsfx.control.NotificationPane;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
