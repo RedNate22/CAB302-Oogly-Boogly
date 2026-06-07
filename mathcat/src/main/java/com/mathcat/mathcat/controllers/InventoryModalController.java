@@ -252,7 +252,7 @@ public class InventoryModalController {
     /**
      * Unlocks item slots for items the cat currently has in its inventory.
      */
-    public void unlockItem() {
+    private void unlockItem() {
         for (Item item : catItem) {
             switch (item.getItemId()) {
                 case ITEM_FOOD_TUNA:
@@ -299,7 +299,7 @@ public class InventoryModalController {
     /**
      * Unlocks accessory slots for accessories unlocked by the cat's level.
      */
-    public void unlockAccessory() {
+    private void unlockAccessory() {
         LOG.debug("unlocking accessories for level {}", (int) catLevel);
         if (catLevel >= 3) {
             blueBowtieTooltip.setText("");

@@ -129,7 +129,7 @@ public class CreatePetController extends BaseController {
      * Displays a timed success notification indicating account creation was
      * successful. Auto-dismisses after 4 seconds.
      */
-    public void setConfirmationMessage() {
+    private void setConfirmationMessage() {
         confirmationPane.setText("Account was Created Successfully!");
         confirmationPane.show();
 
