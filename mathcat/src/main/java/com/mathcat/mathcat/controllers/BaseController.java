@@ -16,33 +16,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Shared navigation utilities for MathCat controllers.
- *
- * Centralises screen transitions that are identical across multiple controllers to avoid
- * duplicating logic. Currently handles logout, which requires consistent teardown: stopping
- * {@link com.mathcat.mathcat.services.CatScheduler} and clearing the user session before returning
- * to the initial screen.
+ * Abstract base class for MathCat controllers. Provides shared navigation and logout logic,
+ * and exposes the application stylesheet path for use in child controllers.
  */
-public final class NavigationUtil {
-    // Static utility rather than a base controller class: JavaFX controllers are instantiated by
-    // FXMLLoader via reflection, making inheritance fragile. @FXML injection, initialize(), and
-    // constructor constraints all interact poorly with superclasses.
+public abstract class BaseController {
+    private static final Logger LOG = LoggerFactory.getLogger(BaseController.class);
 
-    private static final Logger LOG = LoggerFactory.getLogger(NavigationUtil.class);
-
-    public static final String STYLESHEET = NavigationUtil.class
+    public static final String STYLESHEET = BaseController.class
             .getResource("/com/mathcat/mathcat/styling/styles.css").toExternalForm();
 
-    private NavigationUtil() {}
-
     /**
-     * Performs a clean logout: stops the cat scheduler, clears the current user session, and
-     * navigates back to the initial screen.
+     * Stops the scheduler, clears the current user session, and navigates to the initial screen.
      *
      * @param event the button click event used to resolve the current stage
-     * @throws IOException if the initial screen FXML cannot be loaded
      */
-    public static void logout(ActionEvent event) {
+    protected void logout(ActionEvent event) {
         CatScheduler.getInstance().stop();
         if (UserDAO.currentUser != null) {
             LOG.info("user logged out: {}", UserDAO.currentUser.getUsername());
@@ -51,7 +39,7 @@ public final class NavigationUtil {
 
         try {
             Parent root = FXMLLoader.load(
-                    NavigationUtil.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
+                    BaseController.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("MathCat");
             stage.getScene().setRoot(root);
@@ -61,14 +49,14 @@ public final class NavigationUtil {
     }
 
     /**
-     * Navigates to the given FXML screen, replacing the current scene.
+     * Replaces the current scene with the given FXML screen.
      *
      * @param event the button click event used to resolve the current stage
-     * @param fxml the classpath-absolute path to the FXML resource
+     * @param fxml  the classpath-absolute path to the FXML resource
      */
-    public static void navigateTo(ActionEvent event, String fxml) {
+    protected void navigateTo(ActionEvent event, String fxml) {
         try {
-            Parent root = FXMLLoader.load(NavigationUtil.class.getResource(fxml));
+            Parent root = FXMLLoader.load(BaseController.class.getResource(fxml));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 700, 500);
             scene.getStylesheets().add(STYLESHEET);

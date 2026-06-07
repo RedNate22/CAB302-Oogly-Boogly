@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 /** Controller for the initial screen, handling navigation to login and account creation. */
-public class HelloController {
+public class HelloController extends BaseController {
 
     /** Creates a new HelloController. */
     public HelloController() {}
@@ -16,7 +16,7 @@ public class HelloController {
      */
     @FXML
     public void onLoginClick(ActionEvent event) {
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/login-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/login-view.fxml");
     }
 
     /**
@@ -26,6 +26,6 @@ public class HelloController {
      */
     @FXML
     public void onCreateClick(ActionEvent event) {
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/createaccount-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/createaccount-view.fxml");
     }
 }

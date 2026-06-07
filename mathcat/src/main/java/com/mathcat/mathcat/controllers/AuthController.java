@@ -20,7 +20,7 @@ import org.mindrot.jbcrypt.BCrypt;
 /**
  * Handles UI events for the login and account creation screens.
  */
-public class AuthController {
+public class AuthController extends BaseController {
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
 
     /** Creates a new AuthController. */
@@ -111,7 +111,7 @@ public class AuthController {
                 ? "/com/mathcat/mathcat/home-view.fxml"
                 : "/com/mathcat/mathcat/createpet-view.fxml";
 
-        NavigationUtil.navigateTo(event, fxml);
+        navigateTo(event, fxml);
     }
 
     /**
@@ -155,7 +155,7 @@ public class AuthController {
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
                 LOG.info("account created: {}", username);
 
-                NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/createpet-view.fxml");
+                navigateTo(event, "/com/mathcat/mathcat/createpet-view.fxml");
             } else {
                 LOG.warn("account creation failed - already exists: {}", username);
                 error.setText("Username or email already exists");
@@ -173,6 +173,6 @@ public class AuthController {
      */
     @FXML
     public void onReturn(ActionEvent event) {
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/initial-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/initial-view.fxml");
     }
 }

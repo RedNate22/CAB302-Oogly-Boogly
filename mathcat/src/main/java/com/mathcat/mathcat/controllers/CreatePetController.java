@@ -30,7 +30,7 @@ import com.mathcat.mathcat.services.SpriteService;
  * Controller for the Create Pet screen. Handles pet creation and saves to both in-memory CatDAO and
  * SQLite database.
  */
-public class CreatePetController {
+public class CreatePetController extends BaseController {
     private static final Logger LOG = LoggerFactory.getLogger(CreatePetController.class);
 
     /** Creates a new CreatePetController. */
@@ -174,7 +174,7 @@ public class CreatePetController {
         StackPane alertImage = new StackPane(alertCat, alertAccessory);
         confirmation.setGraphic(alertImage);
 
-        confirmation.getDialogPane().getStylesheets().add(NavigationUtil.STYLESHEET);
+        confirmation.getDialogPane().getStylesheets().add(BaseController.STYLESHEET);
         ButtonType result = confirmation.showAndWait().orElse(goBackButton);
 
         if (result != confirmButton) {
@@ -188,7 +188,7 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**
@@ -197,7 +197,7 @@ public class CreatePetController {
      * @param event the button click event
      */
     public void onLogoutConfirm(ActionEvent event) {
-        NavigationUtil.logout(event);
+        logout(event);
     }
 }
 

@@ -28,7 +28,7 @@ import javafx.application.Platform;
  * Controller for the play screen. Handles math questions and delegates AI hint chat to
  * ChatController.
  */
-public class PlayController {
+public class PlayController extends BaseController {
     private static final Logger LOG = LoggerFactory.getLogger(PlayController.class);
 
     /** Creates a new PlayController. */
@@ -275,7 +275,7 @@ public class PlayController {
      * @param event the button click event
      */
     public void onConfirmGoBack(ActionEvent event) {
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
     /**
@@ -284,7 +284,7 @@ public class PlayController {
      * @param event the button click event
      */
     public void onLogoutConfirm(ActionEvent event) {
-        NavigationUtil.logout(event);
+        logout(event);
     }
 
     /**
@@ -293,6 +293,6 @@ public class PlayController {
      * @param event the button click event
      */
     public void onPressPlay(ActionEvent event) {
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
     }
 }

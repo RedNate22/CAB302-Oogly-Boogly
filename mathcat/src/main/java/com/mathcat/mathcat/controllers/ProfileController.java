@@ -21,7 +21,7 @@ import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.Cat;
 
-public class ProfileController {
+public class ProfileController extends BaseController {
     @FXML
     private Label usernameLabel;
     @FXML
@@ -127,7 +127,7 @@ public class ProfileController {
         changeUsernameStage.initOwner(profileStage);
 
         Scene scene = new Scene(root, 500, 400);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
 
         changeUsernameStage.setScene(scene);
         changeUsernameStage.showAndWait();
@@ -160,7 +160,7 @@ public class ProfileController {
         changeEmailStage.initOwner(profileStage);
 
         Scene scene = new Scene(root, 500, 400);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
 
         changeEmailStage.setScene(scene);
         changeEmailStage.showAndWait();
@@ -193,7 +193,7 @@ public class ProfileController {
         changePasswordStage.initOwner(profileStage);
 
         Scene scene = new Scene(root, 500, 400);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
 
         changePasswordStage.setScene(scene);
         changePasswordStage.showAndWait();
@@ -208,7 +208,7 @@ public class ProfileController {
      * @throws IOException if listed screen does not exist
      */
     public void onLogoutConfirm(ActionEvent event) throws IOException {
-        NavigationUtil.logout(event);
+        logout(event);
     }
 
     /**
@@ -223,7 +223,7 @@ public class ProfileController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             Scene scene = new Scene(root, 700, 500);
-            scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+            scene.getStylesheets().add(BaseController.STYLESHEET);
             stage.setTitle("Delete Account");
             stage.setScene(scene);
     }
@@ -240,7 +240,7 @@ public class ProfileController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root, 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
     }

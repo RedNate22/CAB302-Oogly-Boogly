@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import com.mathcat.mathcat.controllers.NavigationUtil;
+import com.mathcat.mathcat.controllers.BaseController;
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.database.DatabaseManager;
@@ -35,7 +35,7 @@ public class MathCatApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 MathCatApp.class.getResource("/com/mathcat/mathcat/initial-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
         stage.setTitle("MathCat");
         stage.getIcons().add(new Image(MathCatApp.class
                 .getResourceAsStream("/com/mathcat/mathcat/assets/images/icons/mathcat-icon.png")));

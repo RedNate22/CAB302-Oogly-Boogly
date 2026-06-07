@@ -28,7 +28,7 @@ import org.controlsfx.control.NotificationPane;
  * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
  * not handle persistence.
  */
-public class HomeController {
+public class HomeController extends BaseController {
     private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
     /** Creates a new homeController. */
@@ -99,7 +99,7 @@ public class HomeController {
 
             statNotificationPane = new NotificationPane(rootPane);
             statNotificationPane.setShowFromTop(true);
-            statNotificationPane.getStylesheets().add(NavigationUtil.STYLESHEET);
+            statNotificationPane.getStylesheets().add(BaseController.STYLESHEET);
             Platform.runLater(() -> rootPane.getScene().setRoot(statNotificationPane));
 
         } else {
@@ -192,7 +192,7 @@ public class HomeController {
      * @param event gets the window/stage for the home screen
      */
     public void onLogoutConfirm(ActionEvent event) {
-        NavigationUtil.logout(event);
+        logout(event);
     }
 
     /**
@@ -201,7 +201,7 @@ public class HomeController {
      * @param event gets the window/stage for the main screen
      */
     public void onPressPlay(ActionEvent event) {
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/play-view.fxml");
     }
 
     /**
@@ -237,7 +237,7 @@ public class HomeController {
             inventoryStage.initOwner(homeStage);
 
             Scene inventoryScene = new Scene(root);
-            inventoryScene.getStylesheets().add(NavigationUtil.STYLESHEET);
+            inventoryScene.getStylesheets().add(BaseController.STYLESHEET);
             inventoryStage.setScene(inventoryScene);
 
             inventoryStage.setOnShown(windowEvent -> {
@@ -290,7 +290,7 @@ public class HomeController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root, 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
 
