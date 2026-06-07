@@ -1,12 +1,6 @@
 package com.mathcat.mathcat.controllers;
 
-import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
-import com.mathcat.mathcat.models.Cat;
-import com.mathcat.mathcat.models.User;
-import com.mathcat.mathcat.services.CatScheduler;
-import com.mathcat.mathcat.services.CatService;
-import com.mathcat.mathcat.services.SpriteService;
 import com.mathcat.mathcat.services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

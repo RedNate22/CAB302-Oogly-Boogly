@@ -13,9 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.StackPane;
 import org.controlsfx.control.NotificationPane;
 import javafx.scene.layout.BorderPane;
-import org.controlsfx.control.NotificationPane;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 
 import com.mathcat.mathcat.dao.CatDAO;
 import com.mathcat.mathcat.dao.UserDAO;
@@ -30,7 +28,7 @@ import com.mathcat.mathcat.services.SpriteService;
  * Controller for the Create Pet screen. Handles pet creation and saves to both in-memory CatDAO and
  * SQLite database.
  */
-public class CreatePetController {
+public class CreatePetController extends BaseController {
     private static final Logger LOG = LoggerFactory.getLogger(CreatePetController.class);
 
     /** Creates a new CreatePetController. */
@@ -131,7 +129,7 @@ public class CreatePetController {
      * Displays a timed success notification indicating account creation was
      * successful. Auto-dismisses after 4 seconds.
      */
-    public void setConfirmationMessage() {
+    private void setConfirmationMessage() {
         confirmationPane.setText("Account was Created Successfully!");
         confirmationPane.show();
 
@@ -174,7 +172,7 @@ public class CreatePetController {
         StackPane alertImage = new StackPane(alertCat, alertAccessory);
         confirmation.setGraphic(alertImage);
 
-        confirmation.getDialogPane().getStylesheets().add(NavigationUtil.STYLESHEET);
+        confirmation.getDialogPane().getStylesheets().add(BaseController.STYLESHEET);
         ButtonType result = confirmation.showAndWait().orElse(goBackButton);
 
         if (result != confirmButton) {
@@ -188,16 +186,8 @@ public class CreatePetController {
         CatDAO.save(cat);
         LOG.info("pet created: {} (user: {})", name, UserDAO.currentUser.getUsername());
 
-        NavigationUtil.navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
+        navigateTo(event, "/com/mathcat/mathcat/home-view.fxml");
     }
 
-    /**
-     * Handles logout — clears current user and returns to initial screen.
-     *
-     * @param event the button click event
-     */
-    public void onLogoutConfirm(ActionEvent event) {
-        NavigationUtil.logout(event);
-    }
 }
 

@@ -15,7 +15,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class DeleteAccountController {
+public class DeleteAccountController extends BaseController {
 
     @FXML
     private Label error;
@@ -36,7 +36,7 @@ public class DeleteAccountController {
 
             PauseTransition delay = new PauseTransition(Duration.seconds(3));
             delay.setOnFinished(e -> {
-                NavigationUtil.logout(event);
+                logout(event);
             });
             delay.play();
 
@@ -57,7 +57,7 @@ public class DeleteAccountController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         Scene scene = new Scene(root, 700, 500);
-        scene.getStylesheets().add(NavigationUtil.STYLESHEET);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
         stage.setTitle("MathCat");
         stage.setScene(scene);
     }

@@ -51,16 +51,6 @@ public final class CatService {
     }
 
     /**
-     * Returns true if the given value is within the standard stat bounds.
-     *
-     * @param value the stat value to validate
-     * @return true if the value is within {@link #MIN_STAT} and {@link #MAX_STAT} bounds
-     */
-    public static boolean isValidStatValue(double value) {
-        return (value >= MIN_STAT && value <= MAX_STAT);
-    }
-
-    /**
      * Clamps a value between a custom min and max. Used for non-standard stat bounds.
      *
      * @param value the value to clamp

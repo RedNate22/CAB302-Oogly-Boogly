@@ -101,7 +101,7 @@ public class RewardSystem {
      *
      * @return a pseudorandom double between 0-100
      */
-    public static double randomNumberGenerator() {
+    private static double randomNumberGenerator() {
         Random random = new Random();
         return random.nextDouble() * 100;
     }
