@@ -59,9 +59,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
-
 ### Mac OS ###
 .DS_Store
 .env
@@ -70,3 +67,6 @@ mathcat/.env
 ### SQLite ###
 *.db
 *.db.backup
+
+### Javadocs ###
+docs/javadoc

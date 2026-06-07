@@ -1,0 +1,282 @@
+package com.mathcat.mathcat.controllers;
+
+import com.mathcat.mathcat.dao.CatDAO;
+import com.mathcat.mathcat.dao.UserDAO;
+import com.mathcat.mathcat.models.Cat;
+import com.mathcat.mathcat.services.CatScheduler;
+import com.mathcat.mathcat.services.CatService;
+import com.mathcat.mathcat.services.LevelSystem;
+import com.mathcat.mathcat.services.SpriteService;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import javafx.application.Platform;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import org.controlsfx.control.NotificationPane;
+
+/**
+ * Controller class responsible for user interactions with the UI in the "home-view" screen. Does
+ * not handle persistence.
+ */
+public class HomeController extends BaseController {
+    private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
+
+    /** Creates a new homeController. */
+    public HomeController() {}
+
+    private Cat cat;
+
+    /** Stat value at or below which a critical notification is shown. */
+    private static final double CRITICAL_THRESHOLD = 15.0;
+
+    private NotificationPane statNotificationPane;
+    private boolean happinessCriticalShown = false;
+    private boolean hungerCriticalShown    = false;
+    private boolean energyCriticalShown    = false;
+
+    @FXML
+    private Label petNameLabel;
+
+    @FXML
+    private Label happinessLabel;
+    @FXML
+    private Label hungerLabel;
+    @FXML
+    private Label energyLabel;
+    @FXML
+    private Label levelProgressLabel;
+
+    @FXML
+    private ImageView viewCurrentPetImage;
+    @FXML
+    private ImageView viewCurrentAccessoryImage;
+
+    @FXML
+    private ProgressBar happinessProgressBar;
+    @FXML
+    private ProgressBar hungerProgressBar;
+    @FXML
+    private ProgressBar energyProgressBar;
+    @FXML
+    private ProgressBar levelProgressBar;
+    @FXML
+    private Parent rootPane;
+
+    /**
+     * Loads the current user's cat name into the stats label on screen load.
+     * If the user has no cat
+     * (e.g. they closed the app before finishing pet creation), redirects to the create pet screen.
+     */
+    @FXML
+    public void initialize() {
+
+        if (UserDAO.currentUser == null) {
+            LOG.warn("home screen reached with no logged-in user");
+            return;
+        }
+        this.cat = CatDAO.load(UserDAO.currentUser.getId());
+
+        if (cat != null) {
+            CatService.applyOfflineDecay(cat);
+            CatService.updateSpriteBasedOnEnergy(cat);
+            CatScheduler.getInstance().start(cat);
+            CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
+
+            petNameLabel.setText(cat.getCatName() + "'s Stats");
+            viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+            viewCurrentAccessoryImage.setImage(SpriteService.load(cat.getCatAccessory()));
+            refreshStats(cat);
+
+            statNotificationPane = new NotificationPane(rootPane);
+            statNotificationPane.setShowFromTop(true);
+            statNotificationPane.getStylesheets().add(BaseController.STYLESHEET);
+            Platform.runLater(() -> rootPane.getScene().setRoot(statNotificationPane));
+
+        } else {
+            Platform.runLater(() -> {
+                try {
+                    if (petNameLabel.getScene() == null) {
+                        return;
+                    }
+                    Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
+                    Stage stage = (Stage) petNameLabel.getScene().getWindow();
+                    stage.getScene().setRoot(root);
+                } catch (IOException e) {
+                    LOG.error("failed to redirect to create pet screen", e);
+                }
+            });
+        }
+    }
+
+    private void refreshStats(Cat cat) {
+        double happiness = CatService.displayHappiness(cat);
+        double hunger = CatService.displayHunger(cat);
+        double energy = CatService.displayEnergy(cat);
+        double level = CatService.displayLevel(cat);
+        double xp = CatService.displayXP(cat);
+        double nextLevelXP = LevelSystem.getXpToNextLevel(level);
+        happinessProgressBar.setProgress(happiness / 100);
+        hungerProgressBar.setProgress(hunger / 100);
+        energyProgressBar.setProgress(energy / 100);
+        levelProgressBar.setProgress(nextLevelXP < 0 ? 1.0 : xp / nextLevelXP);
+
+        happinessLabel.setText(String.format("%.0f", happiness));
+        hungerLabel.setText(String.format("%.0f", hunger));
+        energyLabel.setText(String.format("%.0f", energy));
+        levelProgressLabel.setText(String.format("Level %.0f", level));
+
+        int delay = 0;
+        if (happiness <= CRITICAL_THRESHOLD && !happinessCriticalShown) {
+            happinessCriticalShown = true;
+            scheduleCriticalNotification("Happiness", delay);
+            delay += 5;
+        }
+        if (hunger <= CRITICAL_THRESHOLD && !hungerCriticalShown) {
+            hungerCriticalShown = true;
+            scheduleCriticalNotification("Fullness", delay);
+            delay += 5;
+        }
+        if (energy <= CRITICAL_THRESHOLD && !energyCriticalShown) {
+            energyCriticalShown = true;
+            scheduleCriticalNotification("Energy", delay);
+        }
+
+        if (happiness > CRITICAL_THRESHOLD) {
+            happinessCriticalShown = false;
+        }
+        if (hunger > CRITICAL_THRESHOLD) {
+            hungerCriticalShown = false;
+        }
+        if (energy > CRITICAL_THRESHOLD) {
+            energyCriticalShown = false;
+        }
+
+        viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
+    }
+
+
+    /**
+     * Schedules a critical stat notification to show after a given delay,
+     * so multiple critical stats are shown sequentially rather than overwriting each other.
+     *
+     * @param statName    human-readable stat name shown in the message
+     * @param delaySeconds seconds to wait before showing this notification
+     */
+    private void scheduleCriticalNotification(String statName, int delaySeconds) {
+        PauseTransition delay = new PauseTransition(Duration.seconds(delaySeconds + 0.3));
+        delay.setOnFinished(e -> {
+            Platform.runLater(() -> {
+                statNotificationPane.setText(statName + " is Critical! Use an Item to Regenerate!");
+                statNotificationPane.show();
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(4));
+                pause.setOnFinished(e2 -> statNotificationPane.hide());
+                pause.play();
+            });
+        });
+        delay.play();
+    }
+
+    /**
+     * Handles inventory modal screen logic for MathCat in the home screen.
+     * Opens and sets modal as current screen, so user has to close modal before
+     * further interacting with the home screen.
+     *
+     * @param event gets the window/stage for the inventory modal screen
+     */
+    @FXML
+    public void onPressInventory(ActionEvent event) {
+        try {
+            FXMLLoader loader =
+                new FXMLLoader(getClass().getResource("/com/mathcat/mathcat/inventory-modal-view.fxml"));
+
+            Parent root =
+                loader.load();
+
+            InventoryModalController invModalController = loader.getController();
+
+            invModalController.setOnItemSelect(imagePath -> {
+                Image newAccessory = new Image(getClass().getResourceAsStream(imagePath));
+                viewCurrentAccessoryImage.setImage(newAccessory);
+            });
+
+            Stage inventoryStage = new Stage();
+            inventoryStage.setTitle("Inventory");
+
+            inventoryStage.initModality(Modality.APPLICATION_MODAL);
+
+            Stage homeStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            inventoryStage.initOwner(homeStage);
+
+            Scene inventoryScene = new Scene(root);
+            inventoryScene.getStylesheets().add(BaseController.STYLESHEET);
+            inventoryStage.setScene(inventoryScene);
+
+            inventoryStage.setOnShown(windowEvent -> {
+                double homeX = homeStage.getX();
+                double homeY = homeStage.getY();
+                double homeHeight = homeStage.getHeight();
+                double inventoryHeight = inventoryStage.getHeight();
+
+                inventoryStage.setX(homeX + 10);
+                inventoryStage.setY(homeY + (homeHeight - inventoryHeight) / 2);
+
+                inventoryStage.toFront();
+                inventoryStage.requestFocus();
+            });
+
+            inventoryStage.showAndWait();
+            cat = CatDAO.load(UserDAO.currentUser.getId());
+            CatScheduler.getInstance().setCat(cat);
+            refreshStats(cat);
+
+            String finalChoice = invModalController.getCurrentSelectedPath();
+
+            if (finalChoice != null && cat != null) {
+                cat.setCatAccessory(finalChoice);
+                CatDAO.save(cat);
+                LOG.info("accessory updated for cat: {}", cat.getCatName());
+
+            } else {
+                LOG.debug("no accessory selected in inventory modal");
+            }
+
+        } catch (IOException e) {
+            LOG.error("failed to load inventory modal", e);
+            CatDAO.save(cat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Handles the logic for accessing the profile screen
+     *
+     * @param event gets the window/stage for the profile screen
+     * @throws IOException if listed screen does not exist
+     */
+    public void onPressProfile(ActionEvent event) throws IOException {
+        Parent root =
+                FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/profile-view.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Scene scene = new Scene(root, 700, 500);
+        scene.getStylesheets().add(BaseController.STYLESHEET);
+        stage.setTitle("MathCat");
+        stage.setScene(scene);
+
+    }
+}
+
+

@@ -1,18 +1,24 @@
 package com.mathcat.mathcat.database;
 
 import java.sql.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the SQLite database connection and initialises all tables.
  */
-public class DatabaseManager {
+public final class DatabaseManager {
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseManager.class);
+
+    private DatabaseManager() {}
 
     private static final String DB_URL = "jdbc:sqlite:mathcat.db";
     private static Connection connection;
 
     /**
-     * Replaces the active connection with an in-memory SQLite database.
-     * For use in tests only — data is lost when the connection closes.
+     * Replaces the active connection with an in-memory SQLite database. For use in tests only —
+     * data is lost when the connection closes.
+     * 
      * @throws SQLException if the in-memory connection cannot be created
      */
     public static void useInMemoryDatabase() throws SQLException {
@@ -21,6 +27,7 @@ public class DatabaseManager {
 
     /**
      * Returns the active database connection, creating one if needed.
+     * 
      * @return the SQLite connection
      * @throws SQLException if connection fails
      */
@@ -32,8 +39,8 @@ public class DatabaseManager {
     }
 
     /**
-     * Creates all required tables if they don't already exist.
-     * Should be called once on application startup.
+     * Creates all required tables if they don't already exist. Should be called once on application
+     * startup.
      */
     public static void initialiseDatabase() {
         String createUsersTable = """
@@ -51,6 +58,7 @@ public class DatabaseManager {
                     user_id INTEGER NOT NULL,
                     cat_name TEXT,
                     cat_sprite TEXT,
+                    cat_accessory TEXT,
                     happiness REAL DEFAULT 100.0,
                     fullness REAL DEFAULT 100.0,
                     energy REAL DEFAULT 100.0,
@@ -77,9 +85,9 @@ public class DatabaseManager {
             stmt.execute(createUsersTable);
             stmt.execute(createPetsTable);
             stmt.execute(createItemsTable);
-            System.out.println("Database initialised successfully!");
+            LOG.debug("Initialised successfully");
         } catch (SQLException e) {
-            System.out.println("Database error: " + e.getMessage());
+            LOG.error("Initialisation error", e);
         }
     }
 }

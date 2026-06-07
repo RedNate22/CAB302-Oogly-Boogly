@@ -112,6 +112,60 @@ public final class CatDAOTest {
             assertEquals(1, loaded.getLevel());
             assertEquals(0.0, loaded.getXp());
         }
+
+        @Test
+        void savesAndLoadsAccessory() throws SQLException {
+            int userId = insertUser("Nate");
+            Cat cat = new Cat("Whiskers");
+            cat.setUserId(userId);
+            cat.setCatAccessory("path/to/cowboy-hat.png");
+            CatDAO.save(cat);
+
+            Cat loaded = CatDAO.load(userId);
+            assertEquals("path/to/cowboy-hat.png", loaded.getCatAccessory());
+        }
+
+        @Test
+        void savesNullAccessory() throws SQLException {
+            int userId = insertUser("Nate");
+            Cat cat = new Cat("Whiskers");
+            cat.setUserId(userId);
+            cat.setCatAccessory(null);
+            CatDAO.save(cat);
+
+            Cat loaded = CatDAO.load(userId);
+            assertNull(loaded.getCatAccessory());
+        }
+
+        @Test
+        void updatesAccessory() throws SQLException {
+            int userId = insertUser("Nate");
+            Cat cat = new Cat("Whiskers");
+            cat.setUserId(userId);
+            cat.setCatAccessory("path/to/cowboy-hat.png");
+            CatDAO.save(cat);
+
+            cat.setCatAccessory("path/to/bowtie.png");
+            CatDAO.save(cat);
+
+            Cat loaded = CatDAO.load(userId);
+            assertEquals("path/to/bowtie.png", loaded.getCatAccessory());
+        }
+
+        @Test
+        void clearsAccessoryBySettingToNull() throws SQLException {
+            int userId = insertUser("Nate");
+            Cat cat = new Cat("Whiskers");
+            cat.setUserId(userId);
+            cat.setCatAccessory("path/to/cowboy-hat.png");
+            CatDAO.save(cat);
+
+            cat.setCatAccessory(null);
+            CatDAO.save(cat);
+
+            Cat loaded = CatDAO.load(userId);
+            assertNull(loaded.getCatAccessory());
+        }
     }
 
     @Nested
@@ -225,4 +279,5 @@ public final class CatDAOTest {
             assertNull(CatDAO.load(userId2));
         }
     }
+
 }

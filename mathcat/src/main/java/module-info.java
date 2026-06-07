@@ -1,3 +1,4 @@
+/** Module descriptor for the MathCat application. */
 module com.mathcat.mathcat {
     requires transitive javafx.graphics;
     requires javafx.controls;
@@ -11,6 +12,11 @@ module com.mathcat.mathcat {
     requires com.google.gson;
     requires io.github.cdimascio.dotenv.java;
     requires transitive java.sql;
+    requires annotations;
+    requires org.slf4j;
+    requires javafx.base;
+    requires jbcrypt;
+    requires org.controlsfx.controls;
 
     opens com.mathcat.mathcat to javafx.fxml;
     opens com.mathcat.mathcat.controllers to javafx.fxml;

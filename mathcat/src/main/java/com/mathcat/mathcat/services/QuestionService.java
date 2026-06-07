@@ -2,11 +2,13 @@ package com.mathcat.mathcat.services;
 
 import java.util.List;
 import java.util.LinkedList;
-// import java.util.Random;
+import java.util.Random;
 
 import com.mathcat.mathcat.models.QuestionBank;
 import com.mathcat.mathcat.models.Difficulty;
 import com.mathcat.mathcat.models.IQuestion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the flow of math questions to the player.
@@ -19,7 +21,12 @@ import com.mathcat.mathcat.models.IQuestion;
  * one at a time until the pool is exhausted, at which point the process repeats.
  */
 public class QuestionService {
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionService.class);
+
+    /** Creates a new QuestionService with an empty question queue. */
+    public QuestionService() {}
     private final LinkedList<IQuestion> questionQueue = new LinkedList<>();
+    private final Random random = new Random();
 
     /**
      * Returns the next question from the queue. If the queue is empty, builds a new shuffled queue
@@ -30,10 +37,14 @@ public class QuestionService {
      */
     public IQuestion nextQuestion(int level) {
         if (questionQueue.isEmpty()) {
-            // ! hardcoded difficulty for now
-            questionQueue.addAll(QuestionBank.getByDifficulty(Difficulty.EASY));
+            buildQueue(pickDifficulty(level));
+            LOG.debug("Queue refilled - cat level: {}, pool size: {}", level, questionQueue.size());
         }
-        return questionQueue.poll();
+        IQuestion question = questionQueue.poll();
+        LOG.debug(
+                "Serving question - difficulty: {}, text: \"{}\", answer: {}, queue remaining: {}",
+                        question.getDifficulty(), question.getText(), question.getAnswer(), questionQueue.size());
+        return question;
     }
 
     // @formatter:off don't remove pls - Nate
@@ -51,23 +62,38 @@ public class QuestionService {
     // Called by nextQuestion() when the queue is empty.
     // Rolls a weighted random based on the cat's current level and returns the appropriate
     // Difficulty.
-    @SuppressWarnings("unused") // TODO
     private Difficulty pickDifficulty(int level) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        int roll = random.nextInt(100); // 0-99
+
+        if (level <= 2) {
+            return Difficulty.EASY;
+        } else if (level <= 4) {
+            return roll < 40 ? Difficulty.EASY : Difficulty.MEDIUM;
+        } else if (level <= 6) {
+            return roll < 60 ? Difficulty.MEDIUM : Difficulty.HARD;
+        } else {
+            return roll < 20 ? Difficulty.MEDIUM : Difficulty.HARD;
+        }
     }
 
     // Called by nextQuestion() when the queue is empty, after pickDifficulty().
     // Fetches all questions for the given difficulty from QuestionBank, shuffles them via
     // shuffle(),
     // and populates questionQueue.
-    @SuppressWarnings("unused") // TODO
-    private LinkedList<IQuestion> buildQueue(Difficulty difficulty) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    private void buildQueue(Difficulty difficulty) {
+        List<IQuestion> questions = QuestionBank.getByDifficulty(difficulty);
+        shuffle(questions);
+        questionQueue.addAll(questions);
     }
 
     // Called by buildQueue(). Performs an in-place Fisher-Yates shuffle on the question list.
-    @SuppressWarnings("unused") // TODO
     private List<IQuestion> shuffle(List<IQuestion> questions) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+        for (int i = questions.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            IQuestion temp = questions.get(i);
+            questions.set(i, questions.get(j));
+            questions.set(j, temp);
+        }
+        return questions;
     }
 }

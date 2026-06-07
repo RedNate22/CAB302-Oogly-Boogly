@@ -29,11 +29,11 @@ High-level overview of the project purpose is outlined in the project [README.md
     - Hard: +20 Energy spent, highest reward
 - Items earned can **restore Energy, increase Happiness, or satisfy Fullness**.
 
-#### 1.1.4 Bonus Challenges *(Out of Scope)*
+#### 1.1.4 Bonus Challenges _(Out of Scope)_
 
 Moved out of scope. Energy-based bonus challenge system has been replaced by the daily Energy cap on rewards (see 1.1.3).
 
-#### 1.1.5 Shop *(Out of Scope)*
+#### 1.1.5 Shop _(Out of Scope)_
 
 Moved out of scope. Currency and item purchasing system deferred. Items are earned exclusively through solving problems.
 
@@ -111,13 +111,18 @@ The system uses a layered architecture. Core components include:
 
 ![Architecture Diagram](Diagrams/Desktop%20Pet%20Architecture%20Diagram.png)
 
-Created by [Colin](https://github.com/Ka-319)
+Created by (former member) [Colin](https://github.com/Ka-319)
 
 ### 2.4 State Machine Diagram (Pet Stats)
 
 ![State Machine Diagram](Diagrams/MathCat_StateMachine.png)
 
 Created by [Nathan](https://github.com/RedNate22)
+
+**Implementation notes:**
+
+- **"Bonus challenge" -> replaced by energy-gated rewards:** There are no longer separate bonus challenges. Energy is spent on every math problem (Easy: 5, Medium: 10, Hard: 20). If the cat has enough energy, rewards (XP + items) are given; if not, the problem can still be attempted but yields no rewards. Happiness is always gained regardless.
+- **"Feed (capped daily)" -> indirect cap via energy:** The daily cap applies to _energy gained_, not to feeding itself. Fullness still decays at 0.07/min regardless of whether the energy cap has been hit, so the player must keep the cat fed to avoid the hunger happiness penalty - not just to regenerate energy.
 
 ### 2.5 Wireframes of Project (Screens + Flow)
 
@@ -256,6 +261,8 @@ Created by [Leonora](https://github.com/smolbebby)
     - Maintain consistent indentation and spacing.
     - Organise code logically for readability and maintainability.
         - Separate logical blocks with empty lines
+    - Use K&R brace style: opening brace on the same line as the statement, `else`/`catch`/`finally` on the same line as the closing brace.
+    - Always use braces on control structures (`if`, `else`, `for`, `while`, `do`), even for single-line bodies.
 
 ### 5.2 Documentation requirements
 

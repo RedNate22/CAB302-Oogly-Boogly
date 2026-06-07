@@ -2,91 +2,125 @@ package com.mathcat.mathcat.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import com.mathcat.mathcat.services.UserService;
 import com.mathcat.mathcat.dao.UserDAO;
 import com.mathcat.mathcat.models.User;
+import com.mathcat.mathcat.dao.CatDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * Handles UI events for the login and account creation screens.
  */
-public class AuthController {
+public class AuthController extends BaseController {
+    private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
+
+    /** Creates a new AuthController. */
+    public AuthController() {}
 
     @FXML private TextField usernameField;
-    @FXML private TextField passwordField;
     @FXML private TextField emailField;
+
+    @FXML private PasswordField passwordField;
+    @FXML private TextField visiblePasswordField;
+
     @FXML private Label error;
+
+    /**
+     * Binds the visible and masked password fields together so they stay in sync when toggling
+     * password visibility.
+     */
+    @FXML
+    public void initialize() {
+        visiblePasswordField.textProperty().bindBidirectional(passwordField.textProperty());
+    }
+
+    @FXML
+    private void togglePassword() {
+
+        boolean showing = visiblePasswordField.isVisible();
+
+        visiblePasswordField.setVisible(!showing);
+        visiblePasswordField.setManaged(!showing);
+
+        passwordField.setVisible(showing);
+        passwordField.setManaged(showing);
+    }
 
     /**
      * Validates credentials and navigates to the home screen on success.
      *
      * @param event the button click event
-     * @throws IOException if the home screen FXML cannot be loaded
      */
     @FXML
-    public void onLoginConfirm(ActionEvent event) throws IOException {
-        String username_email = usernameField.getText().trim();
+    public void onLoginConfirm(ActionEvent event) {
+        String usernameEmail = usernameField.getText().trim();
         String password = passwordField.getText().trim();
 
-        if (UserService.fieldsEmpty(username_email, password)) {
+        if (UserService.fieldsEmpty(usernameEmail, password)) {
             error.setText("Please fill out all fields");
             return;
         }
 
         User matchedUser;
         try {
-            matchedUser = UserDAO.findByEmail(username_email);
+            matchedUser = UserDAO.findByEmail(usernameEmail);
             if (matchedUser == null) {
                 try {
-                    matchedUser = UserDAO.findByUsername(username_email);
+                    matchedUser = UserDAO.findByUsername(usernameEmail);
                 } catch (SQLException e) {
+                    LOG.error("database error during login", e);
                     error.setText("Database error. Please try again.");
                     return;
                 }
             }
         } catch (SQLException e) {
+            LOG.error("database error during login", e);
             error.setText("Database error. Please try again.");
             return;
         }
 
         if (matchedUser == null) {
+            LOG.warn("login attempt for unknown user: {}", usernameEmail);
             error.setText("This account does not exist.");
             return;
         }
 
-        if (!matchedUser.getPassword().equals(password)) {
+        if (!BCrypt.checkpw(password, matchedUser.getPassword())) {
+            LOG.warn("Incorrect password for user: {}", usernameEmail);
             error.setText("Password is incorrect. Please try again");
             return;
         }
 
+        LOG.info("user logged in: {}", matchedUser.getUsername());
         UserDAO.setCurrentUser(matchedUser);
 
-        Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/home-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 400);
-        stage.setTitle("MathCat");
-        stage.setScene(scene);
-        stage.show();
+        boolean hasCat = CatDAO.load(matchedUser.getId()) != null;
+        if (!hasCat) {
+            LOG.warn("user {} has no cat, redirecting to create pet screen", matchedUser.getUsername());
+        }
+        String fxml = hasCat
+                ? "/com/mathcat/mathcat/home-view.fxml"
+                : "/com/mathcat/mathcat/createpet-view.fxml";
+
+        navigateTo(event, fxml);
     }
 
     /**
      * Validates registration fields, creates the account, and navigates to the create pet screen.
      *
      * @param event the button click event
-     * @throws IOException if the create pet screen FXML cannot be loaded
      */
     @FXML
-    public void onCreateAccountConfirm(ActionEvent event) throws IOException {
+    public void onCreateAccountConfirm(ActionEvent event) {
         String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
@@ -115,19 +149,19 @@ public class AuthController {
             boolean exists = UserDAO.findByUsername(username) != null
                     || UserDAO.findByEmail(email) != null;
             if (!exists) {
-                UserDAO.insert(new User(username, email, password));
+                UserDAO.insert(
+                        // default BCrypt cost factor 10 is fine (100ms per hash on modern hardware)
+                        new User(username, email, BCrypt.hashpw(password, BCrypt.gensalt())));
                 UserDAO.setCurrentUser(UserDAO.findByUsername(username));
+                LOG.info("account created: {}", username);
 
-                Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/createpet-view.fxml"));
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 700, 400);
-                stage.setTitle("MathCat");
-                stage.setScene(scene);
-                stage.show();
+                navigateTo(event, "/com/mathcat/mathcat/createpet-view.fxml");
             } else {
+                LOG.warn("account creation failed - already exists: {}", username);
                 error.setText("Username or email already exists");
             }
         } catch (SQLException e) {
+            LOG.error("database error during account creation", e);
             error.setText("Database error. Please try again.");
         }
     }
@@ -136,13 +170,9 @@ public class AuthController {
      * Returns to the initial screen without logging in.
      *
      * @param event the button click event
-     * @throws IOException if the initial screen FXML cannot be loaded
      */
     @FXML
-    public void onReturn(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/mathcat/mathcat/initial-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("MathCat");
-        stage.getScene().setRoot(root);
+    public void onReturn(ActionEvent event) {
+        navigateTo(event, "/com/mathcat/mathcat/initial-view.fxml");
     }
 }
