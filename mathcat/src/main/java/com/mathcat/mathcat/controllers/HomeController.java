@@ -88,6 +88,7 @@ public class HomeController {
 
         if (cat != null) {
             CatService.applyOfflineDecay(cat);
+            CatService.updateSpriteBasedOnEnergy(cat);
             CatScheduler.getInstance().start(cat);
             CatScheduler.getInstance().setOnTick(() -> refreshStats(cat));
 
@@ -159,6 +160,8 @@ public class HomeController {
         if (energy > CRITICAL_THRESHOLD) {
             energyCriticalShown = false;
         }
+
+        viewCurrentPetImage.setImage(SpriteService.load(cat.getCatSprite()));
     }
 
 

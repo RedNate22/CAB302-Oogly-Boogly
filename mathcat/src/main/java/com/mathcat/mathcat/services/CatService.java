@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import com.mathcat.mathcat.models.Cat;
 import com.mathcat.mathcat.models.Item;
+import com.mathcat.mathcat.models.SpriteConstants;
 import com.mathcat.mathcat.dao.CatDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,8 @@ public final class CatService {
     public static final double HUNGER_THRESHOLD = 25.0;
     /** Maximum energy the cat can regenerate per day via the scheduler. */
     public static final double DAILY_ENERGY_CAP = 100.0;
+    /** Maximum energy level before cat sprite changes to sleeping. */
+    public static final double SLEEPY_ENERGY_THRESHOLD = 15.0;
 
     private static final Logger LOG = LoggerFactory.getLogger(CatService.class);
 
@@ -163,6 +166,7 @@ public final class CatService {
         cat.setEnergy(clampStat(cat.getEnergy() + value));
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
+        updateSpriteBasedOnEnergy(cat);
     }
 
     /**
@@ -175,6 +179,7 @@ public final class CatService {
         cat.setEnergy(clampStat(cat.getEnergy() - value));
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
+        updateSpriteBasedOnEnergy(cat);
     }
 
     /**
@@ -203,10 +208,69 @@ public final class CatService {
         cat.setDailyEnergyGained(cat.getDailyEnergyGained() + regen);
         cat.setLastSaved(LocalDateTime.now());
         CatDAO.save(cat);
+        updateSpriteBasedOnEnergy(cat);
         LOG.debug("Energy regen +{} (fullness: {}) daily total: {}/{}",
                 String.format("%.2f", regen), String.format("%.2f", cat.getFullness()),
                 String.format("%.2f", cat.getDailyEnergyGained()),
                 String.format("%.2f", DAILY_ENERGY_CAP));
+    }
+
+    /**
+     * Updates the cat's sprite based on energy level and cat type.
+     * Sets to sleepy variant if energy <= SLEEPY_ENERGY_THRESHOLD,
+     * otherwise normal variant.
+     * Persists the change to the database.
+     * @param cat the cat to update
+     */
+    public static void updateSpriteBasedOnEnergy(Cat cat) {
+        String currentSprite = cat.getCatSprite();
+        String updatedSprite = determineSpriteForEnergy(currentSprite, cat.getEnergy());
+
+        LOG.debug("Sprite check - Current: {}, Energy: {}, New: {}", currentSprite, cat.getEnergy(), updatedSprite);
+
+
+        if (updatedSprite != null && !updatedSprite.equals(currentSprite)) {
+            LOG.debug("Sprite changed: {} -> {}", currentSprite, updatedSprite);
+            cat.setCatSprite(updatedSprite);
+            cat.setLastSaved((LocalDateTime.now()));
+            CatDAO.save(cat);
+        }
+    }
+
+    /**
+     * Determines the appropriate sprite path based on current sprite and energy level.
+     * @param currentSprite the cat's current sprite path
+     * @param energy the cat's current energy level
+     * @return the sprite path that should be displayed
+     */
+    public static String determineSpriteForEnergy(String currentSprite, double energy) {
+        boolean isSleepy = energy <= SLEEPY_ENERGY_THRESHOLD;
+
+        if (currentSprite == null) {
+            return currentSprite;
+        }
+
+        // Map normal sprites to their sleepy counterparts and vice versa
+        if (isSleepy) {
+            if (currentSprite.equals(SpriteConstants.ORANGE_CAT)) {
+                return SpriteConstants.SLEEPY_ORANGE_CAT;
+            } else if (currentSprite.equals(SpriteConstants.SIAMESE_CAT)) {
+                return SpriteConstants.SLEEPY_SIAMESE_CAT;
+            } else if (currentSprite.equals(SpriteConstants.TUXEDO_CAT)) {
+                return SpriteConstants.SLEEPY_TUXEDO_CAT;
+            }
+        } else {
+            // Return to awake variant
+            if (currentSprite.equals(SpriteConstants.SLEEPY_ORANGE_CAT)) {
+                return SpriteConstants.ORANGE_CAT;
+            } else if (currentSprite.equals(SpriteConstants.SLEEPY_SIAMESE_CAT)) {
+                return SpriteConstants.SIAMESE_CAT;
+            } else if (currentSprite.equals(SpriteConstants.SLEEPY_TUXEDO_CAT)) {
+                return SpriteConstants.TUXEDO_CAT;
+            }
+        }
+        
+        return currentSprite;
     }
 
     /**

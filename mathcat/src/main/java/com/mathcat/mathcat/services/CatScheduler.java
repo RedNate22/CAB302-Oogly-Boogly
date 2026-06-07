@@ -99,6 +99,7 @@ public final class CatScheduler {
         CatService.decreaseFullness(cat, CatService.FULLNESS_DECAY_RATE);
         CatService.applyHungerPenalty(cat);
         CatService.regenerateEnergy(cat);
+        CatService.updateSpriteBasedOnEnergy(cat);
         LOG.debug("After tick - happiness: {}, fullness: {}, energy: {}",
                         String.format("%.2f", cat.getHappiness()), String.format("%.2f", cat.getFullness()),
                 String.format("%.2f", cat.getEnergy()));
