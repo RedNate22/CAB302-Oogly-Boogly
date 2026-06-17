@@ -96,10 +96,8 @@ Unstaged changes will carry over with you to the other branch (unless a conflict
 
 2. `git switch branch_name`
 
-### DO NOT MERGE BRANCHES YOURSELF
+### PR's FROM `MAIN` WILL NOT BE ACCEPTED
 
-Always make a pull request for merges so they can be reviewed and conflicts can be solved easier
+All PR's must be made and updated with `dev`.
 
-### DO NOT MAKE CHANGES/COMMIT/PUSH ON THE `MAIN` BRANCH
-
-The main branch is intended to remain 'clean' of any issues wherever possible, and represents the current 'final' state of our app.
+The main branch is intended to remain 'clean' of any issues wherever possible, and represents the current 'final' state of our app. Active development is to remain on the `dev` branch and only periodically merged into `main` upon releases or critical fixes.
