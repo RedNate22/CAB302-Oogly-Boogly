@@ -9,7 +9,7 @@ The project embraces the theme "**Living, Learning, Working with AI**," combinin
 
 Users maintain and improve their pet's stats through earned items. Items can also provide cosmetic customisation, such as costumes, fur (colour) patterns etc. which have no effect on gameplay.
 
-<img width="677" height="464" alt="image" src="https://github.com/user-attachments/assets/3dbddc6c-1614-45dc-820b-bff5af6ccd01" />
+<img width="877" height="664" alt="image" src="https://github.com/user-attachments/assets/3dbddc6c-1614-45dc-820b-bff5af6ccd01" />
 
 
 ## Technical Requirements
