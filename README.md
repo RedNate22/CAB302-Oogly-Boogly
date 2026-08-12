@@ -45,6 +45,12 @@ Note: `checkstyle:check` runs against the compiled classes in `target/`, so if y
 ./mvnw package
 ```
 
+### Running the project
+
+```bash
+./mvnw javafx:run
+```
+
 ### Generating Javadocs
 
 ```bash
