@@ -68,6 +68,12 @@ If errors persist after fixing violations, or the build behaves unexpectedly, cl
 ./mvnw clean package
 ```
 
+### Running the project
+
+```bash
+./mvnw javafx:run
+```
+
 ### Generating Javadocs
 
 ```bash
